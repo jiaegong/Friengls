@@ -1,11 +1,39 @@
 import React from 'react';
 import './App.css';
 
+// 패키지
+import { Route } from 'react-router-dom';
+import { history } from '../redux/configureStore';
+import { ConnectedRouter } from 'connected-react-router';
+
+//  컴포넌트
+import Main from '../pages/Main';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
+import Essay from '../pages/Essay';
+import Mypage from '../pages/Mypage';
+import Detail from '../pages/Detail';
+import VideoChat from '../pages/VideoChat';
+import Booking from '../pages/Booking';
+import Search from '../pages/Search';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
 function App() {
   return (
-    <React.Fragment>
-      <div>test</div>
-    </React.Fragment>
+    <ConnectedRouter history={history}>
+      <Header />
+      <Route path="/" exact component={Main} />
+      <Route path="/signup" exact component={Signup} />
+      <Route path="/login" exact component={Login} />
+      <Route path="/essay" exact component={Essay} />
+      <Route path="/mypage" exact component={Mypage} />
+      <Route path="/detail" exact component={Detail} />
+      <Route path="/videoChat" exact component={VideoChat} />
+      <Route path="/booking" exact component={Booking} />
+      <Route path="/search" exact component={Search} />
+      <Footer />
+    </ConnectedRouter>
   );
 }
 
