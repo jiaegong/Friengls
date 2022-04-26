@@ -25,6 +25,6 @@ const Wrap = styled.div`
     height: 910px;
     margin: auto;
 
-    background: #eee;
+    background: white;
   }
 `;

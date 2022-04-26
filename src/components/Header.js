@@ -19,6 +19,20 @@ const Header = () => {
         </div>
 
         <ul className="navBarWrap">
+          <li
+            onClick={() => {
+              history.push('/signup');
+            }}
+          >
+            영상통화
+          </li>
+          <li
+            onClick={() => {
+              history.push('/signup');
+            }}
+          >
+            첨삭기능
+          </li>
           <li>알림 아이콘</li>
           <li
             onClick={() => {
@@ -71,7 +85,8 @@ const Wrap = styled.div`
     }
 
     .navBarWrap {
-      width: 300px;
+      /* width: 300px; */
+      width: auto;
       height: 35px;
       display: flex;
       justify-content: space-between;
@@ -87,6 +102,12 @@ const Wrap = styled.div`
         align-items: center;
         cursor: pointer;
         background: #8e8e8e;
+
+        margin-right: 10px;
+
+        &:nth-child(5) {
+          margin: 0;
+        }
       }
     }
   }
