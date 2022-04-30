@@ -5,6 +5,8 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { ConnectedRouter } from 'connected-react-router';
+import { useDispatch } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
 
 //  컴포넌트
 import Main from '../pages/Main';
@@ -18,14 +20,24 @@ import Booking from '../pages/Booking';
 import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Kakao from '../pages/Kakao';
 
 function App() {
+  const dispatch = useDispatch();
+  // 페이지 조회할 때마다 실행, token이 유효한지 여부 체크
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(userActions.loginCheckDB());
+    }
+  });
+
   return (
     <ConnectedRouter history={history}>
       <Header />
       <Route path="/" exact component={Main} />
       <Route path="/signup" exact component={Signup} />
       <Route path="/login" exact component={Login} />
+      <Route path="/auth/kakao" component={Kakao} />
       <Route path="/essay" exact component={Essay} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/detail" exact component={Detail} />
