@@ -10,7 +10,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import Main from '../pages/Main';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
-import Essay from '../pages/Essay';
 import Mypage from '../pages/Mypage';
 import Detail from '../pages/Detail';
 import VideoChat from '../pages/VideoChat';
@@ -26,7 +25,6 @@ function App() {
       <Route path="/" exact component={Main} />
       <Route path="/signup" exact component={Signup} />
       <Route path="/login" exact component={Login} />
-      <Route path="/essay" exact component={Essay} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/detail" exact component={Detail} />
       <Route path="/videoChat" exact component={VideoChat} />

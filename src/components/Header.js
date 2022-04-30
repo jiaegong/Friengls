@@ -21,17 +21,10 @@ const Header = () => {
         <ul className="navBarWrap">
           <li
             onClick={() => {
-              history.push('/signup');
+              history.push('/videoChat');
             }}
           >
             영상통화
-          </li>
-          <li
-            onClick={() => {
-              history.push('/signup');
-            }}
-          >
-            첨삭기능
           </li>
           <li>알림 아이콘</li>
           <li
