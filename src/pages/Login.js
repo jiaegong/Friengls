@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { KAKAO_AUTH_URL } from '../shared/OAuth';
+import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../shared/OAuth';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -24,11 +24,6 @@ const Login = (props) => {
     console.log('보낼 데이터', form);
     dispatch(userActions.loginDB(form));
   };
-
-  //카카오 로그인
-  // const CLIENT_ID = "a460e0fb29f8d9d785fbf3641185281b";
-  // const REDIRECT_URI = "http://주소/auth/kakao/callback";
-  // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
     <Container>
@@ -57,10 +52,12 @@ const Login = (props) => {
       <div>
         <button onClick={() => history.push('/signup')}>회원가입</button>
       </div>
-      <a href={KAKAO_AUTH_URL}>
-        <img src="kakaoLogin.png" alt="카카오 로그인 버튼" />
-      </a>
-      <button>구글로그인</button>
+      <A href={KAKAO_AUTH_URL}>
+        <Img src="kakaoLoginImg.png" alt="카카오 로그인 버튼" />
+      </A>
+      <A href={GOOGLE_AUTH_URL}>
+        <Img src="googleLogin3.png" alt="구글 로그인 버튼" />
+      </A>
     </Container>
   );
 };
@@ -68,6 +65,20 @@ const Login = (props) => {
 const Container = styled.div`
   width: 50vw;
   margin: auto;
+`;
+
+const Img = styled.img`
+  // width: 100px;
+  height: 50px;
+`;
+
+const A = styled.a`
+  width: 100px;
+  height: 50px;
+`;
+
+const Button = styled.button`
+  background-image: url();
 `;
 
 export default Login;

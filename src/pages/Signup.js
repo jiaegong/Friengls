@@ -11,10 +11,13 @@ const Signup = (props) => {
     userName: '',
     pwd: '',
     pwdCheck: '',
-    userType: '',
+    isTutor: '',
     userProfile: '',
     tag: '',
+    language: '',
     contents: '',
+    startTime: '',
+    endTime: '',
   });
 
   //각각 input에 입력한 값을 넣기 위한 함수
