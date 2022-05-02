@@ -35,6 +35,9 @@ const setTimeDB = (data) => {
 
 const getTimeDB = (userName) => {
   return function (dispatch, getState, { history }) {
+    // userName 없으면 그냥 바로 취소 시켜 버림
+    // 이부분은 좀더 생각해보자~!!!
+    if (!userName) return;
     axios({
       method: 'get',
       url: `htttp://test/gettime/${userName}`,

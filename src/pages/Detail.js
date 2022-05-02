@@ -1,22 +1,26 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import CalendarTemplate from '../components/calendar/Calendar';
+import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as calendarActions } from '../redux/modules/calendar';
+
+// 컴포넌트
+import CalendarTemplate from '../components/calendar/Calendar';
 
 const Detail = () => {
   const dispatch = useDispatch();
+  // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
-    // dispatch(calendarActions.getTimeDB());
+    dispatch(calendarActions.getTimeDB());
   }, []);
 
+  // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
   const timeList = useSelector((state) => state.calendar.list);
   console.log({ timeList });
-  //  db에 저장을 해야겟지..?
-  //  state값을 위로 올리수는 없을까??
-  //  새로고침시 data 날라가잖아... 그럼 .... db에 저장을 해야되는거 같은데... 그걸 불러오면...?
+
+  // 초기값으로 리듀서에서 불러오는 값을 넣어둠
   const [availability, setAvailability] = React.useState(timeList);
-  console.log('db랑 연동한 데이터 ', availability);
+  console.log('리듀서랑 연동한 데이터 ', availability);
+
   const Calendar = CalendarTemplate({
     availability,
     setAvailability,
