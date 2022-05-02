@@ -1,7 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import CalendarTemplate from '../components/calendar/Calendar';
 
 const Detail = () => {
+  const [availability, setAvailability] = React.useState([]);
+  console.log({ availability });
+  const Calendar = CalendarTemplate({
+    availability,
+    setAvailability,
+  });
   return (
     <Wrap>
       <div className="innerWrap">
@@ -15,8 +22,8 @@ const Detail = () => {
         </div>
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
-          Booking
           <div className="booking">캘린더</div>
+          <Calendar />
         </div>
         {/* 코멘트 */}
         <div className="commentWrap">
