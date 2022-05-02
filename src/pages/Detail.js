@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import CalendarTemplate from '../components/calendar/Calendar';
+import { actionCreators as calendarActions } from '../redux/modules/calendar';
 
 const Detail = () => {
-  const [availability, setAvailability] = React.useState([]);
-  console.log({ availability });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // dispatch(calendarActions.getTimeDB());
+  }, []);
+
+  const timeList = useSelector((state) => state.calendar.list);
+  console.log({ timeList });
+  //  db에 저장을 해야겟지..?
+  //  state값을 위로 올리수는 없을까??
+  //  새로고침시 data 날라가잖아... 그럼 .... db에 저장을 해야되는거 같은데... 그걸 불러오면...?
+  const [availability, setAvailability] = React.useState(timeList);
+  console.log('db랑 연동한 데이터 ', availability);
   const Calendar = CalendarTemplate({
     availability,
     setAvailability,

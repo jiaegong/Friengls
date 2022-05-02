@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import {
   IconButton,
@@ -12,7 +12,8 @@ import {
 } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import { ArrowLeft, ArrowRight } from '@material-ui/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as calendarActions } from '../../redux/modules/calendar';
 
 const CalendarTemplate = ({
   availability,
@@ -33,10 +34,14 @@ const CalendarTemplate = ({
   // startTime = "0:00",
   // endTime = "24:00",
 }) => {
-  const user_info = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+
+  const user_info = useSelector((state) => state.user.user[0]);
   let userId = user_info.userId;
-  console.log(user_info);
-  console.log(userId);
+  // console.log(user_info);
+  // console.log(userId);
+  // 토큰값을 어디로 저장 되는지.
+  // 토큰값을 불러와서.
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -324,7 +329,7 @@ const CalendarTemplate = ({
   //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
     console.log('1 : --------------------');
-    console.log({ availability });
+    // console.log({ availability });
     const output = [];
     for (let year in availability) {
       for (let month in availability[year]) {
@@ -355,8 +360,10 @@ const CalendarTemplate = ({
         output.push({
           start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
           end: new Date(`${month} ${day} ${year} ${time.time}`),
-          //  유저정보 넣어서 성공한곳
-          userId: userId,
+
+          // 유저정보 넣어서 성공한곳
+          token: userId,
+          // 그럼 디스패치 할대 선생님 id값으로 요청
         });
         activeRangeStart = null;
       }
@@ -463,8 +470,9 @@ const CalendarTemplate = ({
       setMonthNumber(newMonth);
     };
 
+    //  시간버튼이 몇 번째인지.
     const createTimeHandler = (i) => () => {
-      console.log({ i });
+      // console.log({ i });
       const newTimes = [...times];
       newTimes[i].available = !newTimes[i].available;
       if (activeDay) {
@@ -497,6 +505,7 @@ const CalendarTemplate = ({
       setSaving(true);
 
       // useState로 값 저장해주는거!!!!!!!
+      dispatch(calendarActions.setTimeDB(data));
       setAvailability(data);
     };
 
