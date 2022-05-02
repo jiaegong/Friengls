@@ -1,8 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 // import dkdl
 
 const Main = () => {
+  const user = useSelector((state) => state.user);
+  console.log('유저정보 확인', user);
+
   return (
     <Wrap>
       <div className="innerWrap">

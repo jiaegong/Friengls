@@ -20,6 +20,7 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Kakao from '../pages/Kakao';
+import Google from '../pages/Google';
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
       <Route path="/signup" exact component={Signup} />
       <Route path="/login" exact component={Login} />
       <Route path="/auth/kakao" component={Kakao} />
+      <Route path="/oauth2/callback/google" component={Google} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/detail" exact component={Detail} />
       <Route path="/videoChat" exact component={VideoChat} />
