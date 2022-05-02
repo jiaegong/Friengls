@@ -36,10 +36,10 @@ const CalendarTemplate = ({
 }) => {
   const dispatch = useDispatch();
 
-  const user_info = useSelector((state) => state.user.user[0]);
-  let userId = user_info.userId;
+  // const user_info = useSelector((state) => state.user.info);
+  // let userName = user_info.userName;
   // console.log(user_info);
-  // console.log(userId);
+  // console.log(userName);
   // 토큰값을 어디로 저장 되는지.
   // 토큰값을 불러와서.
 
@@ -328,7 +328,7 @@ const CalendarTemplate = ({
 
   //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
-    console.log('1 : --------------------');
+    // console.log('1 : --------------------');
     // console.log({ availability });
     const output = [];
     for (let year in availability) {
@@ -353,6 +353,8 @@ const CalendarTemplate = ({
 
   //!!!!!!!!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
+    // let token = localStorage.getItem('token');
+    // console.log('token', '-------------------------');
     let activeRangeStart = null;
     for (let time of activeDay) {
       if (time.available && !activeRangeStart) activeRangeStart = time.time;
@@ -362,7 +364,7 @@ const CalendarTemplate = ({
           end: new Date(`${month} ${day} ${year} ${time.time}`),
 
           // 유저정보 넣어서 성공한곳
-          token: userId,
+          // token: token,
           // 그럼 디스패치 할대 선생님 id값으로 요청
         });
         activeRangeStart = null;
@@ -505,6 +507,7 @@ const CalendarTemplate = ({
       setSaving(true);
 
       // useState로 값 저장해주는거!!!!!!!
+      // dispatch 할때 userName 같이 보내줘야된다.
       dispatch(calendarActions.setTimeDB(data));
       setAvailability(data);
     };

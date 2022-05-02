@@ -16,12 +16,19 @@ const setTimeDB = (data) => {
   // let token = localStorage.token;
   return function (dispatch, getState, { history }) {
     dispatch(setTime(data));
+    // 토큰값을 여기서 받아서 넘기면 될꺼 같다.
+    // 캘린더에서 값을 같이 안넣어도 될듯.
 
     // axios({
     //   method: 'post',
-    //   // url: '주소',
-    //   header: 'token',
-    //   data
+    //   url: '주소',
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+    //   },
+    //   data:{
+    // start: data.start,
+    // end: data.end
+    // },
     // })
     //   .then((doc) => {
     //     console.log(doc);
@@ -41,7 +48,9 @@ const getTimeDB = (userName) => {
     axios({
       method: 'get',
       url: `htttp://test/gettime/${userName}`,
-      headers: 'token',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     })
       .then((doc) => {
         console.log(doc);
