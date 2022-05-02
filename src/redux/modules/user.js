@@ -10,7 +10,7 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 
 //이니셜스테이트
 const initialState = {
-  user: {
+  info: {
     userEmail: '',
     userName: '',
     pwd: '',
@@ -20,8 +20,9 @@ const initialState = {
     tag: ',,',
     language: '',
     contents: '',
-    startTime: '',
-    endTime: '',
+    startTime: '08:00',
+    endTime: '19:00',
+    //최대 12시간
   },
   isLogin: false, //확인해보기
 };
@@ -106,35 +107,35 @@ const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
     console.log('loginCheckDB시작');
 
-    // axios({
-    //   method: 'get',
-    //   url: 'http://13.124.206.190/getUser',
-    //   headers: {
-    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log('loginCheckDB성공', response.data);
-    //     // 유저양식만들어서 setUser디스패치하기
-    //     const user = {};
-    //     // dispatch(setUser(user));
-    //   })
-    //   .catch((error) => {
-    //     window.alert('로그인체크에 실패하셨습니다.');
-    //     // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-    //     if (error.response) {
-    //       // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
-    //     } else if (error.request) {
-    //       // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
-    //       // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
-    //       // node.js에서는 http.ClientRequest 인스턴스입니다.
-    //       console.log(error.request);
-    //     } else {
-    //       // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
-    //       console.log('Error', error.message);
-    //     }
-    //     console.log(error.config);
-    //   });
+    axios({
+      method: 'get',
+      url: 'http://13.124.206.190/getUser',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((response) => {
+        console.log('loginCheckDB성공', response.data);
+        // 유저양식만들어서 setUser디스패치하기
+        const user = {};
+        // dispatch(setUser(user));
+      })
+      .catch((error) => {
+        window.alert('로그인체크에 실패하셨습니다.');
+        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+        if (error.response) {
+          // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
+        } else if (error.request) {
+          // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
+          // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
+          // node.js에서는 http.ClientRequest 인스턴스입니다.
+          console.log(error.request);
+        } else {
+          // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
   };
 };
 
