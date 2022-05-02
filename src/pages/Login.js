@@ -4,6 +4,7 @@ import { history } from '../redux/configureStore';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../shared/OAuth';
+import { emailForm, pwdForm } from '../shared/common';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -21,6 +22,15 @@ const Login = (props) => {
   //입력된 값을 data로 보내기 위한 함수
   const login = () => {
     //1차로 유효성검사 필요하다.
+    if (!emailForm(form.userEmail)) {
+      window.alert('이메일: abc@abc.abc형식의 이메일');
+      return;
+    }
+    if (!pwdForm(form.pwd)) {
+      window.alert('비밀번호: 8-20자 사이의 영어대소문자, 숫자, 특수문자');
+      return;
+    }
+
     console.log('보낼 데이터', form);
     dispatch(userActions.loginDB(form));
   };
@@ -75,10 +85,6 @@ const Img = styled.img`
 const A = styled.a`
   width: 100px;
   height: 50px;
-`;
-
-const Button = styled.button`
-  background-image: url();
 `;
 
 export default Login;

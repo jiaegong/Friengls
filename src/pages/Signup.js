@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { emailForm, pwdForm } from '../shared/common';
+import { emailForm, pwdForm, userNameForm } from '../shared/common';
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -30,23 +30,29 @@ const Signup = (props) => {
   //이메일 중복체크
   const emailCheck = () => {
     if (!emailForm(form.userEmail)) {
-      window.alert('이메일 형식이 아닙니다.');
+      window.alert('이메일: abc@abc.abc형식의 이메일');
       return;
     }
     console.log('중복확인할 이메일', form.userEmail);
+    dispatch(userActions.emailCheckDB(form.userEmail));
   };
 
   //닉네임 중복체크
   const nameCheck = () => {
+    if (!userNameForm(form.userName)) {
+      window.alert(
+        '닉네임: 영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
+      );
+      return;
+    }
     console.log('중복확인할 닉네임', form.userName);
+    dispatch(userActions.userNameCheckDB(form.userName));
   };
 
   //DetailInfo페이지로 넘어가기 위한 함수
   const toDetailInfo = () => {
-    //1차로 유효성검사 필요하다.
-    //비밀번호
     if (!pwdForm(form.pwd)) {
-      window.alert('비밀번호 규칙: 영어 대소문자, 숫자, 특수문자 포함 8-20자');
+      window.alert('비밀번호: 8-20자 사이의 영어대소문자, 숫자, 특수문자');
       return;
     }
 

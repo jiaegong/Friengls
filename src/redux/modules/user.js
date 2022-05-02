@@ -27,7 +27,46 @@ const initialState = {
   isLogin: false, //확인해보기
 };
 //미들웨어
-// const emailCheckDB =
+const emailCheckDB = (userEmail) => {
+  console.log('emailCheckDB시작', userEmail);
+  return function () {
+    axios({
+      method: 'post',
+      url: 'http://13.124.206.190/signUp/emailCheck',
+      data: {
+        userEmail: userEmail,
+      },
+    })
+      .then((response) => {
+        console.log('emailCheckDB성공', response.data);
+        window.alert('사용 가능한 이메일입니다!');
+      })
+      .catch((error) => {
+        window.alert('사용할 수 없는 이메일입니다!');
+      });
+  };
+};
+
+const userNameCheckDB = (userName) => {
+  console.log('userNameCheckDB시작', userName);
+  return function () {
+    axios({
+      method: 'post',
+      url: 'http://13.124.206.190/signUp/nameCheck',
+      data: {
+        userName: userName,
+      },
+    })
+      .then((response) => {
+        console.log('userNameCheckDB성공', response.data);
+        window.alert('사용 가능한 닉네임입니다!');
+      })
+      .catch((error) => {
+        window.alert('사용할 수 없는 닉네임입니다!');
+      });
+  };
+};
+
 const signupDB = (signupInfo) => {
   return function (dispatch, getState, { history }) {
     console.log('signupDB시작', signupInfo);
@@ -176,6 +215,8 @@ export default handleActions(
 
 //익스포트
 const actionCreators = {
+  emailCheckDB,
+  userNameCheckDB,
   signupDB,
   loginDB,
   loginCheckDB,
