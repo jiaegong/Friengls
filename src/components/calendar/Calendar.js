@@ -34,7 +34,9 @@ const CalendarTemplate = ({
   // endTime = "24:00",
 }) => {
   const user_info = useSelector((state) => state.user.user);
+  let userId = user_info.userId;
   console.log(user_info);
+  console.log(userId);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -319,7 +321,10 @@ const CalendarTemplate = ({
     return output;
   };
 
+  //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
+    console.log('1 : --------------------');
+    console.log({ availability });
     const output = [];
     for (let year in availability) {
       for (let month in availability[year]) {
@@ -329,7 +334,7 @@ const CalendarTemplate = ({
         }
       }
     }
-    // console.log({ output });
+    console.log({ output });
     return output;
   };
 
@@ -341,6 +346,7 @@ const CalendarTemplate = ({
   //   return a;
   // };
 
+  //!!!!!!!!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
     let activeRangeStart = null;
     for (let time of activeDay) {
@@ -349,6 +355,8 @@ const CalendarTemplate = ({
         output.push({
           start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
           end: new Date(`${month} ${day} ${year} ${time.time}`),
+          //  유저정보 넣어서 성공한곳
+          userId: userId,
         });
         activeRangeStart = null;
       }
@@ -429,7 +437,7 @@ const CalendarTemplate = ({
     let week = 0;
     let dayOfMonth = 1;
     // console.log({ times });
-    console.log({ saving });
+    // console.log({ saving });
 
     while (week < 6 && dayOfMonth <= lastDay) {
       days[week][dayOfWeek] = dayOfMonth;
