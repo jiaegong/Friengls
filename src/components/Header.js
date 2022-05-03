@@ -28,10 +28,10 @@ const Header = () => {
         <ul className="navBarWrap">
           <li
             onClick={() => {
-              history.push('/videoChat');
+              history.push('/search');
             }}
           >
-            영상통화
+            튜터찾기
           </li>
           <li>알림 아이콘</li>
           <li
