@@ -6,12 +6,12 @@ import { actionCreators as reviewActions } from '../redux/modules/review';
 const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
-  const reviewList = useSelector((state) => state.review.list);
+  // const reviewList = useSelector((state) => state.review.list);
   // console.log('유저정보 확인', tutorList);
 
-  React.useEffect(() => {
-    dispatch(reviewActions.getReviewDB());
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(reviewActions.getReviewDB());
+  // }, []);
 
   return (
     <Wrap>

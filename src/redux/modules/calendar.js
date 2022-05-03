@@ -47,7 +47,7 @@ const getTimeDB = (userName) => {
     if (!userName) return;
     axios({
       method: 'get',
-      url: `htttp://test/gettime/${userName}`,
+      // url: `htttp://test/gettime/${userName}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },

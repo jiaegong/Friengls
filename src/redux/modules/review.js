@@ -29,7 +29,7 @@ const addReviewDB = (token, tutorId, rate, text) => {
   return function (dispatch) {
     axios({
       method: 'post',
-      url: '서버주소/addReview',
+      // url: '서버주소/addReview',
       data: {
         tutorId,
         rate,
@@ -52,17 +52,17 @@ const addReviewDB = (token, tutorId, rate, text) => {
 
 const getReviewDB = (tutorId = null) => {
   return function (dispatch) {
-    axios({
-      method: 'post',
-      url: '서버주소/getReview',
-      data: { tutorId },
-    })
-      .then((res) => {
-        dispatch(setReview(res.data.tutorId, res.data.review));
-      })
-      .catch((err) => {
-        console.log('리뷰 불러오기에 실패했습니다!', err);
-      });
+    // axios({
+    //   method: 'post',
+    //   // url: '서버주소/getReview',
+    //   data: { tutorId },
+    // })
+    //   .then((res) => {
+    //     dispatch(setReview(res.data.tutorId, res.data.review));
+    //   })
+    //   .catch((err) => {
+    //     console.log('리뷰 불러오기에 실패했습니다!', err);
+    //   });
   };
 };
 
@@ -70,7 +70,7 @@ const editReviewDB = (reviewId, text) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'put',
-      url: '서버주소/editReview',
+      // url: '서버주소/editReview',
       data: {
         reviewId,
         text,
@@ -90,7 +90,7 @@ const deleteReviewDB = (reviewId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'delete',
-      url: `서버주소/deleteReview`,
+      // url: `서버주소/deleteReview`,
       data: { reviewId },
     })
       .then((res) => {

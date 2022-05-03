@@ -4,7 +4,7 @@ import { history } from '../redux/configureStore';
 
 const Mypage = () => {
   const videoChatHandler = (roomName) => {
-    // const id = userId
+    // const id = userId;
     // history.push(`/videochat/${id}`);
   };
 
