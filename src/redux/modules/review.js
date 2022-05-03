@@ -67,14 +67,14 @@ const getReviewDB = (tutorId = null) => {
   };
 };
 
-const editReviewDB = (reviewId, comment) => {
+const editReviewDB = (reviewId, text) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'put',
       url: '서버주소/editReview',
       data: {
         reviewId,
-        comment,
+        text,
       },
     })
       .then((res) => {

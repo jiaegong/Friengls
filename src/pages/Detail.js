@@ -33,9 +33,9 @@ const Detail = (props) => {
   const tutorId = props.userName;
 
   // comment 초기값은 review 내용으로 바꾸기
-  const [review, setReview] = React.useState('');
+  const [text, setText] = React.useState('');
   const onChange = (e) => {
-    setReview(e.target.value);
+    setText(e.target.value);
   };
 
   React.useEffect(() => {
@@ -49,7 +49,7 @@ const Detail = (props) => {
   }
 
   const editReview = () => {
-    dispatch(reviewActions.editReviewDB(reviewId, review));
+    dispatch(reviewActions.editReviewDB(reviewId, text));
   };
 
   const deleteReview = () => {
