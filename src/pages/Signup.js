@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
@@ -78,7 +78,7 @@ const Signup = (props) => {
     } else if (confirmPwd === '') {
       setConfirmPwdCheck('비밀번호를 한 번 더 입력해 주세요.');
     } else {
-      setConfirmPwdCheck('비밀번호와 일치하지 않습니다..');
+      setConfirmPwdCheck('비밀번호와 일치하지 않습니다.');
     }
   };
 
@@ -164,51 +164,49 @@ const Signup = (props) => {
 
   return (
     <Container>
-      <RequiredInfo>
-        <InputBox>
-          <input
-            placeholder="이메일"
-            type="text"
-            name="userEmail"
-            onChange={handleEmail}
-            // onBlur={checkDuplicatedEmail} //성공하면 온블러로 바꾸기
-          />
-          <span>{emailCheck}</span>
-          <button onClick={checkDuplicatedEmail}>중복확인</button>
-        </InputBox>
-        <InputBox>
-          <input
-            placeholder="닉네임"
-            type="text"
-            name="userName"
-            onChange={handleUserName}
-            // onBlur={checkDuplicatedUserName} // 성공하면 온블러로 바꾸기
-          />
-          <span>{userNameCheck}</span>
-          <button onClick={checkDuplicatedUserName}>중복확인</button>
-        </InputBox>
-        <InputBox>
-          <input
-            placeholder="비밀번호"
-            type="text"
-            name="pwd"
-            onChange={handlePwd}
-          />
-          <span>{pwdCheck}</span>
-        </InputBox>
-        <InputBox>
-          <input
-            placeholder="비밀번호확인"
-            type="text"
-            name="pwdCheck"
-            onChange={handleConfirmPwd}
-          />
-          <span>{confirmPwdCheck}</span>
-        </InputBox>
-        <div>
-          <button onClick={signUp}>가입하기</button>
-        </div>
-      </RequiredInfo>
+      <InputBox>
+        <input
+          placeholder="이메일"
+          type="text"
+          name="userEmail"
+          onChange={handleEmail}
+          // onBlur={checkDuplicatedEmail} //성공하면 온블러로 바꾸기
+        />
+        <span>{emailCheck}</span>
+        <button onClick={checkDuplicatedEmail}>중복확인</button>
+      </InputBox>
+      <InputBox>
+        <input
+          placeholder="닉네임"
+          type="text"
+          name="userName"
+          onChange={handleUserName}
+          // onBlur={checkDuplicatedUserName} // 성공하면 온블러로 바꾸기
+        />
+        <span>{userNameCheck}</span>
+        <button onClick={checkDuplicatedUserName}>중복확인</button>
+      </InputBox>
+      <InputBox>
+        <input
+          placeholder="비밀번호"
+          type="text"
+          name="pwd"
+          onChange={handlePwd}
+        />
+        <span>{pwdCheck}</span>
+      </InputBox>
+      <InputBox>
+        <input
+          placeholder="비밀번호확인"
+          type="text"
+          name="pwdCheck"
+          onChange={handleConfirmPwd}
+        />
+        <span>{confirmPwdCheck}</span>
+      </InputBox>
+      <div>
+        <button onClick={signUp}>가입하기</button>
+      </div>
     </Container>
   );
 };
@@ -217,8 +215,6 @@ const Container = styled.div`
   width: 50vw;
   margin: auto;
 `;
-
-const RequiredInfo = styled.div``;
 
 const InputBox = styled.div`
   margin: 30px;
