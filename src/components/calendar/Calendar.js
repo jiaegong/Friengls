@@ -352,6 +352,7 @@ const CalendarTemplate = ({
   // };
 
   //!!!!!!!!!!!
+  // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
     // let token = localStorage.getItem('token');
     // console.log('token', '-------------------------');
@@ -364,7 +365,7 @@ const CalendarTemplate = ({
           end: new Date(`${month} ${day} ${year} ${time.time}`),
 
           // 유저정보 넣어서 성공한곳
-          // token: token,
+          token: localStorage.getItem('token'),
           // 그럼 디스패치 할대 선생님 id값으로 요청
         });
         activeRangeStart = null;
@@ -508,7 +509,7 @@ const CalendarTemplate = ({
 
       // useState로 값 저장해주는거!!!!!!!
       // dispatch 할때 userName 같이 보내줘야된다.
-      dispatch(calendarActions.setTimeDB(data));
+      dispatch(calendarActions.setBookingDB(data));
       setAvailability(data);
     };
 

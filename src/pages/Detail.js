@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as calendarActions } from '../redux/modules/booking';
+import { actionCreators as bookingAction } from '../redux/modules/booking';
 
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
@@ -10,16 +10,22 @@ const Detail = () => {
   const dispatch = useDispatch();
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
-    dispatch(calendarActions.getTimeDB());
+    dispatch(bookingAction.getBookingDB());
   }, []);
 
   // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
-  const timeList = useSelector((state) => state.calendar.list);
-  console.log({ timeList });
+  const timeList = useSelector((state) => state.booking.list);
+  // console.log('검사중 : ', timeList[0].start.toDateString());
+  // console.log('검사중 : ', timeList[0].start.getDate()); //일
+  // console.log(timeList[0].start.getHours()); //시간
+  // console.log(timeList[0].start.toTimeString()); // 08:00:00 GMT+0900
+  // console.log(typeof timeList[0].start.toString()); // Thu May 19 2022 08:00:00 GMT+0900
+  // console.log(timeList[0].start.toDateString()); // Thu May 19 2022
+  // console.log(typeof timeList[0].start);
 
   // 초기값으로 리듀서에서 불러오는 값을 넣어둠
   const [availability, setAvailability] = React.useState(timeList);
-  console.log('리듀서랑 연동한 데이터 ', availability);
+  // console.log('리듀서랑 연동한 데이터 ', availability);
 
   const Calendar = CalendarTemplate({
     availability,

@@ -27,7 +27,7 @@ function App() {
   // 페이지 조회할 때마다 실행, token이 유효한지 여부 체크
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
-      dispatch(userActions.loginCheckDB());
+      // dispatch(userActions.loginCheckDB());
     }
   });
 
