@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as calendarActions } from '../redux/modules/calendar';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { actionCreators as likeActions } from '../redux/modules/like';
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
 
@@ -30,7 +31,7 @@ const Detail = (props) => {
   const reviewList = useSelector((state) => state.review.list);
   const reviewId = reviewList.reviewId;
 
-  const tutorId = props.userName;
+  const tutorName = props.userName;
 
   // comment 초기값은 review 내용으로 바꾸기
   const [rate, setRate] = React.useState();
@@ -40,12 +41,12 @@ const Detail = (props) => {
   };
 
   React.useEffect(() => {
-    if (reviewList[tutorId]) {
-      dispatch(reviewActions.getReviewDB(tutorId));
+    if (reviewList[tutorName]) {
+      dispatch(reviewActions.getReviewDB(tutorName));
     }
   }, []);
 
-  if (!reviewList[tutorId] || !tutorId) {
+  if (!reviewList[tutorName] || !tutorName) {
     return null;
   }
 
@@ -57,8 +58,14 @@ const Detail = (props) => {
     dispatch(reviewActions.deleteReviewDB(reviewId));
   };
 
-  // like 누르기
-  const like = () => {};
+  // like 누르기, 토큰 같이 보내기, likeList랑 tutor유저 리스트 인덱스랑 비교해서 같으면 넣기
+  const like = () => {
+    dispatch(likeActions.likeDB(tutorName));
+  };
+
+  const unLike = () => {
+    dispatch(likeActions.unLikeDB(tutorName));
+  };
 
   return (
     <Wrap>
@@ -66,17 +73,26 @@ const Detail = (props) => {
         {/* 유저 정보 */}
         <div className="userInfoWrap">
           <div className="userInfo">user_info</div>
-          {/* like 버튼 */}
-          <div
+          {/* like 버튼, 나중에 아이콘 찾아서 바꿔 놓기, like 상태 값에 따라서 채워진 하트/빈 하트 */}
+          {/* {isLiked? <div
             onClick={like}
             style={{
               width: '30px',
               height: '30px',
               borderRadius: '30px',
               margin: '5px',
-              backgroundColor: '#ffeb3b' ? '#ddd' : '#ffeb3b',
+              backgroundColor: '#ddd'
             }}
-          />
+          /> : <div
+          onClick={unLike}
+          style={{
+            width: '30px',
+            height: '30px',
+            borderRadius: '30px',
+            margin: '5px',
+            backgroundColor: '#ffeb3b'
+          }}
+        />} */}
           <div className="aboutMe">자기소개</div>
         </div>
         {/* 예약 캘린더 */}
