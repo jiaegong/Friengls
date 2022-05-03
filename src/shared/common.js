@@ -1,12 +1,15 @@
-export const emailForm = (email) => {
-  let reg =
-    /^[0-9a-zA-Z]([-_.0-9a-zA-Z])*@[0-9a-zA-Z]([-_.0-9a-zA-z])*.([a-zA-Z])*/;
-  //이메일 [0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i
-  //비밀번호
-  return reg.test(email);
+//이메일: abc@abc.abc형식의 이메일
+export const emailForm = (userEmail) => {
+  let reg = /^[A-Za-z0-9-_.]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,6}$/;
+  return reg.test(userEmail);
 };
-
+//비밀번호: 8-20자 사이의 영어대소문자, 숫자, 특수문자
 export const pwdForm = (pwd) => {
-  let reg = /^(?=.*[A-Za-z])(?=.*\d)[\w]{8,20}$/;
+  let reg = /^[a-zA-Z0-9!-_]{8,20}$/;
   return reg.test(pwd);
+};
+//닉네임: 영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)
+export const userNameForm = (userName) => {
+  let reg = /^[a-zA-Z0-9-_.]{6,20}|[ㄱ-힣0-9-_.]{3,8}$/;
+  return reg.test(userName);
 };
