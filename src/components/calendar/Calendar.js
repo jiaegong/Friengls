@@ -13,7 +13,7 @@ import {
 import { createTheme } from '@material-ui/core/styles';
 import { ArrowLeft, ArrowRight } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as calendarActions } from '../../redux/modules/calendar';
+import { actionCreators as calendarActions } from '../../redux/modules/booking';
 
 const CalendarTemplate = ({
   availability,

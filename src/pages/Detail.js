@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as calendarActions } from '../redux/modules/calendar';
+import { actionCreators as calendarActions } from '../redux/modules/booking';
 
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';

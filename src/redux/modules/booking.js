@@ -21,7 +21,7 @@ const setTimeDB = (data) => {
 
     // axios({
     //   method: 'post',
-    //   url: '주소',
+    //   url: `http://addBooking/${userName}`,
     //   headers: {
     //     Authorization: `Bearer ${localStorage.getItem('token')}`,
     //   },
@@ -47,9 +47,9 @@ const getTimeDB = (userName) => {
     if (!userName) return;
     axios({
       method: 'get',
-      url: `htttp://test/gettime/${userName}`,
+      url: `http://getBooking/${userName}`, // 학생 또는 선생님
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`, // 학생일때는 토큰으로 예약 정보 불러오기
       },
     })
       .then((doc) => {
