@@ -33,6 +33,7 @@ const Detail = (props) => {
   const tutorId = props.userName;
 
   // comment 초기값은 review 내용으로 바꾸기
+  const [rate, setRate] = React.useState();
   const [text, setText] = React.useState('');
   const onChange = (e) => {
     setText(e.target.value);
@@ -56,16 +57,27 @@ const Detail = (props) => {
     dispatch(reviewActions.deleteReviewDB(reviewId));
   };
 
+  // like 누르기
+  const like = () => {};
+
   return (
     <Wrap>
       <div className="innerWrap">
         {/* 유저 정보 */}
         <div className="userInfoWrap">
           <div className="userInfo">user_info</div>
-
+          {/* like 버튼 */}
+          <div
+            onClick={like}
+            style={{
+              width: '30px',
+              height: '30px',
+              borderRadius: '30px',
+              margin: '5px',
+              backgroundColor: '#ffeb3b' ? '#ddd' : '#ffeb3b',
+            }}
+          />
           <div className="aboutMe">자기소개</div>
-
-          <div className="resume">이력</div>
         </div>
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
@@ -81,7 +93,23 @@ const Detail = (props) => {
           <p>작성 시간</p>
           <button onClick={editReview}>수정</button>
           <button onClick={deleteReview}>삭제</button>
-          <input type="text" onChange={onChange} />
+          {Array.from({ length: 5 }, (c, idx) => {
+            return (
+              <div
+                onClick={() => {
+                  setRate(idx + 1);
+                }}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '30px',
+                  margin: '5px',
+                  backgroundColor: rate < idx + 1 ? '#ddd' : '#ffeb3b',
+                }}
+              />
+            );
+          })}
+          <textarea onChange={onChange} />
         </div>
       </div>
     </Wrap>

@@ -25,14 +25,15 @@ const initialState = {
   list: {},
 };
 
-const addReviewDB = (token, tutorId, comment) => {
+const addReviewDB = (token, tutorId, rate, text) => {
   return function (dispatch) {
     axios({
       method: 'post',
       url: '서버주소/addReview',
       data: {
-        tutorId: tutorId,
-        comment: comment,
+        tutorId,
+        rate,
+        text,
       },
       headers: {
         Authorization: `Bearer${token}`,
@@ -54,9 +55,7 @@ const getReviewDB = (tutorId = null) => {
     axios({
       method: 'post',
       url: '서버주소/getReview',
-      data: {
-        tutorId: tutorId,
-      },
+      data: { tutorId },
     })
       .then((res) => {
         dispatch(setReview(res.data.tutorId, res.data.review));
@@ -92,9 +91,7 @@ const deleteReviewDB = (reviewId) => {
     axios({
       method: 'delete',
       url: `서버주소/deleteReview`,
-      data: {
-        reviewId,
-      },
+      data: { reviewId },
     })
       .then((res) => {
         dispatch(deleteReview(res));

@@ -1,10 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { actionCreators as reviewActions } from '../redux/modules/review';
 
 const Main = () => {
+  const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
+  // const reviewList = useSelector((state) => state.review.list);
   // console.log('유저정보 확인', tutorList);
+
+  React.useEffect(() => {
+    dispatch(reviewActions.getReviewDB());
+  }, []);
 
   return (
     <Wrap>
@@ -40,9 +47,7 @@ const Main = () => {
           </div>
 
           <div className="reviewWrap">
-            <div className="reviewInner">
-              <h1>review</h1>
-            </div>
+            <div className="reviewInner">{/* 리뷰 맵 돌리기 */}</div>
           </div>
         </div>
       </div>

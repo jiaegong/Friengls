@@ -3,26 +3,42 @@ import { useDispatch } from 'react-redux';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 
 const ReviewModal = () => {
-  const [comment, setComment] = React.useState();
+  const [rate, setRate] = React.useState();
+  const [text, setText] = React.useState();
   const onChange = (e) => {
-    setComment(e.target.value);
+    setText(e.target.value);
   };
 
   const dispatch = useDispatch();
 
-  // 넘겨줘야 할 것: 작성자 아이디(쿠키), 선생님 아이디, 내용
+  // 넘겨줘야 할 것: 작성자 아이디(쿠키), 선생님 아이디, 평점, 내용
   const addReview = () => {
-    dispatch(reviewActions.addReviewDB(comment));
-    setComment('');
+    dispatch(reviewActions.addReviewDB(rate, text));
+    setText(''); // 작성하고 나서 칸 비워주기
   };
   return (
     <div>
       <p>리뷰 남기기</p>
-      <input
-        type="text"
+      {Array.from({ length: 5 }, (c, idx) => {
+        return (
+          <div
+            onClick={() => {
+              setRate(idx + 1);
+            }}
+            style={{
+              width: '30px',
+              height: '30px',
+              borderRadius: '30px',
+              margin: '5px',
+              backgroundColor: rate < idx + 1 ? '#ddd' : '#ffeb3b',
+            }}
+          />
+        );
+      })}
+      <textarea
         placeholder="튜터링은 어땠나요?"
         onChange={onChange}
-        value={comment}
+        value={text}
       />
       <div>
         <button onClick={addReview}>등록하기</button>

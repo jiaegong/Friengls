@@ -8,6 +8,22 @@ import axios from 'axios';
 const Signup = (props) => {
   const dispatch = useDispatch();
 
+  //유저정보를 저장할 form
+  const [form, setForm] = useState({
+    userEmail: '',
+    userName: '',
+    pwd: '',
+    pwdCheck: '',
+    isTutor: '',
+    userProfile: '',
+    comment: '',
+    tag: '',
+    language: '',
+    contents: '',
+    startTime: '',
+    endTime: '',
+  });
+
   // userEmail 유효성 검사, input값 가져오기
   const [userEmail, setUserEmail] = useState('');
   const [emailCheck, setEmailCheck] = useState(
