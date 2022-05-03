@@ -57,6 +57,10 @@ const VideoChat = (props) => {
       });
   }, []);
 
+  const leaveCall = () => {
+    connectionRef.destroy();
+  };
+
   return (
     <div>
       <video playsInline muted ref={callerVideo} autoPlay />
