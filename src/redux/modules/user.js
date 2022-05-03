@@ -27,6 +27,8 @@ const initialState = {
   isLogin: false, //확인해보기
 };
 //미들웨어
+
+//이메일 중복확인
 const emailCheckDB = (userEmail) => {
   console.log('emailCheckDB시작', userEmail);
   return function () {
@@ -42,11 +44,13 @@ const emailCheckDB = (userEmail) => {
         window.alert('사용 가능한 이메일입니다!');
       })
       .catch((error) => {
+        console.log(error);
         window.alert('사용할 수 없는 이메일입니다!');
       });
   };
 };
 
+//닉네임 중복확인
 const userNameCheckDB = (userName) => {
   console.log('userNameCheckDB시작', userName);
   return function () {
@@ -181,22 +185,19 @@ const loginCheckDB = () => {
 const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
     console.log(code);
-    //   //악시오스 연결
-    //   axios({
-    //     method: "GET",
-    //     url: `http://서버주소?code=${code}`,
-    // })
-    //     .then((res) => {
-
-    //         localStorage.setItem("token", res.data.token);
-    //         //서버에서 유저 데이터도 같이 받아올 수 있을까?
-    //             //상세정보 작성페이지로 연결
-    //     })
-    //     .catch((err) => {
-    //         window.alert("로그인에 실패했습니다!");
-    //         history.replace("/login");
-    //     });
-    //
+    axios({
+      method: 'GET',
+      url: `http://13.124.206.190?code=${code}`,
+    })
+      .then((response) => {
+        localStorage.setItem('token', response.data.token);
+        //서버에서 유저 데이터도 같이 받아올 수 있을까?
+        //상세정보 작성페이지로 연결
+      })
+      .catch((err) => {
+        window.alert('로그인에 실패했습니다!');
+        history.replace('/login');
+      });
   };
 };
 
