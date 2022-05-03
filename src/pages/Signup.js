@@ -14,6 +14,7 @@ const Signup = (props) => {
     pwdCheck: '',
     isTutor: '',
     userProfile: '',
+    comment: '',
     tag: '',
     language: '',
     contents: '',

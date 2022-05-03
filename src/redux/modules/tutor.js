@@ -12,6 +12,7 @@ const initialState = {
       userName: 'aaa',
       userProfile: '',
       tag: '',
+      comment: '',
       contents: '',
       isTutor: true,
     },

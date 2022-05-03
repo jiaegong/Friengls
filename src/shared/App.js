@@ -20,6 +20,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Kakao from '../pages/Kakao';
 import Google from '../pages/Google';
+import ReviewModal from '../components/ReviewModal';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function App() {
       <Route path="/detail" exact component={Detail} />
       <Route path="/videochat/:roomName" exact component={VideoChat} />
       <Route path="/search" exact component={Search} />
+      <Route path="/reviewmodal" exact component={ReviewModal} />
       <Footer />
     </ConnectedRouter>
   );
