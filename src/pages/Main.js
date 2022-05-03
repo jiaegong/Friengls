@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-// import dkdl
 
 const Main = () => {
-  const user = useSelector((state) => state.user);
-  console.log('유저정보 확인', user);
+  const tutorList = useSelector((state) => state.tutor.list);
+  // console.log('유저정보 확인', tutorList);
 
   return (
     <Wrap>
@@ -22,40 +21,27 @@ const Main = () => {
           </div>
 
           <div className="cardList">
-            <div className="card">
-              <div className="user_img">img</div>
-              <div className="user_info">
-                <p className="">user_name</p>
-                <p className="">use_etc</p>
-              </div>
-            </div>
-            <div className="card">
-              <div className="user_img">img</div>
-              <div className="user_info">
-                <p className="">user_name</p>
-                <p className="">use_etc</p>
-              </div>
-            </div>
-            <div className="card">
-              <div className="user_img">img</div>
-              <div className="user_info">
-                <p className="">user_name</p>
-                <p className="">use_etc</p>
-              </div>
-            </div>
-            <div className="card">
-              <div className="user_img">img</div>
-              <div className="user_info">
-                <p className="">user_name</p>
-                <p className="">use_etc</p>
-              </div>
-            </div>
-            <div className="card">
-              <div className="user_img">img</div>
-              <div className="user_info">
-                <p className="">user_name</p>
-                <p className="">use_etc</p>
-              </div>
+            {tutorList.map((item, idx) => {
+              return (
+                <div className="card" key={`tutor${idx}`}>
+                  <img
+                    className="user_img"
+                    src={item.userProfile}
+                    alt="#"
+                  ></img>
+                  <div className="user_info">
+                    <p className="userName">{item.userName}</p>
+                    <p className="userContents">{item.contents}</p>
+                    <p className="userTag">{item.tag}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="reviewWrap">
+            <div className="reviewInner">
+              <h1>review</h1>
             </div>
           </div>
         </div>
@@ -63,8 +49,6 @@ const Main = () => {
     </Wrap>
   );
 };
-
-export default Main;
 
 const Wrap = styled.div`
   /* 공통 */
@@ -76,7 +60,7 @@ const Wrap = styled.div`
   .innerWrap {
     width: 90%;
     max-width: 1400px;
-    height: 910px;
+    min-height: 910px;
     margin: auto;
 
     background: white;
@@ -133,6 +117,23 @@ const Wrap = styled.div`
           }
         }
       }
+
+      .reviewWrap {
+        width: 100%;
+        min-height: 200px;
+        margin-top: 60px;
+        background: #ddd;
+
+        .reviewInner {
+          width: 95%;
+          padding: 20px 30px;
+          margin: auto;
+
+          background-color: #fff;
+        }
+      }
     }
   }
 `;
+
+export default Main;

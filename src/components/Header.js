@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 // 패키지
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(tutorActions.getListDB());
+  }, []);
+
   return (
     <Wrap>
       <div className="innerWrap">
@@ -21,10 +28,10 @@ const Header = () => {
         <ul className="navBarWrap">
           <li
             onClick={() => {
-              history.push('/videoChat');
+              history.push('/search');
             }}
           >
-            영상통화
+            튜터찾기
           </li>
           <li>알림 아이콘</li>
           <li

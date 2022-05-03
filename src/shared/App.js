@@ -15,7 +15,6 @@ import Signup from '../pages/Signup';
 import Mypage from '../pages/Mypage';
 import Detail from '../pages/Detail';
 import VideoChat from '../pages/VideoChat';
-import Booking from '../pages/Booking';
 import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -41,8 +40,7 @@ function App() {
       <Route path="/oauth2/callback/google" component={Google} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/detail" exact component={Detail} />
-      <Route path="/videoChat" exact component={VideoChat} />
-      <Route path="/booking" exact component={Booking} />
+      <Route path="/videochat/:roomName" exact component={VideoChat} />
       <Route path="/search" exact component={Search} />
       <Footer />
     </ConnectedRouter>

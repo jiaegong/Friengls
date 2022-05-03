@@ -11,19 +11,20 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 //이니셜스테이트
 const initialState = {
   info: {
-    userEmail: '',
-    userName: '',
+    userEmail: 'test00',
+    userName: 'dingo',
     pwd: '',
     pwdCheck: '',
     isTutor: false,
     userProfile: '',
     tag: ',,',
-    language: '',
+    language: '영어',
     contents: '',
     startTime: '08:00',
     endTime: '19:00',
     //최대 12시간
   },
+
   isLogin: false, //확인해보기
 };
 //미들웨어
