@@ -7,7 +7,6 @@ import { history } from '../redux/configureStore';
 const Mypage = () => {
   const dispatch = useDispatch();
   const bookingList = useSelector((state) => state.booking.list);
-  // console.log(bookingList);
 
   useEffect(() => {
     dispatch(bookingAction.getBookingDB());
@@ -30,13 +29,17 @@ const Mypage = () => {
           <p className="bookingTitle">예약 리스트</p>
           <ul className="bookingList">
             {bookingList.map((item, idx) => {
-              // console.log(item);
+              let start = item.start;
+              let end = item.end;
+              let [week, month, day, year, sTime] = start.split(' ');
+              let startTime = sTime.substr(0, 5);
+              let endTime = end.substr(-17, 5);
               return (
                 <li className="booking" key={`booking${idx}`}>
                   <div className="bookingInfo">
                     <div className="userName">{item.userName}</div>
                     <div className="userBooking">
-                      Tue May 24 2022 &emsp; 10:00 ~ 11:00
+                      {week} {month} {day} {year}  {startTime} ~ {endTime}
                     </div>
                   </div>
                   <button
@@ -165,7 +168,7 @@ const Wrap = styled.div`
               text-align: left;
             }
 
-            /* background: #eee; */
+            background: #eee; 
           }
 
           .videoBtn {
