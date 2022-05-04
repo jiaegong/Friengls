@@ -39,37 +39,17 @@ const Mypage = () => {
                   <div className="bookingInfo">
                     <div className="userName">{item.userName}</div>
                     <div className="userBooking">
-                      {week} {month} {day} {year}  {startTime} ~ {endTime}
+                      {week} {month} {day} {year} {startTime} ~ {endTime}
                     </div>
                   </div>
-                  <button
-                    className="videoBtn"
-                    onClick={() => {
-                      alert('준비중');
-                    }}
-                  >
-                    화상채팅
+                  {/* <List> */}
+                  <button className="videoBtn" onClick={videoChatHandler}>
+                    채팅하기
                   </button>
+                  {/* </List> */}
                 </li>
               );
             })}
-            {/* <li className="booking">
-              <div className="bookingInfo">
-                <div className="userName">dingo</div>
-                
-                <div className="userBooking">
-                  Tue May 24 2022 &emsp; 10:00 ~ 11:00
-                </div>
-              </div>
-              <button
-                className="videoBtn"
-                onClick={() => {
-                  alert('준비중');
-                }}
-              >
-                화상채팅
-              </button>
-            </li> */}
           </ul>
         </div>
       </div>
