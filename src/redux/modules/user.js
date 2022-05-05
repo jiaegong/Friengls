@@ -4,16 +4,9 @@ import axios from 'axios';
 
 //액션
 const SET_USER = 'SET_USER';
-const SET_LIKE = 'SET_LIKE';
-const UPDATE_LIKE = 'UPDATE_LIKE';
 
 //액션생성
 const setUser = createAction(SET_USER, (user) => ({ user }));
-const setLike = createAction(SET_LIKE, (likeList) => ({ likeList }));
-const updateLike = createAction(UPDATE_LIKE, (tutorName, isLike) => ({
-  tutorName,
-  isLike,
-}));
 
 //이니셜스테이트
 const initialState = {
@@ -31,9 +24,9 @@ const initialState = {
     endTime: '19:00',
     //최대 12시간
   },
-  likeList: [],
   isLogin: false, //확인해보기
 };
+
 //미들웨어
 
 //이메일 중복확인
@@ -209,44 +202,6 @@ const kakaoLogin = (code) => {
   };
 };
 
-const likeDB = (token, tutorId) => {
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: 'put',
-      url: '서버주소/like',
-      data: { tutorId },
-      headers: {
-        Authorization: `Bearer${token}`,
-      },
-    })
-      .then((res) => {
-        dispatch(updateLike(tutorId, true));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
-const unlikeDB = (token, tutorId) => {
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: 'put',
-      url: '서버주소/unlike',
-      data: { tutorId },
-      headers: {
-        Authorization: `Bearer${token}`,
-      },
-    })
-      .then((res) => {
-        dispatch(updateLike(tutorId, false));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
 //리듀서
 export default handleActions(
   {
@@ -255,21 +210,6 @@ export default handleActions(
         console.log('setuser리듀서시작', action.payload.user);
         // draft.user = action.payload.user;
         // draft.isLogin = true;
-      }),
-    // like한 목록 가져오기
-    [SET_LIKE]: (state, action) =>
-      produce(state, (draft) => {
-        draft.likeList = action.payload.list;
-      }),
-    [UPDATE_LIKE]: (state, action) =>
-      produce(state, (draft) => {
-        if (action.payload.isLike) {
-          draft.likeList.unshift(action.payload.tutorId);
-        } else {
-          draft.likeList = draft.likeList.filter(
-            (l) => l !== action.payload.tutorId,
-          );
-        }
       }),
   },
   initialState,
@@ -284,9 +224,6 @@ const actionCreators = {
   loginCheckDB,
   setUser,
   kakaoLogin,
-  setLike,
-  likeDB,
-  unlikeDB,
 };
 
 export { actionCreators };
