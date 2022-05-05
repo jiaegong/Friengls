@@ -18,11 +18,11 @@ const updateLike = createAction(UPDATE_LIKE, (tutorName, isLike) => ({
 //이니셜스테이트
 const initialState = {
   info: {
-    userEmail: 'test00',
-    userName: 'dingo',
-    pwd: '',
-    pwdCheck: '',
-    isTutor: false,
+    userEmail: 'asd@asd,com',
+    userName: 'asdaf',
+    pwd: 'asdaasd',
+    pwdCheck: 'asdaasd',
+    isTutor: true,
     userProfile: '',
     tag: ',,',
     language1: '',
@@ -30,8 +30,8 @@ const initialState = {
     language3: '',
     commnt: '',
     contents: '',
-    startTime: '08:00',
-    endTime: '19:00',
+    startTime: '',
+    endTime: '',
     //최대 12시간
   },
   likeList: [],

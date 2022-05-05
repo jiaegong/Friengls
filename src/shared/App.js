@@ -24,13 +24,13 @@ import Footer from '../components/Footer';
 import ReviewModal from '../components/ReviewModal';
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // 페이지 조회할 때마다 실행, token이 유효한지 여부 체크
-  React.useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(userActions.loginCheckDB());
-    }
-  });
+  // React.useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     dispatch(userActions.loginCheckDB());
+  //   }
+  // }, []);
 
   return (
     <ConnectedRouter history={history}>
@@ -43,7 +43,7 @@ function App() {
       <Route path="/signup/detail" component={DetailInfo} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/detail" exact component={Detail} />
-      <Route path="/videochat/:roomName" exact component={VideoChat} />
+      {/* <Route path="/videochat/:roomName" exact component={VideoChat} /> */}
       <Route path="/search" exact component={Search} />
       <Route path="/reviewmodal" exact component={ReviewModal} />
       <Footer />

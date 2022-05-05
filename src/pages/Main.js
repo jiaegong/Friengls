@@ -10,7 +10,7 @@ const Main = () => {
   // console.log('유저정보 확인', tutorList);
 
   React.useEffect(() => {
-    dispatch(reviewActions.getReviewDB());
+    // dispatch(reviewActions.getReviewDB());
   }, []);
 
   return (

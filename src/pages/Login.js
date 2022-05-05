@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../shared/OAuth';
 import { emailForm, pwdForm } from '../shared/common';
+import { GoogleLogin2, KakaoLogin1 } from '../image/';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -63,10 +64,10 @@ const Login = (props) => {
         <button onClick={() => history.push('/signup')}>회원가입</button>
       </div>
       <A href={KAKAO_AUTH_URL}>
-        <Img src="kakaoLoginImg.png" alt="카카오 로그인 버튼" />
+        <Img src={KakaoLogin1} alt="카카오 로그인 버튼" />
       </A>
       <A href={GOOGLE_AUTH_URL}>
-        <Img src="googleLogin3.png" alt="구글 로그인 버튼" />
+        <Img src={GoogleLogin2} alt="구글 로그인 버튼" />
       </A>
     </Container>
   );

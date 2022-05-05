@@ -98,6 +98,8 @@ const Signup = (props) => {
     }
   };
 
+  //isTutor
+
   //이메일 중복체크
   const checkDuplicatedEmail = () => {
     if (!emailForm(userEmail)) {

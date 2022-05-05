@@ -27,8 +27,8 @@ const Detail = (props) => {
   });
 
   // 리뷰 불러오기, 수정, 삭제 부분
-  const reviewList = useSelector((state) => state.review.list);
-  const reviewId = reviewList.reviewId;
+  // const reviewList = useSelector((state) => state.review.list);
+  // const reviewId = reviewList.reviewId;
 
   const tutorId = props.userName;
 
@@ -39,23 +39,23 @@ const Detail = (props) => {
     setText(e.target.value);
   };
 
-  React.useEffect(() => {
-    if (reviewList[tutorId]) {
-      dispatch(reviewActions.getReviewDB(tutorId));
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (reviewList[tutorId]) {
+  //     dispatch(reviewActions.getReviewDB(tutorId));
+  //   }
+  // }, []);
 
-  if (!reviewList[tutorId] || !tutorId) {
-    return null;
-  }
+  // if (!reviewList[tutorId] || !tutorId) {
+  //   return null;
+  // }
 
-  const editReview = () => {
-    dispatch(reviewActions.editReviewDB(reviewId, text));
-  };
+  // const editReview = () => {
+  //   dispatch(reviewActions.editReviewDB(reviewId, text));
+  // };
 
-  const deleteReview = () => {
-    dispatch(reviewActions.deleteReviewDB(reviewId));
-  };
+  // const deleteReview = () => {
+  //   dispatch(reviewActions.deleteReviewDB(reviewId));
+  // };
 
   // like 누르기
   const like = () => {};
@@ -91,9 +91,9 @@ const Detail = (props) => {
           {/* <image src="유저 프로필 이미지" /> */}
           <p>유저 이름</p>
           <p>작성 시간</p>
-          <button onClick={editReview}>수정</button>
-          <button onClick={deleteReview}>삭제</button>
-          {Array.from({ length: 5 }, (c, idx) => {
+          {/* <button onClick={editReview}>수정</button>
+          <button onClick={deleteReview}>삭제</button> */}
+          {/* {Array.from({ length: 5 }, (c, idx) => {
             return (
               <div
                 onClick={() => {
@@ -108,7 +108,7 @@ const Detail = (props) => {
                 }}
               />
             );
-          })}
+          })} */}
           <textarea onChange={onChange} />
         </div>
       </div>
