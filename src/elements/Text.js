@@ -2,19 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Text = (props) => {
-  const { styles, children, className, _onClick } = props;
+  const { styles, children, className, _onClick, defaultStyles } = props;
 
   return (
-    <TextStyled style={{ ...styles }} onClick={_onClick} className={className}>
+    <TextStyled
+      style={{ ...styles }}
+      onClick={_onClick}
+      className={className}
+      {...defaultStyles}
+    >
       {children}
     </TextStyled>
   );
 };
 
 Text.defaultProps = {
-  fontSize: '14px',
-  fontWeight: '400',
-  color: '#000',
+  defaultStyles: {
+    fontSize: '14px',
+    fontWeight: '400',
+    color: '#000',
+  },
 };
 
 const TextStyled = styled.span`

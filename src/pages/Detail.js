@@ -27,45 +27,45 @@ const Detail = (props) => {
     setAvailability,
   });
 
-  // 리뷰 불러오기, 수정, 삭제 부분
-  const reviewList = useSelector((state) => state.review.list);
-  const reviewId = reviewList.reviewId;
+  // // 리뷰 불러오기, 수정, 삭제 부분
+  // const reviewList = useSelector((state) => state.review.list);
+  // const reviewId = reviewList.reviewId;
 
-  const tutorName = props.userName;
+  // const tutorName = props.userName;
 
-  // comment 초기값은 review 내용으로 바꾸기
-  const [rate, setRate] = React.useState();
-  const [text, setText] = React.useState('');
-  const onChange = (e) => {
-    setText(e.target.value);
-  };
+  // // comment 초기값은 review 내용으로 바꾸기
+  // const [rate, setRate] = React.useState();
+  // const [text, setText] = React.useState('');
+  // const onChange = (e) => {
+  //   setText(e.target.value);
+  // };
 
-  React.useEffect(() => {
-    if (reviewList[tutorName]) {
-      dispatch(reviewActions.getReviewDB(tutorName));
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (reviewList[tutorName]) {
+  //     dispatch(reviewActions.getReviewDB(tutorName));
+  //   }
+  // }, []);
 
-  if (!reviewList[tutorName] || !tutorName) {
-    return null;
-  }
+  // if (!reviewList[tutorName] || !tutorName) {
+  //   return null;
+  // }
 
-  const editReview = () => {
-    dispatch(reviewActions.editReviewDB(reviewId, text));
-  };
+  // const editReview = () => {
+  //   dispatch(reviewActions.editReviewDB(reviewId, text));
+  // };
 
-  const deleteReview = () => {
-    dispatch(reviewActions.deleteReviewDB(reviewId));
-  };
+  // const deleteReview = () => {
+  //   dispatch(reviewActions.deleteReviewDB(reviewId));
+  // };
 
-  // like 누르기, 토큰 같이 보내기, likeList랑 tutor유저 리스트 인덱스랑 비교해서 같으면 넣기
-  const like = () => {
-    dispatch(likeActions.likeDB(tutorName));
-  };
+  // // like 누르기, 토큰 같이 보내기, likeList랑 tutor유저 리스트 인덱스랑 비교해서 같으면 넣기
+  // const like = () => {
+  //   dispatch(likeActions.likeDB(tutorName));
+  // };
 
-  const unLike = () => {
-    dispatch(likeActions.unLikeDB(tutorName));
-  };
+  // const unLike = () => {
+  //   dispatch(likeActions.unLikeDB(tutorName));
+  // };
 
   return (
     <Wrap>
@@ -107,7 +107,7 @@ const Detail = (props) => {
           {/* <image src="유저 프로필 이미지" /> */}
           <p>유저 이름</p>
           <p>작성 시간</p>
-          <button onClick={editReview}>수정</button>
+          {/* <button onClick={editReview}>수정</button>
           <button onClick={deleteReview}>삭제</button>
           {Array.from({ length: 5 }, (c, idx) => {
             return (
@@ -125,7 +125,7 @@ const Detail = (props) => {
               />
             );
           })}
-          <textarea onChange={onChange} />
+          <textarea onChange={onChange} /> */}
         </div>
       </div>
     </Wrap>
