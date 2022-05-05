@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as calendarActions } from '../redux/modules/calendar';
+import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 import { actionCreators as likeActions } from '../redux/modules/like';
 // 컴포넌트
@@ -11,27 +11,27 @@ const Detail = (props) => {
   const dispatch = useDispatch();
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
-    dispatch(calendarActions.getTimeDB());
+    dispatch(bookingAction.getBookingDB());
   }, []);
 
   // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
-  const timeList = useSelector((state) => state.calendar.list);
-  console.log({ timeList });
+  const timeList = useSelector((state) => state.booking.list);
+  // console.log('검사중 : ', timeList[0].start.toDateString());
+  // console.log('검사중 : ', timeList[0].start.getDate()); //일
+  // console.log(timeList[0].start.getHours()); //시간
+  // console.log(timeList[0].start.toTimeString()); // 08:00:00 GMT+0900
+  // console.log(typeof timeList[0].start.toString()); // Thu May 19 2022 08:00:00 GMT+0900
+  // console.log(timeList[0].start.toDateString()); // Thu May 19 2022
+  // console.log(typeof timeList[0].start);
 
   // 초기값으로 리듀서에서 불러오는 값을 넣어둠
   const [availability, setAvailability] = React.useState(timeList);
-  console.log('리듀서랑 연동한 데이터 ', availability);
+  // console.log('리듀서랑 연동한 데이터 ', availability);
 
   const Calendar = CalendarTemplate({
     availability,
     setAvailability,
   });
-
-  // // 리뷰 불러오기, 수정, 삭제 부분
-  // const reviewList = useSelector((state) => state.review.list);
-  // const reviewId = reviewList.reviewId;
-
-  // const tutorName = props.userName;
 
   // // comment 초기값은 review 내용으로 바꾸기
   // const [rate, setRate] = React.useState();
@@ -41,12 +41,12 @@ const Detail = (props) => {
   // };
 
   // React.useEffect(() => {
-  //   if (reviewList[tutorName]) {
-  //     dispatch(reviewActions.getReviewDB(tutorName));
+  //   if (reviewList[tutorId]) {
+  //     dispatch(reviewActions.getReviewDB(tutorId));
   //   }
   // }, []);
 
-  // if (!reviewList[tutorName] || !tutorName) {
+  // if (!reviewList[tutorId] || !tutorId) {
   //   return null;
   // }
 
@@ -108,8 +108,8 @@ const Detail = (props) => {
           <p>유저 이름</p>
           <p>작성 시간</p>
           {/* <button onClick={editReview}>수정</button>
-          <button onClick={deleteReview}>삭제</button>
-          {Array.from({ length: 5 }, (c, idx) => {
+          <button onClick={deleteReview}>삭제</button> */}
+          {/* {Array.from({ length: 5 }, (c, idx) => {
             return (
               <div
                 onClick={() => {
@@ -124,8 +124,8 @@ const Detail = (props) => {
                 }}
               />
             );
-          })}
-          <textarea onChange={onChange} /> */}
+          })} */}
+          {/* <textarea onChange={onChange} /> */}
         </div>
       </div>
     </Wrap>

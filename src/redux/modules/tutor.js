@@ -26,7 +26,7 @@ const getListDB = () => {
       url: 'https://6251cd887f7fa1b1dddf398b.mockapi.io/user',
     })
       .then((doc) => {
-        console.log(doc);
+        // console.log(doc);
         dispatch(getList(doc));
       })
       .catch((err) => {
@@ -39,7 +39,7 @@ export default handleActions(
   {
     [GET_LIST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.list.data);
+        // console.log(action.payload.list.data);
         draft.list = action.payload.list.data;
       }),
   },
