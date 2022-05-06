@@ -3,12 +3,14 @@ import { produce } from 'immer';
 import axios from 'axios';
 
 //액션
-const SET_USER = 'SET_USER';
+const SET_USER = 'SET_USER'; //유저정보 불러오기
+const EDIT_USER = 'EDIT_USER'; //유저정보 수정
 const SET_LIKE = 'SET_LIKE';
 const UPDATE_LIKE = 'UPDATE_LIKE';
 
 //액션생성
-const setUser = createAction(SET_USER, (user) => ({ user }));
+const setUser = createAction(SET_USER, (userInfo) => ({ userInfo }));
+const editUser = createAction(EDIT_USER, (userInfo) => ({ userInfo }));
 const setLike = createAction(SET_LIKE, (likeList) => ({ likeList }));
 const updateLike = createAction(UPDATE_LIKE, (tutorName, isLike) => ({
   tutorName,
@@ -170,9 +172,7 @@ const loginCheckDB = () => {
     })
       .then((response) => {
         console.log('loginCheckDB성공', response.data);
-        // 유저양식만들어서 setUser디스패치하기
-        const user = {};
-        // dispatch(setUser(user));
+        // dispatch(setUser(response.data));
       })
       .catch((error) => {
         window.alert('로그인체크에 실패하셨습니다.');
@@ -209,6 +209,45 @@ const kakaoLogin = (code) => {
         window.alert('로그인에 실패했습니다!');
         history.replace('/login');
       });
+  };
+};
+
+const editUserDB = (userInfo) => {
+  return function (dispatch, getState, { history }) {
+    console.log('editUserDB시작', userInfo);
+
+    // axios({
+    //   method: 'put',
+    //   url: 'http://13.124.206.190/editUserInfo',
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+    //   },
+    //   data: userInfo,
+    // })
+    //   .then((response) => {
+    //     console.log('editUserDB성공', response);
+    //     const userInfo = {
+    //     };
+    //     console.log('editUserDB 후 로그인정보', userInfo);
+    //     dispatch(editUser(userInfo))
+    //     // 상제정보페이지에서는 메인으로 전환, 마이페이지에서는 새로고침
+    //   })
+    //   .catch((error) => {
+    //     window.alert('정보 저장에 실패하셨습니다.');
+    //     // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+    //     if (error.response) {
+    //       // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
+    //     } else if (error.request) {
+    //       // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
+    //       // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
+    //       // node.js에서는 http.ClientRequest 인스턴스입니다.
+    //       console.log(error.request);
+    //     } else {
+    //       // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
+    //       console.log('Error', error.message);
+    //     }
+    //     console.log(error.config);
+    //   });
   };
 };
 
@@ -256,8 +295,14 @@ export default handleActions(
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
         console.log('setuser리듀서시작', action.payload.user);
-        // draft.user = action.payload.user;
+        // draft.info = action.payload.user;
         // draft.isLogin = true;
+      }),
+    [EDIT_USER]: (state, action) =>
+      produce(state, (draft) => {
+        console.log('editUser리듀서시작', action.payload.userInfo);
+        draft.info = action.payload.userInfo; // 이거맞나? 확인
+        draft.isLogin = true;
       }),
     // like한 목록 가져오기
     [SET_LIKE]: (state, action) =>
@@ -287,6 +332,8 @@ const actionCreators = {
   loginCheckDB,
   setUser,
   kakaoLogin,
+  editUserDB,
+  editUser,
   setLike,
   likeDB,
   unlikeDB,

@@ -13,3 +13,8 @@ export const userNameForm = (userName) => {
   let reg = /^[a-zA-Z0-9-_.]{6,20}|[ㄱ-힣0-9-_.]{3,8}$/;
   return reg.test(userName);
 };
+//한글, 영문, 숫자만 입력가능
+export const checkSpelling = (spelling) => {
+  let reg = /^[a-zA-z0-9]$/;
+  return reg.test(spelling);
+};

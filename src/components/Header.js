@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // 패키지
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ const Header = () => {
   useEffect(() => {
     dispatch(tutorActions.getListDB());
   }, []);
+  const userId = useSelector((state) => state.user.info.userName);
 
   return (
     <Wrap>

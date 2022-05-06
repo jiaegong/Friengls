@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 
 // 패키지
@@ -24,13 +24,13 @@ import Footer from '../components/Footer';
 import ReviewModal from '../components/ReviewModal';
 
 function App() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // 페이지 조회할 때마다 실행, token이 유효한지 여부 체크
-  // React.useEffect(() => {
-  //   if (localStorage.getItem('token')) {
-  //     dispatch(userActions.loginCheckDB());
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(userActions.loginCheckDB());
+    }
+  }, []);
 
   return (
     <ConnectedRouter history={history}>
