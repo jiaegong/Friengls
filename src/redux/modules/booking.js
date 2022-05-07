@@ -38,11 +38,11 @@ const initialState = {
 const setBookingDB = (data) => {
   // let token = localStorage.token;
   return function (dispatch, getState, { history }) {
-    // dispatch(setBooking(data));
+    dispatch(setBooking(data));
 
     // 객체와 string 두개다 도전해보기
-    console.log(data[2].start.toString());
-    console.log(data.start);
+    // console.log(data[0].start.toString());
+    // console.log(data[0].start);
 
     //
     // 토큰값을 여기서 받아서 넘기면 될꺼 같다.

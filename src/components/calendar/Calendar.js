@@ -19,7 +19,7 @@ const CalendarTemplate = ({
   availability,
   setAvailability,
   primaryColor = '#DF1B1B',
-  secondaryColor = '#00aaff',
+  secondaryColor = '#0077ff',
   fontFamily = 'Noto Sans',
   fontSize = 12,
   primaryFontColor = '#131313',
@@ -726,17 +726,17 @@ const CalendarTemplate = ({
               justifyContent="center"
             >
               {/* <Grid item>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={handleSetMultiple}
-                className={classes.button}
-              >
-                {settingMultiple
-                  ? "Done"
-                  : "Add Selected Times to Multiple Days"}
-              </Button>
-            </Grid> */}
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSetMultiple}
+                  className={classes.button}
+                >
+                  {settingMultiple
+                    ? 'Done'
+                    : 'Add Selected Times to Multiple Days'}
+                </Button>
+              </Grid> */}
 
               <Grid item>
                 {saving ? (
@@ -748,7 +748,7 @@ const CalendarTemplate = ({
                     onClick={handleSaveAvailability}
                     className={classes.button}
                   >
-                    Save Availability
+                    예약하기
                   </Button>
                 )}
               </Grid>

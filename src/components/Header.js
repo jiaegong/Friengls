@@ -1,15 +1,25 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // 패키지
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { actionCreators as tutorActions } from '../redux/modules/tutor';
+import { io } from 'socket.io-client';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const [username, setUsername] = useState('');
+  const [user, setUser] = useState('');
+  const [socket, setSocket] = useState(null);
+
+  console.log(socket);
+
+  // ⭐️
   useEffect(() => {
     dispatch(tutorActions.getListDB());
+    // setSocket(io('소켓을 받을 주소'));
+    // setSocket(io('http://localhost:4000'));
   }, []);
 
   const token = localStorage.getItem('token');
@@ -18,6 +28,11 @@ const Header = () => {
   const logout = () => {
     console.log('로그아웃');
   };
+  // ⭐️
+  // user ==> socket DB로 이동.
+  useEffect(() => {
+    socket?.emit('newUser', user);
+  }, [socket, user]);
 
   return (
     <Wrap>
@@ -34,6 +49,7 @@ const Header = () => {
 
         <ul className="navBarWrap">
           <li
+            className="icon"
             onClick={() => {
               history.push('/search');
             }}
@@ -51,6 +67,14 @@ const Header = () => {
                 마이페이지
               </li>
               <li onClick={logout}>로그아웃</li>
+              {/* {open && ( */}
+              <div className="notifications">
+                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
+                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
+                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
+                <button className="notificationBtn">확인</button>
+              </div>
+              {/* // )} */}
             </>
           ) : (
             <>
@@ -113,6 +137,8 @@ const Wrap = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
+
       background: #c5c5c5;
 
       li {
@@ -124,11 +150,62 @@ const Wrap = styled.div`
         align-items: center;
         cursor: pointer;
         background: #8e8e8e;
+        position: relative;
 
         margin-right: 10px;
 
         &:nth-child(5) {
           margin: 0;
+        }
+
+        .counter {
+          background-color: red;
+          color: #fff;
+          position: absolute;
+          right: -5px;
+          top: -5px;
+
+          width: 18px;
+          height: 18px;
+          font-size: 12px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          border-radius: 50%;
+
+          padding: 5px;
+        }
+      }
+
+      /* 알림창 */
+      .notifications {
+        position: absolute;
+        width: 90%;
+        /* min-height: 200px; */
+        right: 0;
+        top: 50px;
+        padding: 10px;
+        text-align: center;
+
+        background-color: #fff;
+
+        .text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 40px;
+          margin-bottom: 10px;
+          background-color: #aaa;
+          cursor: pointer;
+        }
+
+        .notificationBtn {
+          border: 1px solid #a2a2a2;
+          border-radius: 5px;
+          padding: 3px 10px;
+          cursor: pointer;
         }
       }
     }

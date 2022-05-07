@@ -130,7 +130,7 @@ const loginDB = (loginInfo) => {
         console.log('loginDB성공', response.data);
         localStorage.setItem('token', response.data.token);
         // dispatch(loginCheckDB);
-        history.replace('/signup/detail');
+        history.replace('/');
         window.location.reload();
       })
       .catch((error) => {
