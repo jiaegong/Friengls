@@ -24,7 +24,7 @@ const initialState = {
     userName: 'asdaf',
     pwd: 'asdaasd',
     pwdCheck: 'asdaasd',
-    isTutor: true,
+    isTutor: false,
     userProfile: '',
     tag: ',,',
     language1: '',
@@ -47,7 +47,7 @@ const emailCheckDB = (userEmail) => {
   return function () {
     axios({
       method: 'post',
-      url: 'http://13.124.206.190/signUp/emailCheck',
+      url: 'https://jg-jg.shop/signUp/emailCheck',
       data: {
         userEmail: userEmail,
       },
@@ -69,7 +69,7 @@ const userNameCheckDB = (userName) => {
   return function () {
     axios({
       method: 'post',
-      url: 'http://13.124.206.190/signUp/nameCheck',
+      url: 'https://jg-jg.shop/signUp/nameCheck',
       data: {
         userName: userName,
       },
@@ -90,7 +90,7 @@ const signupDB = (signupInfo) => {
 
     axios({
       method: 'post',
-      url: 'http://13.124.206.190/signUp',
+      url: 'https://jg-jg.shop/signUp',
       data: signupInfo,
     })
       .then((response) => {
@@ -130,14 +130,14 @@ const loginDB = (loginInfo) => {
 
     axios({
       method: 'post',
-      url: 'http://13.124.206.190/login',
+      url: 'https://jg-jg.shop/login',
       data: loginInfo,
     })
       .then((response) => {
         console.log('loginDB성공', response.data);
         localStorage.setItem('token', response.data.token);
         // dispatch(loginCheckDB);
-        history.replace('/');
+        history.replace('/signup/detail');
         window.location.reload();
       })
       .catch((error) => {
@@ -165,14 +165,14 @@ const loginCheckDB = () => {
 
     axios({
       method: 'get',
-      url: 'http://13.124.206.190/getUser',
+      url: 'https://jg-jg.shop/login/getUser',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
       .then((response) => {
         console.log('loginCheckDB성공', response.data);
-        // dispatch(setUser(response.data));
+        dispatch(setUser(response.data));
       })
       .catch((error) => {
         window.alert('로그인체크에 실패하셨습니다.');
@@ -218,7 +218,7 @@ const editUserDB = (userInfo) => {
 
     // axios({
     //   method: 'put',
-    //   url: 'http://13.124.206.190/editUserInfo',
+    //   url: 'https://jg-jg.shop/editUserInfo',
     //   headers: {
     //     Authorization: `Bearer ${localStorage.getItem('token')}`,
     //   },
@@ -294,9 +294,9 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        console.log('setuser리듀서시작', action.payload.user);
-        // draft.info = action.payload.user;
-        // draft.isLogin = true;
+        console.log('setuser리듀서시작', action.payload.userInfo);
+        draft.info = action.payload.userInfo;
+        draft.isLogin = true;
       }),
     [EDIT_USER]: (state, action) =>
       produce(state, (draft) => {

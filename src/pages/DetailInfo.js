@@ -233,7 +233,9 @@ const DetailInfo = (props) => {
       {/* 자기소개, 한 줄 소개 */}
       <Grid>
         <span>자신을 소개해 주세요</span>
-        <Textarea name="contents" onChange={handleContents} />
+        <Grid>
+          <Textarea name="contents" onChange={handleContents} />
+        </Grid>
       </Grid>
       <Grid>
         <span>한 줄 소개</span>
@@ -348,10 +350,6 @@ const ImageBox = styled.div`
   overflow: hidden;
   width: 80px;
   height: 80px;
-  // @media screen and (max-width: 767px) {
-  //   width: 56px;
-  //   height: 56px;
-  // }
 `;
 
 const Image = styled.img`
@@ -383,7 +381,6 @@ const TagBox = styled.div`
 `;
 
 const Tag = styled.div`
-  // width: 100px;
   margin: auto 10px;
   padding: 5px 10px;
   border-radius: 10px;

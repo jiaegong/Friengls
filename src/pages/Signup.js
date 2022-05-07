@@ -85,49 +85,58 @@ const Signup = (props) => {
   //이메일 중복체크
   const checkDuplicatedEmail = () => {
     if (!emailForm(userEmail)) {
-      window.alert('닉네임 형식을 확인해 주세요.');
+      window.alert('이메일 형식을 확인해 주세요.');
       return;
     }
     console.log('중복확인할 이메일', userEmail);
 
     axios({
       method: 'post',
-      url: 'http://13.124.206.190/signUp/emailCheck',
+      url: 'https://jg-jg.shop/signUp/emailCheck',
       data: {
         userEmail: userEmail,
       },
     })
       .then((response) => {
-        console.log('emailCheckDB성공', response.data);
+        console.log('emailCheckDB성공', response.data.msg);
+        if (response.data.msg === '이미 있는 이메일 주소입니다.') {
+          window.alert('이미 사용중인 이메일입니다.');
+          setEmailCheck('다른 이메일을 입력해주세요.');
+          return;
+        }
         setEmailCheck('사용 가능한 이메일입니다.');
       })
       .catch((error) => {
         console.log(error);
-        window.alert('이미 사용중인 이메일입니다.');
-        setEmailCheck('다른 이메일을 입력해주세요.');
       });
   };
   //닉네임 중복체크
   const checkDuplicatedUserName = () => {
     if (!userNameForm(userName)) {
-      window.alert('형식확인');
+      window.alert('닉네임 형식을 확인해주세요.');
       return;
     }
     console.log('중복확인할 닉네임', userName);
 
     axios({
       method: 'post',
-      url: 'http://13.124.206.190/signUp/nameCheck',
+      url: 'https://jg-jg.shop/signUp/nameCheck',
       data: {
         userName: userName,
       },
     })
       .then((response) => {
         console.log('userNameCheckDB성공', response.data);
-        window.alert('사용 가능한 닉네임입니다!');
+        if (response.data.msg === '이미 있는 닉네임입니다.') {
+          window.alert('이미 사용중인 닉네임입니다.');
+          setUserNameCheck('다른 닉네임을 입력해주세요.');
+          return;
+        }
+        setUserNameCheck('사용 가능한 닉네임입니다.');
       })
       .catch((error) => {
-        window.alert('사용할 수 없는 닉네임입니다!');
+        window.alert('사용할 수 없는 닉네임입니다.');
+        setUserNameCheck('다른 닉네임을 입력해주세요.');
       });
   };
 
@@ -138,7 +147,7 @@ const Signup = (props) => {
       return;
     }
 
-    if (userNameCheck !== '사용 가능한 닉네임 입니다.') {
+    if (userNameCheck !== '사용 가능한 닉네임입니다.') {
       window.alert('닉네임 중복 확인을 해주세요.');
       return;
     }
@@ -157,9 +166,19 @@ const Signup = (props) => {
       userName: userName,
       pwd: pwd,
       pwdCheck: confirmPwd,
+      isTutor: false,
+      userProfile: '',
+      tag: ',,',
+      language1: '',
+      language2: '',
+      language3: '',
+      commnt: '',
+      contents: '',
+      startTime: '',
+      endTime: '',
     };
     console.log('보낼 데이터', userForm);
-    // dispatch(userActions.signupDB(userForm));
+    dispatch(userActions.signupDB(userForm));
   };
 
   return (

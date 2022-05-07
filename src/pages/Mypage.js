@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Mypage = () => {
   const videoChatHandler = (roomName) => {
     //   const id = userId
     //   history.push(`/videochat/${id}`);
   };
+  const userInfo = useSelector((state) => state.user.info);
+  console.log(userInfo);
 
   return (
     <>

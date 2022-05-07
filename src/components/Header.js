@@ -11,7 +11,13 @@ const Header = () => {
   useEffect(() => {
     dispatch(tutorActions.getListDB());
   }, []);
-  const userId = useSelector((state) => state.user.info.userName);
+
+  const token = localStorage.getItem('token');
+
+  //로그아웃
+  const logout = () => {
+    console.log('로그아웃');
+  };
 
   return (
     <Wrap>
@@ -35,20 +41,35 @@ const Header = () => {
             튜터찾기
           </li>
           <li>알림 아이콘</li>
-          <li
-            onClick={() => {
-              history.push('/login');
-            }}
-          >
-            로그인
-          </li>
-          <li
-            onClick={() => {
-              history.push('/signup');
-            }}
-          >
-            회원가입
-          </li>
+          {token ? (
+            <>
+              <li
+                onClick={() => {
+                  history.push('/mypage');
+                }}
+              >
+                마이페이지
+              </li>
+              <li onClick={logout}>로그아웃</li>
+            </>
+          ) : (
+            <>
+              <li
+                onClick={() => {
+                  history.push('/login');
+                }}
+              >
+                로그인
+              </li>
+              <li
+                onClick={() => {
+                  history.push('/signup');
+                }}
+              >
+                회원가입
+              </li>
+            </>
+          )}
         </ul>
         {/* 로그인시 회원이름 나오게 할것인지?? */}
       </div>
