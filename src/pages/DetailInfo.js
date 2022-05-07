@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { ProfileMedium } from '../image';
 import { checkSpelling } from '../shared/common';
@@ -326,7 +327,14 @@ const DetailInfo = (props) => {
         </Grid>
       )}
       {/* 버튼 */}
-      <button type="button">건너뛰기</button>
+      <button
+        type="button"
+        onClick={() => {
+          history.push('/');
+        }}
+      >
+        건너뛰기
+      </button>
       <button type="submit" onClick={addDetailInfo}>
         추가정보 제출
       </button>

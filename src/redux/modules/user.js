@@ -18,7 +18,6 @@ const initialState = {
     pwd: 'asdaasd',
     pwdCheck: 'asdaasd',
     isTutor: false,
-    userProfile: '',
     tag: ',,',
     language1: '',
     language2: '',
@@ -93,10 +92,11 @@ const signupDB = (signupInfo) => {
         const loginInfo = {
           userEmail: signupInfo.userEmail,
           pwd: signupInfo.pwd,
+          isSignup: true,
         };
         console.log('회원가입DB후로그인정보', loginInfo);
         dispatch(loginDB(loginInfo));
-        history.replace('/signupDetail');
+        // history.replace('/signup/detail');
       })
       .catch((error) => {
         window.alert('회원가입에 실패하셨습니다.');
@@ -117,9 +117,14 @@ const signupDB = (signupInfo) => {
   };
 };
 
-const loginDB = (loginInfo) => {
+const loginDB = (loginForm) => {
   return function (dispatch, getState, { history }) {
-    console.log('login시작', loginInfo);
+    console.log('login시작', loginForm);
+
+    const loginInfo = {
+      userEmail: loginForm.userEmail,
+      pwd: loginForm.pwd,
+    };
 
     axios({
       method: 'post',
@@ -129,8 +134,10 @@ const loginDB = (loginInfo) => {
       .then((response) => {
         console.log('loginDB성공', response.data);
         localStorage.setItem('token', response.data.token);
-        // dispatch(loginCheckDB);
-        history.replace('/signup/detail');
+        //회원가입 후 로그인, 기존유저 로그인 일 때 전환할 페이지가 달라지도록 만들어준다.
+        loginForm.isSignup
+          ? history.replace('/signup/detail')
+          : history.replace('/');
         window.location.reload();
       })
       .catch((error) => {

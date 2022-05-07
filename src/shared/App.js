@@ -42,7 +42,7 @@ function App() {
       <Route path="/oauth2/callback/google" component={Google} />
       <Route path="/signup/detail" component={DetailInfo} />
       <Route path="/mypage" exact component={Mypage} />
-      <Route path="/detail" exact component={Detail} />
+      <Route path="/detail/:userName" exact component={Detail} />
       {/* <Route path="/videochat/:roomName" exact component={VideoChat} /> */}
       <Route path="/search" exact component={Search} />
       <Route path="/reviewmodal" exact component={ReviewModal} />
