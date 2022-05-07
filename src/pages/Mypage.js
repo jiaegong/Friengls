@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
+import { Flex, Text, Input, Button } from '../elements/index';
 
 const Mypage = () => {
   const videoChatHandler = (roomName) => {
@@ -11,18 +12,15 @@ const Mypage = () => {
   return (
     <>
       {/* 예약리스트 맵 돌리기 */}
-      <List>
-        <p>공지애 하니또</p>
-        <p>2022-04-30 17시</p>
-        <button onClick={videoChatHandler}>채팅하기</button>
-      </List>
+      <Flex styles={{ border: '1px solid black', width: '300px' }}>
+        <Flex styles={{ justifyContent: 'flex-start' }}>
+          <Text>선생님 이름</Text>
+          <Text>시간</Text>
+        </Flex>
+        <Button onClick={videoChatHandler}>Video Call</Button>
+      </Flex>
     </>
   );
 };
-
-const List = styled.div`
-  border: 1px solid black;
-  border-radius: 10px;
-`;
 
 export default Mypage;
