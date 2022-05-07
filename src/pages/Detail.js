@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as calendarActions } from '../redux/modules/calendar';
+import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { actionCreators as likeActions } from '../redux/modules/like';
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
 
@@ -10,16 +11,22 @@ const Detail = (props) => {
   const dispatch = useDispatch();
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
-    dispatch(calendarActions.getTimeDB());
+    dispatch(bookingAction.getBookingDB());
   }, []);
 
   // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
-  const timeList = useSelector((state) => state.calendar.list);
-  console.log({ timeList });
+  const timeList = useSelector((state) => state.booking.list);
+  // console.log('검사중 : ', timeList[0].start.toDateString());
+  // console.log('검사중 : ', timeList[0].start.getDate()); //일
+  // console.log(timeList[0].start.getHours()); //시간
+  // console.log(timeList[0].start.toTimeString()); // 08:00:00 GMT+0900
+  // console.log(typeof timeList[0].start.toString()); // Thu May 19 2022 08:00:00 GMT+0900
+  // console.log(timeList[0].start.toDateString()); // Thu May 19 2022
+  // console.log(typeof timeList[0].start);
 
   // 초기값으로 리듀서에서 불러오는 값을 넣어둠
   const [availability, setAvailability] = React.useState(timeList);
-  console.log('리듀서랑 연동한 데이터 ', availability);
+  // console.log('리듀서랑 연동한 데이터 ', availability);
 
   const Calendar = CalendarTemplate({
     availability,
@@ -30,14 +37,12 @@ const Detail = (props) => {
   // const reviewList = useSelector((state) => state.review.list);
   // const reviewId = reviewList.reviewId;
 
-  const tutorId = props.userName;
-
-  // comment 초기값은 review 내용으로 바꾸기
-  const [rate, setRate] = React.useState();
-  const [text, setText] = React.useState('');
-  const onChange = (e) => {
-    setText(e.target.value);
-  };
+  // // comment 초기값은 review 내용으로 바꾸기
+  // const [rate, setRate] = React.useState();
+  // const [text, setText] = React.useState('');
+  // const onChange = (e) => {
+  //   setText(e.target.value);
+  // };
 
   // React.useEffect(() => {
   //   if (reviewList[tutorId]) {
@@ -57,8 +62,14 @@ const Detail = (props) => {
   //   dispatch(reviewActions.deleteReviewDB(reviewId));
   // };
 
-  // like 누르기
-  const like = () => {};
+  // // like 누르기, 토큰 같이 보내기, likeList랑 tutor유저 리스트 인덱스랑 비교해서 같으면 넣기
+  // const like = () => {
+  //   dispatch(likeActions.likeDB(tutorName));
+  // };
+
+  // const unLike = () => {
+  //   dispatch(likeActions.unLikeDB(tutorName));
+  // };
 
   return (
     <Wrap>
@@ -66,17 +77,26 @@ const Detail = (props) => {
         {/* 유저 정보 */}
         <div className="userInfoWrap">
           <div className="userInfo">user_info</div>
-          {/* like 버튼 */}
-          <div
+          {/* like 버튼, 나중에 아이콘 찾아서 바꿔 놓기, like 상태 값에 따라서 채워진 하트/빈 하트 */}
+          {/* {isLiked? <div
             onClick={like}
             style={{
               width: '30px',
               height: '30px',
               borderRadius: '30px',
               margin: '5px',
-              backgroundColor: '#ffeb3b' ? '#ddd' : '#ffeb3b',
+              backgroundColor: '#ddd'
             }}
-          />
+          /> : <div
+          onClick={unLike}
+          style={{
+            width: '30px',
+            height: '30px',
+            borderRadius: '30px',
+            margin: '5px',
+            backgroundColor: '#ffeb3b'
+          }}
+        />} */}
           <div className="aboutMe">자기소개</div>
         </div>
         {/* 예약 캘린더 */}
@@ -109,7 +129,7 @@ const Detail = (props) => {
               />
             );
           })} */}
-          <textarea onChange={onChange} />
+          {/* <textarea onChange={onChange} /> */}
         </div>
       </div>
     </Wrap>

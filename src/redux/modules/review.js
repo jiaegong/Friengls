@@ -7,12 +7,12 @@ const ADD_REVIEW = 'ADD_COMMENT';
 const EDIT_REVIEW = 'EDIT_REVIEW';
 const DELETE_REVIEW = 'DELETE_REVIEW';
 
-const setReview = createAction(SET_REVIEW, (tutorId, review) => ({
-  tutorId,
+const setReview = createAction(SET_REVIEW, (tutorName, review) => ({
+  tutorName,
   review,
 }));
-const addReview = createAction(ADD_REVIEW, (tutorId, review) => ({
-  tutorId,
+const addReview = createAction(ADD_REVIEW, (tutorName, review) => ({
+  tutorName,
   review,
 }));
 const editReview = createAction(EDIT_REVIEW, (reviewId, review) => ({
@@ -25,13 +25,13 @@ const initialState = {
   list: {},
 };
 
-const addReviewDB = (token, tutorId, rate, text) => {
+const addReviewDB = (token, tutorName, rate, text) => {
   return function (dispatch) {
     axios({
       method: 'post',
-      url: '서버주소/addReview',
+      // url: '서버주소/addReview',
       data: {
-        tutorId,
+        tutorName,
         rate,
         text,
       },
@@ -40,7 +40,7 @@ const addReviewDB = (token, tutorId, rate, text) => {
       },
     })
       .then((res) => {
-        dispatch(addReview(res.data.tutorId, res.data.review));
+        dispatch(addReview(res.data.tutorName, res.data.review));
         window.alert('리뷰가 작성되었습니다!');
       })
       .catch((err) => {
@@ -50,19 +50,19 @@ const addReviewDB = (token, tutorId, rate, text) => {
   };
 };
 
-const getReviewDB = (tutorId = null) => {
+const getReviewDB = (tutorName = null) => {
   return function (dispatch) {
-    axios({
-      method: 'post',
-      url: '서버주소/getReview',
-      data: { tutorId },
-    })
-      .then((res) => {
-        dispatch(setReview(res.data.tutorId, res.data.review));
-      })
-      .catch((err) => {
-        console.log('리뷰 불러오기에 실패했습니다!', err);
-      });
+    // axios({
+    //   method: 'post',
+    //   // url: '서버주소/getReview',
+    //   data: { tutorId },
+    // })
+    //   .then((res) => {
+    //     dispatch(setReview(res.data.tutorId, res.data.review));
+    //   })
+    //   .catch((err) => {
+    //     console.log('리뷰 불러오기에 실패했습니다!', err);
+    //   });
   };
 };
 
@@ -70,7 +70,7 @@ const editReviewDB = (reviewId, text) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'put',
-      url: '서버주소/editReview',
+      // url: '서버주소/editReview',
       data: {
         reviewId,
         text,
@@ -90,7 +90,7 @@ const deleteReviewDB = (reviewId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'delete',
-      url: `서버주소/deleteReview`,
+      // url: `서버주소/deleteReview`,
       data: { reviewId },
     })
       .then((res) => {
@@ -107,11 +107,11 @@ export default handleActions(
   {
     [SET_REVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.list[action.payload.tutorId] = action.payload.review;
+        draft.list[action.payload.tutorName] = action.payload.review;
       }),
     [ADD_REVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.list[action.payload.tutorId].unshift(action.payload.review);
+        draft.list[action.payload.tutorName].unshift(action.payload.review);
       }),
     [EDIT_REVIEW]: (state, action) =>
       produce(state, (draft) => {

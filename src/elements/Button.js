@@ -2,21 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = (props) => {
-  const { styles, _onClick, children, className } = props;
+  const { styles, _onClick, children, className, defaultStyles } = props;
 
   return (
-    <ButtonStyle className={className} style={{ ...styles }} onClick={_onClick}>
+    <ButtonStyle
+      className={className}
+      style={{ ...styles }}
+      onClick={_onClick}
+      {...defaultStyles}
+    >
       {children}
     </ButtonStyle>
   );
 };
 
 Button.defaultProps = {
-  bg: '#fff',
-  width: '',
-  height: '',
-  border: 'none',
-  borderRadius: '4px',
+  defaultStyles: {
+    bg: '#fff',
+    width: '',
+    height: '',
+    borderRadius: '4px',
+  },
 };
 
 const ButtonStyle = styled.button`

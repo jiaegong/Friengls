@@ -9,9 +9,9 @@ const Main = () => {
   // const reviewList = useSelector((state) => state.review.list);
   // console.log('유저정보 확인', tutorList);
 
-  React.useEffect(() => {
-    // dispatch(reviewActions.getReviewDB());
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(reviewActions.getReviewDB());
+  // }, []);
 
   return (
     <Wrap>

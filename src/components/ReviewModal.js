@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { Flex, Text, Input, Button } from '../elements/index';
 
 const ReviewModal = () => {
   const [rate, setRate] = React.useState();
@@ -17,34 +18,37 @@ const ReviewModal = () => {
     setText(''); // 작성하고 나서 칸 비워주기
   };
   return (
-    <div>
-      <p>리뷰 남기기</p>
-      {Array.from({ length: 5 }, (c, idx) => {
-        return (
-          <div
-            onClick={() => {
-              setRate(idx + 1);
-            }}
-            style={{
-              width: '30px',
-              height: '30px',
-              borderRadius: '30px',
-              margin: '5px',
-              backgroundColor: rate < idx + 1 ? '#ddd' : '#ffeb3b',
-            }}
-          />
-        );
-      })}
-      <textarea
+    <Flex styles={{ flexDirection: 'column', width: '200px', height: '300px' }}>
+      <Text>리뷰 남기기</Text>
+      <Flex styles={{ flexDirection: 'row' }}>
+        {Array.from({ length: 5 }, (c, idx) => {
+          return (
+            <Flex
+              _onClick={() => {
+                setRate(idx + 1);
+              }}
+              styles={{
+                width: '30px',
+                height: '30px',
+                borderRadius: '30px',
+                margin: '5px',
+                backgroundColor: rate < idx + 1 ? '#ddd' : '#ffeb3b',
+              }}
+            />
+          );
+        })}
+      </Flex>
+      <Input
+        multiLine
         placeholder="튜터링은 어땠나요?"
         onChange={onChange}
         value={text}
       />
-      <div>
-        <button onClick={addReview}>등록하기</button>
-        <button>돌아가기</button>
-      </div>
-    </div>
+      <Flex>
+        <Button _onClick={addReview}>등록하기</Button>
+        <Button>돌아가기</Button>
+      </Flex>
+    </Flex>
   );
 };
 
