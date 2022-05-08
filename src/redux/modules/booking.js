@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import moment from 'moment';
 import axios from 'axios';
+import { getCookie } from '../../shared/Cookie';
 
 const SET_BOOKING = 'SET_BOOKING';
 const GET_BOOKING = 'GET_TIME';
@@ -37,6 +38,7 @@ const initialState = {
 
 const setBookingDB = (data) => {
   // let token = localStorage.token;
+  // const token = getCookie('token')
   return function (dispatch, getState, { history }) {
     // dispatch(setBooking(data));
 
@@ -52,7 +54,7 @@ const setBookingDB = (data) => {
     //   method: 'post',
     //   url: `http://addBooking/${userName}`,
     //   headers: {
-    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+    //     Authorization: `Bearer ${getCookie('token')}`,
     //   },
     //   data:{
     // start: data.start,
@@ -78,7 +80,7 @@ const getBookingDB = (userName) => {
       method: 'get',
       url: `http://getBooking/${userName}`, // 학생 또는 선생님
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`, // 학생일때는 토큰으로 예약 정보 불러오기
+        Authorization: `Bearer ${getCookie('token')}`, // 학생일때는 토큰으로 예약 정보 불러오기
       },
     })
       .then((doc) => {

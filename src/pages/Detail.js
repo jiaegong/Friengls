@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from '../redux/configureStore';
-import { actionCreators as userActions } from '../redux/modules/booking';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 import { actionCreators as likeActions } from '../redux/modules/like';
@@ -11,17 +11,16 @@ import CalendarTemplate from '../components/calendar/Calendar';
 import DetailUser from '../components/DetailUser';
 
 const Detail = (props) => {
-  //디테일페이지에서 보여줄 유저
-  const userId = props.match.params.userName;
-
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //  userActions.getUserDetail()
-  // }, []);
-
+  //디테일페이지에서 보여줄 유저
+  const userId = props.match.params.userName;
+  useEffect(() => {
+    dispatch(userActions.getUserDetailDB(userId));
+  }, []);
   // //디테일페이지에 사용할 유저 정보
-  const detailInfo = useSelector((state) => state.user.info); //detail유저정보로 바꾸기
+
+  const detailInfo = useSelector((state) => state.user.detailInfo);
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {

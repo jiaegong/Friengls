@@ -22,12 +22,13 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ReviewModal from '../components/ReviewModal';
+import { getCookie } from '../shared/Cookie';
 
 function App() {
   const dispatch = useDispatch();
   // 페이지 조회할 때마다 실행, token이 유효한지 여부 체크
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (getCookie('token')) {
       dispatch(userActions.loginCheckDB());
     }
   }, []);

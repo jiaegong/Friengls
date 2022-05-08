@@ -28,7 +28,13 @@ const Mypage = () => {
           <div>
             <div>
               <button>좋아요</button>
-              <button>수정</button>
+              <button
+                onClick={() => {
+                  history.push('/mypage');
+                }}
+              >
+                수정
+              </button>
             </div>
             <UserInfoBox>
               <ImageBox>
@@ -49,10 +55,10 @@ const Mypage = () => {
                 </TextInfo>
               </div>
             </UserInfoBox>
-            <TextInfo>
+            <div>
               <h2>자기소개</h2>
               <TextInfo>자기소개 불러오기</TextInfo>
-            </TextInfo>
+            </div>
           </div>
         </div>
         {/* 예약 캘린더 */}
@@ -192,7 +198,7 @@ const Wrap = styled.div`
           }
         }
       }
-    }
+    }3
   }
 `;
 const UserInfoBox = styled.div`

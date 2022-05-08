@@ -6,7 +6,6 @@ import { ProfileMedium } from '../image';
 
 const DetailUser = (props) => {
   const { detailInfo } = props;
-  console.log(detailInfo);
 
   return (
     <div>
@@ -26,22 +25,26 @@ const DetailUser = (props) => {
         </ImageBox>
         <div>
           <TextInfo>
-            <span>닉네임</span>: <span>닉네임불러오기</span>
+            <span>닉네임</span>: <span>{detailInfo.userName}</span>
           </TextInfo>
           <TextInfo>
-            <span>한 줄 소개</span>: <span>닉네임불러오기</span>
+            <span>한 줄 소개</span>: <span>{detailInfo.comment}</span>
           </TextInfo>
           <TextInfo>
-            <span>태그</span>: <span>태그불러오기</span>
+            <span>태그</span>: <span>{detailInfo.tag}</span>
           </TextInfo>
           <TextInfo>
-            <span>구사 가능 언어</span>: <span>언어불러오기</span>
+            <span>구사 가능 언어</span>:{' '}
+            <span>
+              {detailInfo.language1},{detailInfo.language2},
+              {detailInfo.language3}
+            </span>
           </TextInfo>
         </div>
       </UserInfoBox>
       <div>
         <h2>자기소개</h2>
-        <TextInfo>자기소개 불러오기</TextInfo>
+        <TextInfo>detailInfo.contents</TextInfo>
       </div>
 
       {/* like 버튼, 나중에 아이콘 찾아서 바꿔 놓기, like 상태 값에 따라서 채워진 하트/빈 하트 */}

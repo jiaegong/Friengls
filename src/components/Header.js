@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { history } from '../redux/configureStore';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 패키지
 import styled from 'styled-components';
-import { history } from '../redux/configureStore';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
+
+//컴포넌트
+import { getCookie } from '../shared/Cookie';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,7 +15,8 @@ const Header = () => {
     dispatch(tutorActions.getListDB());
   }, []);
 
-  const token = localStorage.getItem('token');
+  const token = getCookie('token');
+  // const token = localStorage.getItem('token')
 
   //로그아웃
   const logout = () => {
