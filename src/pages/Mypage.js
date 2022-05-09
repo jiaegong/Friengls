@@ -17,6 +17,8 @@ const Mypage = () => {
     // const id = userId;
     // history.push(`/videochat/${id}`);
   };
+
+  //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.info);
   console.log(userInfo);
 

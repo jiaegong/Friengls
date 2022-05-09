@@ -18,11 +18,11 @@ const setUserDetail = createAction(SET_USER_DETAIL, (userInfo) => ({
 //이니셜스테이트
 const initialState = {
   info: {
-    userEmail: 'asd@asd,com',
-    userName: 'asdaf',
-    pwd: 'asdaasd',
-    pwdCheck: 'asdaasd',
-    isTutor: false,
+    userEmail: '',
+    userName: '',
+    pwd: '',
+    pwdCheck: '',
+    isTutor: 0,
     tag: ',,',
     language1: '',
     language2: '',
@@ -36,7 +36,7 @@ const initialState = {
   isLogin: false, //확인해보기
   detailInfo: {
     userName: '',
-    isTutor: false,
+    isTutor: 1,
     tag: ',,',
     language1: '',
     language2: '',
@@ -216,7 +216,7 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getUserDetail/?userId=${userApi.userId}&isTutor=${userApi.isTutor}`,
+      url: `https://jg-jg.shop/getUserDetail/${userApi.userName}`,
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
