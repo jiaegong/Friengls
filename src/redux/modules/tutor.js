@@ -23,11 +23,12 @@ const getListDB = () => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
-      url: 'https://6251cd887f7fa1b1dddf398b.mockapi.io/user',
+      // url: 'https://6251cd887f7fa1b1dddf398b.mockapi.io/user',
+      url: `https://jg-jg.shop/getPopularTutor`,
     })
       .then((doc) => {
-        // console.log(doc);
-        dispatch(getList(doc));
+        console.log(doc.data);
+        dispatch(getList(doc.data));
       })
       .catch((err) => {
         console.log(err);
@@ -39,7 +40,7 @@ export default handleActions(
   {
     [GET_TUTOR_LIST]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.list.data);
+        console.log(action.payload.list.data);
         draft.list = action.payload.list.data;
       }),
   },

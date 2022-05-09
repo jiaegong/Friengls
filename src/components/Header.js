@@ -74,12 +74,12 @@ const Header = () => {
               </li>
               <li onClick={logout}>로그아웃</li>
               {/* {open && ( */}
-              <div className="notifications">
+              {/* <div className="notifications">
                 <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
                 <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
                 <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
                 <button className="notificationBtn">확인</button>
-              </div>
+              </div> */}
               {/* // )} */}
             </>
           ) : (

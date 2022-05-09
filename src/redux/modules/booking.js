@@ -62,7 +62,7 @@ const setBookingDB = (data, tutorName) => {
 
     axios({
       method: 'post',
-      // url: `https://jg-jg.shop/addBooking/yoonha3331`,
+      url: `https://jg-jg.shop/addBooking/jungi521`,
       // url: `https://jg-jg.shop/addBooking/${tutorName}`,
       data: {
         start: data[0].start.toString(),
@@ -88,11 +88,12 @@ const getBookingDB = ({ userName, isTutor }) => {
   return function (dispatch, getState, { history }) {
     // userName 없을시 에러 뜨는 경우 방지 ??? 없어도 되나??
     // if (!userName) return;
-    console.log({ userName, isTutor })
+    // console.log({ userName, isTutor })
 
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
+      url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
+      // url: `https://jg-jg.shop/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
       // url: `https://jg-jg.shop/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {

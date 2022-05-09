@@ -417,7 +417,7 @@ const CalendarTemplate = ({
       convertAvailabilityFromDatabase(availability),
     );
     // console.log({ availabilityState });
-    console.log('5');
+    // console.log('5');
 
     // 선택한 시간 값 받아 오는 stats
     const [quickAvailability, setQuickAvailability] = useState(

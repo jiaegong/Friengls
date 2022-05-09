@@ -179,7 +179,7 @@ const loginDB = (loginForm) => {
 
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
-    console.log('loginCheckDB시작');
+    // console.log('loginCheckDB시작');
 
     axios({
       method: 'get',

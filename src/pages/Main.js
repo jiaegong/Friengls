@@ -7,6 +7,7 @@ import { history } from '../redux/configureStore';
 const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
+  console.log(tutorList)
   // const reviewList = useSelector((state) => state.review.list);
   // console.log('유저정보 확인', tutorList);
 

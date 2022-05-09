@@ -18,20 +18,15 @@ const Detail = (props) => {
   const detailInfo = useSelector((state) => state.user.detailInfo);
   const isTutor = detailInfo.isTutor;
 
-  // console.log({ tutorName, isTutor })
-
+  // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
+  const timeList = useSelector((state) => state.booking.list);
+  console.log("useEffect 밖의 예약 정보 : ", timeList)
 
   useEffect(() => {
     dispatch(userActions.getUserDetailDB());
-  }, []);
-
-  // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
-  useEffect(() => {
     dispatch(bookingAction.getBookingDB({ userName: tutorName, isTutor }));
+    console.log("useEffect의 예약 정보 : ", timeList)
   }, []);
-
-  // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
-  const timeList = useSelector((state) => state.booking.list);
 
   // 초기값으로 리듀서에서 불러오는 값을 넣어둠
   const [availability, setAvailability] = React.useState(timeList);
