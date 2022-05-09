@@ -1,7 +1,7 @@
 import reactDom from 'react-dom';
 
 const Portal = ({ children }) => {
-  const el = document.getElementById('ReviewModal');
+  const el = document.getElementById('modal');
   return reactDom.createPortal(children, el);
 };
 

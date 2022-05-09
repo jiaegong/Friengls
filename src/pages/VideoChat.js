@@ -1,8 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
+import Portal from '../components/Portal';
+import ReviewModal from '../components/ReviewModal';
 
 const VideoChat = () => {
+  const [modalOn, setModalOn] = useState(false);
+  const handleModal = () => {
+    setModalOn(!modalOn);
+  };
+
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
@@ -22,6 +29,7 @@ const VideoChat = () => {
         .then((stream) => {
           userStream = stream;
           myVideo.current.srcObject = stream;
+          console.log(1);
         });
     });
 
@@ -31,6 +39,7 @@ const VideoChat = () => {
         .then((stream) => {
           userStream = stream;
           myVideo.current.srcObject = stream;
+          console.log(2);
         });
 
       socket.emit('ready', roomName);
@@ -46,14 +55,17 @@ const VideoChat = () => {
 
         peer.on('signal', (signal) => {
           socket.emit('sendingSignal', { signal, roomName });
+          console.log(3);
         });
 
         peer.on('stream', (stream) => {
           userVideo.current.srcObject = stream;
+          console.log(4);
         });
 
         socket.on('receivingSignal', (signal) => {
           peer.signal(signal);
+          console.log(5);
         });
 
         connectionRef.current = peer;
@@ -70,14 +82,16 @@ const VideoChat = () => {
 
         peer.on('signal', (signal) => {
           socket.emit('returningSignal', { signal, roomName });
+          console.log(6);
         });
 
         peer.on('stream', (stream) => {
           userVideo.current.srcObject = stream;
+          console.log(7);
         });
 
         peer.signal(incomingSignal);
-
+        console.log(8);
         connectionRef.current = peer;
       }
     });
@@ -92,6 +106,8 @@ const VideoChat = () => {
       <video playsInline muted ref={myVideo} autoPlay />
       <video playsInline muted ref={userVideo} autoPlay />
       <button onClick={leaveCall}>통화 종료</button>
+      <button onClick={handleModal}>리뷰 남기기</button>
+      <Portal>{modalOn && <ReviewModal onClose={handleModal} />}</Portal>
     </div>
   );
 };
