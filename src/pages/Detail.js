@@ -1,14 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { history } from '../redux/configureStore';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 import { actionCreators as likeActions } from '../redux/modules/like';
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
+import DetailUser from '../components/DetailUser';
 
 const Detail = (props) => {
   const dispatch = useDispatch();
+
+  //디테일페이지에서 보여줄 유저
+  const userId = props.match.params.userName;
+  useEffect(() => {
+    dispatch(userActions.getUserDetailDB(userId));
+  }, []);
+  // //디테일페이지에 사용할 유저 정보
+
+  const detailInfo = useSelector((state) => state.user.detailInfo);
+  console.log(detailInfo.isTutor);
+
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
     dispatch(bookingAction.getBookingDB());
@@ -76,7 +90,8 @@ const Detail = (props) => {
       <div className="innerWrap">
         {/* 유저 정보 */}
         <div className="userInfoWrap">
-          <div className="userInfo">user_info</div>
+          <DetailUser detailInfo={detailInfo} />
+
           {/* like 버튼, 나중에 아이콘 찾아서 바꿔 놓기, like 상태 값에 따라서 채워진 하트/빈 하트 */}
           {/* {isLiked? <div
             onClick={like}
@@ -97,7 +112,6 @@ const Detail = (props) => {
             backgroundColor: '#ffeb3b'
           }}
         />} */}
-          <div className="aboutMe">자기소개</div>
         </div>
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
@@ -149,7 +163,7 @@ const Wrap = styled.div`
     /* 유저정보 wrap */
     .userInfoWrap {
       width: 95%;
-      height: 900px;
+      height: 300px;
       margin: 30px auto;
 
       background-color: #aaa;

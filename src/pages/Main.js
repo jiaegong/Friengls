@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { history } from '../redux/configureStore';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,13 @@ const Main = () => {
           <div className="cardList">
             {tutorList.map((item, idx) => {
               return (
-                <div className="card" key={`tutor${idx}`}>
+                <div
+                  className="card"
+                  key={`tutor${idx}`}
+                  onClick={() => {
+                    history.push(`/detail/${item.userName}`);
+                  }}
+                >
                   <img
                     className="user_img"
                     src={item.userProfile}

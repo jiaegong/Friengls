@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import moment from 'moment';
 import axios from 'axios';
+import { getCookie } from '../../shared/Cookie';
 
 const SET_BOOKING = 'SET_BOOKING';
 const GET_BOOKING = 'GET_BOOKING';
@@ -47,6 +48,7 @@ const initialState = {
 // 예약하기.
 const setBookingDB = (data) => {
   // let token = localStorage.token;
+  // const token = getCookie('token')
   return function (dispatch, getState, { history }) {
     console.log(data);
 

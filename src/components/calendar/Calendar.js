@@ -14,6 +14,7 @@ import { createTheme } from '@material-ui/core/styles';
 import { ArrowLeft, ArrowRight } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as calendarActions } from '../../redux/modules/booking';
+import { getCookie } from '../../shared/Cookie';
 
 const CalendarTemplate = ({
   availability,
@@ -349,6 +350,7 @@ const CalendarTemplate = ({
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
     // let token = localStorage.getItem('token');
+    // let token = getCookie('token)
     // console.log('token', '-------------------------');
     let activeRangeStart = null;
     for (let time of activeDay) {

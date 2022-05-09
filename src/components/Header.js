@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 패키지
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
 import { io } from 'socket.io-client';
+
+//컴포넌트
+import { getCookie } from '../shared/Cookie';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -22,7 +25,8 @@ const Header = () => {
     // setSocket(io('http://localhost:4000'));
   }, []);
 
-  const token = localStorage.getItem('token');
+  const token = getCookie('token');
+  // const token = localStorage.getItem('token')
 
   //로그아웃
   const logout = () => {

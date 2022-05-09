@@ -11,7 +11,7 @@ const Signup = (props) => {
   // userEmail 유효성 검사, input값 가져오기
   const [userEmail, setUserEmail] = useState('');
   const [emailCheck, setEmailCheck] = useState(
-    'abc@abc.abc형식으로 작성해 주세요',
+    '이메일 형식을 지켜주세요 예)example@gmail.com',
   );
 
   const handleEmail = (e) => {
@@ -19,10 +19,8 @@ const Signup = (props) => {
     setUserEmail(email);
     if (emailForm(email)) {
       setEmailCheck('올바른 이메일 형식입니다.');
-    } else if (email === '') {
-      setEmailCheck('abc@abc.abc형식으로 작성해 주세요.');
     } else {
-      setEmailCheck('이메일 형식을 확인해 주세요.');
+      setEmailCheck('이메일 형식을 지켜주세요 예)example@gmail.com');
     }
   };
 
@@ -37,19 +35,17 @@ const Signup = (props) => {
     setUserName(userName);
     if (userNameForm(userName)) {
       setUserNameCheck('올바른 닉네임 형식입니다.');
-    } else if (userName === '') {
+    } else {
       setUserNameCheck(
         '영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
       );
-    } else {
-      setUserNameCheck('닉네임 형식을 확인해 주세요.');
     }
   };
 
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
   const [pwdCheck, setPwdCheck] = useState(
-    '8-20자 사이의 영어대소문자, 숫자, 특수문자',
+    '비밀번호는 영어대소문자, 숫자, 특수문자를 조합해 만들어주세요. (8-20자)',
   );
 
   const handlePwd = (e) => {
@@ -57,10 +53,10 @@ const Signup = (props) => {
     setPwd(pwd);
     if (pwdForm(pwd)) {
       setPwdCheck('올바른 비밀번호 형식입니다.');
-    } else if (pwd === '') {
-      setPwdCheck('8-20자 사이의 영어대소문자, 숫자, 특수문자');
     } else {
-      setPwdCheck('비밀번호를 형식을 확인해 주세요.');
+      setPwdCheck(
+        '비밀번호는 영어대소문자, 숫자, 특수문자를 조합해 만들어주세요. (8-20자)',
+      );
     }
   };
 
@@ -85,7 +81,7 @@ const Signup = (props) => {
   //이메일 중복체크
   const checkDuplicatedEmail = () => {
     if (!emailForm(userEmail)) {
-      window.alert('이메일 형식을 확인해 주세요.');
+      //조건 깜빡이게 할 수 있을까?
       return;
     }
     console.log('중복확인할 이메일', userEmail);
@@ -100,20 +96,20 @@ const Signup = (props) => {
       .then((response) => {
         console.log('emailCheckDB성공', response.data.msg);
         if (response.data.msg === '이미 있는 이메일 주소입니다.') {
-          window.alert('이미 사용중인 이메일입니다.');
-          setEmailCheck('다른 이메일을 입력해주세요.');
+          setEmailCheck(
+            '이미 가입된 이메일입니다. 다른 이메일을 입력해주세요.',
+          );
           return;
         }
         setEmailCheck('사용 가능한 이메일입니다.');
       })
       .catch((error) => {
-        console.log(error);
+        console.log('이메일체크 에러', error);
       });
   };
   //닉네임 중복체크
   const checkDuplicatedUserName = () => {
     if (!userNameForm(userName)) {
-      window.alert('닉네임 형식을 확인해주세요.');
       return;
     }
     console.log('중복확인할 닉네임', userName);
@@ -128,15 +124,15 @@ const Signup = (props) => {
       .then((response) => {
         console.log('userNameCheckDB성공', response.data);
         if (response.data.msg === '이미 있는 닉네임입니다.') {
-          window.alert('이미 사용중인 닉네임입니다.');
-          setUserNameCheck('다른 닉네임을 입력해주세요.');
+          setUserNameCheck(
+            '이미 사용중인 닉네임입니다. 다른 닉네임을 입력해주세요.',
+          );
           return;
         }
         setUserNameCheck('사용 가능한 닉네임입니다.');
       })
       .catch((error) => {
-        window.alert('사용할 수 없는 닉네임입니다.');
-        setUserNameCheck('다른 닉네임을 입력해주세요.');
+        console.log('닉네임체크에러', error);
       });
   };
 
@@ -167,7 +163,6 @@ const Signup = (props) => {
       pwd: pwd,
       pwdCheck: confirmPwd,
       isTutor: false,
-      userProfile: '',
       tag: ',,',
       language1: '',
       language2: '',
@@ -189,10 +184,10 @@ const Signup = (props) => {
           type="text"
           name="userEmail"
           onChange={handleEmail}
-          // onBlur={checkDuplicatedEmail} //성공하면 온블러로 바꾸기
+          onBlur={checkDuplicatedEmail} //성공하면 온블러로 바꾸기
         />
         <span>{emailCheck}</span>
-        <button onClick={checkDuplicatedEmail}>중복확인</button>
+        {/* <button onClick={checkDuplicatedEmail}>중복확인</button> */}
       </InputBox>
       <InputBox>
         <input
@@ -200,10 +195,10 @@ const Signup = (props) => {
           type="text"
           name="userName"
           onChange={handleUserName}
-          // onBlur={checkDuplicatedUserName} // 성공하면 온블러로 바꾸기
+          onBlur={checkDuplicatedUserName} // 성공하면 온블러로 바꾸기
         />
         <span>{userNameCheck}</span>
-        <button onClick={checkDuplicatedUserName}>중복확인</button>
+        {/* <button onClick={checkDuplicatedUserName}>중복확인</button> */}
       </InputBox>
       <InputBox>
         <input
