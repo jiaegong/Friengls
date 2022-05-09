@@ -7,6 +7,8 @@ import { history } from '../redux/configureStore';
 const Mypage = () => {
   const dispatch = useDispatch();
   const bookingList = useSelector((state) => state.booking.list);
+  const isTutor = useSelector((state) => state.user.info.isTutor);
+  console.log(isTutor);
 
   useEffect(() => {
     dispatch(bookingAction.getBookingDB());
@@ -16,8 +18,6 @@ const Mypage = () => {
     // const id = userId;
     // history.push(`/videochat/${id}`);
   };
-  const userInfo = useSelector((state) => state.user.info);
-  console.log(userInfo);
 
   return (
     <Wrap>
@@ -30,18 +30,25 @@ const Mypage = () => {
         <div className="bookingWrap">
           <p className="bookingTitle">예약 리스트</p>
           <ul className="bookingList">
-            {bookingList.map((item, idx) => {
-              let start = item.start;
-              let end = item.end;
-              let [week, month, day, year, sTime] = start.split(' ');
-              let startTime = sTime.substr(0, 5);
-              let endTime = end.substr(-17, 5);
+            {bookingList?.map((item, idx) => {
+              let startTime = item.start;
+              let endTime = item.end;
+
+              if (!item) return; // 이 부분 불확실...
+              let [week, month, day, year, sTime] = startTime.split(' ');
+              let start = sTime.substr(0, 5);
+              let end = endTime.substr(-26, 5);
               return (
                 <li className="booking" key={`booking${idx}`}>
                   <div className="bookingInfo">
-                    <div className="userName">{item.userName}</div>
+                    {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}
+                    {isTutor === 0 ? (
+                      <div className="userName">{item.Tutor_userName}</div>
+                    ) : (
+                      <div className="userName">{item.Tutee_userName}</div>
+                    )}
                     <div className="userBooking">
-                      {week} {month} {day} {year} {startTime} ~ {endTime}
+                      {week} {month} {day} {year} &emsp; {start} ~ {end}
                     </div>
                   </div>
                   {/* <List> */}
