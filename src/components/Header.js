@@ -56,7 +56,13 @@ const Header = () => {
           >
             튜터찾기
           </li>
-          <li>알림 아이콘</li>
+          <li
+            onClick={() => {
+              history.push('/detail');
+            }}
+          >
+            알림 아이콘
+          </li>
           {token ? (
             <>
               <li

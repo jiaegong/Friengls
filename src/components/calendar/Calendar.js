@@ -35,13 +35,7 @@ const CalendarTemplate = ({
   // endTime = "24:00",
 }) => {
   const dispatch = useDispatch();
-
-  // const user_info = useSelector((state) => state.user.info);
-  // let userName = user_info.userName;
-  // console.log(user_info);
-  // console.log(userName);
-  // 토큰값을 어디로 저장 되는지.
-  // 토큰값을 불러와서.
+  const userName = useSelector((state) => state.user.info.userName);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -297,7 +291,7 @@ const CalendarTemplate = ({
   }
 
   const convertAvailabilityFromDatabase = (availability) => {
-    // console.log({ availability });
+    console.log({ availability });
     const output = {};
     for (let range of availability) {
       let start = moment(range.start);
@@ -365,8 +359,9 @@ const CalendarTemplate = ({
           end: new Date(`${month} ${day} ${year} ${time.time}`),
 
           // 유저정보 넣어서 성공한곳
-          token: localStorage.getItem('token'),
+          // token: localStorage.getItem('token'),
           // 그럼 디스패치 할대 선생님 id값으로 요청
+          userName: userName,
         });
         activeRangeStart = null;
       }
@@ -420,7 +415,8 @@ const CalendarTemplate = ({
     const [availabilityState, setAvailabilityState] = useState(
       convertAvailabilityFromDatabase(availability),
     );
-    // console.log({ availabilityState });
+    console.log({ availabilityState });
+    console.log('5');
 
     // 선택한 시간 값 받아 오는 stats
     const [quickAvailability, setQuickAvailability] = useState(
