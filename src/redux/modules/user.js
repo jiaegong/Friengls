@@ -236,38 +236,37 @@ const editUserDB = (userInfo) => {
   return function (dispatch, getState, { history }) {
     console.log('editUserDB시작', userInfo);
 
-    // axios({
-    //   method: 'put',
-    //   url: 'https://jg-jg.shop/editUserInfo',
-    //   headers: {
-    //     Authorization: `Bearer ${getCookie('token')}`,
-    //   },
-    //   data: userInfo,
-    // })
-    //   .then((response) => {
-    //     console.log('editUserDB성공', response);
-    //     const userInfo = {
-    //     };
-    //     console.log('editUserDB 후 로그인정보', userInfo);
-    //     dispatch(editUser(userInfo))
-    //     // 상제정보페이지에서는 메인으로 전환, 마이페이지에서는 새로고침
-    //   })
-    //   .catch((error) => {
-    //     window.alert('정보 저장에 실패하셨습니다.');
-    //     // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-    //     if (error.response) {
-    //       // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
-    //     } else if (error.request) {
-    //       // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
-    //       // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
-    //       // node.js에서는 http.ClientRequest 인스턴스입니다.
-    //       console.log(error.request);
-    //     } else {
-    //       // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
-    //       console.log('Error', error.message);
-    //     }
-    //     console.log(error.config);
-    //   });
+    axios({
+      method: 'put',
+      url: 'https://jg-jg.shop/editUserInfo',
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+      data: userInfo,
+    })
+      .then((response) => {
+        console.log('editUserDB성공', response);
+        const userInfo = {};
+        console.log('editUserDB 후 로그인정보', userInfo);
+        dispatch(editUser(userInfo));
+        // 상제정보페이지에서는 메인으로 전환, 마이페이지에서는 새로고침
+      })
+      .catch((error) => {
+        window.alert('정보 저장에 실패하셨습니다.');
+        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+        if (error.response) {
+          // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
+        } else if (error.request) {
+          // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
+          // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
+          // node.js에서는 http.ClientRequest 인스턴스입니다.
+          console.log(error.request);
+        } else {
+          // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
   };
 };
 
@@ -277,10 +276,10 @@ const getUserDetailDB = (userId) => {
 
     const userInfos = {
       userEmail: 'detail@test.com',
-      userName: 'detail',
+      userName: userId,
       isTutor: true,
       tag: 'asd,sdf,fgh',
-      language1: userId,
+      language1: '한국',
       language2: 'asd',
       language3: 'ads',
       comment: 'asd',

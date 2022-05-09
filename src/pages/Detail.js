@@ -21,6 +21,7 @@ const Detail = (props) => {
   // //디테일페이지에 사용할 유저 정보
 
   const detailInfo = useSelector((state) => state.user.detailInfo);
+  console.log(detailInfo.isTutor);
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
