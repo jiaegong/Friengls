@@ -8,7 +8,7 @@ const Input = (props) => {
     type,
     placeholder,
     _onChange,
-    // value,
+    value,
     multiLine,
     defaultStyles,
   } = props;
@@ -19,7 +19,7 @@ const Input = (props) => {
       className={className}
       placeholder={placeholder}
       onChange={_onChange}
-      // value={value}
+      value={value}
       {...defaultStyles}
     />;
   }
@@ -30,7 +30,7 @@ const Input = (props) => {
       type={type}
       placeholder={placeholder}
       onChange={_onChange}
-      // value={value}
+      value={value}
       {...defaultStyles}
     />
   );
@@ -40,14 +40,14 @@ Input.defaultProps = {
   multiLine: false,
   type: 'text',
   placeholder: '',
-  // value: '',
+  value: '',
   _onChange: () => {},
   defaultStyles: {
     fontSize: '14px',
     fontWeight: '400',
     color: '#000',
     width: '100%',
-    borderBottom: '1px solid #333',
+    border: 'none',
   },
 };
 
@@ -56,7 +56,7 @@ const InputStyled = styled.input`
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
   width: ${(props) => props.width};
-  border-bottom: ${(props) => props.borderBottom};
+  border: ${(props) => props.border};
   box-sizing: border-box;
 `;
 
@@ -65,7 +65,7 @@ const TextareaStyled = styled.textarea`
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
   width: ${(props) => props.width};
-  border-bottom: ${(props) => props.borderBottom};
+  border: ${(props) => props.border};
   box-sizing: border-box;
 `;
 

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Flex, Button } from '../elements/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from '../redux/configureStore';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 패키지
 import styled from 'styled-components';
@@ -11,11 +10,6 @@ import styled from 'styled-components';
 import { getCookie } from '../shared/Cookie';
 
 const Header = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(tutorActions.getListDB());
-  }, []);
-
   const token = getCookie('token');
   // const token = localStorage.getItem('token')
 

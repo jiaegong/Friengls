@@ -2,9 +2,9 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import axios from 'axios';
 
-const GET_LIST = 'GET_LIST';
+const GET_TUTOR = 'GET_TUTOR';
 
-const getList = createAction(GET_LIST, (list) => ({ list }));
+const getTutor = createAction(GET_TUTOR, (list) => ({ list }));
 
 const initialState = {
   list: [
@@ -19,15 +19,14 @@ const initialState = {
   ],
 };
 
-const getListDB = () => {
+const getTutorDB = () => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
-      url: 'https://6251cd887f7fa1b1dddf398b.mockapi.io/user',
+      url: 'http://3.36.123.28/getTutor',
     })
-      .then((doc) => {
-        // console.log(doc);
-        dispatch(getList(doc));
+      .then((res) => {
+        dispatch(getTutor(res.data.data));
       })
       .catch((err) => {
         console.log(err);
@@ -37,17 +36,16 @@ const getListDB = () => {
 
 export default handleActions(
   {
-    [GET_LIST]: (state, action) =>
+    [GET_TUTOR]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.list.data);
-        draft.list = action.payload.list.data;
+        draft.list = action.payload.list;
       }),
   },
   initialState,
 );
 
 const actionCreators = {
-  getListDB,
+  getTutorDB,
 };
 
 export { actionCreators };

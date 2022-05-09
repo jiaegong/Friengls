@@ -17,7 +17,7 @@ const Grid = (props) => {
 
 Grid.defaultProps = {
   defaultStyles: {
-    width: '100%',
+    width: '',
   },
 };
 

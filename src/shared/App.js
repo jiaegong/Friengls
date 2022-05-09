@@ -17,7 +17,7 @@ import Google from '../pages/Google';
 import DetailInfo from '../pages/DetailInfo';
 import Mypage from '../pages/Mypage';
 import Detail from '../pages/Detail';
-// import VideoChat from '../pages/VideoChat';
+import VideoChat from '../pages/VideoChat';
 import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -43,7 +43,7 @@ function App() {
       <Route path="/signup/detail" component={DetailInfo} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/detail/:userName" exact component={Detail} />
-      {/* <Route path="/videochat/:roomName" exact component={VideoChat} /> */}
+      <Route path="/videochat" exact component={VideoChat} />
       <Route path="/search" exact component={Search} />
       <Footer />
     </ConnectedRouter>

@@ -9,6 +9,7 @@ import { actionCreators as likeActions } from '../redux/modules/like';
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
 import DetailUser from '../components/DetailUser';
+import Review from '../components/Review';
 
 const Detail = (props) => {
   const dispatch = useDispatch();
@@ -48,25 +49,18 @@ const Detail = (props) => {
   });
 
   // 리뷰 불러오기, 수정, 삭제 부분
-  // const reviewList = useSelector((state) => state.review.list);
-  // const reviewId = reviewList.reviewId;
+  const reviewList = useSelector((state) => state.review.list);
 
-  // // comment 초기값은 review 내용으로 바꾸기
-  // const [rate, setRate] = React.useState();
-  // const [text, setText] = React.useState('');
-  // const onChange = (e) => {
-  //   setText(e.target.value);
-  // };
+  React.useEffect(() => {
+    dispatch(reviewActions.getOneReviewDB(userId));
+  }, []);
 
-  // React.useEffect(() => {
-  //   if (reviewList[tutorId]) {
-  //     dispatch(reviewActions.getReviewDB(tutorId));
-  //   }
-  // }, []);
-
-  // if (!reviewList[tutorId] || !tutorId) {
-  //   return null;
-  // }
+  // comment 초기값은 review 내용으로 바꾸기
+  const [rate, setRate] = React.useState('');
+  const [text, setText] = React.useState('');
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
 
   // const editReview = () => {
   //   dispatch(reviewActions.editReviewDB(reviewId, text));
@@ -118,33 +112,9 @@ const Detail = (props) => {
           <div className="booking">캘린더</div>
           <Calendar />
         </div>
-        {/* 코멘트 */}
         {/* 리뷰 리스트 맵 돌릴 때, 작성자 이름이 접속한 이름과 같으면 수정, 삭제 버튼 보이게
         현재 접속한 이름이 없는 경우에 대한 처리도 필요(옵셔널 체이닝) */}
-        <div className="commentWrap">
-          {/* <image src="유저 프로필 이미지" /> */}
-          <p>유저 이름</p>
-          <p>작성 시간</p>
-          {/* <button onClick={editReview}>수정</button>
-          <button onClick={deleteReview}>삭제</button> */}
-          {/* {Array.from({ length: 5 }, (c, idx) => {
-            return (
-              <div
-                onClick={() => {
-                  setRate(idx + 1);
-                }}
-                style={{
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '30px',
-                  margin: '5px',
-                  backgroundColor: rate < idx + 1 ? '#ddd' : '#ffeb3b',
-                }}
-              />
-            );
-          })} */}
-          {/* <textarea onChange={onChange} /> */}
-        </div>
+        <Review />
       </div>
     </Wrap>
   );
@@ -210,29 +180,6 @@ const Wrap = styled.div`
 
         background-color: #fff;
       }
-    }
-
-    /* 코멘트  */
-    .commentWrap {
-      width: 75%;
-      min-height: 150px;
-      margin: 20px 35px;
-      padding: 10px;
-
-      background: #aaa;
-
-      /* .commentInnerWrap {
-        margin-top: 10px;
-        padding: 0 10px;
-
-        .commentCard {
-          width: 100%;
-          min-height: 70px;
-          padding: 10px;
-
-          background: #eee;
-        }
-      } */
     }
   }
 `;

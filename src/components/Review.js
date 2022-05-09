@@ -1,29 +1,42 @@
 import React from 'react';
-import { Flex, Image, Text } from '../elements/index';
+import { Flex, Image, Text, Input } from '../elements/index';
 
-const Review = () => {
-  const rate = '5'; // 평점 불러와서 넣기
+const Review = (props) => {
   return (
-    <Flex>
-      <Image shape="circle" />
-      <Text>작성자 아이디</Text>
-      <Text>선생님 이름</Text>
-      <Flex styles={{ flexDirection: 'row' }}>
-        {Array.from({ length: 5 }, (c, idx) => {
-          return (
-            <Flex
-              styles={{
-                width: '30px',
-                height: '30px',
-                borderRadius: '30px',
-                margin: '5px',
-                backgroundColor: rate < idx + 1 ? '#ddd' : '#000',
-              }}
-            />
-          );
-        })}
+    <Flex
+      styles={{
+        width: '100%',
+        height: '200px',
+        padding: '30px',
+        border: '1px solid black',
+      }}
+    >
+      <Image shape="circle" src={props.src} />
+      <Flex styles={{ flexDirection: 'column' }}>
+        <Text styles={{ width: '100%' }}>{props.userName}작성자 아이디</Text>
+        <Text styles={{ width: '100%' }}>{props.tutorName}선생님</Text>
+        <Flex styles={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+          {Array.from({ length: 5 }, (c, idx) => {
+            return (
+              <Flex
+                key={idx}
+                styles={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '30px',
+                  margin: '5px',
+                  backgroundColor: props.rate < idx + 1 ? '#ddd' : '#000',
+                }}
+              />
+            );
+          })}
+        </Flex>
+        <Input
+          value={props.text}
+          multiLine
+          styles={{ width: '100%', height: '100px' }}
+        />
       </Flex>
-      <Text>리뷰</Text>
     </Flex>
   );
 };

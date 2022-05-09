@@ -16,7 +16,7 @@ const Flex = (props) => {
 };
 
 Flex.defaultProps = {
-  defaultStyles: { width: '100%', jc: 'center', ai: 'center' },
+  defaultStyles: { width: '', jc: 'center', ai: 'center' },
 };
 
 const FlexDiv = styled.div`
