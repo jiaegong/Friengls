@@ -38,9 +38,7 @@ const Main = () => {
                   className="card"
                   key={`tutor${idx}`}
                   onClick={() => {
-                    history.push(`/detail/${item.userName}`);
-                    // dispatch(bookingAction.getBookingDB());
-                    console.log('111');
+                    history.push(`/detail/${item.userId}/1`);
                   }}
                 >
                   <img

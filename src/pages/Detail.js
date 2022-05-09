@@ -14,14 +14,18 @@ import axios from 'axios';
 const Detail = (props) => {
   const dispatch = useDispatch();
 
-  //디테일페이지에서 보여줄 유저
+  //디테일페이지에서 불러올 유저 api
+  const userApi = props.match.params;
+
+  useEffect(() => {
+    // const apiTest = { userId: '30', isTutor: '1' };
+    dispatch(userActions.getUserDetailDB(userApi));
+  }, []);
+  //디테일페이지에 사용할 유저 정보
+  const isTutor = detailInfo.isTutor;
   const tutorName = props.match.params.userName;
   const detailInfo = useSelector((state) => state.user.detailInfo);
-  const isTutor = detailInfo.isTutor;
-
-  // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
-  // const timeList = useSelector((state) => state.booking.list);
-  // console.log('useEffect 밖의 예약 정보 : ', timeList);
+  console.log(detailInfo);
 
   useEffect(() => {
     // dispatch(bookingAction.getBookingDB({ userName: tutorName, isTutor }));

@@ -1,19 +1,19 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { ProfileMedium } from '../image';
 import { checkSpelling } from '../shared/common';
 
 const DetailInfo = (props) => {
-  //+ isTutor왜 두번씩 렌더링 되지? onClick함수랑 관련있는 듯 확인해볼 것
-  //+ 완성도높이기1: 인풋값, 길이 제한하기
-  //+ 완성도높이기2:
-  //+ 완성도높이기3: 자연스러운 용어 사용하기
-
+  const location = useLocation();
   const imageRef = useRef();
   const dispatch = useDispatch();
+
+  //singup페이지에서 가져온 데이터
+  const signupInfo = location.signupForm;
 
   // 이미지 미리보기
   const [previewProfile, setPreviewProfile] = useState(ProfileMedium);
@@ -68,6 +68,7 @@ const DetailInfo = (props) => {
   const handleContents = (e) => {
     setContents(e.target.value);
   };
+  // console.log(contents);
 
   //한줄소개 input값
   const [comment, setComment] = useState('');
@@ -101,7 +102,9 @@ const DetailInfo = (props) => {
   };
   //태그삭제
   const deleteTag = (e) => {
-    console.log(e.target.id);
+    if (tagLimit) {
+      setTagLimit(false);
+    }
     setTagList(tagList.filter((tag, index) => index !== Number(e.target.id)));
   };
 
@@ -133,6 +136,29 @@ const DetailInfo = (props) => {
     setEndTime(e.target.value);
   };
 
+  //필수정보만 저장하기
+  const addSignupInfo = () => {
+    const userForm = {
+      //유저정보 추가하기
+      userEmail: signupInfo.userEmail,
+      userName: signupInfo.userName,
+      pwd: signupInfo.pwd,
+      pwdCheck: signupInfo.pwdCheck,
+      isTutor: false,
+      tag: '',
+      language1: '',
+      language2: '',
+      language3: '',
+      comment: '',
+      contents: '',
+
+      startTime: '',
+      endTime: '',
+    };
+    console.log('전송할 유저정보', userForm);
+    dispatch(userActions.signupDB(userForm));
+  };
+
   //사진업로드, 추가정보 디스패치
   const addDetailInfo = (e) => {
     //사진업로드
@@ -154,19 +180,22 @@ const DetailInfo = (props) => {
     //추가정보 디스패치
     const userForm = {
       //유저정보 추가하기
+      userEmail: signupInfo.userEmail,
+      userName: signupInfo.userName,
+      pwd: signupInfo.pwd,
+      pwdCheck: signupInfo.pwdCheck,
       tag: tagList.join(),
       language1: language1,
       language2: language2,
       language3: language3,
-      commnt: comment,
+      comment: comment,
       contents: contents,
       isTutor: isTutor,
       startTime: startTime,
       endTime: endTime,
     };
     console.log('전송할 유저정보', userForm);
-    // dispatch(userActions.editUserDB(userForm));
-    dispatch(userActions.editUser(userForm));
+    dispatch(userActions.signupDB(userForm));
   };
 
   return (
@@ -235,12 +264,12 @@ const DetailInfo = (props) => {
       <Grid>
         <span>자신을 소개해 주세요</span>
         <Grid>
-          <Textarea name="contents" onChange={handleContents} />
+          <Textarea name="contents" onBlur={handleContents} />
         </Grid>
       </Grid>
       <Grid>
         <span>한 줄 소개</span>
-        <input name="comment" onChange={handleComment} />
+        <input name="comment" onBlur={handleComment} />
       </Grid>
       {/* 태그 */}
       <TagBox>
@@ -327,12 +356,7 @@ const DetailInfo = (props) => {
         </Grid>
       )}
       {/* 버튼 */}
-      <button
-        type="button"
-        onClick={() => {
-          history.push('/');
-        }}
-      >
+      <button type="submit" onClick={addSignupInfo}>
         건너뛰기
       </button>
       <button type="submit" onClick={addDetailInfo}>
