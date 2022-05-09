@@ -16,6 +16,7 @@ const Detail = (props) => {
 
   //디테일페이지에서 불러올 유저 api
   const userApi = props.match.params;
+  console.log(userApi);
 
   useEffect(() => {
     // const apiTest = { userId: '30', isTutor: '1' };
@@ -27,10 +28,10 @@ const Detail = (props) => {
   const detailInfo = useSelector((state) => state.user.detailInfo);
   console.log(detailInfo);
 
-  useEffect(() => {
-    // dispatch(bookingAction.getBookingDB({ userName: tutorName, isTutor }));
-    // console.log('useEffect의 예약 정보 : ', timeList);
-  }, []);
+  // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
+  // useEffect(() => {
+  //   dispatch(bookingAction.getBookingDB());
+  // }, []);
 
   useEffect(() => {
     dispatch(userActions.getUserDetailDB());

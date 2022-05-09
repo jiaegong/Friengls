@@ -216,7 +216,7 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getUserDetail/?userId=${userApi.userId}&isTutor=${userApi.isTutor}`,
+      url: `https://jg-jg.shop/getUserDetail/${userApi.userName}`,
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },

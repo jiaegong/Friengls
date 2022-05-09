@@ -85,6 +85,7 @@ const DetailInfo = (props) => {
   };
   //태그 생성(빈 값일 경우 return)
   // + 중복일 경우(완전일치, 대소문자 구분없이) return 필요하다.
+  // 특수문자 사용하지 못하도록
   const exampleTag = ['언어교환', '일상회화'];
   const inputTag = (e) => {
     if (e.keyCode === 32) {
@@ -139,7 +140,7 @@ const DetailInfo = (props) => {
   //필수정보만 저장하기
   const addSignupInfo = () => {
     const userForm = {
-      //유저정보 추가하기
+      //필수정보 추가하기
       userEmail: signupInfo.userEmail,
       userName: signupInfo.userName,
       pwd: signupInfo.pwd,
@@ -151,7 +152,6 @@ const DetailInfo = (props) => {
       language3: '',
       comment: '',
       contents: '',
-
       startTime: '',
       endTime: '',
     };

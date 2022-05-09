@@ -146,6 +146,8 @@ const Signup = (props) => {
     pwdCheck: confirmPwd,
   };
 
+  console.log(signupForm);
+
   //DetailInfo페이지로 넘어가는 버튼 활성화
   const [disabled, setDisabled] = useState(true);
 

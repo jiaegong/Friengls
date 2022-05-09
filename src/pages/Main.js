@@ -38,7 +38,7 @@ const Main = () => {
                   className="card"
                   key={`tutor${idx}`}
                   onClick={() => {
-                    history.push(`/detail/${item.userId}/1`);
+                    history.push(`/detail/${item.userName}`);
                   }}
                 >
                   <img

@@ -24,6 +24,10 @@ const Mypage = () => {
     // history.push(`/videochat/${id}`);
   };
 
+  //마이페이지 유저정보
+  const userInfo = useSelector((state) => state.user.info);
+  console.log(userInfo);
+
   return (
     <Wrap>
       <div className="innerWrap">
