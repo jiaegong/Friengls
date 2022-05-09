@@ -5,6 +5,7 @@ import { Flex, Text } from '../elements/index';
 import Tutor from '../components/Tutor';
 import Review from '../components/Review';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { history } from '../redux/configureStore';
 
 const Main = () => {
   const dispatch = useDispatch();
