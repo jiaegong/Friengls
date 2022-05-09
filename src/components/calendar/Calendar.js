@@ -347,10 +347,8 @@ const CalendarTemplate = ({
   //   return a;
   // };
 
-
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
-
     let activeRangeStart = null;
     for (let time of activeDay) {
       if (time.available && !activeRangeStart) activeRangeStart = time.time;
@@ -486,7 +484,7 @@ const CalendarTemplate = ({
       // if (settingMultiple) {
       // addTimesToDay(day);
       // } else {
-      // console.log("선택한 날 : ", day);
+      console.log('선택한 날 : ', day);
       examineAvailabilityForDay(day);
       // }
     };
@@ -602,9 +600,9 @@ const CalendarTemplate = ({
                                           availabilityState[year][month][
                                             day
                                           ].filter((x) => x.available).length >
-                                          0
-                                          ? 'secondary'
-                                          : 'default'
+                                            0
+                                        ? 'secondary'
+                                        : 'default'
                                     }
                                     disabled={
                                       !day ||

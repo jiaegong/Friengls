@@ -2,12 +2,14 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { actionCreators as bookingAction } from '../redux/modules/booking';
+
 import { history } from '../redux/configureStore';
 
 const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
-  console.log(tutorList)
+  console.log(tutorList);
   // const reviewList = useSelector((state) => state.review.list);
   // console.log('유저정보 확인', tutorList);
 
@@ -37,6 +39,8 @@ const Main = () => {
                   key={`tutor${idx}`}
                   onClick={() => {
                     history.push(`/detail/${item.userName}`);
+                    // dispatch(bookingAction.getBookingDB());
+                    console.log('111');
                   }}
                 >
                   <img

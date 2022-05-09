@@ -47,22 +47,17 @@ const initialState = {
 
 // 예약하기.
 const setBookingDB = (data, tutorName) => {
-  // let token = localStorage.token;
-  // const token = getCookie('token')
   return function (dispatch, getState, { history }) {
     console.log(data, tutorName);
 
     const userName = data[0].userName;
-    // const start: data[0].start.toString();
-    // const end: data[0].end.toString();
-
-    console.log(userName);
 
     dispatch(setBooking(data));
 
     axios({
       method: 'post',
-      url: `https://jg-jg.shop/addBooking/jungi521`,
+      // url: `https://jg-jg.shop/addBooking/jungi521`,
+      url: `https://jg-jg.shop/addBooking/yoonha3331`, // 학생 또는 선생님
       // url: `https://jg-jg.shop/addBooking/${tutorName}`,
       data: {
         start: data[0].start.toString(),
@@ -92,8 +87,8 @@ const getBookingDB = ({ userName, isTutor }) => {
 
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
-      // url: `https://jg-jg.shop/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
+      // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
+      url: `https://jg-jg.shop/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
       // url: `https://jg-jg.shop/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {

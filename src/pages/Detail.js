@@ -9,6 +9,7 @@ import { actionCreators as likeActions } from '../redux/modules/like';
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
 import DetailUser from '../components/DetailUser';
+import axios from 'axios';
 
 const Detail = (props) => {
   const dispatch = useDispatch();
@@ -19,24 +20,42 @@ const Detail = (props) => {
   const isTutor = detailInfo.isTutor;
 
   // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
-  const timeList = useSelector((state) => state.booking.list);
-  console.log("useEffect 밖의 예약 정보 : ", timeList)
+  // const timeList = useSelector((state) => state.booking.list);
+  // console.log('useEffect 밖의 예약 정보 : ', timeList);
+
+  useEffect(() => {
+    // dispatch(bookingAction.getBookingDB({ userName: tutorName, isTutor }));
+    // console.log('useEffect의 예약 정보 : ', timeList);
+  }, []);
 
   useEffect(() => {
     dispatch(userActions.getUserDetailDB());
-    dispatch(bookingAction.getBookingDB({ userName: tutorName, isTutor }));
-    console.log("useEffect의 예약 정보 : ", timeList)
+    // 예약 리스트 불러오기
+    axios({
+      method: 'get',
+      // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
+      url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
+      // url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=${isTutor}`, // 학생 또는 선생님
+    })
+      .then((doc) => {
+        console.log('!!!!!!!!!!!!');
+        console.log(doc.data.datas1);
+        setAvailability(doc.data.datas1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // 초기값으로 리듀서에서 불러오는 값을 넣어둠
-  const [availability, setAvailability] = React.useState(timeList);
+  const [availability, setAvailability] = React.useState([]);
 
   const Calendar = CalendarTemplate({
     tutorName,
     availability,
-    setAvailability: timeList => {
+    setAvailability: (timeList) => {
       // performAdditionalAction(update)
-      setAvailability(timeList)
+      setAvailability(timeList);
     },
   });
 
