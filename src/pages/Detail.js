@@ -14,37 +14,35 @@ const Detail = (props) => {
   const dispatch = useDispatch();
 
   //디테일페이지에서 보여줄 유저
-  const userId = props.match.params.userName;
-  useEffect(() => {
-    dispatch(userActions.getUserDetailDB(userId));
-  }, []);
-  // //디테일페이지에 사용할 유저 정보
-
+  const tutorName = props.match.params.userName;
   const detailInfo = useSelector((state) => state.user.detailInfo);
-  console.log(detailInfo.isTutor);
+  const isTutor = detailInfo.isTutor;
+
+  // console.log({ tutorName, isTutor })
+
+
+  useEffect(() => {
+    dispatch(userActions.getUserDetailDB());
+  }, []);
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
-    dispatch(bookingAction.getBookingDB());
+    dispatch(bookingAction.getBookingDB({ userName: tutorName, isTutor }));
   }, []);
 
   // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
   const timeList = useSelector((state) => state.booking.list);
-  // console.log('검사중 : ', timeList[0].start.toDateString());
-  // console.log('검사중 : ', timeList[0].start.getDate()); //일
-  // console.log(timeList[0].start.getHours()); //시간
-  // console.log(timeList[0].start.toTimeString()); // 08:00:00 GMT+0900
-  // console.log(typeof timeList[0].start.toString()); // Thu May 19 2022 08:00:00 GMT+0900
-  // console.log(timeList[0].start.toDateString()); // Thu May 19 2022
-  // console.log(typeof timeList[0].start);
 
   // 초기값으로 리듀서에서 불러오는 값을 넣어둠
   const [availability, setAvailability] = React.useState(timeList);
-  // console.log('리듀서랑 연동한 데이터 ', availability);
 
   const Calendar = CalendarTemplate({
+    tutorName,
     availability,
-    setAvailability,
+    setAvailability: timeList => {
+      // performAdditionalAction(update)
+      setAvailability(timeList)
+    },
   });
 
   // 리뷰 불러오기, 수정, 삭제 부분

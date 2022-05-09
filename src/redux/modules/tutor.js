@@ -2,9 +2,9 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import axios from 'axios';
 
-const GET_LIST = 'GET_LIST';
+const GET_TUTOR_LIST = 'GET_TUTOR_LIST';
 
-const getList = createAction(GET_LIST, (list) => ({ list }));
+const getList = createAction(GET_TUTOR_LIST, (list) => ({ list }));
 
 const initialState = {
   list: [
@@ -37,7 +37,7 @@ const getListDB = () => {
 
 export default handleActions(
   {
-    [GET_LIST]: (state, action) =>
+    [GET_TUTOR_LIST]: (state, action) =>
       produce(state, (draft) => {
         // console.log(action.payload.list.data);
         draft.list = action.payload.list.data;

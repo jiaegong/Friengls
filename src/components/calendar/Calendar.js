@@ -17,6 +17,7 @@ import { actionCreators as calendarActions } from '../../redux/modules/booking';
 import { getCookie } from '../../shared/Cookie';
 
 const CalendarTemplate = ({
+  tutorName,
   availability,
   setAvailability,
   primaryColor = '#DF1B1B',
@@ -37,7 +38,7 @@ const CalendarTemplate = ({
 }) => {
   const dispatch = useDispatch();
   const userName = useSelector((state) => state.user.info.userName);
-
+  // console.log({ tutorName })
   // 스타일 지정 해주는거
   const theme = createTheme({
     typography: {
@@ -292,7 +293,7 @@ const CalendarTemplate = ({
   }
 
   const convertAvailabilityFromDatabase = (availability) => {
-    console.log({ availability });
+    // console.log({ availability });
     const output = {};
     for (let range of availability) {
       let start = moment(range.start);
@@ -346,12 +347,10 @@ const CalendarTemplate = ({
   //   return a;
   // };
 
-  //!!!!!!!!!!!
+
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
-    // let token = localStorage.getItem('token');
-    // let token = getCookie('token)
-    // console.log('token', '-------------------------');
+
     let activeRangeStart = null;
     for (let time of activeDay) {
       if (time.available && !activeRangeStart) activeRangeStart = time.time;
@@ -417,7 +416,7 @@ const CalendarTemplate = ({
     const [availabilityState, setAvailabilityState] = useState(
       convertAvailabilityFromDatabase(availability),
     );
-    console.log({ availabilityState });
+    // console.log({ availabilityState });
     console.log('5');
 
     // 선택한 시간 값 받아 오는 stats
@@ -507,7 +506,7 @@ const CalendarTemplate = ({
 
       // useState로 값 저장해주는거!!!!!!!
       // dispatch 할때 userName 같이 보내줘야된다.
-      dispatch(calendarActions.setBookingDB(data));
+      dispatch(calendarActions.setBookingDB(data, tutorName));
       setAvailability(data);
     };
 
@@ -603,9 +602,9 @@ const CalendarTemplate = ({
                                           availabilityState[year][month][
                                             day
                                           ].filter((x) => x.available).length >
-                                            0
-                                        ? 'secondary'
-                                        : 'default'
+                                          0
+                                          ? 'secondary'
+                                          : 'default'
                                     }
                                     disabled={
                                       !day ||

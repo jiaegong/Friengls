@@ -22,7 +22,7 @@ const initialState = {
     userName: 'asdaf',
     pwd: 'asdaasd',
     pwdCheck: 'asdaasd',
-    isTutor: false,
+    isTutor: 0,
     tag: ',,',
     language1: '',
     language2: '',
@@ -36,7 +36,7 @@ const initialState = {
   isLogin: false, //확인해보기
   detailInfo: {
     userName: 'asdaf',
-    isTutor: false,
+    isTutor: 1,
     tag: ',,',
     language1: '',
     language2: '',
@@ -189,7 +189,7 @@ const loginCheckDB = () => {
       },
     })
       .then((response) => {
-        console.log('loginCheckDB성공', response.data);
+        // console.log('loginCheckDB성공', response.data);
         dispatch(setUser(response.data));
       })
       .catch((error) => {
@@ -245,9 +245,9 @@ const editUserDB = (userInfo) => {
       data: userInfo,
     })
       .then((response) => {
-        console.log('editUserDB성공', response);
+        // console.log('editUserDB성공', response);
         const userInfo = {};
-        console.log('editUserDB 후 로그인정보', userInfo);
+        // console.log('editUserDB 후 로그인정보', userInfo);
         dispatch(editUser(userInfo));
         // 상제정보페이지에서는 메인으로 전환, 마이페이지에서는 새로고침
       })
@@ -272,12 +272,12 @@ const editUserDB = (userInfo) => {
 
 const getUserDetailDB = (userId) => {
   return function (dispatch, getState, { history }) {
-    console.log('getUserDetailDB시작');
+    // console.log('getUserDetailDB시작');
 
     const userInfos = {
-      userEmail: 'detail@test.com',
+      userEmail: 'tutor@test.com',
       userName: userId,
-      isTutor: true,
+      isTutor: 1,
       tag: 'asd,sdf,fgh',
       language1: '한국',
       language2: 'asd',
@@ -313,19 +313,19 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        console.log('setuser리듀서시작', action.payload.userInfo);
+        // console.log('setuser리듀서시작', action.payload.userInfo);
         draft.info = action.payload.userInfo;
         draft.isLogin = true;
       }),
     [EDIT_USER]: (state, action) =>
       produce(state, (draft) => {
-        console.log('editUser리듀서시작', action.payload.userInfo);
+        // console.log('editUser리듀서시작', action.payload.userInfo);
         draft.info = action.payload.userInfo; // 이거맞나? 확인
         draft.isLogin = true;
       }),
     [SET_USER_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        console.log('setUserDetail리듀서시작', action.payload.userInfo);
+        // console.log('setUserDetail리듀서시작', action.payload.userInfo);
         draft.detailInfo = action.payload.userInfo;
       }),
   },

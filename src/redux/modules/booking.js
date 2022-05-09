@@ -46,24 +46,24 @@ const initialState = {
 };
 
 // 예약하기.
-const setBookingDB = (data) => {
+const setBookingDB = (data, tutorName) => {
   // let token = localStorage.token;
   // const token = getCookie('token')
   return function (dispatch, getState, { history }) {
-    console.log(data);
+    console.log(data, tutorName);
 
     const userName = data[0].userName;
     // const start: data[0].start.toString();
     // const end: data[0].end.toString();
 
-    console.log();
+    console.log(userName);
 
     dispatch(setBooking(data));
 
     axios({
       method: 'post',
-      url: `https://jg-jg.shop/addBooking/yoonha3331`,
-      // url: `https://jg-jg.shop/addBooking/${튜터이름}`,
+      // url: `https://jg-jg.shop/addBooking/yoonha3331`,
+      // url: `https://jg-jg.shop/addBooking/${tutorName}`,
       data: {
         start: data[0].start.toString(),
         end: data[0].end.toString(),
@@ -83,15 +83,17 @@ const setBookingDB = (data) => {
 };
 
 // 예약리스트 불러오기
-const getBookingDB = (userName) => {
+const getBookingDB = ({ userName, isTutor }) => {
+  // const getBookingDB = (data) => {
   return function (dispatch, getState, { history }) {
     // userName 없을시 에러 뜨는 경우 방지 ??? 없어도 되나??
     // if (!userName) return;
+    console.log({ userName, isTutor })
 
     axios({
       method: 'get',
       url: `https://jg-jg.shop/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
-      // url: `https://jg-jg.shop/getBooking/?userName=${튜터이름}&isTutor=${1 or 0}`, // 학생 또는 선생님
+      // url: `https://jg-jg.shop/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {
         // console.log(doc.data.datas1[0].endTime);

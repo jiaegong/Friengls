@@ -7,12 +7,16 @@ import { ProfileMedium } from '../image';
 
 const Mypage = () => {
   const dispatch = useDispatch();
-  const bookingList = useSelector((state) => state.booking.list);
+  // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = useSelector((state) => state.user.info.isTutor);
-  console.log(isTutor);
+  const userName = useSelector((state) => state.user.info.userName);
+  // console.log({ isTutor, userName });
+
+  //  불러온 예약 정보
+  const bookingList = useSelector((state) => state.booking.list);
 
   useEffect(() => {
-    dispatch(bookingAction.getBookingDB());
+    dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, []);
 
   const videoChatHandler = (roomName) => {
@@ -72,7 +76,7 @@ const Mypage = () => {
               if (!item) return; // 이 부분 불확실...
               let [week, month, day, year, sTime] = startTime.split(' ');
               let start = sTime.substr(0, 5);
-              let end = endTime.substr(-26, 5);
+              let end = endTime.substr(-17, 5);
               return (
                 <li className="booking" key={`booking${idx}`}>
                   <div className="bookingInfo">
