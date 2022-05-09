@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { emailForm, pwdForm, userNameForm } from '../shared/common';
 import axios from 'axios';
@@ -136,45 +138,25 @@ const Signup = (props) => {
       });
   };
 
-  //DetailInfo페이지로 넘어가기 위한 함수
-  const signUp = () => {
-    if (emailCheck !== '사용 가능한 이메일입니다.') {
-      window.alert('이메일 중복 확인을 해주세요.');
-      return;
-    }
-
-    if (userNameCheck !== '사용 가능한 닉네임입니다.') {
-      window.alert('닉네임 중복 확인을 해주세요.');
-      return;
-    }
-
-    if (!pwdForm(pwd)) {
-      window.alert('비밀번호 형식을 확인해주세요.');
-      return;
-    }
-    if (pwd !== confirmPwd) {
-      window.alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-      return;
-    }
-
-    const userForm = {
-      userEmail: userEmail,
-      userName: userName,
-      pwd: pwd,
-      pwdCheck: confirmPwd,
-      isTutor: false,
-      tag: ',,',
-      language1: '',
-      language2: '',
-      language3: '',
-      commnt: '',
-      contents: '',
-      startTime: '',
-      endTime: '',
-    };
-    console.log('보낼 데이터', userForm);
-    dispatch(userActions.signupDB(userForm));
+  //signup페이지에서 받는 유저정보
+  const signupForm = {
+    userEmail: userEmail,
+    userName: userName,
+    pwd: pwd,
+    pwdCheck: confirmPwd,
   };
+
+  //DetailInfo페이지로 넘어가는 버튼 활성화
+  const [disabled, setDisabled] = useState(true);
+
+  const isTrue = !(
+    emailCheck === '사용 가능한 이메일입니다.' &&
+    userNameCheck === '사용 가능한 닉네임입니다.' &&
+    pwdForm(pwd) &&
+    pwd === confirmPwd
+  )
+    ? true
+    : false;
 
   return (
     <Container>
@@ -184,10 +166,9 @@ const Signup = (props) => {
           type="text"
           name="userEmail"
           onChange={handleEmail}
-          onBlur={checkDuplicatedEmail} //성공하면 온블러로 바꾸기
+          onBlur={checkDuplicatedEmail} //자동 이메일 체크
         />
         <span>{emailCheck}</span>
-        {/* <button onClick={checkDuplicatedEmail}>중복확인</button> */}
       </InputBox>
       <InputBox>
         <input
@@ -195,10 +176,9 @@ const Signup = (props) => {
           type="text"
           name="userName"
           onChange={handleUserName}
-          onBlur={checkDuplicatedUserName} // 성공하면 온블러로 바꾸기
+          onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
         />
         <span>{userNameCheck}</span>
-        {/* <button onClick={checkDuplicatedUserName}>중복확인</button> */}
       </InputBox>
       <InputBox>
         <input
@@ -218,9 +198,10 @@ const Signup = (props) => {
         />
         <span>{confirmPwdCheck}</span>
       </InputBox>
-      <div>
-        <button onClick={signUp}>가입하기</button>
-      </div>
+
+      <Link to={{ pathname: '/signup/detail', signupForm }}>
+        <input type="button" value="다음" disabled={isTrue} />
+      </Link>
     </Container>
   );
 };

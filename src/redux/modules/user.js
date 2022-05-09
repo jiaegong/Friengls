@@ -35,7 +35,7 @@ const initialState = {
   },
   isLogin: false, //확인해보기
   detailInfo: {
-    userName: 'asdaf',
+    userName: '',
     isTutor: false,
     tag: ',,',
     language1: '',
@@ -104,32 +104,16 @@ const signupDB = (signupInfo) => {
     })
       .then((response) => {
         console.log('signupDB성공', response);
-        //어떻게 추가정보로 넘어갈까?
-        //바로 loginDB로 넘어가면 안되나?
         const loginInfo = {
           userEmail: signupInfo.userEmail,
           pwd: signupInfo.pwd,
-          isSignup: true,
         };
         console.log('회원가입DB후로그인정보', loginInfo);
         dispatch(loginDB(loginInfo));
-        // history.replace('/signup/detail');
       })
       .catch((error) => {
         window.alert('회원가입에 실패하셨습니다.');
-        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-        if (error.response) {
-          // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
-        } else if (error.request) {
-          // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
-          // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
-          // node.js에서는 http.ClientRequest 인스턴스입니다.
-          console.log(error.request);
-        } else {
-          // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
+        console.log(error);
       });
   };
 };
@@ -138,41 +122,20 @@ const loginDB = (loginForm) => {
   return function (dispatch, getState, { history }) {
     console.log('login시작', loginForm);
 
-    const loginInfo = {
-      userEmail: loginForm.userEmail,
-      pwd: loginForm.pwd,
-    };
-
     axios({
       method: 'post',
       url: 'https://jg-jg.shop/login',
-      data: loginInfo,
+      data: loginForm,
     })
       .then((response) => {
         console.log('loginDB성공', response.data);
         setCookie('token', response.data.token);
-        // localStorage.setItem('token', response.data.token);
-        //회원가입 후 로그인, 기존유저 로그인 일 때 전환할 페이지가 달라지도록 만들어준다.
-        loginForm.isSignup
-          ? history.replace('/signup/detail')
-          : history.replace('/');
+        history.replace('/');
         window.location.reload();
       })
       .catch((error) => {
         window.alert('로그인에 실패하셨습니다.');
-        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-        if (error.response) {
-          // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
-        } else if (error.request) {
-          // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
-          // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
-          // node.js에서는 http.ClientRequest 인스턴스입니다.
-          console.log(error.request);
-        } else {
-          // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
+        console.log(error);
       });
   };
 };
@@ -194,19 +157,8 @@ const loginCheckDB = () => {
       })
       .catch((error) => {
         window.alert('로그인체크에 실패하셨습니다.');
-        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-        if (error.response) {
-          // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
-        } else if (error.request) {
-          // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
-          // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
-          // node.js에서는 http.ClientRequest 인스턴스입니다.
-          console.log(error.request);
-        } else {
-          // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
+        console.log(error);
+        //메인으로 백
       });
   };
 };
@@ -253,58 +205,29 @@ const editUserDB = (userInfo) => {
       })
       .catch((error) => {
         window.alert('정보 저장에 실패하셨습니다.');
-        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-        if (error.response) {
-          // 요청이 전송되었고, 서버는 2xx 외의 상태 코드로 응답했습니다.
-        } else if (error.request) {
-          // 요청이 전송되었지만, 응답이 수신되지 않았습니다.
-          // 'error.request'는 브라우저에서 XMLHtpRequest 인스턴스이고,
-          // node.js에서는 http.ClientRequest 인스턴스입니다.
-          console.log(error.request);
-        } else {
-          // 오류가 발생한 요청을 설정하는 동안 문제가 발생했습니다.
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
+        console.log(error);
       });
   };
 };
 
-const getUserDetailDB = (userId) => {
+const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
-    console.log('getUserDetailDB시작');
+    console.log('getUserDetailDB시작', userApi);
 
-    const userInfos = {
-      userEmail: 'detail@test.com',
-      userName: userId,
-      isTutor: true,
-      tag: 'asd,sdf,fgh',
-      language1: '한국',
-      language2: 'asd',
-      language3: 'ads',
-      comment: 'asd',
-      contents: '123',
-      startTime: '12',
-      endTime: '16',
-    };
-
-    dispatch(setUserDetail(userInfos));
-
-    // axios({
-    //   method: 'get',
-    //   url: `https://jg-jg.shop/login/getUserDetail/${userId}`,
-    //   headers: {
-    //     Authorization: `Bearer ${getCookie('token')}`,
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log('getUserDetailDB성공', response.data);
-    //     dispatch(setUserDetail(response.data));
-    //   })
-    //   .catch((error) => {
-    //     console.log('getUserDetailDB실패', error);
-    //     history.replace('/login');
-    //   });
+    axios({
+      method: 'get',
+      url: `https://jg-jg.shop/getUserDetail/?userId=${userApi.userId}&isTutor=${userApi.isTutor}`,
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+      .then((response) => {
+        console.log('getUserDetailDB성공', response.data.data[0]);
+        dispatch(setUserDetail(response.data.data[0]));
+      })
+      .catch((error) => {
+        console.log('getUserDetailDB실패', error);
+      });
   };
 };
 

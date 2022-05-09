@@ -13,15 +13,17 @@ import DetailUser from '../components/DetailUser';
 const Detail = (props) => {
   const dispatch = useDispatch();
 
-  //디테일페이지에서 보여줄 유저
-  const userId = props.match.params.userName;
+  //디테일페이지에서 불러올 유저 api
+  const userApi = props.match.params;
+
   useEffect(() => {
-    dispatch(userActions.getUserDetailDB(userId));
+    // const apiTest = { userId: '30', isTutor: '1' };
+    dispatch(userActions.getUserDetailDB(userApi));
   }, []);
-  // //디테일페이지에 사용할 유저 정보
+  //디테일페이지에 사용할 유저 정보
 
   const detailInfo = useSelector((state) => state.user.detailInfo);
-  console.log(detailInfo.isTutor);
+  console.log(detailInfo);
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {

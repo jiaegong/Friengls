@@ -44,7 +44,7 @@ const DetailUser = (props) => {
       </UserInfoBox>
       <div>
         <h2>자기소개</h2>
-        <TextInfo>detailInfo.contents</TextInfo>
+        <TextInfo>{detailInfo.contents}</TextInfo>
       </div>
 
       {/* like 버튼, 나중에 아이콘 찾아서 바꿔 놓기, like 상태 값에 따라서 채워진 하트/빈 하트 */}
