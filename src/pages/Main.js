@@ -10,6 +10,8 @@ import { history } from '../redux/configureStore';
 const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
+  const reviewList = useSelector((state) => state.review.list);
+
   console.log(tutorList);
   // const reviewList = useSelector((state) => state.review.list);
   // console.log('유저정보 확인', tutorList);
@@ -71,8 +73,23 @@ const Main = () => {
             })}
           </div>
 
+          {/* 리뷰 부분 */}
           <div className="reviewWrap">
-            <div className="reviewInner"></div>
+            <div className="reviewInner">
+              <div className="contentsTitleWrap">
+                <div className="subTitleWrap">
+                  <span className="subReviewTitle">
+                    다른 튜티들의 리뷰를 들어보세요
+                  </span>
+                  <span className="reviewMoreBtn">더보기 ></span>
+                </div>
+                <p className="title">수강 추천 리뷰</p>
+              </div>
+              {/* 리뷰 맵 돌리는 곳 */}
+              {reviewList?.map((r) => {
+                return <div key={r.reviewId}>{/* <Review {...r} /> */}</div>;
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -85,6 +102,7 @@ const Wrap = styled.div`
   width: 100%;
   min-height: 905px;
 
+  /* 배너 */
   .bannerWrap {
     width: 100%;
     height: 700px;
@@ -178,7 +196,7 @@ const Wrap = styled.div`
         }
         .title {
           /* font-size: 60px; */
-          font-size: 45px;
+          font-size: 48px;
           font-weight: bold;
         }
       }
@@ -189,7 +207,9 @@ const Wrap = styled.div`
         display: grid;
         place-items: center;
         grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-        grid-gap: 2rem;
+        /* grid-gap: 2rem; */
+        row-gap: 4rem;
+        column-gap: 2rem;
 
         /* background: #575757; */
 
@@ -239,16 +259,19 @@ const Wrap = styled.div`
 
       .reviewWrap {
         width: 100%;
-        min-height: 200px;
-        margin-top: 60px;
+        min-height: 600px;
+        margin-top: 131px;
+        /* margin-top: 60px; */
         background: #ddd;
 
         .reviewInner {
-          width: 95%;
-          padding: 20px 30px;
+          width: 100%;
           margin: auto;
-
           background-color: #fff;
+          .contentsTitleWrap {
+            .subTitleWrap {
+            }
+          }
         }
       }
     }

@@ -143,6 +143,7 @@ const Wrap = styled.div`
       height: 36px;
       margin: auto;
       display: flex;
+      /* justify-content: center; */
       justify-content: space-around;
       align-items: center;
       position: relative;
@@ -156,12 +157,14 @@ const Wrap = styled.div`
         justify-content: center;
         vertical-align: middle;
         align-items: center;
+        cursor: pointer;
         position: relative;
         font-size: 16px;
         font-weight: 800;
         letter-spacing: 1px;
 
-        margin-right: 10px;
+        margin-right: 54px;
+        /* background: #8e8e8e; */
 
         cursor: pointer;
         /* background: #8e8e8e; */
