@@ -147,7 +147,7 @@ const Wrap = styled.div`
       align-items: center;
       position: relative;
 
-      background: #c5c5c5;
+      /* background: #c5c5c5; */
 
       li {
         width: 80px;
@@ -156,16 +156,21 @@ const Wrap = styled.div`
         justify-content: center;
         vertical-align: middle;
         align-items: center;
-        cursor: pointer;
-        background: #8e8e8e;
         position: relative;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 1px;
 
         margin-right: 10px;
+
+        cursor: pointer;
+        /* background: #8e8e8e; */
 
         &:nth-child(5) {
           margin: 0;
         }
 
+        /* 알림 갯수 */
         .counter {
           background-color: red;
           color: #fff;

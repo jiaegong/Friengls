@@ -20,13 +20,13 @@ const Detail = (props) => {
 
   useEffect(() => {
     // const apiTest = { userId: '30', isTutor: '1' };
-    dispatch(userActions.getUserDetailDB(userApi));
+    // dispatch(userActions.getUserDetailDB(userApi));
   }, []);
   //디테일페이지에 사용할 유저 정보
-  const isTutor = detailInfo.isTutor;
+  // const isTutor = detailInfo.isTutor;
   const tutorName = props.match.params.userName;
   const detailInfo = useSelector((state) => state.user.detailInfo);
-  console.log(detailInfo);
+  // console.log(detailInfo);
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   // useEffect(() => {

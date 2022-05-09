@@ -7,6 +7,7 @@ import KakaoLogin2 from './kakaoLoginImg2.png';
 import KakaoLogin3 from './kakaoLoginImg3.png';
 import ProfileMedium from './profileMedium.png';
 import MainLogo from './MainLogo.png';
+import BannerImg from './BannerImg.png';
 
 export {
   GoogleLogin1,
@@ -18,4 +19,5 @@ export {
   KakaoLogin3,
   ProfileMedium,
   MainLogo,
+  BannerImg,
 };
