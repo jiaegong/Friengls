@@ -214,20 +214,20 @@ const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
     console.log('getUserDetailDB시작', userApi);
 
-    axios({
-      method: 'get',
-      url: `https://jg-jg.shop/getUserDetail/${userApi.userName}`,
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
-    })
-      .then((response) => {
-        console.log('getUserDetailDB성공', response.data.data[0]);
-        dispatch(setUserDetail(response.data.data[0]));
-      })
-      .catch((error) => {
-        console.log('getUserDetailDB실패', error);
-      });
+    // axios({
+    //   method: 'get',
+    //   url: `https://jg-jg.shop/getUserDetail/${userApi.userName}`,
+    //   headers: {
+    //     Authorization: `Bearer ${getCookie('token')}`,
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log('getUserDetailDB성공', response.data.data[0]);
+    //     dispatch(setUserDetail(response.data.data[0]));
+    //   })
+    //   .catch((error) => {
+    //     console.log('getUserDetailDB실패', error);
+    //   });
   };
 };
 

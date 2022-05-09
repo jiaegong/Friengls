@@ -23,7 +23,7 @@ const Detail = (props) => {
     dispatch(userActions.getUserDetailDB(userApi));
   }, []);
   //디테일페이지에 사용할 유저 정보
-  const isTutor = detailInfo.isTutor;
+  // const isTutor = detailInfo.isTutor;
   const tutorName = props.match.params.userName;
   const detailInfo = useSelector((state) => state.user.detailInfo);
   console.log(detailInfo);
