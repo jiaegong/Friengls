@@ -10,6 +10,8 @@ import { io } from 'socket.io-client';
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
 
+import { MainLogo } from '../image/index';
+
 const Header = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
@@ -47,8 +49,7 @@ const Header = () => {
             history.push('/');
           }}
         >
-          LOGO
-          {/* img or background_img로 설정하면 될듯. */}
+          <img className="logo" src={MainLogo} alt=""></img>
         </div>
 
         <ul className="navBarWrap">
@@ -58,11 +59,9 @@ const Header = () => {
               history.push('/search');
             }}
           >
-            튜터찾기
+            선생님 찾기
           </li>
-          <li>
-            알림 아이콘
-          </li>
+          <li>알림</li>
           {token ? (
             <>
               <li
@@ -111,37 +110,40 @@ export default Header;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 120px;
-  background: #aaa;
+  height: 240px;
+  background: #fff;
 
   .innerWrap {
     width: 90%;
     max-width: 1400px;
     height: 100%;
-    padding: 0px 16px 0;
+    padding: 50px 16px 0;
     margin: auto;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #eee;
+    /* text-align: center; */
 
+    /* display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center; */
+    /* background: #eee; */
     .logoWrap {
-      width: 100px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 313px;
+      margin: 0 auto 53px;
       cursor: pointer;
-      background: #aaa;
+      .logo {
+        width: 100%;
+        height: 50px;
+      }
     }
 
     .navBarWrap {
-      /* width: 300px; */
-      width: auto;
-      height: 35px;
+      max-width: 612px;
+      /* width: auto; */
+      height: 36px;
+      margin: auto;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
       position: relative;
 
