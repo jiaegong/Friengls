@@ -173,7 +173,7 @@ const DetailInfo = (props) => {
     formData.append('image', profileImage);
 
     for (let value of formData.values()) {
-      console.log('업로드할 이미지데이터', value);
+      // console.log('업로드할 이미지데이터', value);
     }
     // dispatch(formData));
 

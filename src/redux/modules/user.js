@@ -56,7 +56,7 @@ const emailCheckDB = (userEmail) => {
   return function () {
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp/emailCheck',
+      url: 'http://13.124.206.190/signUp/emailCheck',
       data: {
         userEmail: userEmail,
       },
@@ -78,7 +78,8 @@ const userNameCheckDB = (userName) => {
   return function () {
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp/nameCheck',
+      // url: 'https://jg-jg.shop/signUp/nameCheck',
+      url: 'http://13.124.206.190/signUp/nameCheck',
       data: {
         userName: userName,
       },
@@ -99,7 +100,8 @@ const signupDB = (signupInfo) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp',
+      // url: 'https://jg-jg.shop/signUp',
+      url: 'http://13.124.206.190/signUp',
       data: signupInfo,
     })
       .then((response) => {
@@ -124,7 +126,8 @@ const loginDB = (loginForm) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/login',
+      // url: 'https://jg-jg.shop/login',
+      url: 'http://13.124.206.190/login',
       data: loginForm,
     })
       .then((response) => {
@@ -146,7 +149,8 @@ const loginCheckDB = () => {
 
     axios({
       method: 'get',
-      url: 'https://jg-jg.shop/login/getUser',
+      // url: 'https://jg-jg.shop/login/getUser',
+      url: 'http://13.124.206.190/login/getUser',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
@@ -168,6 +172,7 @@ const kakaoLogin = (code) => {
     console.log(code);
     axios({
       method: 'GET',
+      // url: `https://jg-jg.shop?code=${code}`,
       url: `http://13.124.206.190?code=${code}`,
     })
       .then((response) => {
@@ -190,7 +195,8 @@ const editUserDB = (userInfo) => {
 
     axios({
       method: 'put',
-      url: 'https://jg-jg.shop/editUserInfo',
+      // url: 'https://jg-jg.shop/editUserInfo',
+      url: 'http://13.124.206.190/editUserInfo',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
