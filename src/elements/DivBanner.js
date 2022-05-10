@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { BannerImg } from '../image/index';
 
 const DivBanner = (props) => {
-  const { children } = props;
+  const { children, className } = props;
 
-  return <BannerWrap>{children}</BannerWrap>;
+  return <BannerWrap className={className}>{children}</BannerWrap>;
 };
 
 export default DivBanner;

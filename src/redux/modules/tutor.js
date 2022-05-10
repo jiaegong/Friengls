@@ -11,9 +11,9 @@ const initialState = {
     {
       userName: 'aaa',
       userProfile: '',
-      tag: '',
-      comment: '',
-      contents: '',
+      tag: 'bbb',
+      comment: 'bbb',
+      contents: 'bbb',
       isTutor: true,
     },
   ],
