@@ -7,8 +7,7 @@ const ADD_REVIEW = 'ADD_COMMENT';
 const EDIT_REVIEW = 'EDIT_REVIEW';
 const DELETE_REVIEW = 'DELETE_REVIEW';
 
-const setReview = createAction(SET_REVIEW, (tutorName, review) => ({
-  tutorName,
+const setReview = createAction(SET_REVIEW, (review) => ({
   review,
 }));
 const addReview = createAction(ADD_REVIEW, (tutorName, review) => ({
@@ -22,21 +21,31 @@ const editReview = createAction(EDIT_REVIEW, (reviewId, review) => ({
 const deleteReview = createAction(DELETE_REVIEW, (reviewId) => ({ reviewId }));
 
 const initialState = {
-  list: {},
+  list: [
+    {
+      Tutee_userName: '',
+      Tutor_userName: '',
+      createdAt: '',
+      rate: '',
+      reviewId: '',
+      text: '',
+      updatedAt: '',
+    },
+  ],
 };
-
 const addReviewDB = (token, tutorName, rate, text) => {
+  console.log(token, tutorName, rate, text);
   return function (dispatch) {
     axios({
       method: 'post',
-      // url: '서버주소/addReview',
+      url: 'https://jg-jg.shop/addReview',
       data: {
-        tutorName,
+        tutor_userName: tutorName,
         rate,
         text,
       },
       headers: {
-        Authorization: `Bearer${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -45,32 +54,45 @@ const addReviewDB = (token, tutorName, rate, text) => {
       })
       .catch((err) => {
         window.alert('리뷰 작성에 실패했습니다!');
-        console.log(err);
       });
   };
 };
 
-const getReviewDB = (tutorName = null) => {
+const getReviewDB = () => {
   return function (dispatch) {
-    // axios({
-    //   method: 'post',
-    //   // url: '서버주소/getReview',
-    //   data: { tutorId },
-    // })
-    //   .then((res) => {
-    //     dispatch(setReview(res.data.tutorId, res.data.review));
-    //   })
-    //   .catch((err) => {
-    //     console.log('리뷰 불러오기에 실패했습니다!', err);
-    //   });
+    axios({
+      method: 'get',
+      url: 'http://3.36.123.28/getReview',
+    })
+      .then((res) => {
+        dispatch(setReview(res.data.data));
+      })
+      .catch((err) => {
+        console.log('리뷰 불러오기에 실패했습니다!', err);
+      });
+  };
+};
+
+const getOneReviewDB = (tutorName = null) => {
+  return function (dispatch) {
+    axios({
+      method: 'get',
+      url: `https://jg-jg.shop/getReview/${tutorName}`,
+    })
+      .then((res) => {
+        dispatch(setReview(res.data));
+      })
+      .catch((err) => {
+        console.log('리뷰 불러오기에 실패했습니다!', err);
+      });
   };
 };
 
 const editReviewDB = (reviewId, text) => {
   return function (dispatch, getState, { history }) {
     axios({
-      method: 'put',
-      // url: '서버주소/editReview',
+      method: 'patch',
+      url: 'https://jg-jg.shop/editReview',
       data: {
         reviewId,
         text,
@@ -90,7 +112,7 @@ const deleteReviewDB = (reviewId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'delete',
-      // url: `서버주소/deleteReview`,
+      url: `https://jg-jg.shop/deleteReview`,
       data: { reviewId },
     })
       .then((res) => {
@@ -107,7 +129,7 @@ export default handleActions(
   {
     [SET_REVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.list[action.payload.tutorName] = action.payload.review;
+        draft.list = action.payload.review;
       }),
     [ADD_REVIEW]: (state, action) =>
       produce(state, (draft) => {
@@ -133,6 +155,7 @@ const actionCreators = {
   addReview,
   setReview,
   getReviewDB,
+  getOneReviewDB,
   editReview,
   editReviewDB,
   deleteReview,

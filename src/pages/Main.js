@@ -4,21 +4,22 @@ import styled from 'styled-components';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { BannerImg } from '../image/index';
+import Review from '../components/Review';
+import { AiFillStar } from 'react-icons/ai';
 
 import { history } from '../redux/configureStore';
 
 const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
-  const reviewList = useSelector((state) => state.review.list);
 
   console.log(tutorList);
-  // const reviewList = useSelector((state) => state.review.list);
-  // console.log('유저정보 확인', tutorList);
+  const reviewList = useSelector((state) => state.review.list);
+  console.log('유저정보 확인', reviewList);
 
-  // React.useEffect(() => {
-  //   dispatch(reviewActions.getReviewDB());
-  // }, []);
+  React.useEffect(() => {
+    dispatch(reviewActions.getReviewDB());
+  }, []);
 
   return (
     <Wrap>
@@ -86,9 +87,81 @@ const Main = () => {
                 <p className="title">수강 추천 리뷰</p>
               </div>
               {/* 리뷰 맵 돌리는 곳 */}
-              {reviewList?.map((r) => {
-                return <div key={r.reviewId}>{/* <Review {...r} /> */}</div>;
-              })}
+              <ul className="reviewContentWrap">
+                <li className="reviewItem">
+                  {/* user_img */}
+                  {/* <div className="reviewImgWrap">
+                    <img className="userProfileImg" src="" alt=""></img>
+                  </div> */}
+                  {/* user_img2 */}
+                  <div className="reviewImgWrap2">
+                    <div className="reviewImg">
+                      <img className="userProfileImg" src="" alt=""></img>
+                    </div>
+                  </div>
+
+                  <div className="reviewTextWrap">
+                    <p className="tutorReview">티쳐: 안젤라</p>
+                    <div className="rating">
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                    </div>
+                    <p className="tuteeReview">
+                      너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지
+                      완벽해,, Perfect~~
+                    </p>
+                    <button className="tutorBookingBtn btnPosition btn">
+                      나도 선생님 예약하기
+                    </button>
+                    {/* <div className="reviewBtnWrap btnPosition">
+                      <button className="reviewEditBtn btn">수정하기</button>
+                      <button className="reviewDeleteBtn btn">삭제하기</button>
+                    </div> */}
+                  </div>
+                </li>
+                <li className="reviewItem">
+                  <div className="reviewImgWrap1">
+                    <img className="userProfileImg" src="" alt=""></img>
+                  </div>
+                  <div className="reviewTextWrap">
+                    <p className="tutorReview">티쳐: 안젤라</p>
+                    <div className="rating">
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                      <AiFillStar className="star" />
+                    </div>
+                    <textarea
+                      // style="resize: horizontal;"
+                      className="tuteeReview"
+                    >
+                      너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지
+                      완벽해,, Perfect~~
+                    </textarea>
+                    {/* <p className="tuteeReview"> 
+                      너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지
+                      완벽해,, Perfect~~
+                    </p> */}
+                    {/* btn */}
+                    {/* main page BTN */}
+                    {/* <button className="tutorBookingBtn btnPosition btn">
+                      나도 선생님 예약하기
+                    </button> */}
+
+                    {/* detail page BTN */}
+                    <div className="reviewBtnWrap btnPosition">
+                      <button className="reviewEditBtn btn">수정하기</button>
+                      <button className="reviewDeleteBtn btn">삭제하기</button>
+                    </div>
+                    {/* btn */}
+                  </div>
+                </li>
+              </ul>
+              {/* 리뷰 맵 돌리는 곳 */}
             </div>
           </div>
         </div>
@@ -149,6 +222,7 @@ const Wrap = styled.div`
         height: 70px;
         font-size: 18px;
         font-weight: 800;
+        cursor: pointer;
         background: #fff;
 
         border: 2px solid #000;
@@ -260,16 +334,128 @@ const Wrap = styled.div`
       .reviewWrap {
         width: 100%;
         min-height: 600px;
-        margin-top: 131px;
-        /* margin-top: 60px; */
-        background: #ddd;
+        /* margin-top: 131px; */
+        margin-top: 60px;
+        /* background: #ddd; */
 
         .reviewInner {
           width: 100%;
           margin: auto;
           background-color: #fff;
           .contentsTitleWrap {
-            .subTitleWrap {
+            .reviewMoreBtn {
+              cursor: pointer;
+            }
+          }
+
+          .reviewContentWrap {
+            width: 100%;
+            min-height: 188px;
+            margin: auto;
+
+            /* background-color: #a6a6a6; */
+
+            .reviewItem {
+              display: flex;
+              padding: 24px;
+
+              border-radius: 20px;
+              box-shadow: 0px 2px 12px 0px #00000040;
+
+              margin-bottom: 16px;
+              /* background-color: #eee; */
+
+              /* USER_IMG */
+              .reviewImgWrap1 {
+                width: 140px;
+                height: 140px;
+                border-radius: 50%;
+                margin-right: 32px;
+
+                background-color: #aaa;
+              }
+              /* USER_IMG */
+
+              /* USER_IMG2 */
+              .reviewImgWrap2 {
+                width: 129px;
+                height: 140px;
+                border-radius: 50%;
+                margin-right: 32px;
+                position: relative;
+
+                .reviewImg {
+                  width: 101px;
+                  height: 101px;
+                  border-radius: 50%;
+                  background: #aaa;
+
+                  .userProfileImg {
+                    width: 71px;
+                    height: 71px;
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+
+                    border-radius: 50%;
+                    overflow: hidden;
+                    background: #eee;
+                  }
+                }
+
+                /* background-color: #aaa; */
+              }
+
+              /* USER_IMG2 */
+
+              .reviewTextWrap {
+                max-width: 1172px;
+                width: 100%;
+                position: relative;
+
+                /* background-color: #aaa; */
+
+                .tutorReview {
+                  font-size: 28px;
+                  font-weight: 700;
+                  letter-spacing: 2px;
+                  margin-bottom: 5px;
+                }
+
+                .rating {
+                  margin-bottom: 37px;
+                  /* background-color: #eee; */
+
+                  .star {
+                    color: #aaa;
+                    font-size: 24px;
+                    margin-right: 5px;
+                  }
+                }
+
+                .tuteeReview {
+                  font-size: 20px;
+                  resize: horizontal;
+                  width: 100%;
+                }
+
+                .btnPosition {
+                  position: absolute;
+                  right: 0;
+                  top: 0;
+                }
+
+                .btn {
+                  border: none;
+                  background: #fff;
+                  color: #7c7c7c;
+                  cursor: pointer;
+                  text-decoration-line: underline;
+                  margin-left: 5px;
+                }
+                .tutorBookingBtn {
+                }
+              }
             }
           }
         }
