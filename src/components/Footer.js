@@ -2,6 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Footer = () => {
+  if (
+    '/login' === window.location.pathname ||
+    '/signup' === window.location.pathname ||
+    '/signup/detail' === window.location.pathname
+  )
+    return null;
+
   return (
     <Wrap>
       <div className="innerWrap">

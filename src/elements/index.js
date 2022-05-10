@@ -5,5 +5,6 @@ import Text from './Text';
 import Flex from './Flex';
 import Grid from './Grid';
 import Input from './Input';
+import Icon from './Icon';
 
-export { Button, Image, InputLogin, Text, Flex, Grid, Input };
+export { Button, Image, InputLogin, Text, Flex, Grid, Input, Icon };
