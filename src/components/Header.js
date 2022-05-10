@@ -163,7 +163,7 @@ const Wrap = styled.div`
         font-weight: 800;
         letter-spacing: 1px;
 
-        margin-right: 54px;
+        /* margin-right: 54px; */
         /* background: #8e8e8e; */
 
         cursor: pointer;

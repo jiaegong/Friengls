@@ -88,77 +88,16 @@ const Main = () => {
               </div>
               {/* 리뷰 맵 돌리는 곳 */}
               <ul className="reviewContentWrap">
-                <li className="reviewItem">
-                  {/* user_img */}
-                  {/* <div className="reviewImgWrap">
-                    <img className="userProfileImg" src="" alt=""></img>
-                  </div> */}
-                  {/* user_img2 */}
-                  <div className="reviewImgWrap2">
-                    <img className="reviewImg" src="" alt=""></img>
-                    <img className="userProfileImg" src="" alt=""></img>
-                  </div>
-
-                  <div className="reviewTextWrap">
-                    <p className="tutorReview">티쳐: 안젤라</p>
-                    <div className="rating">
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                    </div>
-                    <p className="tuteeReview">
-                      너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지
-                      완벽해,, Perfect~~
-                    </p>
-                    <button className="tutorBookingBtn btnPosition btn">
-                      나도 선생님 예약하기
-                    </button>
-                    {/* <div className="reviewBtnWrap btnPosition">
-                      <button className="reviewEditBtn btn">수정하기</button>
-                      <button className="reviewDeleteBtn btn">삭제하기</button>
-                    </div> */}
-                  </div>
-                </li>
-                <li className="reviewItem">
-                  <div className="reviewImgWrap1">
-                    <img className="userProfileImg" src="" alt=""></img>
-                  </div>
-                  <div className="reviewTextWrap">
-                    <p className="tutorReview">티쳐: 안젤라</p>
-                    <div className="rating">
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                      <AiFillStar className="star" />
-                    </div>
-                    <textarea
-                      // style="resize: horizontal;"
-                      className="tuteeReview"
-                    >
-                      너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지
-                      완벽해,, Perfect~~
-                    </textarea>
-                    {/* <p className="tuteeReview"> 
-                      너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지
-                      완벽해,, Perfect~~
-                    </p> */}
-                    {/* btn */}
-                    {/* main page BTN */}
-                    {/* <button className="tutorBookingBtn btnPosition btn">
-                      나도 선생님 예약하기
-                    </button> */}
-
-                    {/* detail page BTN */}
-                    <div className="reviewBtnWrap btnPosition">
-                      <button className="reviewEditBtn btn">수정하기</button>
-                      <button className="reviewDeleteBtn btn">삭제하기</button>
-                    </div>
-                    {/* btn */}
-                  </div>
-                </li>
+                {reviewList?.map((r) => {
+                  return (
+                    // <Flex key={r.reviewId}>
+                    //   <Review {...r} />
+                    // </Flex>
+                    <li className="reviewItem">
+                      <Review {...r} />
+                    </li>
+                  );
+                })}
               </ul>
               {/* 리뷰 맵 돌리는 곳 */}
             </div>
@@ -274,6 +213,7 @@ const Wrap = styled.div`
         }
       }
 
+      /* 튜터 리스트 */
       .cardList {
         width: 100%;
         padding: 20px 0;
@@ -330,6 +270,7 @@ const Wrap = styled.div`
         }
       }
 
+      /* 리뷰 Wrap */
       .reviewWrap {
         width: 100%;
         min-height: 600px;
@@ -363,103 +304,6 @@ const Wrap = styled.div`
 
               margin-bottom: 16px;
               /* background-color: #eee; */
-
-              /* USER_IMG */
-              .reviewImgWrap1 {
-                width: 140px;
-                height: 140px;
-                border-radius: 50%;
-                margin-right: 32px;
-                overflow: hidden;
-
-                background-color: #aaa;
-              }
-              /* USER_IMG */
-
-              /* USER_IMG2 */
-              .reviewImgWrap2 {
-                width: 129px;
-                height: 140px;
-                border-radius: 50%;
-                margin-right: 32px;
-                position: relative;
-
-                .reviewImg {
-                  max-width: 101px;
-                  width: 100%;
-                  height: 101px;
-                  border-radius: 50%;
-                  position: absolute;
-                  overflow: hidden;
-
-                  background: #aaa;
-                }
-                .userProfileImg {
-                  max-width: 71px;
-                  width: 100%;
-                  height: 71px;
-                  position: absolute;
-                  bottom: 0;
-                  right: 0;
-
-                  border-radius: 50%;
-                  overflow: hidden;
-                  background: #eee;
-                }
-
-                /* background-color: #aaa; */
-              }
-
-              /* USER_IMG2 */
-
-              .reviewTextWrap {
-                max-width: 1172px;
-                width: 100%;
-                position: relative;
-
-                /* background-color: #aaa; */
-
-                .tutorReview {
-                  font-size: 28px;
-                  font-weight: 700;
-                  letter-spacing: 2px;
-                  margin-bottom: 5px;
-                }
-
-                .rating {
-                  margin-bottom: 37px;
-                  /* background-color: #eee; */
-
-                  .star {
-                    color: #aaa;
-                    font-size: 24px;
-                    margin-right: 5px;
-                  }
-                }
-
-                .tuteeReview {
-                  font-size: 20px;
-                  resize: horizontal;
-                  width: 100%;
-                }
-
-                .btnPosition {
-                  position: absolute;
-                  right: 0;
-                  top: 0;
-                }
-
-                .btn {
-                  border: none;
-                  background: #fff;
-                  color: #7c7c7c;
-                  cursor: pointer;
-                  text-decoration-line: underline;
-                  margin-left: 5px;
-                }
-                .tutorBookingBtn {
-                }
-              }
             }
           }
         }
