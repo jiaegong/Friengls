@@ -95,9 +95,8 @@ const Main = () => {
                   </div> */}
                   {/* user_img2 */}
                   <div className="reviewImgWrap2">
-                    <div className="reviewImg">
-                      <img className="userProfileImg" src="" alt=""></img>
-                    </div>
+                    <img className="reviewImg" src="" alt=""></img>
+                    <img className="userProfileImg" src="" alt=""></img>
                   </div>
 
                   <div className="reviewTextWrap">
@@ -283,7 +282,7 @@ const Wrap = styled.div`
         grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
         /* grid-gap: 2rem; */
         row-gap: 4rem;
-        column-gap: 2rem;
+        column-gap: 3rem;
 
         /* background: #575757; */
 
@@ -371,6 +370,7 @@ const Wrap = styled.div`
                 height: 140px;
                 border-radius: 50%;
                 margin-right: 32px;
+                overflow: hidden;
 
                 background-color: #aaa;
               }
@@ -385,22 +385,26 @@ const Wrap = styled.div`
                 position: relative;
 
                 .reviewImg {
-                  width: 101px;
+                  max-width: 101px;
+                  width: 100%;
                   height: 101px;
                   border-radius: 50%;
+                  position: absolute;
+                  overflow: hidden;
+
                   background: #aaa;
+                }
+                .userProfileImg {
+                  max-width: 71px;
+                  width: 100%;
+                  height: 71px;
+                  position: absolute;
+                  bottom: 0;
+                  right: 0;
 
-                  .userProfileImg {
-                    width: 71px;
-                    height: 71px;
-                    position: absolute;
-                    bottom: 0;
-                    right: 0;
-
-                    border-radius: 50%;
-                    overflow: hidden;
-                    background: #eee;
-                  }
+                  border-radius: 50%;
+                  overflow: hidden;
+                  background: #eee;
                 }
 
                 /* background-color: #aaa; */
