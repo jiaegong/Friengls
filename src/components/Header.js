@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 패키지
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { history } from '../redux/configureStore';
 import { io } from 'socket.io-client';
+
+// 모듈
+import { history } from '../redux/configureStore';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
-
 import { MainLogo } from '../image/index';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const token = getCookie('token');
   const [username, setUsername] = useState('');
   const [user, setUser] = useState('');
   const [socket, setSocket] = useState(null);
@@ -27,19 +29,16 @@ const Header = () => {
     // setSocket(io('http://localhost:4000'));
   }, []);
 
-  const token = getCookie('token');
-  // const token = localStorage.getItem('token')
-
-  //로그아웃
-  const logout = () => {
-    console.log('로그아웃');
-  };
   // ⭐️
   // user ==> socket DB로 이동.
   useEffect(() => {
     socket?.emit('newUser', user);
   }, [socket, user]);
 
+  //로그아웃
+  const logout = () => {
+    console.log('로그아웃');
+  };
   return (
     <Wrap>
       <div className="innerWrap">
