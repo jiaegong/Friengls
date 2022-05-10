@@ -15,21 +15,25 @@ export default Footer;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 100px;
-  background: #aaa;
+  height: 340px;
+  background: #262626;
 
   .innerWrap {
-    width: 90%;
-    max-width: 1400px;
+    width: 100%;
+    max-width: 1432px;
     height: 100%;
     margin: auto;
-    padding: 30px 16px 0;
+    padding: 0px 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background: #eee;
+    /* background: #8d8d8d71; */
 
     h1 {
       text-align: center;
-      font-size: 30px;
+      color: #fff;
+      font-size: 70px;
     }
   }
 `;
