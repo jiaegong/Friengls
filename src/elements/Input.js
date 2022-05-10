@@ -8,7 +8,7 @@ const Input = (props) => {
     type,
     placeholder,
     _onChange,
-    // value,
+    value,
     multiLine,
     defaultStyles,
   } = props;
@@ -19,7 +19,7 @@ const Input = (props) => {
       className={className}
       placeholder={placeholder}
       onChange={_onChange}
-      // value={value}
+      value={value}
       {...defaultStyles}
     />;
   }
