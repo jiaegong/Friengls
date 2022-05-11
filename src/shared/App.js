@@ -45,7 +45,7 @@ function App() {
       </Switch>
       <Route path="/" exact component={Main} />
       <Route path="/mypage" exact component={Mypage} />
-      <Route path="/detail/:userName" exact component={Detail} />
+      <Route path="/detail/:userName/:isTutor" exact component={Detail} />
       {/* <Route path="/videochat/:roomName" exact component={VideoChat} /> */}
       <Route path="/search" exact component={Search} />
       <Route path="/reviewmodal" exact component={ReviewModal} />

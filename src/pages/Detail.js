@@ -19,12 +19,12 @@ const Detail = (props) => {
   console.log(userApi);
 
   useEffect(() => {
-    // const apiTest = { userId: '30', isTutor: '1' };
     // dispatch(userActions.getUserDetailDB(userApi));
   }, []);
+
   //디테일페이지에 사용할 유저 정보
   // const isTutor = detailInfo.isTutor;
-  const tutorName = props.match.params.userName;
+  const tutorName = props.match.params;
   const detailInfo = useSelector((state) => state.user.detailInfo);
   // console.log(detailInfo);
 
@@ -34,7 +34,7 @@ const Detail = (props) => {
   // }, []);
 
   useEffect(() => {
-    dispatch(userActions.getUserDetailDB());
+    dispatch(userActions.getUserDetailDB(userApi));
     // 예약 리스트 불러오기
     axios({
       method: 'get',

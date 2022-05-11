@@ -22,7 +22,7 @@ const Input = (props) => {
       value={value}
       {...defaultStyles}
     />;
-  }
+  } 
   return (
     <InputStyled
       style={{ ...styles }}

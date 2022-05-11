@@ -126,8 +126,8 @@ const loginDB = (loginForm) => {
 
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/login',
-      url: 'http://13.124.206.190/login',
+      url: 'https://jg-jg.shop/login',
+      // url: 'http://13.124.206.190/login',
       data: loginForm,
     })
       .then((response) => {
@@ -149,8 +149,8 @@ const loginCheckDB = () => {
 
     axios({
       method: 'get',
-      // url: 'https://jg-jg.shop/login/getUser',
-      url: 'http://13.124.206.190/login/getUser',
+      url: 'https://jg-jg.shop/login/getUser',
+      // url: 'http://13.124.206`.190/login/getUser',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
@@ -195,8 +195,8 @@ const editUserDB = (userInfo) => {
 
     axios({
       method: 'put',
-      // url: 'https://jg-jg.shop/editUserInfo',
-      url: 'http://13.124.206.190/editUserInfo',
+      url: 'https://jg-jg.shop/editUserInfo',
+      // url: 'http://13.124.206.190/editUserInfo',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
@@ -220,20 +220,20 @@ const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
     console.log('getUserDetailDB시작', userApi);
 
-    // axios({
-    //   method: 'get',
-    //   url: `https://jg-jg.shop/getUserDetail/${userApi.userName}`,
-    //   headers: {
-    //     Authorization: `Bearer ${getCookie('token')}`,
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log('getUserDetailDB성공', response.data.data[0]);
-    //     dispatch(setUserDetail(response.data.data[0]));
-    //   })
-    //   .catch((error) => {
-    //     console.log('getUserDetailDB실패', error);
-    //   });
+    axios({
+      method: 'get',
+      url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+      .then((response) => {
+        console.log('getUserDetailDB성공', response.data.data[0]);
+        dispatch(setUserDetail(response.data.data[0]));
+      })
+      .catch((error) => {
+        console.log('getUserDetailDB실패', error);
+      });
   };
 };
 

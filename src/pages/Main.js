@@ -15,6 +15,7 @@ const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
+  console.log(tutorList);
 
   React.useEffect(() => {
     dispatch(reviewActions.getReviewDB());
@@ -49,7 +50,15 @@ const Main = () => {
           </TutorTitleWrap>
           <CardList>
             {tutorList.map((item, idx) => {
-              return <TutorCard item={item} key={`tutorCard_${idx}`} />;
+              return (
+                <TutorCard
+                  item={item}
+                  key={`tutorCard_${idx}`}
+                  onClick={() => {
+                    history.push(`/detail/${tutorList[idx].userName}/1`);
+                  }}
+                />
+              );
             })}
           </CardList>
         </TutorListWrap>

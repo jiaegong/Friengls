@@ -54,7 +54,7 @@ const Login = (props) => {
             position: 'absolute',
             justifyContent: 'space-between',
             marginTop: '25px',
-            paddingRight: '33.5px',
+            paddingRight: '33.5 px',
             paddingLeft: '29px',
           }}
         >
