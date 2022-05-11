@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 
 // 패키지
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { ConnectedRouter } from 'connected-react-router';
 import { useDispatch } from 'react-redux';
@@ -34,16 +34,18 @@ function App() {
 
   return (
     <ConnectedRouter history={history}>
-      <Header />
+      <Switch>
+        <Route path="/login" exact component={Login} />
+        <Route path="/signup" exact component={Signup} />
+        <Route path="/auth/kakao" component={Kakao} />
+        <Route path="/oauth2/callback/google" component={Google} />
+        <Route path="/signup/detail" component={DetailInfo} />
+        <Header />
+      </Switch>
       <Route path="/" exact component={Main} />
-      <Route path="/signup" exact component={Signup} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/auth/kakao" component={Kakao} />
-      <Route path="/oauth2/callback/google" component={Google} />
-      <Route path="/signup/detail" component={DetailInfo} />
       <Route path="/mypage" exact component={Mypage} />
-      <Route path="/detail/:userName" exact component={Detail} />
-      <Route path="/videochat" exact component={VideoChat} />
+      <Route path="/detail/:userName/:isTutor" exact component={Detail} />
+      {/* <Route path="/videochat/:roomName" exact component={VideoChat} /> */}
       <Route path="/search" exact component={Search} />
       <Footer />
     </ConnectedRouter>

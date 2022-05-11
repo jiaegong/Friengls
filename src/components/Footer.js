@@ -1,27 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Flex, Text } from '../elements/index';
 
 const Footer = () => {
   return (
-    <Flex
-      styles={{
-        width: '100%',
-        height: '100px',
-        background: '#f9f9f9',
-      }}
-    >
-      <Text
-        styles={{
-          fontSize: '20px',
-          fontWeight: '600',
-          color: '#000',
-        }}
-      >
-        Friengles
-      </Text>
-    </Flex>
+    <Wrap>
+      <div className="innerWrap">
+        <h1>Footer</h1>
+      </div>
+    </Wrap>
   );
 };
 
 export default Footer;
+
+const Wrap = styled.div`
+  width: 100%;
+  height: 340px;
+  background: #262626;
+
+  .innerWrap {
+    width: 100%;
+    max-width: 1432px;
+    height: 100%;
+    margin: auto;
+    padding: 0px 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* background: #8d8d8d71; */
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      font-size: 70px;
+    }
+  }
+`;
