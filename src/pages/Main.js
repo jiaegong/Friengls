@@ -81,12 +81,8 @@ const Main = () => {
             </ReviewTitleWrap>
             {/* 리뷰 맵 돌리는 곳 */}
             <ReviewList>
-              {reviewList?.map((r, i) => {
-                return (
-                  <li className="reviewItem" key={`review_${i}`}>
-                    <Review {...r} />
-                  </li>
-                );
+              {reviewList?.map((r, idx) => {
+                return <Review key={idx} {...r} />;
               })}
             </ReviewList>
             {/* 리뷰 맵 돌리는 곳 */}
@@ -259,12 +255,4 @@ const ReviewList = styled.div`
   width: 100%;
   min-height: 188px;
   margin: auto;
-
-  .reviewItem {
-    display: flex;
-    padding: 24px;
-    border-radius: 20px;
-    box-shadow: 0px 2px 12px 0px #00000040;
-    margin-bottom: 16px;
-  }
 `;

@@ -115,6 +115,7 @@ const Login = (props) => {
                 type="text"
                 name="userEmail"
                 _onChange={handleUserEmail}
+                value={userEmail}
                 styles={{
                   width: '293px',
                   height: '46px',
@@ -132,6 +133,7 @@ const Login = (props) => {
                 type="text"
                 name="pwd"
                 _onChange={handlePwd}
+                value={pwd}
                 styles={{
                   width: '293px',
                   height: '46px',

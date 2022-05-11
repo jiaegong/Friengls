@@ -103,7 +103,15 @@ const VideoChat = () => {
   };
 
   return (
-    <Flex styles={{ width: '960px', margin: '0 auto' }}>
+    <Flex
+      styles={{
+        width: '960px',
+        margin: '30px auto',
+        padding: '30px',
+        border: '2px solid black',
+        borderRadius: '10px',
+      }}
+    >
       <Grid>
         <Flex
           styles={{ margin: '30px', gap: '30px', justifyContent: 'flex-start' }}

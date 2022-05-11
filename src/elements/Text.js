@@ -24,7 +24,7 @@ Text.defaultProps = {
   },
 };
 
-const TextStyled = styled.span`
+const TextStyled = styled.p`
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};

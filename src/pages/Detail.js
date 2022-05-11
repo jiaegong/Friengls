@@ -5,7 +5,7 @@ import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as reviewActions } from '../redux/modules/review';
-import { actionCreators as likeActions } from '../redux/modules/like';
+
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
 import DetailUser from '../components/DetailUser';
@@ -72,57 +72,12 @@ const Detail = (props) => {
     dispatch(reviewActions.getOneReviewDB(tutorName));
   }, []);
 
-  // comment 초기값은 review 내용으로 바꾸기
-  // const [rate, setRate] = React.useState('');
-  // const [text, setText] = React.useState('');
-  // const onChange = (e) => {
-  //   setText(e.target.value);
-  // };
-
-  // const editReview = () => {
-  //   dispatch(reviewActions.editReviewDB(reviewId, text));
-  // };
-
-  // const deleteReview = () => {
-  //   dispatch(reviewActions.deleteReviewDB(reviewId));
-  // };
-
-  // // like 누르기, 토큰 같이 보내기, likeList랑 tutor유저 리스트 인덱스랑 비교해서 같으면 넣기
-  // const like = () => {
-  //   dispatch(likeActions.likeDB(tutorName));
-  // };
-
-  // const unLike = () => {
-  //   dispatch(likeActions.unLikeDB(tutorName));
-  // };
-
   return (
     <Wrap>
       <div className="innerWrap">
         {/* 유저 정보 */}
         <div className="userInfoWrap">
           <DetailUser detailInfo={detailInfo} />
-
-          {/* like 버튼, 나중에 아이콘 찾아서 바꿔 놓기, like 상태 값에 따라서 채워진 하트/빈 하트 */}
-          {/* {isLiked? <div
-            onClick={like}
-            style={{
-              width: '30px',
-              height: '30px',
-              borderRadius: '30px',
-              margin: '5px',
-              backgroundColor: '#ddd'
-            }}
-          /> : <div
-          onClick={unLike}
-          style={{
-            width: '30px',
-            height: '30px',
-            borderRadius: '30px',
-            margin: '5px',
-            backgroundColor: '#ffeb3b'
-          }}
-        />} */}
         </div>
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
@@ -131,7 +86,13 @@ const Detail = (props) => {
         </div>
         {/* 리뷰 리스트 맵 돌릴 때, 작성자 이름이 접속한 이름과 같으면 수정, 삭제 버튼 보이게
         현재 접속한 이름이 없는 경우에 대한 처리도 필요(옵셔널 체이닝) */}
-        <Review />
+        <ReviewList>
+          {/* {reviewList?.map((r, idx) => {
+            return (
+                <Review key={idx} {...r} />
+            );
+          })} */}
+        </ReviewList>
       </div>
     </Wrap>
   );
@@ -199,6 +160,12 @@ const Wrap = styled.div`
       }
     }
   }
+`;
+
+const ReviewList = styled.div`
+  width: 100%;
+  min-height: 188px;
+  margin: auto;
 `;
 
 export default Detail;

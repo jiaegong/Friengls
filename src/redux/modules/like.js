@@ -18,8 +18,8 @@ const initialState = {
 const likeDB = (token, tutorName) => {
   return function (dispatch, getState, { history }) {
     axios({
-      method: 'put',
-      url: '서버주소/like',
+      method: 'patch',
+      url: 'https://jg-jg.shop/like',
       data: { tutorName },
       headers: {
         Authorization: `Bearer${token}`,
@@ -37,8 +37,8 @@ const likeDB = (token, tutorName) => {
 const unlikeDB = (token, tutorName) => {
   return function (dispatch, getState, { history }) {
     axios({
-      method: 'put',
-      url: '서버주소/unlike',
+      method: 'patch',
+      url: 'https://jg-jg.shop/unlike',
       data: { tutorName },
       headers: {
         Authorization: `Bearer${token}`,
@@ -57,7 +57,7 @@ const getLikeDB = (token) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
-      url: '서버주소/getLikeList',
+      url: 'https://jg-jg.shop/getLikeList',
       headers: {
         Authorization: `Bearer${token}`,
       },

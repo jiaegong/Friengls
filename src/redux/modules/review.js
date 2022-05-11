@@ -80,6 +80,7 @@ const getOneReviewDB = (tutorName = null) => {
       url: `https://jg-jg.shop/getReview/${tutorName}`,
     })
       .then((res) => {
+        console.log(res);
         dispatch(setReview(res.data));
       })
       .catch((err) => {
@@ -88,13 +89,15 @@ const getOneReviewDB = (tutorName = null) => {
   };
 };
 
-const editReviewDB = (reviewId, text) => {
+const editReviewDB = (reviewId, rate, text) => {
+  console.log(reviewId, rate, text);
   return function (dispatch, getState, { history }) {
     axios({
       method: 'patch',
-      url: 'https://jg-jg.shop/editReview',
+      url: 'http://3.36.123.28/editReview',
       data: {
         reviewId,
+        rate,
         text,
       },
     })

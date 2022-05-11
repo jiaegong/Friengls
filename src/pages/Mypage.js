@@ -15,14 +15,14 @@ const Mypage = () => {
 
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
-
+  console.log(bookingList);
   useEffect(() => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, []);
 
   const videoChatHandler = (roomName) => {
-    // const id = userId;
-    // history.push(`/videochat/${id}`);
+    // const roomid = Tutor_userName+Tutee_userName;
+    // history.push(`/videochat/${roomid}`);
   };
 
   //마이페이지 유저정보

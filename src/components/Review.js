@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Image, Text, Input } from '../elements/index';
-import { AiFillStar } from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { actionCreators as reviewActions } from '../redux/modules/review';
 
 import styled from 'styled-components';
 
 const Review = (props) => {
+  const dispatch = useDispatch();
+
+  const reviewId = props.reviewId;
+  const [rate, setRate] = useState(props.rate);
+  const [text, setText] = useState(props.text);
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const editReview = () => {
+    dispatch(reviewActions.editReviewDB(reviewId, rate, text));
+  };
+
+  const deleteReview = () => {
+    dispatch(reviewActions.deleteReviewDB(reviewId));
+  };
   return (
-    <>
+    <Flex
+      styles={{
+        padding: '24px',
+        borderRadius: '20px',
+        boxShadow: '0px 2px 12px 0px #00000040',
+        marginBottom: '16px',
+      }}
+    >
       {/* 메인페이지 이미지 */}
       <ReviewImgWrap2>
         <img className="reviewImg" src="" alt=""></img>
@@ -17,49 +41,66 @@ const Review = (props) => {
       {/* <ReviewImgWrap1 className="reviewImgWrap">
         <img className="userProfileImg" src="" alt=""></img>
       </ReviewImgWrap1> */}
-
-      <ReviewTextWrap>
-        <p className="tutorReview">티쳐: 안젤라</p>
-        {/* 별점 */}
-        <Rating>
+      <Flex
+        styles={{
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          width: '100%',
+        }}
+      >
+        <Text>Tutee: {props.Tutee_userName}</Text>
+        <Text
+          styles={{
+            fontSize: '28px',
+            fontWeight: '700',
+            marginBottom: '5px',
+          }}
+        >
+          Tutor: {props.Tutor_userName}
+        </Text>
+        <Flex
+          styles={{
+            justifyContent: 'flex-start',
+            flexDirection: 'row',
+            marginBottom: '37px',
+          }}
+        >
           {Array.from({ length: 5 }, (c, idx) => {
             return (
-              <AiFillStar
+              <Flex
                 key={idx}
-                className="star"
+                _onClick={() => {
+                  setRate(idx + 1);
+                }}
                 styles={{
-                  backgroundColor: props.rate < idx + 1 ? '#ddd' : '#000',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '30px',
+                  margin: '5px',
+                  backgroundColor: rate < idx + 1 ? '#ddd' : '#000',
                 }}
               />
             );
           })}
-        </Rating>
-
-        {/* 메인 텍스트 */}
-        <p className="tuteeReview">
-          너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지 완벽해,,
-          Perfect~~
-        </p>
-        {/* 상세페이지 */}
-        {/* <textarea
-          className="tuteeReview"
-          value={
-            '너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지 완벽해,, Perfect~~'
-          }
-        >
-          너무 예뻐요 아름답고.. 말도 잘하고 머리부터 발끝까지 완벽해,,
-          Perfect~~
-        </textarea> */}
-
-        {/* 메인페이지 BTN */}
-        <BtnPosition>나도 선생님 예약하기</BtnPosition>
-        {/* 상세페이지 BTN */}
-        {/* <BtnPosition>
-          <button className="reviewEditBtn btn">수정하기</button>
-          <button className="reviewDeleteBtn btn">삭제하기</button>
-        </BtnPosition> */}
-      </ReviewTextWrap>
-    </>
+        </Flex>
+        <Input
+          styles={{ fontSize: '20px', border: 'none' }}
+          multiLine
+          value={text}
+          _onChange={onChange}
+        />
+      </Flex>
+      {/* 메인페이지 BTN */}
+      {/* <BtnPosition>나도 선생님 예약하기</BtnPosition> */}
+      {/* 상세페이지 BTN */}
+      <button className="reviewEditBtn btn" onClick={editReview}>
+        수정하기
+      </button>
+      <button className="reviewDeleteBtn btn" onClick={deleteReview}>
+        삭제하기
+      </button>
+    </Flex>
   );
 };
 
@@ -103,35 +144,6 @@ const ReviewImgWrap2 = styled.div`
     border-radius: 50%;
     overflow: hidden;
     background: #eee;
-  }
-`;
-
-const ReviewTextWrap = styled.div`
-  max-width: 1172px;
-  width: 100%;
-  position: relative;
-
-  .tutorReview {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 5px;
-  }
-
-  .tuteeReview {
-    font-size: 20px;
-    resize: horizontal;
-    width: 100%;
-  }
-`;
-
-const Rating = styled.div`
-  margin-bottom: 37px;
-
-  .star {
-    color: #aaa;
-    font-size: 24px;
-    margin-right: 5px;
   }
 `;
 
