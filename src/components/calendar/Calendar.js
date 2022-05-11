@@ -17,10 +17,11 @@ import { actionCreators as calendarActions } from '../../redux/modules/booking';
 import { getCookie } from '../../shared/Cookie';
 
 const CalendarTemplate = ({
+  tutorName,
   availability,
   setAvailability,
   primaryColor = '#DF1B1B',
-  secondaryColor = '#00aaff',
+  secondaryColor = '#0077ff',
   fontFamily = 'Noto Sans',
   fontSize = 12,
   primaryFontColor = '#131313',
@@ -36,14 +37,8 @@ const CalendarTemplate = ({
   // endTime = "24:00",
 }) => {
   const dispatch = useDispatch();
-
-  // const user_info = useSelector((state) => state.user.info);
-  // let userName = user_info.userName;
-  // console.log(user_info);
-  // console.log(userName);
-  // 토큰값을 어디로 저장 되는지.
-  // 토큰값을 불러와서.
-
+  const userName = useSelector((state) => state.user.info.userName);
+  // console.log({ tutorName })
   // 스타일 지정 해주는거
   const theme = createTheme({
     typography: {
@@ -352,12 +347,8 @@ const CalendarTemplate = ({
   //   return a;
   // };
 
-  //!!!!!!!!!!!
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
-    // let token = localStorage.getItem('token');
-    // let token = getCookie('token)
-    // console.log('token', '-------------------------');
     let activeRangeStart = null;
     for (let time of activeDay) {
       if (time.available && !activeRangeStart) activeRangeStart = time.time;
@@ -367,8 +358,9 @@ const CalendarTemplate = ({
           end: new Date(`${month} ${day} ${year} ${time.time}`),
 
           // 유저정보 넣어서 성공한곳
-          token: localStorage.getItem('token'),
+          // token: localStorage.getItem('token'),
           // 그럼 디스패치 할대 선생님 id값으로 요청
+          userName: userName,
         });
         activeRangeStart = null;
       }
@@ -423,6 +415,7 @@ const CalendarTemplate = ({
       convertAvailabilityFromDatabase(availability),
     );
     // console.log({ availabilityState });
+    // console.log('5');
 
     // 선택한 시간 값 받아 오는 stats
     const [quickAvailability, setQuickAvailability] = useState(
@@ -491,7 +484,7 @@ const CalendarTemplate = ({
       // if (settingMultiple) {
       // addTimesToDay(day);
       // } else {
-      // console.log("선택한 날 : ", day);
+      console.log('선택한 날 : ', day);
       examineAvailabilityForDay(day);
       // }
     };
@@ -511,7 +504,7 @@ const CalendarTemplate = ({
 
       // useState로 값 저장해주는거!!!!!!!
       // dispatch 할때 userName 같이 보내줘야된다.
-      dispatch(calendarActions.setBookingDB(data));
+      dispatch(calendarActions.setBookingDB(data, tutorName));
       setAvailability(data);
     };
 
@@ -728,17 +721,17 @@ const CalendarTemplate = ({
               justifyContent="center"
             >
               {/* <Grid item>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={handleSetMultiple}
-                className={classes.button}
-              >
-                {settingMultiple
-                  ? "Done"
-                  : "Add Selected Times to Multiple Days"}
-              </Button>
-            </Grid> */}
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSetMultiple}
+                  className={classes.button}
+                >
+                  {settingMultiple
+                    ? 'Done'
+                    : 'Add Selected Times to Multiple Days'}
+                </Button>
+              </Grid> */}
 
               <Grid item>
                 {saving ? (
@@ -750,7 +743,7 @@ const CalendarTemplate = ({
                     onClick={handleSaveAvailability}
                     className={classes.button}
                   >
-                    Save Availability
+                    예약하기
                   </Button>
                 )}
               </Grid>

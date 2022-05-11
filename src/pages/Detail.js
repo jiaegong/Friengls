@@ -9,58 +9,75 @@ import { actionCreators as likeActions } from '../redux/modules/like';
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
 import DetailUser from '../components/DetailUser';
+import axios from 'axios';
 import Review from '../components/Review';
 
 const Detail = (props) => {
   const dispatch = useDispatch();
 
-  //디테일페이지에서 보여줄 유저
-  const userId = props.match.params.userName;
-  useEffect(() => {
-    dispatch(userActions.getUserDetailDB(userId));
-  }, []);
-  // //디테일페이지에 사용할 유저 정보
+  //디테일페이지에서 불러올 유저 api
+  const userApi = props.match.params;
+  console.log(userApi);
 
+  useEffect(() => {
+    // const apiTest = { userId: '30', isTutor: '1' };
+    dispatch(userActions.getUserDetailDB(userApi));
+  }, []);
+  //디테일페이지에 사용할 유저 정보
+  // const isTutor = detailInfo.isTutor;
+  const tutorName = props.match.params.userName;
   const detailInfo = useSelector((state) => state.user.detailInfo);
-  console.log(detailInfo.isTutor);
+  console.log(detailInfo);
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
+  // useEffect(() => {
+  //   dispatch(bookingAction.getBookingDB());
+  // }, []);
+
   useEffect(() => {
-    dispatch(bookingAction.getBookingDB());
+    dispatch(userActions.getUserDetailDB());
+    // 예약 리스트 불러오기
+    axios({
+      method: 'get',
+      // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
+      url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
+      // url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=${isTutor}`, // 학생 또는 선생님
+    })
+      .then((doc) => {
+        console.log('!!!!!!!!!!!!');
+        console.log(doc.data.datas1);
+        setAvailability(doc.data.datas1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
-  // 리듀서에서 초기값 불러오기 또는 db에서 있는 값 불러오기
-  const timeList = useSelector((state) => state.booking.list);
-  // console.log('검사중 : ', timeList[0].start.toDateString());
-  // console.log('검사중 : ', timeList[0].start.getDate()); //일
-  // console.log(timeList[0].start.getHours()); //시간
-  // console.log(timeList[0].start.toTimeString()); // 08:00:00 GMT+0900
-  // console.log(typeof timeList[0].start.toString()); // Thu May 19 2022 08:00:00 GMT+0900
-  // console.log(timeList[0].start.toDateString()); // Thu May 19 2022
-  // console.log(typeof timeList[0].start);
-
   // 초기값으로 리듀서에서 불러오는 값을 넣어둠
-  const [availability, setAvailability] = React.useState(timeList);
-  // console.log('리듀서랑 연동한 데이터 ', availability);
+  const [availability, setAvailability] = React.useState([]);
 
   const Calendar = CalendarTemplate({
+    tutorName,
     availability,
-    setAvailability,
+    setAvailability: (timeList) => {
+      // performAdditionalAction(update)
+      setAvailability(timeList);
+    },
   });
 
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
 
   React.useEffect(() => {
-    dispatch(reviewActions.getOneReviewDB(userId));
+    dispatch(reviewActions.getOneReviewDB(tutorName));
   }, []);
 
   // comment 초기값은 review 내용으로 바꾸기
-  const [rate, setRate] = React.useState('');
-  const [text, setText] = React.useState('');
-  const onChange = (e) => {
-    setText(e.target.value);
-  };
+  // const [rate, setRate] = React.useState('');
+  // const [text, setText] = React.useState('');
+  // const onChange = (e) => {
+  //   setText(e.target.value);
+  // };
 
   // const editReview = () => {
   //   dispatch(reviewActions.editReviewDB(reviewId, text));

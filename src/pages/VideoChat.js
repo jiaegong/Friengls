@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import Portal from '../components/Portal';
 import ReviewModal from '../components/ReviewModal';
+import { Grid, Flex, Button } from '../elements/index';
 
 const VideoChat = () => {
   const [modalOn, setModalOn] = useState(false);
@@ -18,7 +19,7 @@ const VideoChat = () => {
   let creator = false;
 
   useEffect(() => {
-    const socket = io('https://www.jg-jg.shop');
+    const socket = io('https://jg-jg.shop');
     socket.emit('joinRoom', roomName);
 
     socket.on('created', () => {
@@ -102,13 +103,38 @@ const VideoChat = () => {
   };
 
   return (
-    <div>
-      <video playsInline muted ref={myVideo} autoPlay />
-      <video playsInline muted ref={userVideo} autoPlay />
-      <button onClick={leaveCall}>통화 종료</button>
-      <button onClick={handleModal}>리뷰 남기기</button>
-      <Portal>{modalOn && <ReviewModal onClose={handleModal} />}</Portal>
-    </div>
+    <Flex styles={{ width: '960px', margin: '0 auto' }}>
+      <Grid>
+        <Flex
+          styles={{ margin: '30px', gap: '30px', justifyContent: 'flex-start' }}
+        >
+          <Flex>
+            <video
+              style={{ width: '300px', height: '300px', background: '#f9f9f9' }}
+              playsInline
+              muted
+              ref={myVideo}
+              autoPlay
+            />
+          </Flex>
+          <Flex>
+            <video
+              style={{ width: '300px', height: '300px', background: '#f9f9f9' }}
+              playsInline
+              muted
+              ref={userVideo}
+              autoPlay
+            />
+          </Flex>
+        </Flex>
+        <Flex styles={{ gap: '10px' }}>
+          <Button _onClick={leaveCall}>통화 종료</Button>
+          <Button _onClick={handleModal}>리뷰 남기기</Button>
+        </Flex>
+        <Portal>{modalOn && <ReviewModal onClose={handleModal} />}</Portal>
+      </Grid>
+      <Grid>번역기 자리</Grid>
+    </Flex>
   );
 };
 

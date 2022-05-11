@@ -8,16 +8,24 @@ import { ProfileMedium } from '../image';
 
 const Mypage = () => {
   const dispatch = useDispatch();
+  // 마이페이지 예약정보 불러오기 위한 값들
+  const isTutor = useSelector((state) => state.user.info.isTutor);
+  const userName = useSelector((state) => state.user.info.userName);
+  // console.log({ isTutor, userName });
+
+  //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
 
   useEffect(() => {
-    dispatch(bookingAction.getBookingDB());
+    dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, []);
 
   const videoChatHandler = (roomName) => {
     // const id = userId;
     // history.push(`/videochat/${id}`);
   };
+
+  //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.info);
   console.log(userInfo);
 
@@ -76,18 +84,25 @@ const Mypage = () => {
         <div className="bookingWrap">
           <p className="bookingTitle">예약 리스트</p>
           <ul className="bookingList">
-            {bookingList.map((item, idx) => {
-              let start = item.start;
-              let end = item.end;
-              let [week, month, day, year, sTime] = start.split(' ');
-              let startTime = sTime.substr(0, 5);
-              let endTime = end.substr(-17, 5);
+            {bookingList?.map((item, idx) => {
+              let startTime = item.start;
+              let endTime = item.end;
+
+              if (!item) return; // 이 부분 불확실...
+              let [week, month, day, year, sTime] = startTime.split(' ');
+              let start = sTime.substr(0, 5);
+              let end = endTime.substr(-17, 5);
               return (
                 <li className="booking" key={`booking${idx}`}>
                   <div className="bookingInfo">
-                    <div className="userName">{item.userName}</div>
+                    {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}
+                    {isTutor === 0 ? (
+                      <div className="userName">{item.Tutor_userName}</div>
+                    ) : (
+                      <div className="userName">{item.Tutee_userName}</div>
+                    )}
                     <div className="userBooking">
-                      {week} {month} {day} {year} {startTime} ~ {endTime}
+                      {week} {month} {day} {year} &emsp; {start} ~ {end}
                     </div>
                   </div>
                   {/* <List> */}
