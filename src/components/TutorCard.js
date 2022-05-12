@@ -8,7 +8,7 @@ const TutorCard = ({ item, urlCheck }) => {
     <Card
       className="card"
       onClick={() => {
-        history.push(`/detail/${item.userName}`);
+        history.push(`/detail/${item.userName}/1`);
       }}
     >
       <img

@@ -57,15 +57,7 @@ const Main = () => {
           </TutorTitleWrap>
           <CardList>
             {tutorList.map((item, idx) => {
-              return (
-                <TutorCard
-                  item={item}
-                  key={`tutorCard_${idx}`}
-                  onClick={() => {
-                    history.push(`/detail/${tutorList[idx].userName}/1`);
-                  }}
-                />
-              );
+              return <TutorCard item={item} key={`tutorCard_${idx}`} />;
             })}
           </CardList>
         </TutorListWrap>

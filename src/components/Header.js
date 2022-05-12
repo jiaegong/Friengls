@@ -20,11 +20,11 @@ const Header = () => {
   const [user, setUser] = useState('');
   const [socket, setSocket] = useState(null);
 
-  console.log(socket);
+  // console.log(socket);
 
   // ⭐️
   useEffect(() => {
-    dispatch(tutorActions.getListDB());
+    dispatch(tutorActions.getTutorListDB());
     // setSocket(io('소켓을 받을 주소'));
     // setSocket(io('http://localhost:4000'));
   }, []);

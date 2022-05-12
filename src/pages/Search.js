@@ -4,16 +4,41 @@ import styled from 'styled-components';
 import DivBanner from '../elements/DivBanner';
 import TutorCard from '../components/TutorCard';
 import { BiSearchAlt2 } from 'react-icons/bi';
+import axios from 'axios';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 const Search = (props) => {
+  const dispatch = useDispatch();
+  const urlCheck = props.location.pathname;
   const formRef = React.createRef();
   const inputRef = React.createRef();
   const tutorList = useSelector((state) => state.tutor.list);
-  const urlCheck = props.location.pathname;
+  const [tagList, setTagList] = React.useState(null);
+
+  // console.log(tutorList);
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      // url: `https://jg-jg.shop/getPopularTutor`,
+      url: `http://13.124.206.190/getTag`, // 태그 불러오는 url
+      // url: `http://13.124.206.190/getTutorTag?keyword=${keyWord}`,
+    })
+      .then((doc) => {
+        // console.log(doc.data);
+        setTagList(doc.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const keyWrod = inputRef.current.value;
+    const keyWord = inputRef.current.value;
+    dispatch(tutorActions.getSearchTutorsDB(keyWord));
+
+    formRef.current.reset();
   };
 
   return (
@@ -30,16 +55,19 @@ const Search = (props) => {
             ></input>
           </form>
           <div className="keyWordWrap">
-            <span className="keyWord" onClick={() => {}}>
-              영어전공
-            </span>
-            <span className="keyWord">약속철저</span>
-            <span className="keyWord">아름다운_목소리</span>
-            <span className="keyWord">영어전공</span>
-            <span className="keyWord">약속철저</span>
-            <span className="keyWord">아름다운_목소리</span>
-            <span className="keyWord">아름다운_목소리</span>
-            <span className="keyWord">약속철저</span>
+            {tagList?.map((item, idx) => {
+              return (
+                <span
+                  className="keyWord"
+                  key={`tag_${idx}`}
+                  onClick={(e) => {
+                    dispatch(tutorActions.getSearchTutorsDB(item));
+                  }}
+                >
+                  {item}
+                </span>
+              );
+            })}
           </div>
         </div>
       </DivBanner>
