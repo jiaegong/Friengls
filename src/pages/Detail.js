@@ -24,7 +24,7 @@ const Detail = (props) => {
 
   //디테일페이지에 사용할 유저 정보
   // const isTutor = detailInfo.isTutor;
-  const tutorName = props.match.params;
+  const tutorName = props.match.params.userName;
   console.log(tutorName);
   const detailInfo = useSelector((state) => state.user.detailInfo);
   // console.log(detailInfo);
