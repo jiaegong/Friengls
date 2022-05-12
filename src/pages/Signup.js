@@ -6,6 +6,7 @@ import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { emailForm, pwdForm, userNameForm } from '../shared/common';
 import axios from 'axios';
+import { Grid, Flex, Input, Button, Text, Icon } from '../elements';
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -163,50 +164,99 @@ const Signup = (props) => {
     : false;
 
   return (
-    <Container>
-      <InputBox>
-        <input
-          placeholder="이메일"
-          type="text"
-          name="userEmail"
-          onChange={handleEmail}
-          onBlur={checkDuplicatedEmail} //자동 이메일 체크
-        />
-        <span>{emailCheck}</span>
-      </InputBox>
-      <InputBox>
-        <input
-          placeholder="닉네임"
-          type="text"
-          name="userName"
-          onChange={handleUserName}
-          onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
-        />
-        <span>{userNameCheck}</span>
-      </InputBox>
-      <InputBox>
-        <input
-          placeholder="비밀번호"
-          type="text"
-          name="pwd"
-          onChange={handlePwd}
-        />
-        <span>{pwdCheck}</span>
-      </InputBox>
-      <InputBox>
-        <input
-          placeholder="비밀번호확인"
-          type="text"
-          name="pwdCheck"
-          onChange={handleConfirmPwd}
-        />
-        <span>{confirmPwdCheck}</span>
-      </InputBox>
+    <Grid
+      styles={{
+        width: '575px',
+        height: '804px',
+        background: 'rgba( 238, 74, 22, 0.9 )',
+        borderRadius: '30px',
+      }}
+    >
+      <Container>
+        <InputBox>
+          <input
+            style={{
+              width: '293px',
+              height: '46px',
+              marginBottom: '11px',
+              border: 'none',
+              borderRadius: '10px',
+              textAlign: 'center',
+              fontSize: '12px',
+              fontWeight: 700,
+            }}
+            placeholder="이메일"
+            type="text"
+            name="userEmail"
+            onChange={handleEmail}
+            onBlur={checkDuplicatedEmail} //자동 이메일 체크
+          />
+          <span>{emailCheck}</span>
+        </InputBox>
+        <InputBox>
+          <input
+            style={{
+              width: '293px',
+              height: '46px',
+              marginBottom: '11px',
+              border: 'none',
+              borderRadius: '10px',
+              textAlign: 'center',
+              fontSize: '12px',
+              fontWeight: 700,
+            }}
+            placeholder="닉네임"
+            type="text"
+            name="userName"
+            onChange={handleUserName}
+            onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
+          />
+          <span>{userNameCheck}</span>
+        </InputBox>
+        <InputBox>
+          <input
+            style={{
+              width: '293px',
+              height: '46px',
+              marginBottom: '11px',
+              border: 'none',
+              borderRadius: '10px',
+              textAlign: 'center',
+              fontSize: '12px',
+              fontWeight: 700,
+            }}
+            placeholder="비밀번호"
+            type="text"
+            name="pwd"
+            onChange={handlePwd}
+          />
+          <span>{pwdCheck}</span>
+        </InputBox>
+        <InputBox>
+          <input
+            style={{
+              width: '293px',
+              height: '46px',
+              marginBottom: '11px',
+              border: 'none',
+              borderRadius: '10px',
+              textAlign: 'center',
+              fontSize: '12px',
+              fontWeight: 700,
+            }}
+            placeholder="비밀번호확인"
+            type="text"
+            name="pwdCheck"
+            onChange={handleConfirmPwd}
+          />
+          <span>{confirmPwdCheck}</span>
+        </InputBox>
 
-      <Link to={{ pathname: '/signup/detail', signupForm }}>
-        <input type="button" value="다음" disabled={isTrue} />
-      </Link>
-    </Container>
+        <Link to={{ pathname: '/signup/detail', signupForm }}>
+          <input type="button" value="다음" disabled={isTrue} />
+        </Link>
+      </Container>
+    </Grid>
   );
 };
 
