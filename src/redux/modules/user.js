@@ -126,8 +126,8 @@ const loginDB = (loginForm) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/login',
-      // url: 'http://13.124.206.190/login',
+      // url: 'https://jg-jg.shop/login',
+      url: 'http://13.124.206.190/login',
       data: loginForm,
     })
       .then((response) => {
@@ -149,14 +149,14 @@ const loginCheckDB = () => {
 
     axios({
       method: 'get',
-      url: 'https://jg-jg.shop/login/getUser',
-      // url: 'http://13.124.206`.190/login/getUser',
+      // url: 'https://jg-jg.shop/login/getUser',
+      url: 'http://13.124.206.190/login/getUser',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
     })
       .then((response) => {
-        // console.log('loginCheckDB성공', response.data);
+        console.log('loginCheckDB성공', response.data);
         dispatch(setUser(response.data));
       })
       .catch((error) => {
@@ -195,8 +195,8 @@ const editUserDB = (userInfo) => {
 
     axios({
       method: 'put',
-      url: 'https://jg-jg.shop/editUserInfo',
-      // url: 'http://13.124.206.190/editUserInfo',
+      // url: 'https://jg-jg.shop/editUserInfo',
+      url: 'http://13.124.206.190/editUserInfo',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
@@ -222,13 +222,14 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+      // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+      url: `http://13.124.206.190/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
     })
       .then((response) => {
-        console.log('getUserDetailDB성공', response.data.data[0]);
+        // console.log('getUserDetailDB성공', response.data.data[0]);
         dispatch(setUserDetail(response.data.data[0]));
       })
       .catch((error) => {

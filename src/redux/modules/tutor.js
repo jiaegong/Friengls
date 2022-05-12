@@ -28,7 +28,7 @@ const getTutorListDB = () => {
       url: `http://13.124.206.190/getPopularTutor`,
     })
       .then((doc) => {
-        console.log(doc.data.data);
+        // console.log(doc.data.data);
         // const data =
         dispatch(getTutors(doc.data.data));
       })
@@ -59,7 +59,7 @@ export default handleActions(
   {
     [GET_TUTOR_LIST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.list);
+        // console.log(action.payload.list);
         draft.list = action.payload.list;
       }),
   },

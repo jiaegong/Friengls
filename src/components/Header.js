@@ -20,8 +20,6 @@ const Header = () => {
   const [user, setUser] = useState('');
   const [socket, setSocket] = useState(null);
 
-  // console.log(socket);
-
   // ⭐️
   useEffect(() => {
     dispatch(tutorActions.getTutorListDB());
