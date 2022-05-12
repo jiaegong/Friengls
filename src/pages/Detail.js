@@ -25,7 +25,8 @@ const Detail = (props) => {
 
   //디테일페이지에 사용할 유저 정보
   // const isTutor = detailInfo.isTutor;
-  const tutorName = props.match.params;
+  const tutorName = props.match.params.userName;
+  console.log(tutorName);
   const detailInfo = useSelector((state) => state.user.detailInfo);
   // console.log(detailInfo);
 
@@ -40,11 +41,11 @@ const Detail = (props) => {
     axios({
       method: 'get',
       // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
-      url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
+      url: `http://13.124.206.190/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
       // url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {
-        console.log('!!!!!!!!!!!!');
+        console.log(doc);
         console.log(doc.data.datas1);
         setAvailability(doc.data.datas1);
       })

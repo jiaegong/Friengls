@@ -51,14 +51,16 @@ const setBookingDB = (data, tutorName) => {
     console.log(data, tutorName);
 
     const userName = data[0].userName;
+    console.log(userName);
 
     dispatch(setBooking(data));
 
     axios({
       method: 'post',
       // url: `https://jg-jg.shop/addBooking/jungi521`,
-      url: `https://jg-jg.shop/addBooking/yoonha3331`, // 학생 또는 선생님
+      // url: `https://13.124.206.190/addBooking/yoonha3331`, // 학생 또는 선생님
       // url: `https://jg-jg.shop/addBooking/${tutorName}`,
+      url: `http://13.124.206.190/addBooking/${tutorName}`,
       data: {
         start: data[0].start.toString(),
         end: data[0].end.toString(),

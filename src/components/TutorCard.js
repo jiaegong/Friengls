@@ -1,13 +1,14 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 
-const TutorCard = ({ item }) => {
+const TutorCard = ({ item, urlCheck }) => {
   return (
     <Card
       className="card"
       onClick={() => {
-        history.push(`/detail/${item.userName}`);
+        history.push(`/detail/${item.userName}/1`);
       }}
     >
       <img
@@ -18,6 +19,7 @@ const TutorCard = ({ item }) => {
       ></img>
       <div className="user_info">
         <p className="userName">{item.userName}</p>
+        {urlCheck ? <p>search</p> : <p>main</p>}
         <p className="userContents">{item.contents}</p>
         {/* <p className="userTag">{item.tag}</p> */}
       </div>

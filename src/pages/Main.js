@@ -38,7 +38,14 @@ const Main = () => {
             <span> 님도보고 뽕도따는 두마리 토끼 전략~</span>
             <span> 수다떨면서 영어실력 올리는 사람 나야나!</span>
           </p>
-          <button className="bannerBtn">예약하러 가기 ▶︎</button>
+          <button
+            className="bannerBtn"
+            onClick={() => {
+              alert('여긴 어디로 가야되야나??');
+            }}
+          >
+            예약하러 가기 ▶︎
+          </button>
         </Banner>
       </DivBanner>
       <InnerWrap>
@@ -54,15 +61,7 @@ const Main = () => {
           </TutorTitleWrap>
           <CardList>
             {tutorList.map((item, idx) => {
-              return (
-                <TutorCard
-                  item={item}
-                  key={`tutorCard_${idx}`}
-                  onClick={() => {
-                    history.push(`/detail/${tutorList[idx].userName}/1`);
-                  }}
-                />
-              );
+              return <TutorCard item={item} key={`tutorCard_${idx}`} />;
             })}
           </CardList>
         </TutorListWrap>
