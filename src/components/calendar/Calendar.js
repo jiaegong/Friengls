@@ -497,15 +497,28 @@ const CalendarTemplate = ({
 
     // 저장 버튼
     const handleSaveAvailability = () => {
-      console.log('저장중~~!!!!!');
       const data = convertAvailabilityForDatabase(availabilityState);
-      // console.log({ data });
+      const dataLength = data.length - 1;
       setSaving(true);
 
       // useState로 값 저장해주는거!!!!!!!
       // dispatch 할때 userName 같이 보내줘야된다.
+
       dispatch(calendarActions.setBookingDB(data, tutorName));
       setAvailability(data);
+      console.log(data[dataLength].start);
+      console.log(data[dataLength].end);
+      const startTime = data[dataLength].start;
+      const endTime = data[dataLength].end;
+
+      let [week, month, day, year, sTime] = startTime.toString().split(' ');
+      let start = sTime.substr(0, 5);
+      let end = endTime.toString().substr(-26, 5);
+
+      console.log({ week, month, day, year });
+      console.log({ start, end });
+
+      alert(`${month} ${day} ${start} - ${end} 예약 되었습니다!!`);
     };
 
     // 현재의 달로 오는 기능
