@@ -164,111 +164,93 @@ const Signup = (props) => {
     : false;
 
   return (
-    <Grid
-      styles={{
-        width: '575px',
-        height: '804px',
-        background: 'rgba( 238, 74, 22, 0.9 )',
-        borderRadius: '30px',
-      }}
-    >
-      <Container>
-        <InputBox>
-          <input
-            style={{
-              width: '293px',
-              height: '46px',
-              marginBottom: '11px',
-              border: 'none',
-              borderRadius: '10px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: 700,
-            }}
-            placeholder="이메일"
-            type="text"
-            name="userEmail"
-            onChange={handleEmail}
-            onBlur={checkDuplicatedEmail} //자동 이메일 체크
-          />
-          <span>{emailCheck}</span>
-        </InputBox>
-        <InputBox>
-          <input
-            style={{
-              width: '293px',
-              height: '46px',
-              marginBottom: '11px',
-              border: 'none',
-              borderRadius: '10px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: 700,
-            }}
-            placeholder="닉네임"
-            type="text"
-            name="userName"
-            onChange={handleUserName}
-            onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
-          />
-          <span>{userNameCheck}</span>
-        </InputBox>
-        <InputBox>
-          <input
-            style={{
-              width: '293px',
-              height: '46px',
-              marginBottom: '11px',
-              border: 'none',
-              borderRadius: '10px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: 700,
-            }}
-            placeholder="비밀번호"
-            type="text"
-            name="pwd"
-            onChange={handlePwd}
-          />
-          <span>{pwdCheck}</span>
-        </InputBox>
-        <InputBox>
-          <input
-            style={{
-              width: '293px',
-              height: '46px',
-              marginBottom: '11px',
-              border: 'none',
-              borderRadius: '10px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: 700,
-            }}
-            placeholder="비밀번호확인"
-            type="text"
-            name="pwdCheck"
-            onChange={handleConfirmPwd}
-          />
-          <span>{confirmPwdCheck}</span>
-        </InputBox>
-
-        <Link to={{ pathname: '/signup/detail', signupForm }}>
-          <input type="button" value="다음" disabled={isTrue} />
-        </Link>
-      </Container>
-    </Grid>
+    <Container>
+      <input
+        style={{
+          width: '293px',
+          height: '46px',
+          marginBottom: '11px',
+          borderRadius: '10px',
+          textAlign: 'center',
+          fontSize: '12px',
+          fontWeight: 700,
+        }}
+        placeholder="이메일"
+        type="text"
+        name="userEmail"
+        onChange={handleEmail}
+        onBlur={checkDuplicatedEmail} //자동 이메일 체크
+      />
+      <span>{emailCheck}</span>
+      <input
+        style={{
+          width: '293px',
+          height: '46px',
+          marginBottom: '11px',
+          borderRadius: '10px',
+          textAlign: 'center',
+          fontSize: '12px',
+          fontWeight: 700,
+        }}
+        placeholder="닉네임"
+        type="text"
+        name="userName"
+        onChange={handleUserName}
+        onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
+      />
+      <span>{userNameCheck}</span>
+      <input
+        style={{
+          width: '293px',
+          height: '46px',
+          marginBottom: '11px',
+          borderRadius: '10px',
+          textAlign: 'center',
+          fontSize: '12px',
+          fontWeight: 700,
+        }}
+        placeholder="비밀번호"
+        type="text"
+        name="pwd"
+        onChange={handlePwd}
+      />
+      <span>{pwdCheck}</span>
+      <input
+        style={{
+          width: '293px',
+          height: '46px',
+          marginBottom: '11px',
+          borderRadius: '10px',
+          textAlign: 'center',
+          fontSize: '12px',
+          fontWeight: 700,
+        }}
+        placeholder="비밀번호확인"
+        type="text"
+        name="pwdCheck"
+        onChange={handleConfirmPwd}
+      />
+      <span>{confirmPwdCheck}</span>
+      <Link to={{ pathname: '/signup/detail', signupForm }}>
+        <input type="button" value="다음" disabled={isTrue} />
+      </Link>
+    </Container>
   );
 };
 
 const Container = styled.div`
-  width: 50vw;
-  margin: auto;
-`;
-
-const InputBox = styled.div`
-  margin: 30px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 500px;
+  height: 680px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 60px auto;
+  gap: 10px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
 `;
 
 export default Signup;

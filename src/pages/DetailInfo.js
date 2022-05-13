@@ -369,6 +369,12 @@ const DetailInfo = (props) => {
 const Container = styled.div`
   width: 60vw;
   margin: auto;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 60px auto;
+  gap: 10px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
 `;
 
 const Grid = styled.div`

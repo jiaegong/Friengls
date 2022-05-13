@@ -43,7 +43,7 @@ const Header = () => {
         <div
           className="logoWrap"
           onClick={() => {
-            history.push('/');
+            history.replace('/');
           }}
         >
           <img className="logo" src={MainLogo} alt=""></img>

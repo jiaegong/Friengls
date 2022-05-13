@@ -34,13 +34,13 @@ function App() {
 
   return (
     <ConnectedRouter history={history}>
+      <Header />
       <Switch>
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/auth/kakao" component={Kakao} />
         <Route path="/oauth2/callback/google" component={Google} />
         <Route path="/signup/detail" component={DetailInfo} />
-        <Header />
       </Switch>
       <Route path="/" exact component={Main} />
       <Route path="/mypage" exact component={Mypage} />

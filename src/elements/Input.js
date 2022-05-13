@@ -46,8 +46,8 @@ Input.defaultProps = {
     fontSize: '14px',
     fontWeight: '400',
     color: '#000',
-    width: '100%',
-    border: 'none',
+    width: '300px',
+    padding: '20px',
   },
 };
 
@@ -56,7 +56,7 @@ const InputStyled = styled.input`
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
   width: ${(props) => props.width};
-  border: ${(props) => props.border};
+  padding: ${(props) => props.padding};
   box-sizing: border-box;
 `;
 
@@ -65,7 +65,7 @@ const TextareaStyled = styled.textarea`
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
   width: ${(props) => props.width};
-  border: ${(props) => props.border};
+  padding: ${(props) => props.padding};
   box-sizing: border-box;
 `;
 

@@ -81,7 +81,7 @@ const getOneReviewDB = (tutorName = null) => {
     })
       .then((res) => {
         console.log(res);
-        dispatch(setReview(res.data));
+        dispatch(setReview(res.data.data));
       })
       .catch((err) => {
         console.log('리뷰 불러오기에 실패했습니다!', err);
@@ -102,6 +102,7 @@ const editReviewDB = (reviewId, rate, text) => {
       },
     })
       .then((res) => {
+        console.log(res);
         dispatch(editReview(res));
         // 새로고침 해주기
       })
@@ -115,12 +116,12 @@ const deleteReviewDB = (reviewId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'delete',
-      url: `https://jg-jg.shop/deleteReview`,
+      url: `http://3.36.123.28/deleteReview`,
       data: { reviewId },
     })
       .then((res) => {
-        dispatch(deleteReview(res));
-        // 새로고침 해주기
+        dispatch(deleteReview());
+        window.location.reload(); // 새로고침 해주기
       })
       .catch((err) => {
         console.log(err);
@@ -140,7 +141,10 @@ export default handleActions(
       }),
     [EDIT_REVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.unshift(action.payload.review);
+        let idx = draft.list.findIndex(
+          (r) => r.reviewId === action.payload.reviewId,
+        );
+        draft.list[idx] = action.payload.review;
       }),
     [DELETE_REVIEW]: (state, action) =>
       produce(state, (draft) => {

@@ -95,10 +95,10 @@ const Review = (props) => {
       {/* <BtnPosition>나도 선생님 예약하기</BtnPosition> */}
       {/* 상세페이지 BTN */}
       <button className="reviewEditBtn btn" onClick={editReview}>
-        수정하기
+        수정
       </button>
       <button className="reviewDeleteBtn btn" onClick={deleteReview}>
-        삭제하기
+        삭제
       </button>
     </Flex>
   );

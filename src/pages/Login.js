@@ -38,168 +38,60 @@ const Login = (props) => {
   };
 
   return (
-    <Grid styles={{ width: '1920px', height: '1080px' }}>
-      <Grid
+    <Wrap>
+      <InputContainer>
+        <Input
+          placeholder="Email"
+          type="text"
+          name="userEmail"
+          _onChange={handleUserEmail}
+          styles={{
+            width: '240px',
+            height: '40px',
+            borderRadius: '10px',
+            textAlign: 'center',
+            fontSize: '12px',
+            fontWeight: 700,
+          }}
+        />
+        <Input
+          placeholder="Password"
+          type="text"
+          name="pwd"
+          _onChange={handlePwd}
+          styles={{
+            width: '240px',
+            height: '40px',
+            borderRadius: '10px',
+            textAlign: 'center',
+            fontSize: '12px',
+            fontWeight: 700,
+          }}
+        />
+      </InputContainer>
+      <Button
         styles={{
-          width: '575px',
-          height: '804px',
-          background: 'rgba( 238, 74, 22, 0.9 )',
-          borderRadius: '30px',
-          position: 'relative',
+          width: '120px',
+          height: '40px',
+          background: '#000',
+          color: '#fff',
         }}
+        _onClick={login}
       >
-        <Flex
-          styles={{
-            width: '100%',
-            position: 'absolute',
-            justifyContent: 'space-between',
-            marginTop: '25px',
-            paddingRight: '33.5 px',
-            paddingLeft: '29px',
-          }}
-        >
-          <Icon
-            href={'/'}
-            src={HomeIcon}
-            styles={{ width: '27px', height: '23px' }}
-          />
-          <Icon
-            _onClick={() => {
-              history.goBack();
-            }}
-            src={BackIcon}
-            styles={{ width: '27px', height: '23px', color: '#fff' }}
-          />
-        </Flex>
-        <Flex
-          styles={{
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Grid styles={{ textAlign: 'center' }}>
-            <Text
-              styles={{ marginTop: '92px', fontSize: '40px', color: '#ffffff' }}
-            >
-              와주셨군요!
-            </Text>
-          </Grid>
-          <Flex
-            styles={{
-              flexDirection: 'column',
-            }}
-          >
-            <Text styles={{ fontSize: '35px', color: '#ffffff' }}>
-              로그인 하여 더 다양한
-            </Text>
-            <Text styles={{ fontSize: '35px', color: '#ffffff' }}>
-              경험을 즐겨보세요
-            </Text>
-          </Flex>
-
-          <Flex
-            styles={{
-              width: '350px',
-              height: '105px',
-              marginBottom: '116px',
-            }}
-          >
-            <Flex
-              styles={{
-                marginRight: '11px',
-                flexDirection: 'column',
-              }}
-            >
-              <Input
-                placeholder="ID"
-                type="text"
-                name="userEmail"
-                _onChange={handleUserEmail}
-                value={userEmail}
-                styles={{
-                  width: '293px',
-                  height: '46px',
-                  marginBottom: '11px',
-                  border: 'none',
-                  borderRadius: '10px',
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  fontWeight: 700,
-                  // color: '#e34d1d',
-                }}
-              />
-              <Input
-                placeholder="PASSWORD"
-                type="text"
-                name="pwd"
-                _onChange={handlePwd}
-                value={pwd}
-                styles={{
-                  width: '293px',
-                  height: '46px',
-                  border: 'none',
-                  borderRadius: '10px',
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  fontWeight: 700,
-                  // fontColor: '#e34d1d',
-                }}
-              />
-            </Flex>
-            <Grid styles={{ width: '46px', height: '105px' }}>
-              <Button
-                _onClick={login}
-                styles={{
-                  background: '#FFD8C1',
-                  border: 'none',
-                  borderRadius: '10px',
-                }}
-              >
-                <Grid>
-                  <Text
-                    styles={{
-                      fontSize: '12px',
-                      color: '#a52800',
-                      fontWeight: 700,
-                    }}
-                  >
-                    LOG
-                  </Text>
-                  <Text
-                    styles={{
-                      fontSize: '12px',
-                      color: '#a52800',
-                      fontWeight: 700,
-                    }}
-                  >
-                    IN
-                  </Text>
-                </Grid>
-              </Button>
-            </Grid>
-            {/* <div>
+        Login
+      </Button>
+      {/* <div>
               <Button _onClick={() => history.push('/signup')}>회원가입</Button>
             </div> */}
-            {/* <A href={KAKAO_AUTH_URL}>
+      {/* <A href={KAKAO_AUTH_URL}>
               <Img src={KakaoLoginIcon} alt="카카오 로그인 버튼" />
             </A>
             <A href={GOOGLE_AUTH_URL}>
               <Img src={GoogleLoginIcon} alt="구글 로그인 버튼" />
             </A> */}
-          </Flex>
-        </Flex>
-      </Grid>
-      <Flex styles={{ ai: 'center' }}>
-        <Text>로고</Text>
-      </Flex>
-    </Grid>
+    </Wrap>
   );
 };
-
-const Container = styled.div`
-  width: 50vw;
-  margin: auto;
-`;
 
 const Img = styled.img`
   // width: 100px;
@@ -212,3 +104,26 @@ const A = styled.a`
 `;
 
 export default Login;
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 430px;
+  height: 500px;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 60px auto;
+  gap: 20px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;

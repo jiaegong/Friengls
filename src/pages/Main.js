@@ -19,7 +19,7 @@ const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
-  console.log(tutorList);
+  console.log(reviewList);
 
   React.useEffect(() => {
     dispatch(reviewActions.getReviewDB());
@@ -80,9 +80,11 @@ const Main = () => {
             </ReviewTitleWrap>
             {/* 리뷰 맵 돌리는 곳 */}
             <ReviewList>
-              {reviewList?.map((r, idx) => {
-                return <Review key={idx} {...r} />;
-              })}
+              {reviewList
+                ? reviewList.map((r, idx) => {
+                    return <Review key={idx} {...r} />;
+                  })
+                : null}
             </ReviewList>
             {/* 리뷰 맵 돌리는 곳 */}
           </div>
