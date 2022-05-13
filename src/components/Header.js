@@ -148,7 +148,7 @@ const Wrap = styled.div`
       /* background: #c5c5c5; */
 
       li {
-        width: 80px;
+        /* width: 80px; */
         height: 35px;
         display: flex;
         justify-content: center;
@@ -156,7 +156,8 @@ const Wrap = styled.div`
         align-items: center;
         cursor: pointer;
         position: relative;
-        font-size: 16px;
+        /* font-size: 16px; */
+        font-size: 24px;
         font-weight: 800;
         letter-spacing: 1px;
 

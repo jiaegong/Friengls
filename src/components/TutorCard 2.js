@@ -13,8 +13,8 @@ const TutorCard = ({ item, urlCheck }) => {
     >
       <img
         className="user_img"
-        src={item.userProfile}
-        // src={'https://via.placeholder.com/300x200'}
+        // src={item.userProfile}
+        src={'https://via.placeholder.com/300x200'}
         alt="#"
       ></img>
       <div className="user_info">
@@ -31,8 +31,7 @@ export default TutorCard;
 
 const Card = styled.div`
   width: 300px;
-  /* height: 500px; */
-  height: auto;
+  height: 200px;
   overflow: hidden;
   position: relative;
 
@@ -40,21 +39,20 @@ const Card = styled.div`
   background: #c4c4c4;
 
   .user_img {
-    /* width: 100%; */
+    width: 100%;
     /* height: 100%; */
-    width: 300px;
 
     background: #aaa;
   }
 
   .user_info {
-    height: 100px;
+    height: 60px;
     padding: 7px 20px;
 
-    /* position: absolute; */
-    /* bottom: 0;
+    position: absolute;
+    bottom: 0;
     left: 0;
-    right: 0; */
+    right: 0;
     background: #eee;
 
     .userName {

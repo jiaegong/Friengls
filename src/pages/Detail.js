@@ -16,7 +16,7 @@ const Detail = (props) => {
 
   //디테일페이지에서 불러올 유저 api
   const userApi = props.match.params;
-  console.log(userApi);
+  // console.log(userApi);
 
   useEffect(() => {
     // dispatch(userActions.getUserDetailDB(userApi));
@@ -25,7 +25,7 @@ const Detail = (props) => {
   //디테일페이지에 사용할 유저 정보
   // const isTutor = detailInfo.isTutor;
   const tutorName = props.match.params.userName;
-  console.log(tutorName);
+  // console.log(tutorName);
   const detailInfo = useSelector((state) => state.user.detailInfo);
   // console.log(detailInfo);
 
@@ -44,8 +44,8 @@ const Detail = (props) => {
       // url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {
-        console.log(doc);
-        console.log(doc.data.datas1);
+        // console.log(doc);
+        // console.log(doc.data.datas1);
         setAvailability(doc.data.datas1);
       })
       .catch((err) => {
@@ -108,34 +108,15 @@ const Detail = (props) => {
       <div className="innerWrap">
         {/* 유저 정보 */}
         <div className="userInfoWrap">
-          <DetailUser detailInfo={detailInfo} />
-
-          {/* like 버튼, 나중에 아이콘 찾아서 바꿔 놓기, like 상태 값에 따라서 채워진 하트/빈 하트 */}
-          {/* {isLiked? <div
-            onClick={like}
-            style={{
-              width: '30px',
-              height: '30px',
-              borderRadius: '30px',
-              margin: '5px',
-              backgroundColor: '#ddd'
-            }}
-          /> : <div
-          onClick={unLike}
-          style={{
-            width: '30px',
-            height: '30px',
-            borderRadius: '30px',
-            margin: '5px',
-            backgroundColor: '#ffeb3b'
-          }}
-        />} */}
+          <DetailUser detailInfo={detailInfo} props={props} />
         </div>
+
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
-          <div className="booking">캘린더</div>
+          {/* <div className="booking">캘린더</div> */}
           <Calendar />
         </div>
+
         {/* 코멘트 */}
         {/* 리뷰 리스트 맵 돌릴 때, 작성자 이름이 접속한 이름과 같으면 수정, 삭제 버튼 보이게
         현재 접속한 이름이 없는 경우에 대한 처리도 필요(옵셔널 체이닝) */}
@@ -171,7 +152,7 @@ const Detail = (props) => {
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  background-color: #ddd;
+  /* background-color: #ddd; */
 
   .innerWrap {
     max-width: 1400px;
@@ -184,33 +165,7 @@ const Wrap = styled.div`
       height: 300px;
       margin: 30px auto;
 
-      background-color: #aaa;
-
-      /* 유저 정보 */
-      .userInfo {
-        width: 100%;
-        height: 300px;
-
-        background-color: #686868;
-      }
-
-      /* 자기소개 */
-      .aboutMe {
-        width: 100%;
-        height: 200px;
-        margin: 20px auto;
-
-        background-color: #686868;
-      }
-
-      /* 이력 */
-      .resume {
-        width: 100%;
-        height: 300px;
-        margin-top: 20px;
-
-        background-color: #686868;
-      }
+      /* background-color: #aaa; */
     }
 
     /* 예약 캘린더 */
@@ -221,7 +176,7 @@ const Wrap = styled.div`
       min-height: 300px;
       padding: 0 10px;
 
-      background-color: #686868;
+      /* background-color: #686868; */
 
       .booking {
         width: 100%;
