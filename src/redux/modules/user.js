@@ -156,7 +156,7 @@ const loginCheckDB = () => {
       },
     })
       .then((response) => {
-        console.log('loginCheckDB성공', response.data);
+        // console.log('loginCheckDB성공', response.data);
         dispatch(setUser(response.data));
       })
       .catch((error) => {
@@ -218,7 +218,7 @@ const editUserDB = (userInfo) => {
 
 const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
-    console.log('getUserDetailDB시작', userApi);
+    // console.log('getUserDetailDB시작', userApi);
 
     axios({
       method: 'get',
