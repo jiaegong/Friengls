@@ -77,10 +77,9 @@ const getOneReviewDB = (tutorName = null) => {
   return function (dispatch) {
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getReview/${tutorName}`,
+      url: `http://3.36.123.28/getReview/${tutorName}`,
     })
       .then((res) => {
-        console.log(res);
         dispatch(setReview(res.data.data));
       })
       .catch((err) => {

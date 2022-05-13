@@ -69,7 +69,7 @@ const Detail = (props) => {
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(reviewActions.getOneReviewDB(tutorName));
   }, []);
 
@@ -88,11 +88,9 @@ const Detail = (props) => {
         {/* 리뷰 리스트 맵 돌릴 때, 작성자 이름이 접속한 이름과 같으면 수정, 삭제 버튼 보이게
         현재 접속한 이름이 없는 경우에 대한 처리도 필요(옵셔널 체이닝) */}
         <ReviewList>
-          {/* {reviewList?.map((r, idx) => {
-            return (
-                <Review key={idx} {...r} />
-            );
-          })} */}
+          {reviewList?.map((r, idx) => {
+            return <Review key={idx} {...r} />;
+          })}
         </ReviewList>
       </div>
     </Wrap>
