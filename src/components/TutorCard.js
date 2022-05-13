@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
+import { CgProfile } from 'react-icons/cg';
 
 const TutorCard = ({ item, urlCheck }) => {
   return (
@@ -19,10 +20,13 @@ const TutorCard = ({ item, urlCheck }) => {
       ></img>
       <div className="user_info">
         <p className="userName">{item.userName}</p>
-        {urlCheck ? <p>search</p> : <p>main</p>}
+        {/* {urlCheck ? <p>search</p> : <p>main</p>} */}
         <p className="userContents">{item.contents}</p>
-        {/* <p className="userTag">{item.tag}</p> */}
+        <p className="userTag">{item.tag}</p>
       </div>
+      <ModalBtn>
+        <CgProfile className="modalBtn" />
+      </ModalBtn>
     </Card>
   );
 };
@@ -65,9 +69,35 @@ const Card = styled.div`
     }
 
     .userContents {
+      width: 88%;
       font-size: 14px;
       line-height: 20px;
       letter-spacing: 1px;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .userTag {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  }
+`;
+
+const ModalBtn = styled.div`
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+
+  .modalBtn {
+    font-size: 30px;
+    cursor: pointer;
+
+    &:hover {
+      color: #595959;
     }
   }
 `;

@@ -24,7 +24,7 @@ const Main = () => {
   return (
     <Wrap>
       <DivBanner>
-        <Banner className="banner">
+        <Banner>
           <p className="bannerTitle">
             <span>프랭글스에서</span> <span>프랭글과 대화하고</span>
             <span> 영어실력 쌓기!</span>
