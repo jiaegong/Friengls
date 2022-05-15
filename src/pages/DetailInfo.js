@@ -171,9 +171,14 @@ const DetailInfo = (props) => {
     console.log(profileImage);
     const formData = new FormData();
     formData.append('image', profileImage);
+    formData.append('userEmail', signupInfo.userEmail);
+    formData.append('isTutor', isTutor);
 
     for (let value of formData.values()) {
-      // console.log('업로드할 이미지데이터', value);
+      console.log('폼데이터 밸류', value);
+    }
+    for (let key of formData.keys()) {
+      console.log('폼데이터 키', key);
     }
     // dispatch(formData));
 
@@ -195,7 +200,7 @@ const DetailInfo = (props) => {
       endTime: endTime,
     };
     console.log('전송할 유저정보', userForm);
-    dispatch(userActions.signupDB(userForm));
+    // dispatch(userActions.signupDB(userForm));
   };
 
   return (
