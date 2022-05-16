@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import './calendar.css';
 import {
   IconButton,
   Grid,
@@ -20,7 +21,7 @@ const CalendarTemplate = ({
   tutorName,
   availability,
   setAvailability,
-  primaryColor = '#DF1B1B',
+  primaryColor = '#153587',
   secondaryColor = '#0077ff',
   fontFamily = 'Noto Sans',
   fontSize = 12,
@@ -77,6 +78,9 @@ const CalendarTemplate = ({
       minWidth: 200,
       fontFamily: theme.typography.fontFamily,
     },
+    // test: {
+    //   marginTop: 50,
+    // },
     // popover: {
     //   pointerEvents: "none",
     //   fontFamily: theme.typography.fontFamily,
@@ -558,6 +562,8 @@ const CalendarTemplate = ({
     //   setPopoverContent(null);
     // };
 
+    const test = 'test00';
+
     return (
       <ThemeProvider theme={theme}>
         <Grid
@@ -589,7 +595,7 @@ const CalendarTemplate = ({
               <Grid item>
                 <Card style={{ padding: 10, margin: 10 }} variant="outlined">
                   <Grid container direction="column" alignItems="center">
-                    <h3>
+                    <h3 className="calendarTitle">
                       {/* 달력 타이틀 부분 */}
                       {month} {year}
                     </h3>
@@ -753,14 +759,16 @@ const CalendarTemplate = ({
                 {saving ? (
                   <CircularProgress />
                 ) : (
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleSaveAvailability}
-                    className={classes.button}
-                  >
-                    예약하기
-                  </Button>
+                  <div className="saveBtn">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={handleSaveAvailability}
+                      className={classes.button}
+                    >
+                      수강 예약하기
+                    </Button>
+                  </div>
                 )}
               </Grid>
             </Grid>
