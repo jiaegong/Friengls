@@ -72,8 +72,8 @@ const Search = (props) => {
         </div>
       </DivBanner>
 
-      <div className="innerWrap">
-        <ul className="tutorList">
+      <InnerWrap>
+        <ul>
           {tutorList.map((item, idx) => {
             return (
               <TutorCard
@@ -84,7 +84,7 @@ const Search = (props) => {
             );
           })}
         </ul>
-      </div>
+      </InnerWrap>
     </Wrap>
   );
 };
@@ -160,38 +160,22 @@ const Wrap = styled.div`
       }
     }
   }
+`;
 
-  .innerWrap {
-    width: 90%;
-    max-width: 1400px;
-    min-height: 910px;
-    margin: auto;
+const InnerWrap = styled.div`
+  width: 90%;
+  max-width: 1400px;
+  min-height: 910px;
+  margin: auto;
 
-    background: white;
+  background: white;
 
-    .tutorList {
-      width: 100%;
-      padding: 20px 16px;
-      display: grid;
-      place-items: center;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      grid-gap: 1rem;
-
-      /* background-color: #6b6b6b; */
-
-      .tutorCard {
-        width: 310px;
-        height: 218px;
-        border-radius: 10px;
-        overflow: hidden;
-
-        background: #eee;
-
-        .user_img {
-          width: 100%;
-          height: 70%;
-        }
-      }
-    }
+  ul {
+    width: 100%;
+    padding: 20px 16px;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    grid-gap: 1rem;
   }
 `;

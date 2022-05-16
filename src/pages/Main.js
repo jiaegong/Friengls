@@ -28,7 +28,7 @@ const Main = () => {
   return (
     <Wrap>
       <DivBanner>
-        <Banner className="banner">
+        <Banner>
           <p className="bannerTitle">
             <span>프랭글스에서</span> <span>프랭글과 대화하고</span>
             <span> 영어실력 쌓기!</span>
@@ -39,7 +39,6 @@ const Main = () => {
             <span> 수다떨면서 영어실력 올리는 사람 나야나!</span>
           </p>
           <button
-            className="bannerBtn"
             onClick={() => {
               alert('여긴 어디로 가야되야나??');
             }}
@@ -51,13 +50,11 @@ const Main = () => {
       <InnerWrap>
         <TutorListWrap>
           <TutorTitleWrap>
-            <div className="subTitleWrap">
-              <span className="subTitle">
-                지난주 가장 예약이 많았던 튜터에요
-              </span>
+            <div>
+              <span>지난주 가장 예약이 많았던 튜터에요</span>
               <span className="tutorMoreBtn">더보기 ></span>
             </div>
-            <p className="title">인기 선생님 리스트</p>
+            <p>인기 선생님 리스트</p>
           </TutorTitleWrap>
           <CardList>
             {tutorList.map((item, idx) => {
@@ -70,7 +67,7 @@ const Main = () => {
         <ReviewWrap>
           <div className="reviewInner">
             <ReviewTitleWrap>
-              <div className="subTitleWrap">
+              <div>
                 <span className="subTitle">
                   다른 튜티들의 리뷰를 들어보세요
                 </span>
@@ -78,7 +75,6 @@ const Main = () => {
               </div>
               <p className="title">수강 추천 리뷰</p>
             </ReviewTitleWrap>
-            {/* 리뷰 맵 돌리는 곳 */}
             <ReviewList>
               {reviewList
                 ? reviewList.map((r, idx) => {
@@ -86,7 +82,6 @@ const Main = () => {
                   })
                 : null}
             </ReviewList>
-            {/* 리뷰 맵 돌리는 곳 */}
           </div>
         </ReviewWrap>
       </InnerWrap>
@@ -133,7 +128,7 @@ const Banner = styled.div`
     color: #fff;
   }
 
-  .bannerBtn {
+  button {
     /* width: 332px; */
     /* height: 80px; */
     width: 290px;
@@ -176,12 +171,12 @@ const TutorListWrap = styled.div`
 const TutorTitleWrap = styled.div`
   margin-bottom: 40px;
 
-  .subTitleWrap {
+  div {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .subTitle {
+    span {
       /* font-size: 26px;
     font-weight: 400; */
       font-size: 18px;
@@ -193,7 +188,7 @@ const TutorTitleWrap = styled.div`
       cursor: pointer;
     }
   }
-  .title {
+  p {
     /* font-size: 60px; */
     font-size: 48px;
     font-weight: bold;
@@ -228,12 +223,12 @@ const ReviewWrap = styled.div`
 const ReviewTitleWrap = styled.div`
   margin-bottom: 40px;
 
-  .subTitleWrap {
+  div {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .subTitle {
+    span {
       /* font-size: 26px;
       font-weight: 400; */
       font-size: 18px;
@@ -245,7 +240,7 @@ const ReviewTitleWrap = styled.div`
       cursor: pointer;
     }
   }
-  .title {
+  p {
     /* font-size: 60px; */
     font-size: 48px;
     font-weight: bold;
@@ -256,4 +251,12 @@ const ReviewList = styled.div`
   width: 100%;
   min-height: 188px;
   margin: auto;
+
+  li {
+    display: flex;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0px 2px 12px 0px #00000040;
+    margin-bottom: 16px;
+  }
 `;
