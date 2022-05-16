@@ -5,7 +5,7 @@ import Portal from '../components/Portal';
 import ReviewModal from '../components/ReviewModal';
 import { Grid, Flex, Button } from '../elements/index';
 
-const VideoChat = () => {
+const VideoChat = (props) => {
   const [modalOn, setModalOn] = useState(false);
   const handleModal = () => {
     setModalOn(!modalOn);
@@ -14,6 +14,7 @@ const VideoChat = () => {
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
+  // const roomName = props.match.params;
   const roomName = '123';
   let userStream = null;
   let creator = false;
@@ -21,7 +22,7 @@ const VideoChat = () => {
   useEffect(() => {
     const socket = io('https://jg-jg.shop');
     socket.emit('joinRoom', roomName);
-
+    console.log(0);
     socket.on('created', () => {
       creator = true;
 

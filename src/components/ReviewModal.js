@@ -9,7 +9,7 @@ import { getCookie } from '../shared/Cookie';
 const ReviewModal = ({ onClose }) => {
   const dispatch = useDispatch();
 
-  const cookie = getCookie('token');
+  const token = getCookie('token');
   const tutorName = 'yoonha3331'; // 튜터 이름 나중에 props로 받아오기
   const [rate, setRate] = React.useState('');
   const [text, setText] = React.useState('');
@@ -18,7 +18,7 @@ const ReviewModal = ({ onClose }) => {
   };
 
   const addReview = () => {
-    dispatch(reviewActions.addReviewDB(cookie, tutorName, rate, text));
+    dispatch(reviewActions.addReviewDB(token, tutorName, rate, text));
     setRate('');
     setText('');
   };
