@@ -156,7 +156,7 @@ const loginCheckDB = () => {
       },
     })
       .then((response) => {
-        // console.log('loginCheckDB성공', response.data);
+        console.log('loginCheckDB성공', response.data);
         dispatch(setUser(response.data));
       })
       .catch((error) => {

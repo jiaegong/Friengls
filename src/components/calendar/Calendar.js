@@ -506,19 +506,22 @@ const CalendarTemplate = ({
 
       dispatch(calendarActions.setBookingDB(data, tutorName));
       setAvailability(data);
-      console.log(data[dataLength].start);
-      console.log(data[dataLength].end);
-      const startTime = data[dataLength].start;
-      const endTime = data[dataLength].end;
+      // db로 예약 정보 넘기는 값
+      // console.log(data);
 
-      let [week, month, day, year, sTime] = startTime.toString().split(' ');
-      let start = sTime.substr(0, 5);
-      let end = endTime.toString().substr(-26, 5);
+      // console.log(data[dataLength].start);
+      // console.log(data[dataLength].end);
+      // const startTime = data[dataLength].start;
+      // const endTime = data[dataLength].end;
 
-      console.log({ week, month, day, year });
-      console.log({ start, end });
+      // let [week, month, day, year, sTime] = startTime.toString().split(' ');
+      // let start = sTime.substr(0, 5);
+      // let end = endTime.toString().substr(-26, 5);
 
-      alert(`${month} ${day} ${start} - ${end} 예약 되었습니다!!`);
+      // console.log({ week, month, day, year });
+      // console.log({ start, end });
+
+      // alert(`${month} ${day} ${start} - ${end} 예약 되었습니다!!`);
     };
 
     // 현재의 달로 오는 기능

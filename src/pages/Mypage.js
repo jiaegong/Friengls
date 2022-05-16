@@ -11,11 +11,12 @@ const Mypage = () => {
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = useSelector((state) => state.user.info.isTutor);
   const userName = useSelector((state) => state.user.info.userName);
-  // console.log({ isTutor, userName });
+  console.log({ isTutor, userName });
 
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
   console.log(bookingList);
+
   useEffect(() => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, []);
