@@ -22,6 +22,7 @@ const Main = () => {
   console.log(reviewList);
 
   React.useEffect(() => {
+    dispatch(tutorActions.getTutorListDB());
     dispatch(reviewActions.getReviewDB());
   }, []);
 

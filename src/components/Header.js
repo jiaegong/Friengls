@@ -7,7 +7,6 @@ import { io } from 'socket.io-client';
 
 // 모듈
 import { history } from '../redux/configureStore';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
@@ -22,7 +21,6 @@ const Header = () => {
 
   // ⭐️
   useEffect(() => {
-    dispatch(tutorActions.getTutorListDB());
     // setSocket(io('소켓을 받을 주소'));
     // setSocket(io('http://localhost:4000'));
   }, []);
@@ -58,9 +56,15 @@ const Header = () => {
           >
             선생님 찾기
           </li>
-          <li>알림</li>
           {token ? (
             <>
+              <li
+                onClick={() => {
+                  alert('알림창 나오게 해야돰!!');
+                }}
+              >
+                알림
+              </li>
               <li
                 onClick={() => {
                   history.push('/mypage');
@@ -80,6 +84,11 @@ const Header = () => {
             </>
           ) : (
             <>
+              <li
+                onClick={() => {
+                  alert('로그인후 사용가능합니다~!');
+                }}
+              ></li>
               <li
                 onClick={() => {
                   history.push('/login');
