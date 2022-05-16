@@ -30,7 +30,7 @@ const Input = (props) => {
       type={type}
       placeholder={placeholder}
       onChange={_onChange}
-      value={value}
+      // value={value}
       {...defaultStyles}
     />
   );

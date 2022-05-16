@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 
 // 모듈
 import { history } from '../redux/configureStore';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 //컴포넌트
@@ -35,8 +36,9 @@ const Header = () => {
 
   //로그아웃
   const logout = () => {
-    console.log('로그아웃');
+    dispatch(userActions.logout());
   };
+
   return (
     <Wrap>
       <div className="innerWrap">

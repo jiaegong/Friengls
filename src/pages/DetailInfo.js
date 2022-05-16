@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { actionCreators as profileActions } from '../redux/modules/profile';
 import { ProfileMedium } from '../image';
 import { checkSpelling } from '../shared/common';
 
@@ -110,7 +111,7 @@ const DetailInfo = (props) => {
   };
 
   //isTutor input값
-  const [isTutor, setIsTutor] = useState(false);
+  const [isTutor, setIsTutor] = useState('0');
 
   //수업가능시간(시작) option
   const startTimeArray = [
@@ -120,7 +121,6 @@ const DetailInfo = (props) => {
   //수업가능시간(시작) input값
   const [startTime, setStartTime] = useState('');
   const handleStartTime = (e) => {
-    console.log(e.target.value);
     setStartTime(e.target.value);
   };
   //수업가능시간(종료) option설정
@@ -133,7 +133,6 @@ const DetailInfo = (props) => {
   //수업가능시간(종료) input값
   const [endTime, setEndTime] = useState('');
   const handleEndTime = (e) => {
-    console.log(e.target.value);
     setEndTime(e.target.value);
   };
 
@@ -145,7 +144,7 @@ const DetailInfo = (props) => {
       userName: signupInfo.userName,
       pwd: signupInfo.pwd,
       pwdCheck: signupInfo.pwdCheck,
-      isTutor: false,
+      isTutor: '0',
       tag: '',
       language1: '',
       language2: '',
@@ -168,19 +167,31 @@ const DetailInfo = (props) => {
     }
     e.preventDefault();
     const profileImage = imageRef.current.files[0];
-    console.log(profileImage);
     const formData = new FormData();
-    formData.append('image', profileImage);
+    formData.append('userProfile', profileImage);
     formData.append('userEmail', signupInfo.userEmail);
+    formData.append('userName', signupInfo.userName);
+    formData.append('pwd', signupInfo.pwd);
+    formData.append('pwdCheck', signupInfo.pwdCheck);
+    formData.append('language1', language1);
+    formData.append('language2', language2);
+    formData.append('language3', language3);
+    formData.append('comment', comment);
+    formData.append('contents', contents);
+    formData.append('tag', tagList.join());
     formData.append('isTutor', isTutor);
+    formData.append('startTime', startTime);
+    formData.append('endTime', endTime);
 
-    for (let value of formData.values()) {
-      console.log('폼데이터 밸류', value);
-    }
-    for (let key of formData.keys()) {
-      console.log('폼데이터 키', key);
-    }
-    // dispatch(formData));
+    // for (let value of formData.values()) {
+    //   console.log('폼데이터 밸류', value);
+    // }
+    // for (let key of formData.keys()) {
+    //   console.log('폼데이터 키', key);
+    // }
+
+    // dispatch(profileActions.uploadProfileDB(formData));
+    dispatch(userActions.signupDB(formData));
 
     //추가정보 디스패치
     const userForm = {
@@ -313,13 +324,13 @@ const DetailInfo = (props) => {
       {/* isTutor */}
       <Grid>
         <span>'user' 님은 한국어를 </span>
-        <label onClick={() => setIsTutor(true)}>
-          <input type="radio" name="isTutor" value={true} />
+        <label onClick={() => setIsTutor('1')}>
+          <input type="radio" name="isTutor" value={'1'} />
           가르치고
         </label>
         <span> / </span>
-        <label onClick={() => setIsTutor(false)}>
-          <input type="radio" name="isTutor" value={false} />
+        <label onClick={() => setIsTutor('0')}>
+          <input type="radio" name="isTutor" value={'0'} />
           배우고
         </label>
         <span> 싶습니다.</span>
@@ -361,7 +372,7 @@ const DetailInfo = (props) => {
         </Grid>
       )}
       {/* 버튼 */}
-      <button type="submit" onClick={addSignupInfo}>
+      <button type="submit" onClick={addDetailInfo}>
         건너뛰기
       </button>
       <button type="submit" onClick={addDetailInfo}>
