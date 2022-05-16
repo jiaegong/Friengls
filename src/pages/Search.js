@@ -18,6 +18,8 @@ const Search = (props) => {
   // console.log(tutorList);
 
   useEffect(() => {
+    dispatch(tutorActions.getTutorListDB());
+
     axios({
       method: 'get',
       // url: `https://jg-jg.shop/getPopularTutor`,
