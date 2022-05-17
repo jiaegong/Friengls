@@ -23,14 +23,7 @@ const Review = (props) => {
     dispatch(reviewActions.deleteReviewDB(reviewId));
   };
   return (
-    <Flex
-      styles={{
-        padding: '24px',
-        borderRadius: '20px',
-        boxShadow: '0px 2px 12px 0px #00000040',
-        marginBottom: '16px',
-      }}
-    >
+    <Wrap>
       {/* 메인페이지 이미지 */}
       <ReviewImgWrap2>
         <img className="reviewImg" src="" alt=""></img>
@@ -100,11 +93,21 @@ const Review = (props) => {
       <button className="reviewDeleteBtn btn" onClick={deleteReview}>
         삭제
       </button>
-    </Flex>
+    </Wrap>
   );
 };
 
 export default Review;
+
+const Wrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0px 2px 12px 0px #00000040;
+  margin-bottom: 16px;
+`;
 
 const ReviewImgWrap1 = styled.div`
   width: 140px;
