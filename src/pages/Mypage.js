@@ -183,19 +183,28 @@ const Wrap = styled.div`
       }
 
       /* 예약 리스트 */
+
       .bookingList {
         max-height: 520px;
         min-height: 300px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
+        /* display: flex; */
+        /* justify-content: center; */
+        /* flex-direction: column; */
+        /* align-items: center; */
         border: 2px solid #c7c7c7;
         border-radius: 4px;
-        padding: 40px 60px 0px 40px;
+        padding: 40px 60px 40px 40px;
         box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.15);
+        overflow-y: scroll;
 
         background: #fff;
+        /* 스크롤 버튼 조절 */
+        ::-webkit-scrollbar-thumb {
+          height: 20%;
+          background-color: red;
+          border-radius: 15px;
+          /* display: none; */
+        }
 
         /* 예약 카드 */
         .booking {
