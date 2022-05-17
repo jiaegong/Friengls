@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { history } from '../redux/configureStore';
-import { Flex, Text, Input, Button } from '../elements/index';
-import { ProfileMedium } from '../image';
+import DetailUser from '../components/DetailUser';
 
-const Mypage = () => {
+const Mypage = (props) => {
   const dispatch = useDispatch();
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = useSelector((state) => state.user.info.isTutor);
@@ -43,44 +42,9 @@ const Mypage = () => {
     <Wrap>
       <div className="innerWrap">
         {/* 유저 정보 */}
-        <div className="userInfoWrap">
-          <div>
-            <div>
-              <button>좋아요</button>
-              <button
-                onClick={() => {
-                  history.push('/mypage');
-                }}
-              >
-                수정
-              </button>
-            </div>
-            <UserInfoBox>
-              <ImageBox>
-                <Image src={ProfileMedium} />
-              </ImageBox>
-              <div>
-                <TextInfo>
-                  <span>닉네임</span>: <span>닉네임불러오기</span>
-                </TextInfo>
-                <TextInfo>
-                  <span>한 줄 소개</span>: <span>닉네임불러오기</span>
-                </TextInfo>
-                <TextInfo>
-                  <span>태그</span>: <span>태그불러오기</span>
-                </TextInfo>
-                <TextInfo>
-                  <span>구사 가능 언어</span>: <span>언어불러오기</span>
-                </TextInfo>
-              </div>
-            </UserInfoBox>
-            <div>
-              <h2>자기소개</h2>
-              <TextInfo>자기소개 불러오기</TextInfo>
-            </div>
-          </div>
-        </div>
+        <DetailUser userInfo={userInfo} props={props} />
         {/* 예약 캘린더 */}
+        <h2>예약 관리</h2>
         <div className="bookingWrap">
           <p className="bookingTitle">예약 리스트</p>
           <ul className="bookingList">
@@ -125,29 +89,12 @@ export default Mypage;
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  background-color: #ddd;
+  // background-color: #ddd;
 
   .innerWrap {
     max-width: 1400px;
     width: 90%;
     margin: auto;
-
-    /* 유저정보 wrap */
-    .userInfoWrap {
-      width: 95%;
-      min-height: 300px;
-      margin: 30px auto 0;
-
-      background-color: #aaa;
-
-      /* 유저 정보 */
-      .userInfo {
-        width: 100%;
-        height: 300px;
-
-        background-color: #686868;
-      }
-    }
 
     /* 예약 리스트 Wrap */
     .bookingWrap {
@@ -221,27 +168,4 @@ const Wrap = styled.div`
       }
     }
   }
-`;
-const UserInfoBox = styled.div`
-  display: flex;
-`;
-
-const ImageBox = styled.div`
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-`;
-
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-`;
-
-const TextInfo = styled.p`
-  margin-top: 10px;
 `;

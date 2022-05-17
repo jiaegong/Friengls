@@ -203,8 +203,8 @@ const logout = () => {
   return function (dispatch, getState, { history }) {
     deleteCookie('token');
     dispatch(unsetUser);
-    history.replace('/');
     window.location.reload();
+    history.replace('/');
   };
 };
 

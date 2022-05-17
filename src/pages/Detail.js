@@ -77,9 +77,7 @@ const Detail = (props) => {
     <Wrap>
       <div className="innerWrap">
         {/* 유저 정보 */}
-        <div className="userInfoWrap">
-          <DetailUser detailInfo={detailInfo} props={props} />
-        </div>
+        <DetailUser userInfo={detailInfo} props={props} />
 
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
@@ -103,21 +101,12 @@ const Detail = (props) => {
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  /* background-color: #ddd; */
+  // background-color: #ddd;
 
   .innerWrap {
     max-width: 1400px;
     width: 90%;
     margin: auto;
-
-    /* 유저정보 wrap */
-    .userInfoWrap {
-      width: 95%;
-      height: 300px;
-      margin: 30px auto;
-
-      /* background-color: #aaa; */
-    }
 
     /* 예약 캘린더 */
     .bookingWrap {
