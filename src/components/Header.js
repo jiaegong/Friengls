@@ -48,6 +48,7 @@ const Header = () => {
         </div>
 
         <ul className="navBarWrap">
+          <li>언어</li>
           <li
             className="icon"
             onClick={() => {
@@ -87,21 +88,17 @@ const Header = () => {
               <li
                 onClick={() => {
                   alert('로그인후 사용가능합니다~!');
+                  history.push('/login');
                 }}
-              ></li>
+              >
+                알림
+              </li>
               <li
                 onClick={() => {
                   history.push('/login');
                 }}
               >
-                로그인
-              </li>
-              <li
-                onClick={() => {
-                  history.push('/signup');
-                }}
-              >
-                회원가입
+                로그인/회원가입
               </li>
             </>
           )}
@@ -116,26 +113,27 @@ export default Header;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 240px;
+  height: 120px;
   background: #fff;
 
   .innerWrap {
     width: 90%;
     max-width: 1400px;
     height: 100%;
-    padding: 50px 16px 0;
+    /* padding: 50px 16px 0; */
+    padding: 36px 16px 0;
     margin: auto;
 
     /* text-align: center; */
 
-    /* display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center; */
-    /* background: #eee; */
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    /* background: #aaaaaa; */
     .logoWrap {
-      width: 313px;
-      margin: 0 auto 53px;
+      min-width: 245px;
+      /* margin: 0 auto 53px; */
       cursor: pointer;
       .logo {
         width: 100%;
@@ -144,13 +142,13 @@ const Wrap = styled.div`
     }
 
     .navBarWrap {
-      max-width: 612px;
-      /* width: auto; */
+      max-width: 672px;
+      width: 100%;
       height: 36px;
-      margin: auto;
+      /* margin: auto; */
       display: flex;
-      /* justify-content: center; */
-      justify-content: space-around;
+      justify-content: flex-end;
+      /* justify-content: space-around; */
       align-items: center;
       position: relative;
 
@@ -166,18 +164,18 @@ const Wrap = styled.div`
         cursor: pointer;
         position: relative;
         /* font-size: 16px; */
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 800;
         letter-spacing: 1px;
 
-        /* margin-right: 54px; */
+        margin-left: 3.375rem;
         /* background: #8e8e8e; */
 
         cursor: pointer;
         /* background: #8e8e8e; */
 
         &:nth-child(5) {
-          margin: 0;
+          /* margin: 0; */
         }
 
         /* 알림 갯수 */

@@ -425,7 +425,7 @@ const CalendarTemplate = ({
     const [quickAvailability, setQuickAvailability] = useState(
       makeQuickAvailability(availability),
     );
-    // console.log({ quickAvailability });
+    console.log({ quickAvailability });
 
     const [activeDay, setActiveDay] = useState(null);
     const [year, setYear] = useState(Number(today.format('YYYY')));
