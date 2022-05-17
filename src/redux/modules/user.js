@@ -39,7 +39,7 @@ const initialState = {
   //detailInfo: detail페이지의 유저정보
   detailInfo: {
     userName: '',
-    isTutor: 1,
+    isTutor: '1',
     tag: ',,',
     language1: '',
     language2: '',
@@ -53,27 +53,21 @@ const initialState = {
 
 //미들웨어
 
-const signupDB = (formData) => {
+const signupDB = (formData, loginInfo) => {
   return function (dispatch, getState, { history }) {
-    console.log('signupDB시작', formData);
+    console.log('signupDB시작', formData, loginInfo);
 
     axios({
       method: 'post',
       // url: 'https://jg-jg.shop/signUp',
       url: 'http://13.124.206.190/signUp',
-      // formData,
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
-      // data: signupInfo,
     })
       .then((response) => {
         console.log('signupDB성공', response);
-        // const loginInfo = {
-        //   userEmail: signupInfo.userEmail,
-        //   pwd: signupInfo.pwd,
-        // };
-        // console.log('회원가입DB후로그인정보', loginInfo);
-        // dispatch(loginDB(loginInfo));
+
+        dispatch(loginDB(loginInfo));
       })
       .catch((error) => {
         window.alert('회원가입에 실패하셨습니다.');

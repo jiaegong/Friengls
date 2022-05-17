@@ -32,9 +32,9 @@ const DetailUser = (props) => {
         <div className="userInfo">
           <UserTitle>
             <p className="tutorName">{detailInfo.userName}</p>
-            <span>{detailInfo.language1}</span>/
-            <span>{detailInfo.language2}</span>/
-            <span>{detailInfo.language3}</span>
+            {detailInfo.language1 ? <span>{detailInfo.language1}</span> : ''}
+            {detailInfo.language2 ? <span>/ {detailInfo.language2}</span> : ''}
+            {detailInfo.language3 ? <span>/ {detailInfo.language3}</span> : ''}
           </UserTitle>
           <Contests>{detailInfo.comment}</Contests>
           <Tags>
