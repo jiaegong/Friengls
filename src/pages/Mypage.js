@@ -193,17 +193,28 @@ const Wrap = styled.div`
         /* align-items: center; */
         border: 2px solid #c7c7c7;
         border-radius: 4px;
-        padding: 40px 60px 40px 40px;
+        /* padding: 40px 60px 40px 40px; */
+        padding: 40px 30px 40px 40px;
         box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.15);
         overflow-y: scroll;
 
         background: #fff;
+
         /* 스크롤 버튼 조절 */
+        ::-webkit-scrollbar {
+          width: 20px; /*스크롤바의 너비*/
+        }
         ::-webkit-scrollbar-thumb {
           height: 20%;
-          background-color: #e4e4e4;
+          background-color: #e4e4e4; /*스크롤바의 색상*/
           border-radius: 15px;
           /* display: none; */
+        }
+        ::-webkit-scrollbar-track {
+          background-color: #d7d7d7;
+          border-radius: 15px;
+          display: none;
+          /*스크롤바 트랙 색상 */
         }
 
         /* 예약 카드 */
