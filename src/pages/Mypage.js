@@ -201,7 +201,7 @@ const Wrap = styled.div`
         /* 스크롤 버튼 조절 */
         ::-webkit-scrollbar-thumb {
           height: 20%;
-          background-color: red;
+          background-color: #e4e4e4;
           border-radius: 15px;
           /* display: none; */
         }
