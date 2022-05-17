@@ -78,8 +78,8 @@ const userNameCheckDB = (userName) => {
   return function () {
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/signUp/nameCheck',
-      url: 'http://13.124.206.190/signUp/nameCheck',
+      url: 'https://jg-jg.shop/signUp/nameCheck',
+      // url: 'http://13.124.206.190/signUp/nameCheck',
       data: {
         userName: userName,
       },
@@ -100,8 +100,8 @@ const signupDB = (signupInfo) => {
 
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/signUp',
-      url: 'http://13.124.206.190/signUp',
+      url: 'https://jg-jg.shop/signUp',
+      // url: 'http://13.124.206.190/signUp',
       data: signupInfo,
     })
       .then((response) => {
@@ -126,8 +126,8 @@ const loginDB = (loginForm) => {
 
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/login',
-      url: 'http://13.124.206.190/login',
+      url: 'https://jg-jg.shop/login',
+      // url: 'http://13.124.206.190/login',
       data: loginForm,
     })
       .then((response) => {
@@ -149,8 +149,8 @@ const loginCheckDB = () => {
 
     axios({
       method: 'get',
-      // url: 'https://jg-jg.shop/login/getUser',
-      url: 'http://13.124.206.190/login/getUser',
+      url: 'https://jg-jg.shop/login/getUser',
+      // url: 'http://13.124.206.190/login/getUser',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
@@ -172,8 +172,8 @@ const kakaoLogin = (code) => {
     console.log(code);
     axios({
       method: 'GET',
-      // url: `https://jg-jg.shop?code=${code}`,
-      url: `http://13.124.206.190?code=${code}`,
+      url: `https://jg-jg.shop?code=${code}`,
+      // url: `http://13.124.206.190?code=${code}`,
     })
       .then((response) => {
         // localStorage.setItem('token', response.data.token);
@@ -195,8 +195,8 @@ const editUserDB = (userInfo) => {
 
     axios({
       method: 'put',
-      // url: 'https://jg-jg.shop/editUserInfo',
-      url: 'http://13.124.206.190/editUserInfo',
+      url: 'https://jg-jg.shop/editUserInfo',
+      // url: 'http://13.124.206.190/editUserInfo',
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
@@ -222,8 +222,8 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
-      // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
-      url: `http://13.124.206.190/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+      url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+      // url: `http://13.124.206.190/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
