@@ -22,7 +22,7 @@ const likeDB = (token, tutorName) => {
       url: 'https://jg-jg.shop/like',
       data: { tutorName },
       headers: {
-        Authorization: `Bearer${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -41,7 +41,7 @@ const unlikeDB = (token, tutorName) => {
       url: 'https://jg-jg.shop/unlike',
       data: { tutorName },
       headers: {
-        Authorization: `Bearer${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -59,7 +59,7 @@ const getLikeDB = (token) => {
       method: 'get',
       url: 'https://jg-jg.shop/getLikeList',
       headers: {
-        Authorization: `Bearer${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {

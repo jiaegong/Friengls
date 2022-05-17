@@ -44,6 +44,7 @@ const Login = (props) => {
           placeholder="Email"
           type="text"
           name="userEmail"
+          value={userEmail}
           _onChange={handleUserEmail}
           styles={{
             width: '240px',
@@ -58,6 +59,7 @@ const Login = (props) => {
           placeholder="Password"
           type="text"
           name="pwd"
+          value={pwd}
           _onChange={handlePwd}
           styles={{
             width: '240px',
