@@ -328,8 +328,6 @@ const CalendarTemplate = ({
 
   //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
-    // console.log('1 : --------------------');
-    // console.log({ availability });
     const output = [];
     for (let year in availability) {
       for (let month in availability[year]) {
@@ -412,31 +410,26 @@ const CalendarTemplate = ({
   return function Calendar() {
     const classes = useStyles();
     const today = moment();
-    // console.log("moment : ", today);
+    // console.log('moment : ', today);
 
     // timeList 불러와서 저장되있는 곳 유무를 불러오는거.
     const [availabilityState, setAvailabilityState] = useState(
       convertAvailabilityFromDatabase(availability),
     );
-    // console.log({ availabilityState });
-    // console.log('5');
 
     // 선택한 시간 값 받아 오는 stats
     const [quickAvailability, setQuickAvailability] = useState(
       makeQuickAvailability(availability),
     );
-    console.log({ quickAvailability });
 
     const [activeDay, setActiveDay] = useState(null);
     const [year, setYear] = useState(Number(today.format('YYYY')));
-    // console.log({ year });
 
     // "월 number" 데이터 받는곳
     const [monthNumber, setMonthNumber] = useState(Number(today.format('M')));
     // const [settingMultiple, setSettingMultiple] = useState(false);
 
     const months = useMonths(year);
-    // console.log({ months });
 
     const { firstDay, month, lastDay } = months[monthNumber];
     let dayOfWeek = Number(moment(firstDay).format('d'));
@@ -501,14 +494,59 @@ const CalendarTemplate = ({
 
     // 저장 버튼
     const handleSaveAvailability = () => {
+      // outPut 값이 return 되어서 data에 반환됨. convertAvailabilityForDatabase === output
       const data = convertAvailabilityForDatabase(availabilityState);
-      const dataLength = data.length - 1;
       setSaving(true);
+      let onePick1 = [];
+      let onePick2 = [];
 
-      // useState로 값 저장해주는거!!!!!!!
-      // dispatch 할때 userName 같이 보내줘야된다.
+      if (typeof availability[0]?.start === 'string') {
+        for (let i = 0; i < availability.length; i++) {
+          onePick1.push({
+            start: availability[i].start,
+            end: availability[i].end,
+          });
+        }
+      } else {
+        for (let i = 0; i < availability.length; i++) {
+          onePick1.push({
+            start: availability[i].start
+              .toString()
+              .replace(' (한국 표준시)', ''),
+            end: availability[i].end.toString().replace(' (한국 표준시)', ''),
+          });
+        }
+      }
 
-      dispatch(calendarActions.setBookingDB(data, tutorName));
+      for (let i = 0; i < data.length; i++) {
+        onePick2.push({
+          start: data[i].start.toString().replace(' (한국 표준시)', ''),
+          end: data[i].end.toString().replace(' (한국 표준시)', ''),
+        });
+      }
+
+      console.log('현재 저장 비교 availability : ', onePick2);
+      console.log('저장 하려고 비교 data : ', onePick1);
+
+      console.log('현재 저장되어 있는 값 : ', { availability });
+      console.log('저장 하려고 하는 값 : ', { data });
+
+      const Astart = [];
+      for (let i = 0; i < onePick2.length; i++) {
+        Astart.push(onePick2[i].start);
+      }
+      const Bstart = [];
+      for (let i = 0; i < onePick1.length; i++) {
+        Bstart.push(onePick1[i].start);
+      }
+
+      const ABstart = Astart.filter((time, index) => !Bstart.includes(time));
+      console.log('ABstart : ', { ABstart });
+
+      const goDB = onePick2.filter((time, index) => time.start === ABstart[0]);
+      console.log('goDB : ', { goDB });
+
+      dispatch(calendarActions.setBookingDB(goDB, tutorName));
       setAvailability(data);
       // db로 예약 정보 넘기는 값
       // console.log(data);
@@ -561,8 +599,6 @@ const CalendarTemplate = ({
     //   setAnchorEl(null);
     //   setPopoverContent(null);
     // };
-
-    const test = 'test00';
 
     return (
       <ThemeProvider theme={theme}>
