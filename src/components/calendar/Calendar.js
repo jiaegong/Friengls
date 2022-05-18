@@ -16,13 +16,14 @@ import { ArrowLeft, ArrowRight } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as calendarActions } from '../../redux/modules/booking';
 import { getCookie } from '../../shared/Cookie';
+import styled from 'styled-components';
 
 const CalendarTemplate = ({
   tutorName,
   availability,
   setAvailability,
   primaryColor = '#153587',
-  secondaryColor = '#0077ff',
+  secondaryColor = '#ff0000',
   fontFamily = 'Noto Sans',
   fontSize = 12,
   primaryFontColor = '#131313',
@@ -274,16 +275,66 @@ const CalendarTemplate = ({
   //  시간 버튼 컴포넌트
   function TimeButton({ className, start, end, available, handleClick }) {
     return (
-      <Button
-        onClick={handleClick}
-        color={available ? 'primary' : 'default'}
-        className={className}
-        variant={available ? 'contained' : 'outlined'}
-      >
-        {start} - {end}
-      </Button>
+      <>
+        {available ? (
+          <button
+            style={{
+              color: '#fff',
+              background: '#153587',
+              margin: '10px',
+              minWidth: '200px',
+              padding: '5px 15px',
+              boxSizing: 'border-box',
+              transition:
+                'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+              borderRadius: '4px',
+              fontWeight: '500',
+              lineHeight: '1.75',
+              textTransform: 'uppercase',
+              boxShadow:
+                '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
+              border: 'none',
+            }}
+            onClick={handleClick}
+            disabled={available ? 'disabled' : ''}
+          >
+            {start} - {end}
+          </button>
+        ) : (
+          // <Button
+          //   onClick={handleClick}
+          //   color={'primary'}
+          //   className={className}
+          //   variant={'contained'}
+          //   disabled={available ? 'disabled' : 'none'}
+          // >
+          //   {start} - {end}
+          // </Button>
+          <Button
+            onClick={handleClick}
+            color={'default'}
+            className={className}
+            variant={'outlined'}
+          >
+            {start} - {end}
+          </Button>
+        )}
+        {/* <Button
+          onClick={handleClick}
+          color={available ? 'primary' : 'default'}
+          className={className}
+          variant={available ? 'contained' : 'outlined'}
+          // disabled
+        >
+          {start} - {end}
+        </Button> */}
+      </>
     );
   }
+
+  // const StyledBtn = styled.button`
+
+  // `
 
   function getDaysArray() {
     return [
@@ -481,7 +532,7 @@ const CalendarTemplate = ({
       // if (settingMultiple) {
       // addTimesToDay(day);
       // } else {
-      console.log('선택한 날 : ', day);
+      // console.log('선택한 날 : ', day);
       examineAvailabilityForDay(day);
       // }
     };
