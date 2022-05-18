@@ -3,11 +3,15 @@ import Portal from './Portal';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { actionCreators as reviewActions } from '../redux/modules/review';
-import { Flex, Text, Input, Button } from '../elements/index';
+import { Text, Input, Button } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
+import { modalOff } from '../redux/modules/modal';
 
-const ReviewModal = ({ onClose }) => {
+const ReviewModal = () => {
   const dispatch = useDispatch();
+  const closeModal = () => {
+    dispatch(modalOff());
+  };
 
   const token = getCookie('token');
   const tutorName = 'yoonha3331'; // 튜터 이름 나중에 props로 받아오기
@@ -27,52 +31,49 @@ const ReviewModal = ({ onClose }) => {
       <Background
         onClick={(e) => {
           e.stopPropagation();
-          onClose();
+          closeModal();
         }}
       >
         <Content onClick={(e) => e.stopPropagation()}>
-          <Flex
-            styles={{
-              flexDirection: 'column',
-            }}
-          >
+          <ReviewWrap>
             <Text>리뷰 남기기</Text>
-            <Flex styles={{ flexDirection: 'row' }}>
+            <RateWrap>
               {Array.from({ length: 5 }, (c, idx) => {
                 return (
-                  <Flex
+                  <RateCircles
                     key={idx}
-                    _onClick={() => {
+                    onClick={() => {
                       setRate(idx + 1);
                     }}
-                    styles={{
-                      width: '30px',
-                      height: '30px',
-                      borderRadius: '30px',
-                      margin: '5px',
-                      backgroundColor: rate < idx + 1 ? '#ddd' : '#000',
+                    style={{
+                      backgroundColor: rate < idx + 1 ? '#ddd' : '#171b78',
                     }}
                   />
                 );
               })}
-            </Flex>
-            <Input
-              styles={{ width: '100%', height: '200px' }}
-              multiLine
+            </RateWrap>
+            <textarea
+              className="review-text"
               placeholder="튜터링은 어땠나요?"
-              _onChange={onChange}
+              onChange={onChange}
               value={text}
             />
-            <Flex>
-              <Button _onClick={addReview}>등록하기</Button>
-              <Button _onClick={() => onClose()}>돌아가기</Button>
-            </Flex>
-          </Flex>
+            <Buttons>
+              <button className="add-review" onClick={addReview}>
+                등록하기
+              </button>
+              <button className="skip-review" onClick={closeModal}>
+                건너뛰기
+              </button>
+            </Buttons>
+          </ReviewWrap>
         </Content>
       </Background>
     </Portal>
   );
 };
+
+export default ReviewModal;
 
 const Background = styled.div`
   position: fixed;
@@ -95,9 +96,54 @@ const Content = styled.div`
   justify-content: center;
   z-index: 999;
   padding: 30px;
-  width: 300px;
-  height: 400px;
+  width: 400px;
+  height: 500px;
   border-radius: 10px;
   background: #f9f9f9;
 `;
-export default ReviewModal;
+
+const ReviewWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+
+  .review-text {
+    width: 100%;
+    height: 100%;
+    outline-color: #171b78;
+    border: 1px solid #171b78;
+  }
+`;
+
+const RateWrap = styled.div`
+  display: flex;
+`;
+
+const RateCircles = styled.div`
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  margin: 5px;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  gap: 10px;
+
+  .add-review {
+    background-color: #171b78;
+    color: #fff;
+    padding: 5px;
+  }
+
+  .skip-review {
+    background-color: #171b78;
+    color: #fff;
+    padding: 5px;
+  }
+`;

@@ -1,4 +1,5 @@
 import React from 'react';
+import Portal from './Portal';
 import styled from 'styled-components';
 import { Flex, Image, Text } from '../elements/index';
 
