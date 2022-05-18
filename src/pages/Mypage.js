@@ -28,14 +28,8 @@ const Mypage = (props) => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, []);
 
-  const videoChatHandler = (roomName) => {
-    // const roomid = Tutor_userName+Tutee_userName;
-    // history.push(`/videochat/${roomid}`);
-  };
-
   //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.info);
-  console.log(userInfo);
 
   return (
     // <>
@@ -82,7 +76,16 @@ const Mypage = (props) => {
                     </div>
                   </div>
                   {/* <List> */}
-                  <button className="videoBtn" onClick={videoChatHandler}>
+                  <button
+                    className="videoBtn"
+                    onClick={() => {
+                      history.push(
+                        `/videochat/${
+                          item.Tutor_userName + item.Tutee_userName
+                        }`,
+                      );
+                    }}
+                  >
                     채팅하기
                   </button>
                   {/* </List> */}

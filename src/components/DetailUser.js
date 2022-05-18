@@ -4,6 +4,7 @@ import { history } from '../redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { actionCreators as likeActions } from '../redux/modules/like';
+import { getCookie } from '../shared/Cookie';
 
 const DetailUser = (props) => {
   const { userInfo } = props;
@@ -13,20 +14,29 @@ const DetailUser = (props) => {
   // like 누르기, 토큰 같이 보내기, likeList랑 tutor유저 리스트 인덱스랑 비교해서 같으면 넣기
   let isLiked = true; // 테스트차, 서버에서 보내주는 값으로 접속한 유저가 해당 페이지 튜터를 좋아요 했는지 체크하기
   const tutorName = props.userName; // props로 유저 정보 받아서 넣기
+<<<<<<< HEAD
 
   // 자기소개 열기, 닫기
   const [contents, setContents] = useState('');
   // 태그목록 배열로 변환
   let tagList = userInfo.tag.split(' ,');
+=======
+  const token = getCookie('token');
+
+  const { detailInfo } = props;
+  let tags = detailInfo.tag;
+  let [tag1, tag2, tag3] = tags.split(',');
+>>>>>>> backUpMaster
 
   const like = () => {
-    dispatch(likeActions.likeDB(tutorName));
+    dispatch(likeActions.likeDB(token, tutorName));
   };
 
-  const unLike = () => {
-    dispatch(likeActions.unLikeDB(tutorName));
+  const unlike = () => {
+    dispatch(likeActions.unlikeDB(token, tutorName));
   };
   return (
+<<<<<<< HEAD
     <UserInfoBox>
       <UserImgWrap>
         <img className="userImg" src={userInfo.userProfile} alt="" />
@@ -78,6 +88,61 @@ const DetailUser = (props) => {
         )}
       </div>
     </UserInfoBox>
+=======
+    <div>
+      <div>
+        {isLiked ? (
+          <AiFillHeart onClick={unlike} />
+        ) : (
+          <AiOutlineHeart onClick={like} />
+        )}
+        <button
+          onClick={() => {
+            history.push('/mypage');
+          }}
+        >
+          수정
+        </button>
+      </div>
+      <UserInfoBox>
+        <UserImgWrap>
+          <img className="userImg" src={detailInfo.userProfile} alt="" />
+        </UserImgWrap>
+        <div className="userInfo">
+          <UserTitle>
+            <p className="tutorName">{detailInfo.userName}</p>
+            <span>{detailInfo.language1}</span>/
+            <span>{detailInfo.language2}</span>/
+            <span>{detailInfo.language3}</span>
+          </UserTitle>
+          <Contests>{detailInfo.comment}</Contests>
+          <Tags>
+            {tag1 && <span>{tag1}</span>}
+            {tag2 && <span>{tag2}</span>}
+            {tag3 && <span>{tag3}</span>}
+          </Tags>
+          <Like>
+            <AiOutlineHeart className="likeIcon" />
+            {detailInfo.like}
+          </Like>
+        </div>
+      </UserInfoBox>
+      {urlCheck ? (
+        ''
+      ) : (
+        <div>
+          <button>좋아요</button>
+          <button
+            onClick={() => {
+              history.push('/mypage');
+            }}
+          >
+            수정
+          </button>
+        </div>
+      )}
+    </div>
+>>>>>>> backUpMaster
   );
 };
 

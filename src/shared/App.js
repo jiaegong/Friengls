@@ -5,7 +5,7 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { ConnectedRouter } from 'connected-react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 
 //  컴포넌트
@@ -22,6 +22,8 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
+import Portal from '../components/Portal';
+import ReviewModal from '../components/ReviewModal';
 
 function App() {
   const dispatch = useDispatch();
@@ -37,8 +39,12 @@ function App() {
   //   }
   // }, []);
 
+  const modalOn = useSelector((state) => state.modal.modalOn);
+  console.log(modalOn);
+
   return (
     <ConnectedRouter history={history}>
+      {modalOn && <ReviewModal />}
       <Header />
       <Switch>
         <Route path="/login" exact component={Login} />
