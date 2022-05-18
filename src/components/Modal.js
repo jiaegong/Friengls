@@ -1,16 +1,18 @@
 import React from 'react';
-import ModalPortal from './Portal';
+import Portal from '../shared/Portal';
 import styled from 'styled-components';
 
-const Modal = ({ onClose }) => {
+const Modal = (props) => {
+  const { onClose } = props;
   return (
-    <ModalPortal>
+    <Portal>
       <Background>
         <Content>
           <div>모달입니다.</div>
+          <button onClick={onClose}>닫기</button>
         </Content>
       </Background>
-    </ModalPortal>
+    </Portal>
   );
 };
 
@@ -21,6 +23,7 @@ export default Modal;
 const Background = styled.div`
   height: 100%;
   width: 100%;
+  background: red;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,10 +34,10 @@ const Background = styled.div`
 `;
 
 const Content = styled.div`
-  height: 100%;
+  //   height: 100px;
   width: 950px;
   margin-top: 70px;
   position: relative;
-  overflow: scroll;
-  background: #141414;
+  // overflow: scroll;
+  background: #aaa;
 `;

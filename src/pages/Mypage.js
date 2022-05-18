@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { history } from '../redux/configureStore';
 import DetailUser from '../components/DetailUser';
+import Modal from '../components/Modal';
+import Portal from '../shared/Portal';
 
 const Mypage = (props) => {
+  //모달 테스트
+  const [modalOn, setModalOn] = useState(false);
+
+  const handleModal = () => {
+    setModalOn(!modalOn);
+  };
+
   const dispatch = useDispatch();
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = useSelector((state) => state.user.info.isTutor);
@@ -40,6 +49,9 @@ const Mypage = (props) => {
     //   </Flex>
     // </>
     <Wrap>
+      {modalOn && <Modal onClose={handleModal} />}
+      <button onClick={handleModal}>모달버튼</button>
+
       <div className="innerWrap">
         {/* 유저 정보 */}
         <DetailUser userInfo={userInfo} props={props} />
