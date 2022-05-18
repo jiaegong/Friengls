@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
-import Portal from '../components/Portal';
+import Portal from '../shared/Portal';
 import ReviewModal from '../components/ReviewModal';
 import { Grid, Flex, Button } from '../elements/index';
 
