@@ -9,6 +9,7 @@ import { ProfileMedium } from '../image';
 const Mypage = () => {
   const dispatch = useDispatch();
   // 마이페이지 예약정보 불러오기 위한 값들
+  const userInfo = useSelector((state) => state.user.info);
   const isTutor = useSelector((state) => state.user.info.isTutor);
   const userName = useSelector((state) => state.user.info.userName);
   console.log({ isTutor, userName });
@@ -19,7 +20,7 @@ const Mypage = () => {
 
   useEffect(() => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
-  }, []);
+  }, [userName]);
 
   const videoChatHandler = (roomName) => {
     // const roomid = Tutor_userName+Tutee_userName;
@@ -27,7 +28,6 @@ const Mypage = () => {
   };
 
   //마이페이지 유저정보
-  const userInfo = useSelector((state) => state.user.info);
   console.log(userInfo);
 
   return (

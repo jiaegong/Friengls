@@ -57,8 +57,8 @@ const setBookingDB = (data, tutorName) => {
     // let dataLength = data.length;
 
     // dispatch(setBooking(data));
-    console.log(data[0].start);
-    console.log(data[0].end);
+    console.log(data[0]?.start);
+    console.log(data[0]?.end);
 
     axios({
       method: 'post',
