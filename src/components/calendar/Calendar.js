@@ -412,48 +412,35 @@ const CalendarTemplate = ({
     let activeRangeEnd = null;
 
     for (let time of activeDay) {
-      console.log('--------------');
-      console.log('activeDay~!! ', { time });
-      console.log('버튼이 활성화 유무 : ', time.available);
-      console.log('시작 범위 있는지 유무 : ', !activeRangeStart);
-      console.log('시작 범위 : ', activeRangeStart);
-      console.log('끝 범위 : ', activeRangeEnd);
-
-      // if (time.available && !activeRangeStart) {
-      //   // 버튼이 활성화 되있고, 시작 범위가 없을때
-      //   activeRangeStart = time.time;
-
-      //   console.log('시작범위 : ', { activeRangeStart });
-      // } else if (time.available && activeRangeStart) {
-      //   activeRangeStart = null;
-      //   console.log('버튼 활성화 && 시작 시간 있음', { activeRangeStart });
-      // }
-
       if (time.available) {
+        // 버튼이 활성화 되있고,
         if (!activeRangeStart) {
-          // 버튼이 활성화 되있고, 시작 범위가 없을때
+          //시작 범위가 없을때
           activeRangeStart = time.time;
-          // console.log('시작범위 : ', { activeRangeStart });
-          console.log('시작 시간 없음', { activeRangeStart });
         } else if (activeRangeStart) {
+          // 시작 범위가 있을때
+
+          // 앞에 저장 되있는게 있을때 뒷시간대를 저장하게되면, 앞에 시간대 정보가 사라지는 이슈!!
+          // 그래서 앞에 시간대가 있을때는 다음 시간대를 end처리를 해주어, 저장하면 문제가 해결된다!!
           activeRangeEnd = time.time;
-          console.log('시작시간 : ', activeRangeStart);
-          console.log('끝시간 : ', activeRangeEnd);
+
           output.push({
             start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
             end: new Date(`${month} ${day} ${year} ${activeRangeEnd}`),
           });
+
+          // 그리고 다시 시작시간대를 지정해주고, end 시간대는 null로 정리 해주면 된다!!
           activeRangeStart = time.time;
           activeRangeEnd = null;
-          console.log('시작 시간 있음', { activeRangeStart });
         }
       }
 
       if (!time.available && activeRangeStart) {
-        // 버튼의 반전 상태이며, 시작 범위가 있을때
+        // 버튼이 비활성화 상태이며, 시작 범위가 있을때
+
         activeRangeEnd = time.time;
-        console.log('시작 범위 : ', { activeRangeStart });
-        console.log('끝나는 범위  : ', { activeRangeEnd });
+        // console.log('시작 범위 : ', { activeRangeStart });
+        // console.log('끝나는 범위  : ', { activeRangeEnd });
 
         output.push({
           start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
@@ -465,14 +452,6 @@ const CalendarTemplate = ({
       }
     }
   }
-
-  // if (time.activeDay && activeRangeStart) {
-  //   // if (activeRangeStart !== null && time.available) {
-  //   console.log('왜 중복으로 실행이 될까??');
-  //   activeRangeStart = null;
-  //   activeRangeStart = time.time;
-  //   console.log('시작범위 2 : ', { activeRangeStart });
-  // }
 
   function fillOutputWithDefaultTimes(output, year, month, day) {
     console.log(' 4 ');
