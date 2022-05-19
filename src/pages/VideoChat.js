@@ -51,8 +51,8 @@ const VideoChat = () => {
         // 유저랑 연결 끊겼을 때 다른 유저 stream을 close
         socket.on('user-disconnected', (userId) => {
           if (peers[userId]) peers[userId].close();
-          socket.disconnect();
-          peer.destroy();
+          // socket.disconnect();
+          // peer.destroy();
         });
       });
 

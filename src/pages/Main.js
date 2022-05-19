@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
@@ -20,7 +20,7 @@ const Main = () => {
   const tutorList = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(reviewActions.getReviewDB());
   }, []);
 
@@ -56,8 +56,8 @@ const Main = () => {
             <p>인기 선생님 리스트</p>
           </TutorTitleWrap>
           <CardList>
-            {tutorList.map((item, idx) => {
-              return <TutorCard item={item} key={`tutorCard_${idx}`} />;
+            {tutorList.map((tutor, idx) => {
+              return <TutorCard tutor={tutor} key={`tutorCard_${idx}`} />;
             })}
           </CardList>
         </TutorListWrap>
