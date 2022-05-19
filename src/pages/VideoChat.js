@@ -9,7 +9,7 @@ const VideoChat = () => {
   const dispatch = useDispatch();
 
   const myVideo = useRef(null);
-  const userVideo = useRef(null);
+  const userVideo = useRef(null); // userVideo ref말고 생성하는 걸로 해야 할지도..
   const peers = {};
   const roomId = '123'; // roomId params로
   const [videoOn, setVideoOn] = useState(true);
@@ -18,29 +18,31 @@ const VideoChat = () => {
   useEffect(() => {
     const peer = new Peer();
     const socket = io('https://jg-jg.shop');
-    console.log(0);
+
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
         myVideo.current.srcObject = stream;
-        console.log(1);
-        console.log(peer);
 
         // 유저 들어 옴
         if (peer?.id == null) {
           peer.on('open', (id) => {
             socket.emit('join-room', roomId, id);
-            console.log(2);
           });
         } else {
           socket.emit('join-room', roomId, peer.id);
-          console.log('여기');
         }
 
         // 새로 들어 온 유저에게 call 요청
         socket.on('user-connected', (userId) => {
-          connectToNewUser(userId, stream);
-          console.log(3);
+          const call = peer.call(userId, stream); // call 요청
+          call.on('stream', (userVideoStream) => {
+            userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
+          });
+          call.on('close', () => {
+            userVideo.current.remove(); // 상대방 나가면 비디오 remove
+          });
+          peers[userId] = call;
         });
 
         // 상대방이 보낸 요청에 응답
@@ -48,7 +50,6 @@ const VideoChat = () => {
           call.answer(stream); // 내 stream 보내주기
           call.on('stream', (userVideoStream) => {
             userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
-            console.log(4);
           });
         });
 
@@ -59,17 +60,6 @@ const VideoChat = () => {
           peer.destroy();
         });
       });
-
-    function connectToNewUser(userId, stream) {
-      const call = peer.call(userId, stream); // call 요청
-      call.on('stream', (userVideoStream) => {
-        userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
-      });
-      call.on('close', () => {
-        userVideo.current.remove(); // 상대방 나가면 비디오 remove
-      });
-      peers[userId] = call;
-    }
 
     return () => {
       dispatch(modalOn());
