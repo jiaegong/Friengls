@@ -33,6 +33,9 @@ const Header = () => {
     socket?.emit('newUser', user);
   }, [socket, user]);
 
+  //마이페이지url에 사용할 유저정보 가져오기
+  const userInfo = useSelector((state) => state.user.info);
+
   //로그아웃
   const logout = () => {
     dispatch(userActions.logout());
@@ -71,7 +74,9 @@ const Header = () => {
               </li>
               <li
                 onClick={() => {
-                  history.push('/mypage');
+                  history.push(
+                    `/mypage/${userInfo.userName}/${userInfo.isTutor}`,
+                  );
                 }}
               >
                 마이페이지

@@ -21,19 +21,19 @@ const unsetUser = createAction(UNSET_USER, (user) => ({ user }));
 const initialState = {
   //info: 로그인한 유저의 정보
   info: {
-    userEmail: '',
-    userName: '',
-    pwd: '',
-    pwdCheck: '',
-    isTutor: '0',
-    tag: ',,',
-    language1: '',
-    language2: '',
-    language3: '',
-    comment: '',
-    contents: '',
-    startTime: '',
-    endTime: '',
+    // userEmail: '',
+    // userName: '',
+    // pwd: '',
+    // pwdCheck: '',
+    // isTutor: '0',
+    // tag: ',,',
+    // language1: '',
+    // language2: '',
+    // language3: '',
+    // comment: '',
+    // contents: '',
+    // startTime: '',
+    // endTime: '',
   },
   isLogin: false,
   //detailInfo: detail페이지의 유저정보
@@ -83,7 +83,6 @@ const loginDB = (loginForm) => {
     axios({
       method: 'post',
       url: 'https://jg-jg.shop/login',
-      // url: 'http://13.124.206.190/login',
       data: loginForm,
     })
       .then((response) => {
@@ -105,12 +104,14 @@ const loginDB = (loginForm) => {
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
     // console.log('loginCheckDB시작');
-
+    console.log(getCookie('token'));
     axios({
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
-      // url: 'http://13.124.206.190/login/getUser',
       headers: { token: `${getCookie('token')}` },
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
     })
       .then((response) => {
         // console.log('loginCheckDB성공', response.data);
@@ -118,7 +119,7 @@ const loginCheckDB = () => {
       })
       .catch((error) => {
         console.log('로그인체크 실패', error);
-        //메인으로 백
+        //메인으로 돌아가기
       });
   };
 };
@@ -129,7 +130,6 @@ const kakaoLogin = (code) => {
     axios({
       method: 'GET',
       url: `https://jg-jg.shop?code=${code}`,
-      // url: `http://13.124.206.190?code=${code}`,
     })
       .then((response) => {
         // localStorage.setItem('token', response.data.token);
@@ -152,7 +152,6 @@ const editUserDB = (userInfo) => {
     axios({
       method: 'put',
       url: 'https://jg-jg.shop/editUserInfo',
-      // url: 'http://13.124.206.190/editUserInfo',
       headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
@@ -172,16 +171,16 @@ const editUserDB = (userInfo) => {
 
 const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
-    // console.log('getUserDetailDB시작', userApi);
+    console.log('getUserDetailDB시작', userApi);
 
     axios({
       method: 'get',
+      // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
-      // url: `http://13.124.206.190/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
-        // console.log('getUserDetailDB성공', response.data.data[0]);
+        console.log('getUserDetailDB성공', response.data.data[0]);
         dispatch(setUserDetail(response.data.data[0]));
       })
       .catch((error) => {

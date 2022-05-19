@@ -97,9 +97,6 @@ const getBookingDB = ({ userName, isTutor }) => {
       // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
       // url: `https://jg-jg.shop/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
       url: `https://jg-jg.shop/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
-      // url: `http://13.124.206.190/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
-      // url: `http://13.124.206.190/getBooking/?userName=yoonha333&isTutor=0`, // 학생 또는 선생님
-      // url: `http://13.124.206.190/getBooking/?userName=ngredo&isTutor=0`, // 학생 또는 선생님
     })
       .then((doc) => {
         // console.log(doc.data.datas1[0].endTime);

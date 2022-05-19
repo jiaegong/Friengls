@@ -19,7 +19,6 @@ const Main = () => {
   const dispatch = useDispatch();
   const tutorList = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
-  console.log(reviewList);
 
   React.useEffect(() => {
     dispatch(tutorActions.getTutorListDB());

@@ -27,10 +27,8 @@ const getTutorListDB = () => {
       url: `https://jg-jg.shop/getPopularTutor`,
       // url: `http://13.124.206.190/getPopularTutor`,
     })
-      .then((doc) => {
-        // console.log(doc.data.data);
-        // const data =
-        dispatch(getTutors(doc.data.data));
+      .then((res) => {
+        dispatch(getTutors(res.data.data));
       })
       .catch((err) => {
         console.log(err);
@@ -43,12 +41,10 @@ const getSearchTutorsDB = (keyWord) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
-      // url: `http://13.124.206.190/getTutorTag?keyword=${keyWord}`,
       url: `https://jg-jg.shop/getTutorTag?keyword=${keyWord}`,
     })
-      .then((doc) => {
-        console.log(doc.data);
-        dispatch(getTutors(doc.data));
+      .then((res) => {
+        dispatch(getTutors(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -60,7 +56,6 @@ export default handleActions(
   {
     [GET_TUTOR_LIST]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.list);
         draft.list = action.payload.list;
       }),
   },

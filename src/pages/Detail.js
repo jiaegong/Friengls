@@ -17,10 +17,11 @@ const Detail = (props) => {
 
   //디테일페이지에서 불러올 유저 api
   const userApi = props.match.params;
+  console.log(userApi);
 
   //디테일페이지에 사용할 유저 정보
-  const tutorName = props.match.params.userName;
   const detailInfo = useSelector((state) => state.user.detailInfo);
+  const tutorName = props.match.params.userName;
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
@@ -32,7 +33,6 @@ const Detail = (props) => {
       method: 'get',
       // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
       // url: `http://13.124.206.190/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
-      // url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=${isTutor}`, // 학생 또는 선생님
       url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
     })
       .then((doc) => {

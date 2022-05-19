@@ -62,7 +62,7 @@ const getReviewDB = () => {
   return function (dispatch) {
     axios({
       method: 'get',
-      url: 'http://3.36.123.28/getReview',
+      url: 'https://jg-jg.shop/getReview',
     })
       .then((res) => {
         dispatch(setReview(res.data.data));
@@ -77,7 +77,7 @@ const getOneReviewDB = (tutorName = null) => {
   return function (dispatch) {
     axios({
       method: 'get',
-      url: `http://3.36.123.28/getReview/${tutorName}`,
+      url: `https://jg-jg.shop/getReview/${tutorName}`,
     })
       .then((res) => {
         dispatch(setReview(res.data.data));
@@ -89,11 +89,10 @@ const getOneReviewDB = (tutorName = null) => {
 };
 
 const editReviewDB = (reviewId, rate, text) => {
-  console.log(reviewId, rate, text);
   return function (dispatch, getState, { history }) {
     axios({
       method: 'patch',
-      url: 'http://3.36.123.28/editReview',
+      url: 'https://jg-jg.shop/editReview',
       data: {
         reviewId,
         rate,
@@ -101,7 +100,6 @@ const editReviewDB = (reviewId, rate, text) => {
       },
     })
       .then((res) => {
-        console.log(res);
         dispatch(editReview(res));
         // 새로고침 해주기
       })
@@ -115,7 +113,7 @@ const deleteReviewDB = (reviewId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'delete',
-      url: `http://3.36.123.28/deleteReview`,
+      url: `https://jg-jg.shop/deleteReview`,
       data: { reviewId },
     })
       .then((res) => {

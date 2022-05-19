@@ -1,42 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { history } from '../redux/configureStore';
 import DetailUser from '../components/DetailUser';
-import Modal from '../components/Modal';
-import Portal from '../shared/Portal';
 
 const Mypage = (props) => {
-  //모달 테스트
-  const [modalOn, setModalOn] = useState(false);
-
-  const handleModal = () => {
-    setModalOn(!modalOn);
-  };
-
   const dispatch = useDispatch();
+  // 마이페이지에서 불러올 유저 api
+  const userApi = props.match.params;
+
+  //마이페이지 유저정보
+  const userInfo = useSelector((state) => state.user.detailInfo);
+  console.log(userInfo);
+
   // 마이페이지 예약정보 불러오기 위한 값들
-  const userInfo = useSelector((state) => state.user.info);
-  const isTutor = useSelector((state) => state.user.info.isTutor);
-  const userName = useSelector((state) => state.user.info.userName);
-  console.log({ isTutor, userName });
+  const isTutor = userApi.isTutor;
+  const userName = userApi.userName;
 
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
-  console.log(bookingList);
 
   useEffect(() => {
+    dispatch(userActions.getUserDetailDB(userApi));
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, [userName]);
-
-  const videoChatHandler = (roomName) => {
-    // const roomid = Tutor_userName+Tutee_userName;
-    // history.push(`/videochat/${roomid}`);
-  };
-
-  //마이페이지 유저정보
-  console.log(userInfo);
 
   return (
     // <>
@@ -50,9 +39,6 @@ const Mypage = (props) => {
     //   </Flex>
     // </>
     <Wrap>
-      {modalOn && <Modal onClose={handleModal} />}
-      <button onClick={handleModal}>모달버튼</button>
-
       <div className="innerWrap">
         {/* 유저 정보 */}
         <DetailUser userInfo={userInfo} props={props} />
@@ -89,11 +75,18 @@ const Mypage = (props) => {
                       </span>
                     </div>
                   </div>
-                  {/* <List> */}
-                  <button className="videoBtn" onClick={videoChatHandler}>
+                  <button
+                    className="videoBtn"
+                    onClick={() => {
+                      history.push(
+                        `/videochat/${
+                          item.Tutor_userName + item.Tutee_userName
+                        }`,
+                      );
+                    }}
+                  >
                     수업 시작
                   </button>
-                  {/* </List> */}
                 </li>
               );
             })}
