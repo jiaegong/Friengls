@@ -24,12 +24,18 @@ const VideoChat = () => {
       .then((stream) => {
         myVideo.current.srcObject = stream;
         console.log(1);
+        console.log(peer);
 
         // 유저 들어 옴
-        peer.on('open', (id) => {
-          socket.emit('join-room', roomId, id);
-          console.log(2);
-        });
+        if (peer?.id == null) {
+          peer.on('open', (id) => {
+            socket.emit('join-room', roomId, id);
+            console.log(2);
+          });
+        } else {
+          socket.emit('join-room', roomId, peer.id);
+          console.log('여기');
+        }
 
         // 새로 들어 온 유저에게 call 요청
         socket.on('user-connected', (userId) => {
@@ -43,16 +49,14 @@ const VideoChat = () => {
           call.on('stream', (userVideoStream) => {
             userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
             console.log(4);
-            console.log(userVideo);
-            console.log(userVideoStream);
           });
         });
 
-        // 유저랑 연결 끊겼을 때 다른 유저 stream을 close
+        // 유저랑 연결 끊겼을 때
         socket.on('user-disconnected', (userId) => {
           if (peers[userId]) peers[userId].close();
-          // socket.disconnect();
-          // peer.destroy();
+          socket.disconnect();
+          peer.destroy();
         });
       });
 
