@@ -22,7 +22,7 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
-import Portal from '../components/Portal';
+import Portal from '../shared/Portal';
 import ReviewModal from '../components/ReviewModal';
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
         <Route path="/signup/detail" component={DetailInfo} />
       </Switch>
       <Route path="/" exact component={Main} />
-      <Route path="/mypage" exact component={Mypage} />
+      <Route path="/mypage/:userName/:isTutor" exact component={Mypage} />
       <Route path="/detail/:userName/:isTutor" exact component={Detail} />
       <Route path="/videochat/:roomName" exact component={VideoChat} />
       <Route path="/search" exact component={Search} />

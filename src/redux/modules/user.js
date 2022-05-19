@@ -21,19 +21,19 @@ const unsetUser = createAction(UNSET_USER, (user) => ({ user }));
 const initialState = {
   //info: 로그인한 유저의 정보
   info: {
-    userEmail: '',
-    userName: '',
-    pwd: '',
-    pwdCheck: '',
-    isTutor: '0',
-    tag: ',,',
-    language1: '',
-    language2: '',
-    language3: '',
-    comment: '',
-    contents: '',
-    startTime: '',
-    endTime: '',
+    // userEmail: '',
+    // userName: '',
+    // pwd: '',
+    // pwdCheck: '',
+    // isTutor: '0',
+    // tag: ',,',
+    // language1: '',
+    // language2: '',
+    // language3: '',
+    // comment: '',
+    // contents: '',
+    // startTime: '',
+    // endTime: '',
   },
   isLogin: false,
   //detailInfo: detail페이지의 유저정보
@@ -104,13 +104,11 @@ const loginDB = (loginForm) => {
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
     // console.log('loginCheckDB시작');
-
+    console.log(getCookie('token'));
     axios({
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
       // headers: {
       //   authorization: `Bearer ${localStorage.getItem('token')}`,
       // },
@@ -121,7 +119,7 @@ const loginCheckDB = () => {
       })
       .catch((error) => {
         console.log('로그인체크 실패', error);
-        //메인으로 백
+        //메인으로 돌아가기
       });
   };
 };
@@ -154,9 +152,7 @@ const editUserDB = (userInfo) => {
     axios({
       method: 'put',
       url: 'https://jg-jg.shop/editUserInfo',
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
       .then((response) => {
@@ -181,9 +177,7 @@ const getUserDetailDB = (userApi) => {
       method: 'get',
       // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
         // console.log('getUserDetailDB성공', response.data.data[0]);

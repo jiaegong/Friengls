@@ -1,35 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { history } from '../redux/configureStore';
 import DetailUser from '../components/DetailUser';
-import Modal from '../components/Modal';
-import Portal from '../shared/Portal';
 
 const Mypage = (props) => {
-  //모달 테스트
-  const [modalOn, setModalOn] = useState(false);
-
-  const handleModal = () => {
-    setModalOn(!modalOn);
-  };
-
   const dispatch = useDispatch();
+  // 마이페이지에서 불러올 유저 api
+  const userApi = props.match.params;
+  //마이페이지 유저정보
+  const userInfo = useSelector((state) => state.user.detailInfo);
   // 마이페이지 예약정보 불러오기 위한 값들
+  // 현수님: detail 페이지처럼 url파라미터로 유저정보 받아와서 dispatch할 때 사용하면 될 것 같습니다 어떠신가요?
   const isTutor = useSelector((state) => state.user.info.isTutor);
   const userName = useSelector((state) => state.user.info.userName);
   // console.log({ isTutor, userName });
-
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
   console.log(bookingList);
   useEffect(() => {
+    dispatch(userActions.getUserDetailDB(userApi));
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, []);
-
-  //마이페이지 유저정보
-  const userInfo = useSelector((state) => state.user.info);
 
   return (
     // <>
@@ -43,9 +37,6 @@ const Mypage = (props) => {
     //   </Flex>
     // </>
     <Wrap>
-      {modalOn && <Modal onClose={handleModal} />}
-      <button onClick={handleModal}>모달버튼</button>
-
       <div className="innerWrap">
         {/* 유저 정보 */}
         <DetailUser userInfo={userInfo} props={props} />
