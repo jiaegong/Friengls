@@ -151,9 +151,7 @@ const loginCheckDB = () => {
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
       // url: 'http://13.124.206.190/login/getUser',
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
         // console.log('loginCheckDB성공', response.data);
@@ -197,9 +195,7 @@ const editUserDB = (userInfo) => {
       method: 'put',
       url: 'https://jg-jg.shop/editUserInfo',
       // url: 'http://13.124.206.190/editUserInfo',
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
       .then((response) => {
@@ -224,9 +220,7 @@ const getUserDetailDB = (userApi) => {
       method: 'get',
       url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       // url: `http://13.124.206.190/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
         // console.log('getUserDetailDB성공', response.data.data[0]);
