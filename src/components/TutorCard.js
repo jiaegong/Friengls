@@ -39,6 +39,7 @@ const Card = styled.div`
   height: auto;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 
   /* border-radius: 10px; */
   background: #c4c4c4;

@@ -22,9 +22,8 @@ const Search = (props) => {
 
     axios({
       method: 'get',
-      // url: `https://jg-jg.shop/getPopularTutor`,
-      url: `http://13.124.206.190/getTag`, // 태그 불러오는 url
-      // url: `http://13.124.206.190/getTutorTag?keyword=${keyWord}`,
+      url: `https://jg-jg.shop/getTag`,
+      // url: `http://13.124.206.190/getTag`, // 태그 불러오는 url
     })
       .then((doc) => {
         // console.log(doc.data);
