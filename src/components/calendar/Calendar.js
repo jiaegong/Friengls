@@ -300,6 +300,15 @@ const CalendarTemplate = ({
             {start} - {end}
           </button>
         ) : (
+          // <Button
+          //   onClick={handleClick}
+          //   color={'primary'}
+          //   className={className}
+          //   variant={'contained'}
+          //   disabled={available ? 'disabled' : 'none'}
+          // >
+          //   {start} - {end}
+          // </Button>
           <Button
             onClick={handleClick}
             color={'default'}
@@ -309,6 +318,15 @@ const CalendarTemplate = ({
             {start} - {end}
           </Button>
         )}
+        {/* <Button
+          onClick={handleClick}
+          color={available ? 'primary' : 'default'}
+          className={className}
+          variant={available ? 'contained' : 'outlined'}
+          // disabled
+        >
+          {start} - {end}
+        </Button> */}
       </>
     );
   }
@@ -329,6 +347,8 @@ const CalendarTemplate = ({
   }
 
   const convertAvailabilityFromDatabase = (availability) => {
+    console.log(' 1 ');
+
     // console.log({ availability });
     const output = {};
     for (let range of availability) {
@@ -360,6 +380,7 @@ const CalendarTemplate = ({
 
   //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
+    console.log(' 2 ');
     console.log({ availability });
 
     const output = [];
@@ -385,37 +406,77 @@ const CalendarTemplate = ({
 
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
+    console.log({ activeDay, output, month, day, year });
+
     let activeRangeStart = null;
+    let activeRangeEnd = null;
 
     for (let time of activeDay) {
-      if (time.available && !activeRangeStart) {
-        // 버튼이 활성화 되있고, 시작 범위가 없을때
-        activeRangeStart = time.time;
-        console.log('시작범위 지정 : ', { activeRangeStart });
-      }
+      console.log('--------------');
+      console.log('activeDay~!! ', { time });
+      console.log('버튼이 활성화 유무 : ', time.available);
+      console.log('시작 범위 있는지 유무 : ', !activeRangeStart);
+      console.log('시작 범위 : ', activeRangeStart);
+      console.log('끝 범위 : ', activeRangeEnd);
 
-      if (time.available && activeRangeStart) {
-        // 버튼이 활성화 되어 있으면서 시작범위값이 있으면
-        activeRangeStart = null;
-        activeRangeStart = time.time;
-        console.log('시작범위 다시 지정 : ', { activeRangeStart });
+      // if (time.available && !activeRangeStart) {
+      //   // 버튼이 활성화 되있고, 시작 범위가 없을때
+      //   activeRangeStart = time.time;
+
+      //   console.log('시작범위 : ', { activeRangeStart });
+      // } else if (time.available && activeRangeStart) {
+      //   activeRangeStart = null;
+      //   console.log('버튼 활성화 && 시작 시간 있음', { activeRangeStart });
+      // }
+
+      if (time.available) {
+        if (!activeRangeStart) {
+          // 버튼이 활성화 되있고, 시작 범위가 없을때
+          activeRangeStart = time.time;
+          // console.log('시작범위 : ', { activeRangeStart });
+          console.log('시작 시간 없음', { activeRangeStart });
+        } else if (activeRangeStart) {
+          activeRangeEnd = time.time;
+          console.log('시작시간 : ', activeRangeStart);
+          console.log('끝시간 : ', activeRangeEnd);
+          output.push({
+            start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
+            end: new Date(`${month} ${day} ${year} ${activeRangeEnd}`),
+          });
+          activeRangeStart = time.time;
+          activeRangeEnd = null;
+          console.log('시작 시간 있음', { activeRangeStart });
+        }
       }
 
       if (!time.available && activeRangeStart) {
         // 버튼의 반전 상태이며, 시작 범위가 있을때
-        console.log('끝나는 범위  : ', time.time);
+        activeRangeEnd = time.time;
+        console.log('시작 범위 : ', { activeRangeStart });
+        console.log('끝나는 범위  : ', { activeRangeEnd });
 
         output.push({
           start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
-          end: new Date(`${month} ${day} ${year} ${time.time}`),
+          end: new Date(`${month} ${day} ${year} ${activeRangeEnd}`),
         });
 
         activeRangeStart = null;
+        activeRangeEnd = null;
       }
     }
   }
 
+  // if (time.activeDay && activeRangeStart) {
+  //   // if (activeRangeStart !== null && time.available) {
+  //   console.log('왜 중복으로 실행이 될까??');
+  //   activeRangeStart = null;
+  //   activeRangeStart = time.time;
+  //   console.log('시작범위 2 : ', { activeRangeStart });
+  // }
+
   function fillOutputWithDefaultTimes(output, year, month, day) {
+    console.log(' 4 ');
+
     if (output.hasOwnProperty(year)) {
       if (output[year].hasOwnProperty(month)) {
         if (!output[year][month].hasOwnProperty(day)) {
@@ -436,6 +497,8 @@ const CalendarTemplate = ({
   }
 
   function makeQuickAvailability(availability) {
+    console.log(' 5 ');
+
     console.log({ availability });
     const output = {};
     for (let range of availability) {
@@ -458,6 +521,8 @@ const CalendarTemplate = ({
   }
 
   return function Calendar() {
+    console.log(' 6 ');
+
     const classes = useStyles();
     const today = moment();
     // console.log('moment : ', today);
@@ -509,6 +574,8 @@ const CalendarTemplate = ({
     }
 
     const createArrowHandler = (delta) => () => {
+      console.log(' 7 ');
+
       let newMonth = monthNumber + delta;
       if (newMonth > 12) {
         setYear(year + 1);
@@ -524,6 +591,8 @@ const CalendarTemplate = ({
 
     //  시간버튼이 몇 번째인지.
     const createTimeHandler = (i) => () => {
+      console.log(' 8 ');
+
       console.log({ i });
       const newTimes = [...times];
       console.log({ newTimes });
@@ -538,6 +607,8 @@ const CalendarTemplate = ({
 
     // 클릭한 일의 data를 가져오는 함수.
     const createDayHandler = (day) => () => {
+      console.log(' 8 ');
+
       // if (settingMultiple) {
       // addTimesToDay(day);
       // } else {
@@ -554,6 +625,8 @@ const CalendarTemplate = ({
 
     // 저장 버튼
     const handleSaveAvailability = () => {
+      console.log(' 9 ');
+
       // outPut 값이 return 되어서 data에 반환됨. convertAvailabilityForDatabase === output
       const data = convertAvailabilityForDatabase(availabilityState);
       setSaving(true);
@@ -629,6 +702,8 @@ const CalendarTemplate = ({
 
     // 현재의 달로 오는 기능
     const handleJumpToCurrent = () => {
+      console.log(' 10 ');
+
       setYear(Number(today.format('YYYY')));
       setMonthNumber(Number(today.format('M')));
       setActiveDay(null);
@@ -895,6 +970,8 @@ const CalendarTemplate = ({
 
     // 선택한 시간을 한 날에 추가하는 기능
     function addTimeToDay(newTimes) {
+      console.log(' 11 ');
+
       const newAvail = availabilityState;
       console.log({ newAvail });
 
@@ -932,6 +1009,8 @@ const CalendarTemplate = ({
     }
 
     function examineAvailabilityForDay(day) {
+      console.log(' 12 ');
+
       if (
         availabilityState[year] &&
         availabilityState[year][month] &&
