@@ -39,8 +39,7 @@ const CalendarTemplate = ({
   // endTime = "24:00",
 }) => {
   const dispatch = useDispatch();
-  const userName = useSelector((state) => state.user.info.userName);
-  // console.log({ tutorName })
+
   // 스타일 지정 해주는거
   const theme = createTheme({
     typography: {
@@ -301,15 +300,6 @@ const CalendarTemplate = ({
             {start} - {end}
           </button>
         ) : (
-          // <Button
-          //   onClick={handleClick}
-          //   color={'primary'}
-          //   className={className}
-          //   variant={'contained'}
-          //   disabled={available ? 'disabled' : 'none'}
-          // >
-          //   {start} - {end}
-          // </Button>
           <Button
             onClick={handleClick}
             color={'default'}
@@ -319,15 +309,6 @@ const CalendarTemplate = ({
             {start} - {end}
           </Button>
         )}
-        {/* <Button
-          onClick={handleClick}
-          color={available ? 'primary' : 'default'}
-          className={className}
-          variant={available ? 'contained' : 'outlined'}
-          // disabled
-        >
-          {start} - {end}
-        </Button> */}
       </>
     );
   }
@@ -379,6 +360,8 @@ const CalendarTemplate = ({
 
   //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
+    console.log({ availability });
+
     const output = [];
     for (let year in availability) {
       for (let month in availability[year]) {
@@ -403,18 +386,30 @@ const CalendarTemplate = ({
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
     let activeRangeStart = null;
+
     for (let time of activeDay) {
-      if (time.available && !activeRangeStart) activeRangeStart = time.time;
-      else if (!time.available && activeRangeStart) {
+      if (time.available && !activeRangeStart) {
+        // 버튼이 활성화 되있고, 시작 범위가 없을때
+        activeRangeStart = time.time;
+        console.log('시작범위 지정 : ', { activeRangeStart });
+      }
+
+      if (time.available && activeRangeStart) {
+        // 버튼이 활성화 되어 있으면서 시작범위값이 있으면
+        activeRangeStart = null;
+        activeRangeStart = time.time;
+        console.log('시작범위 다시 지정 : ', { activeRangeStart });
+      }
+
+      if (!time.available && activeRangeStart) {
+        // 버튼의 반전 상태이며, 시작 범위가 있을때
+        console.log('끝나는 범위  : ', time.time);
+
         output.push({
           start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
           end: new Date(`${month} ${day} ${year} ${time.time}`),
-
-          // 유저정보 넣어서 성공한곳
-          // token: localStorage.getItem('token'),
-          // 그럼 디스패치 할대 선생님 id값으로 요청
-          userName: userName,
         });
+
         activeRangeStart = null;
       }
     }
@@ -441,6 +436,7 @@ const CalendarTemplate = ({
   }
 
   function makeQuickAvailability(availability) {
+    console.log({ availability });
     const output = {};
     for (let range of availability) {
       if (new Date(range.start) > new Date()) {
@@ -448,11 +444,14 @@ const CalendarTemplate = ({
         let time = `${moment(range.start).format('H:mm')} - ${moment(
           range.end,
         ).format('H:mm')}`;
-        if (output[day]) {
-          output[day].push(time);
-        } else {
-          output[day] = [time];
-        }
+
+        console.log({ day, time });
+
+        // if (output[day]) {
+        //   output[day].push(time);
+        // } else {
+        //   output[day] = [time];
+        // }
       }
     }
     return output;
@@ -467,18 +466,25 @@ const CalendarTemplate = ({
     const [availabilityState, setAvailabilityState] = useState(
       convertAvailabilityFromDatabase(availability),
     );
+    console.log({ availabilityState });
 
     // 선택한 시간 값 받아 오는 stats
     const [quickAvailability, setQuickAvailability] = useState(
       makeQuickAvailability(availability),
     );
+    console.log({ quickAvailability });
 
     const [activeDay, setActiveDay] = useState(null);
     const [year, setYear] = useState(Number(today.format('YYYY')));
 
+    console.log({ activeDay });
+    console.log({ year });
+
     // "월 number" 데이터 받는곳
     const [monthNumber, setMonthNumber] = useState(Number(today.format('M')));
     // const [settingMultiple, setSettingMultiple] = useState(false);
+
+    console.log({ monthNumber });
 
     const months = useMonths(year);
 
@@ -489,8 +495,8 @@ const CalendarTemplate = ({
     const [saving, setSaving] = useState(false);
     let week = 0;
     let dayOfMonth = 1;
-    // console.log({ times });
-    // console.log({ saving });
+    console.log({ times });
+    console.log({ saving });
 
     while (week < 6 && dayOfMonth <= lastDay) {
       days[week][dayOfWeek] = dayOfMonth;
@@ -518,10 +524,13 @@ const CalendarTemplate = ({
 
     //  시간버튼이 몇 번째인지.
     const createTimeHandler = (i) => () => {
-      // console.log({ i });
+      console.log({ i });
       const newTimes = [...times];
+      console.log({ newTimes });
       newTimes[i].available = !newTimes[i].available;
+      console.log(newTimes[i].available);
       if (activeDay) {
+        console.log({ activeDay });
         addTimeToDay(newTimes);
       }
       setTimes(newTimes);
@@ -576,12 +585,6 @@ const CalendarTemplate = ({
         });
       }
 
-      console.log('현재 저장 비교 availability : ', onePick2);
-      console.log('저장 하려고 비교 data : ', onePick1);
-
-      console.log('현재 저장되어 있는 값 : ', { availability });
-      console.log('저장 하려고 하는 값 : ', { data });
-
       const Astart = [];
       for (let i = 0; i < onePick2.length; i++) {
         Astart.push(onePick2[i].start);
@@ -591,6 +594,12 @@ const CalendarTemplate = ({
         Bstart.push(onePick1[i].start);
       }
 
+      // console.log('현재 저장되어 있는 값 : ', { availability });
+      // console.log('저장 하려고 하는 값 : ', { data });
+
+      // console.log('저장 하려고 비교 data : ', onePick1);
+      // console.log('현재 저장 비교 availability : ', onePick2);
+
       const ABstart = Astart.filter((time, index) => !Bstart.includes(time));
       console.log('ABstart : ', { ABstart });
 
@@ -599,6 +608,7 @@ const CalendarTemplate = ({
 
       dispatch(calendarActions.setBookingDB(goDB, tutorName));
       setAvailability(data);
+
       // db로 예약 정보 넘기는 값
       // console.log(data);
 
@@ -886,14 +896,24 @@ const CalendarTemplate = ({
     // 선택한 시간을 한 날에 추가하는 기능
     function addTimeToDay(newTimes) {
       const newAvail = availabilityState;
+      console.log({ newAvail });
 
       // console.log("시간대 한번에 다 불러오는 아이:", newAvail);
-      // console.log("test", newAvail.hasOwnProperty(year));
+      console.log('1 : ', newAvail.hasOwnProperty(year));
+      // console.log('2 : ', newAvail[year].hasOwnProperty(month));
       // console.log("선택한 날의 값", activeDay);
       if (newAvail.hasOwnProperty(year)) {
         if (newAvail[year].hasOwnProperty(month)) {
+          console.log('3 : ', newAvail[year][month][activeDay]);
           newAvail[year][month][activeDay] = newTimes;
         } else {
+          console.log(
+            '4 : ',
+            (newAvail[year][month] = {
+              [activeDay]: newTimes,
+            }),
+          );
+
           newAvail[year][month] = {
             [activeDay]: newTimes,
           };
