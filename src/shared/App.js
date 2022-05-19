@@ -31,6 +31,11 @@ function App() {
       dispatch(userActions.loginCheckDB());
     }
   }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     dispatch(userActions.loginCheckDB());
+  //   }
+  // }, []);
 
   return (
     <ConnectedRouter history={history}>

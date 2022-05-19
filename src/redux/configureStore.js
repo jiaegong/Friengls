@@ -8,6 +8,7 @@ import Booking from './modules/booking';
 import Tutor from './modules/tutor';
 import Review from './modules/review';
 import Like from './modules/like';
+import Profile from './modules/profile';
 
 export const history = createBrowserHistory();
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   tutor: Tutor,
   review: Review,
   like: Like,
+  profile: Profile,
   router: connectRouter(history),
 });
 

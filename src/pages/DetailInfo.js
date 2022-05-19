@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { actionCreators as profileActions } from '../redux/modules/profile';
 import { ProfileMedium } from '../image';
 import { checkSpelling } from '../shared/common';
 
@@ -110,7 +111,7 @@ const DetailInfo = (props) => {
   };
 
   //isTutor input값
-  const [isTutor, setIsTutor] = useState(false);
+  const [isTutor, setIsTutor] = useState('0');
 
   //수업가능시간(시작) option
   const startTimeArray = [
@@ -120,7 +121,6 @@ const DetailInfo = (props) => {
   //수업가능시간(시작) input값
   const [startTime, setStartTime] = useState('');
   const handleStartTime = (e) => {
-    console.log(e.target.value);
     setStartTime(e.target.value);
   };
   //수업가능시간(종료) option설정
@@ -133,70 +133,74 @@ const DetailInfo = (props) => {
   //수업가능시간(종료) input값
   const [endTime, setEndTime] = useState('');
   const handleEndTime = (e) => {
-    console.log(e.target.value);
     setEndTime(e.target.value);
   };
 
-  //필수정보만 저장하기
-  const addSignupInfo = () => {
-    const userForm = {
-      //필수정보 추가하기
-      userEmail: signupInfo.userEmail,
-      userName: signupInfo.userName,
-      pwd: signupInfo.pwd,
-      pwdCheck: signupInfo.pwdCheck,
-      isTutor: false,
-      tag: '',
-      language1: '',
-      language2: '',
-      language3: '',
-      comment: '',
-      contents: '',
-      startTime: '',
-      endTime: '',
-    };
-    console.log('전송할 유저정보', userForm);
-    dispatch(userActions.signupDB(userForm));
-  };
-
-  //사진업로드, 추가정보 디스패치
-  const addDetailInfo = (e) => {
-    //사진업로드
-    if (language1 === '') {
-      window.alert('사용언어는 최소 한 가지의 언어를 선택해 주세요.');
-      return;
+  //유저정보 디스패치
+  const addUser = (e) => {
+    //선생님일 경우 모든 정보를 입력하도록 조건
+    if (isTutor === '1') {
+      if (
+        language1 === '' ||
+        comment === '' ||
+        contents === '' ||
+        tagList.length === 0 ||
+        startTime === '' ||
+        endTime === ''
+      ) {
+        window.alert('선생님은 모든 정보를 작성해주세요');
+        return;
+      }
     }
     e.preventDefault();
     const profileImage = imageRef.current.files[0];
-    console.log(profileImage);
+    //폼데이터에 유저정보 담기
     const formData = new FormData();
-    formData.append('image', profileImage);
+    formData.append('userProfile', profileImage);
+    formData.append('userEmail', signupInfo.userEmail);
+    formData.append('userName', signupInfo.userName);
+    formData.append('pwd', signupInfo.pwd);
+    formData.append('pwdCheck', signupInfo.pwdCheck);
+    formData.append('language1', language1);
+    formData.append('language2', language2);
+    formData.append('language3', language3);
+    formData.append('comment', comment);
+    formData.append('contents', contents);
+    formData.append('tag', tagList.join());
+    formData.append('isTutor', isTutor);
+    formData.append('startTime', startTime);
+    formData.append('endTime', endTime);
 
-    for (let value of formData.values()) {
-      // console.log('업로드할 이미지데이터', value);
-    }
-    // dispatch(formData));
+    const loginInfo = { userEmail: signupInfo.userEmail, pwd: signupInfo.pwd };
+    console.log('작성');
+    dispatch(userActions.signupDB(formData, loginInfo));
 
-    //추가정보 디스패치
-    const userForm = {
-      //유저정보 추가하기
-      userEmail: signupInfo.userEmail,
-      userName: signupInfo.userName,
-      pwd: signupInfo.pwd,
-      pwdCheck: signupInfo.pwdCheck,
-      tag: tagList.join(),
-      language1: language1,
-      language2: language2,
-      language3: language3,
-      comment: comment,
-      contents: contents,
-      isTutor: isTutor,
-      startTime: startTime,
-      endTime: endTime,
-    };
-    console.log('전송할 유저정보', userForm);
-    dispatch(userActions.signupDB(userForm));
+    // //추가정보 디스패치
+    // const userForm = {
+    //   //유저정보 추가하기
+    //   userEmail: signupInfo.userEmail,
+    //   userName: signupInfo.userName,
+    //   pwd: signupInfo.pwd,
+    //   pwdCheck: signupInfo.pwdCheck,
+    //   tag: tagList.join(),
+    //   language1: language1,
+    //   language2: language2,
+    //   language3: language3,
+    //   comment: comment,
+    //   contents: contents,
+    //   isTutor: isTutor,
+    //   startTime: startTime,
+    //   endTime: endTime,
+    // };
+    // console.log('전송할 유저정보', userForm);
+
+    // // dispatch(profileActions.uploadProfileDB(formData));
   };
+  // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
+  if (!signupInfo) {
+    window.alert('새로고침 처음 화면으로 돌아갑니다.');
+    history.replace('/signup');
+  }
 
   return (
     <Container>
@@ -220,7 +224,7 @@ const DetailInfo = (props) => {
         <SelectBox>
           <span>사용하는 언어1:&nbsp;&nbsp;</span>
           <select name="language1" onChange={handleLanguage1}>
-            <option value="">필수</option>
+            <option value="">선택</option>
             {languageList.map((language, index) => (
               <option value={language} key={language + index}>
                 {language}
@@ -264,12 +268,16 @@ const DetailInfo = (props) => {
       <Grid>
         <span>자신을 소개해 주세요</span>
         <Grid>
-          <Textarea name="contents" onBlur={handleContents} />
+          <Textarea name="contents" onChange={handleContents} maxLength={200} />
+          {/* 시간되면 글자수제한 로직짜기 */}
+          <span>{contents.length}/200</span>
         </Grid>
       </Grid>
       <Grid>
         <span>한 줄 소개</span>
-        <input name="comment" onBlur={handleComment} />
+        <input name="comment" onChange={handleComment} maxLength={40} />
+        {/* 시간되면 글자수제한 로직짜기 */}
+        <span>{comment.length}/40</span>
       </Grid>
       {/* 태그 */}
       <TagBox>
@@ -308,23 +316,23 @@ const DetailInfo = (props) => {
       {/* isTutor */}
       <Grid>
         <span>'user' 님은 한국어를 </span>
-        <label onClick={() => setIsTutor(true)}>
-          <input type="radio" name="isTutor" value={true} />
+        <label onClick={() => setIsTutor('1')}>
+          <input type="radio" name="isTutor" value={'1'} />
           가르치고
         </label>
         <span> / </span>
-        <label onClick={() => setIsTutor(false)}>
-          <input type="radio" name="isTutor" value={false} />
+        <label onClick={() => setIsTutor('0')}>
+          <input type="radio" name="isTutor" value={'0'} />
           배우고
         </label>
         <span> 싶습니다.</span>
       </Grid>
       {/* 수업가능시간(선생님만) */}
-      {isTutor && (
+      {isTutor === '1' && (
         <Grid>
           <span>수업가능시간 :&nbsp;&nbsp;&nbsp;</span>
           <select name="startTime" onChange={handleStartTime}>
-            <option value="">=====시작시간=====</option>
+            <option value="">=====첫 수업=====</option>
             {startTimeArray.map((time, index) => (
               //+ 키 유저아이디 같은걸로 바꿔주기
               <option value={time} key={index}>
@@ -338,7 +346,7 @@ const DetailInfo = (props) => {
           ) : (
             <>
               <select name="endTime" onChange={handleEndTime}>
-                <option value="">=====종료시간=====</option>
+                <option value="">=====마지막 수업=====</option>
                 {endTimeArray.map((time, index) => (
                   <option value={time} key={startTime + index}>
                     {time + 1}회차: {time}:00 - {time + 1}:00
@@ -356,10 +364,10 @@ const DetailInfo = (props) => {
         </Grid>
       )}
       {/* 버튼 */}
-      <button type="submit" onClick={addSignupInfo}>
+      <button type="submit" onClick={addUser}>
         건너뛰기
       </button>
-      <button type="submit" onClick={addDetailInfo}>
+      <button type="submit" onClick={addUser}>
         추가정보 제출
       </button>
     </Container>
