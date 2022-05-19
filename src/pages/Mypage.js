@@ -77,7 +77,7 @@ const Mypage = (props) => {
                       );
                     }}
                   >
-                    채팅하기
+                    수업 시작
                   </button>
                   {/* </List> */}
                 </li>

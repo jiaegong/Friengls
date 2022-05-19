@@ -193,8 +193,8 @@ const logout = () => {
   return function (dispatch, getState, { history }) {
     deleteCookie('token');
     dispatch(unsetUser);
-    window.location.reload();
     history.replace('/');
+    window.location.reload();
   };
 };
 
