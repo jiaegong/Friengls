@@ -84,16 +84,15 @@ const DetailUser = (props) => {
           ))}
         </Tags>
         {/* 팔로우 */}
-
-        <Like>
+        <div>
           {isLiked ? (
-            <AiFillHeart className="likeIcon" onClick={unlike} />
+            <AiFillHeart onClick={unlike} />
           ) : (
-            <AiOutlineHeart className="likeIcon" onClick={like} />
+            <AiOutlineHeart onClick={like} />
           )}
           {/* <AiOutlineHeart className="likeIcon" />
           {userInfo.like} */}
-        </Like>
+        </div>
         {/* 자기소개버튼: 자기소개 있을 때 열기/접기 가능 */}
         {userInfo.contents &&
           (contents ? (
@@ -102,7 +101,7 @@ const DetailUser = (props) => {
                 setContents('');
               }}
             >
-              🔽자기소개 닫기
+              🔽 자기소개 닫기
             </ContentsButton>
           ) : (
             <ContentsButton
@@ -110,7 +109,7 @@ const DetailUser = (props) => {
                 setContents(userInfo.contents);
               }}
             >
-              🔽자기소개 열기
+              🔽 자기소개 열기
             </ContentsButton>
           ))}
       </div>

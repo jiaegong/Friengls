@@ -104,7 +104,7 @@ const loginDB = (loginForm) => {
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
     // console.log('loginCheckDB시작');
-    console.log(getCookie('token'));
+    // console.log(getCookie('token'));
     axios({
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
@@ -171,7 +171,7 @@ const editUserDB = (userInfo) => {
 
 const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
-    // console.log('getUserDetailDB시작', userApi);
+    console.log('getUserDetailDB시작', userApi);
 
     axios({
       method: 'get',
@@ -180,7 +180,7 @@ const getUserDetailDB = (userApi) => {
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
-        // console.log('getUserDetailDB성공', response.data.data[0]);
+        console.log('getUserDetailDB성공', response.data.data[0]);
         dispatch(setUserDetail(response.data.data[0]));
       })
       .catch((error) => {

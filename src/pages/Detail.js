@@ -21,16 +21,17 @@ const Detail = (props) => {
 
   //디테일페이지에 사용할 유저 정보
   const detailInfo = useSelector((state) => state.user.detailInfo);
-
   const tutorName = props.match.params.userName;
 
-  // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
-  // useEffect(() => {
-  //   dispatch(bookingAction.getBookingDB());
-  // }, []);
+  // 초기값으로 리듀서에서 불러오는 값을 넣어둠
+  const [availability, setAvailability] = React.useState([]);
 
+  // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
     dispatch(userActions.getUserDetailDB(userApi));
+    dispatch(reviewActions.getOneReviewDB(tutorName));
+    window.scrollTo(0, 0);
+
     // 예약 리스트 불러오기
     axios({
       method: 'get',
@@ -39,8 +40,8 @@ const Detail = (props) => {
       url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
     })
       .then((doc) => {
-        // console.log(doc);
-        // console.log(doc.data.datas1);
+        let data = doc.data.datas1;
+        console.log('DB 예약 리스트 : ', { data });
         setAvailability(doc.data.datas1);
       })
       .catch((err) => {
@@ -48,14 +49,10 @@ const Detail = (props) => {
       });
   }, []);
 
-  // 초기값으로 리듀서에서 불러오는 값을 넣어둠
-  const [availability, setAvailability] = React.useState([]);
-
   const Calendar = CalendarTemplate({
     tutorName,
     availability,
     setAvailability: (timeList) => {
-      // performAdditionalAction(update)
       setAvailability(timeList);
     },
   });
@@ -63,9 +60,8 @@ const Detail = (props) => {
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
 
-  useEffect(() => {
-    dispatch(reviewActions.getOneReviewDB(tutorName));
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   return (
     <Wrap>

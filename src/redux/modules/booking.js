@@ -48,12 +48,17 @@ const initialState = {
 // 예약하기.
 const setBookingDB = (data, tutorName) => {
   return function (dispatch, getState, { history }) {
-    console.log(data, tutorName);
+    console.log('DB 저장으로 가는 데이터 : ', { data, tutorName });
 
-    const userName = data[0].userName;
+    let userName = getState().user.info.userName;
     console.log(userName);
+    // const userName = data[0].userName;
 
-    dispatch(setBooking(data));
+    // let dataLength = data.length;
+
+    // dispatch(setBooking(data));
+    console.log(data[0]?.start);
+    console.log(data[0]?.end);
 
     axios({
       method: 'post',
@@ -62,15 +67,15 @@ const setBookingDB = (data, tutorName) => {
       url: `https://jg-jg.shop/addBooking/${tutorName}`,
       // url: `http://13.124.206.190/addBooking/${tutorName}`,
       data: {
-        start: data[0].start.toString(),
-        end: data[0].end.toString(),
+        start: data[0].start,
+        end: data[0].end,
         userName: userName,
       },
     })
       .then((doc) => {
         console.log('--------------');
         console.log('booking post check!!!!');
-        console.log(doc);
+        console.log(doc.msg);
         // dispatch(setBooking(doc));
       })
       .catch((err) => {
@@ -85,7 +90,7 @@ const getBookingDB = ({ userName, isTutor }) => {
   return function (dispatch, getState, { history }) {
     // userName 없을시 에러 뜨는 경우 방지 ??? 없어도 되나??
     // if (!userName) return;
-    // console.log({ userName, isTutor })
+    console.log({ userName, isTutor });
 
     axios({
       method: 'get',

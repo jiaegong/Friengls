@@ -10,20 +10,22 @@ const Mypage = (props) => {
   const dispatch = useDispatch();
   // 마이페이지에서 불러올 유저 api
   const userApi = props.match.params;
+
   //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.detailInfo);
+  console.log(userInfo);
+
   // 마이페이지 예약정보 불러오기 위한 값들
-  // 현수님: detail 페이지처럼 url파라미터로 유저정보 받아와서 dispatch할 때 사용하면 될 것 같습니다 어떠신가요?
-  const isTutor = useSelector((state) => state.user.info.isTutor);
-  const userName = useSelector((state) => state.user.info.userName);
-  // console.log({ isTutor, userName });
+  const isTutor = userApi.isTutor;
+  const userName = userApi.userName;
+
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
-  console.log(bookingList);
+
   useEffect(() => {
     dispatch(userActions.getUserDetailDB(userApi));
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
-  }, []);
+  }, [userName]);
 
   return (
     // <>
@@ -43,7 +45,9 @@ const Mypage = (props) => {
         {/* 예약 캘린더 */}
         <h2>예약 관리</h2>
         <div className="bookingWrap">
-          <p className="bookingTitle">예약 리스트</p>
+          <p className="bookingTitle">
+            예약 리스트 <span>/ 수업 일정</span>
+          </p>
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {
               let startTime = item.start;
@@ -62,11 +66,15 @@ const Mypage = (props) => {
                     ) : (
                       <div className="userName">{item.Tutee_userName}</div>
                     )}
-                    <div className="userBooking">
-                      {week} {month} {day} {year} &emsp; {start} ~ {end}
+                    <div className="userBookingWrap">
+                      <span>
+                        {week} {month} {day} {year} &emsp;
+                      </span>
+                      <span>
+                        {start}&emsp; ~ &emsp;{end}
+                      </span>
                     </div>
                   </div>
-                  {/* <List> */}
                   <button
                     className="videoBtn"
                     onClick={() => {
@@ -79,7 +87,6 @@ const Mypage = (props) => {
                   >
                     수업 시작
                   </button>
-                  {/* </List> */}
                 </li>
               );
             })}
@@ -104,39 +111,75 @@ const Wrap = styled.div`
 
     /* 예약 리스트 Wrap */
     .bookingWrap {
-      width: 80%;
-      max-width: 1000px;
+      width: 100%;
+      max-width: 1400px;
       height: auto;
       margin-top: 30px;
       margin: 30px auto;
       min-height: 100px;
       padding: 10px;
 
-      background-color: #686868;
+      /* background-color: #0076ed; */
 
       /* 예약 리스트 타이틀 */
       .bookingTitle {
+        font-size: 60px;
+        font-weight: bolder;
+        margin-bottom: 60px;
+
+        span {
+          font-size: 40px;
+          color: #969696;
+          margin-left: 15px;
+        }
       }
 
       /* 예약 리스트 */
-      .bookingList {
-        min-height: 100px;
-        margin-top: 10px;
-        padding: 10px;
 
-        background: #a9a9a9;
+      .bookingList {
+        max-height: 520px;
+        min-height: 300px;
+        /* display: flex; */
+        /* justify-content: center; */
+        /* flex-direction: column; */
+        /* align-items: center; */
+        border: 2px solid #c7c7c7;
+        border-radius: 4px;
+        /* padding: 40px 60px 40px 40px; */
+        padding: 40px 30px 40px 40px;
+        box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.15);
+        overflow-y: scroll;
+
+        background: #fff;
+
+        /* 스크롤 버튼 조절 */
+        ::-webkit-scrollbar {
+          width: 20px; /*스크롤바의 너비*/
+        }
+        ::-webkit-scrollbar-thumb {
+          height: 20%;
+          background-color: #e4e4e4; /*스크롤바의 색상*/
+          border-radius: 15px;
+          /* display: none; */
+        }
+        ::-webkit-scrollbar-track {
+          background-color: #d7d7d7;
+          border-radius: 15px;
+          display: none;
+          /*스크롤바 트랙 색상 */
+        }
 
         /* 예약 카드 */
         .booking {
           width: 100%;
+          max-width: 1300px;
           min-height: 50px;
           border-radius: 10px;
           display: flex;
-          justify-content: space-around;
-          /* justify-content: center; */
+          justify-content: space-between;
           align-items: center;
 
-          background-color: #fff;
+          /* background-color: #fff; */
 
           + .booking {
             margin-top: 10px;
@@ -144,31 +187,60 @@ const Wrap = styled.div`
 
           /* 예약 정보 */
           .bookingInfo {
-            width: 75%;
+            width: 80%;
+            height: 80px;
             padding: 10px;
             display: flex;
-            justify-content: space-between;
+            /* justify-content: space-between; */
+            justify-content: space-around;
             text-align: center;
+            border: 2px solid #c7c7c7;
+            border-radius: 4px;
+            margin-right: 20px;
+
+            /* background-color: #f30b0b; */
 
             .userName {
               width: 20%;
+              font-size: 28px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              /* background-color: #aaaaaa; */
             }
 
-            .userBooking {
+            .userBookingWrap {
               width: 70%;
               text-align: left;
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+
+              span {
+                display: inline-block;
+                font-size: 24px;
+              }
+              /* background-color: #aaaaaa; */
             }
 
-            background: #eee;
+            /* background: #eee; */
           }
 
           .videoBtn {
+            width: 20%;
+            max-width: 240px;
+            height: 80px;
             border: none;
             padding: 10px 8px 9px;
             border-radius: 5px;
+            font-size: 24px;
+            font-weight: bolder;
+            color: #fff;
             cursor: pointer;
 
-            background-color: #c1c1c1;
+            background-color: #153587;
+            /* background-color: #c1c1c1; */
           }
         }
       }
