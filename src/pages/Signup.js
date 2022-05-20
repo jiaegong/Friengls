@@ -17,6 +17,8 @@ const Signup = (props) => {
     '이메일 형식을 지켜주세요 예)example@gmail.com',
   );
 
+  console.log(userEmail.split('@'));
+
   const handleEmail = (e) => {
     const email = e.target.value;
     setUserEmail(email);
@@ -48,18 +50,26 @@ const Signup = (props) => {
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
   const [pwdCheck, setPwdCheck] = useState(
-    '비밀번호는 영어대소문자, 숫자, 특수문자를 조합해 만들어주세요. (8-20자)',
+    '비밀번호는 영어대소문자, 숫자, 특수문자를 포함한 8-20자로 만들어주세요.',
   );
 
   const handlePwd = (e) => {
     const pwd = e.target.value;
     setPwd(pwd);
     if (pwdForm(pwd)) {
-      setPwdCheck('올바른 비밀번호 형식입니다.');
+      if (pwd.includes(userName) || pwd.includes(userEmail.split('@')[0])) {
+        setPwdCheck('비밀번호에 닉네임 또는 이메일을 포함할 수 없습니다.');
+      } else {
+        setPwdCheck('올바른 비밀번호 형식입니다.');
+      }
     } else {
-      setPwdCheck(
-        '비밀번호는 영어대소문자, 숫자, 특수문자를 조합해 만들어주세요. (8-20자)',
-      );
+      if (pwd.includes(userName) || pwd.includes(userEmail.split('@')[0])) {
+        setPwdCheck('비밀번호에 닉네임 또는 이메일을 포함할 수 없습니다.');
+      } else {
+        setPwdCheck(
+          '비밀번호는 영어대소문자, 숫자, 특수문자를 포함한 8-20자로 만들어주세요.',
+        );
+      }
     }
   };
 

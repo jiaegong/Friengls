@@ -18,11 +18,12 @@ const Search = (props) => {
   // console.log(tutorList);
 
   useEffect(() => {
+    dispatch(tutorActions.getTutorListDB());
+
     axios({
       method: 'get',
-      // url: `https://jg-jg.shop/getPopularTutor`,
-      url: `http://13.124.206.190/getTag`, // 태그 불러오는 url
-      // url: `http://13.124.206.190/getTutorTag?keyword=${keyWord}`,
+      url: `https://jg-jg.shop/getTag`,
+      // url: `http://13.124.206.190/getTag`, // 태그 불러오는 url
     })
       .then((doc) => {
         // console.log(doc.data);
@@ -74,10 +75,10 @@ const Search = (props) => {
 
       <InnerWrap>
         <ul>
-          {tutorList.map((item, idx) => {
+          {tutorList.map((tutor, idx) => {
             return (
               <TutorCard
-                item={item}
+                tutor={tutor}
                 key={`searchCard${idx}`}
                 urlCheck={urlCheck}
               />

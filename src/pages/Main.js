@@ -5,6 +5,7 @@ import { history } from '../redux/configureStore';
 
 // 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 컴포넌트
 import { Text } from '../elements/index';
@@ -14,12 +15,24 @@ import DivBanner from '../elements/DivBanner';
 
 const Main = () => {
   const dispatch = useDispatch();
-  const tutorList = useSelector((state) => state.tutor.list);
+  const tutorListDB = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    dispatch(tutorActions.getTutorListDB());
+
     dispatch(reviewActions.getReviewDB());
   }, []);
+
+  let tutorList = [];
+
+  if (tutorListDB.length > 11) {
+    for (let i = 0; i < 12; i++) {
+      tutorList.push(tutorListDB[i]);
+    }
+  }
+
+  console.log(tutorList);
 
   return (
     <Wrap>
@@ -48,15 +61,25 @@ const Main = () => {
         <TutorListWrap>
           <TutorTitleWrap>
             <div>
-              <span>지난 주 가장 예약이 많았던 튜터예요</span>
-              <span className="tutorMoreBtn">더보기 ></span>
+              <span>지난주 가장 예약이 많았던 튜터예요</span>
+              <span
+                className="tutorMoreBtn"
+                onClick={() => {
+                  history.push('/search');
+                }}
+              >
+                더보기 >
+              </span>
             </div>
             <p>인기 선생님 리스트</p>
           </TutorTitleWrap>
           <CardList>
-            {tutorList.map((tutor, idx) => {
-              return <TutorCard tutor={tutor} key={`tutorCard_${idx}`} />;
-            })}
+            {tutorList
+              ? tutorList.map((tutor, idx) => {
+                  // console.log(item);
+                  return <TutorCard tutor={tutor} key={`tutorCard_${idx}`} />;
+                })
+              : null}
           </CardList>
         </TutorListWrap>
 
@@ -68,7 +91,6 @@ const Main = () => {
                 <span className="subTitle">
                   다른 튜티들의 리뷰를 들어보세요
                 </span>
-                <span className="reviewMoreBtn">더보기 ></span>
               </div>
               <p className="title">수강 추천 리뷰</p>
             </ReviewTitleWrap>

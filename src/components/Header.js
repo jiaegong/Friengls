@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 
 // 모듈
 import { history } from '../redux/configureStore';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 //컴포넌트
@@ -22,7 +23,6 @@ const Header = () => {
 
   // ⭐️
   useEffect(() => {
-    dispatch(tutorActions.getTutorListDB());
     // setSocket(io('소켓을 받을 주소'));
     // setSocket(io('http://localhost:4000'));
   }, []);
@@ -33,10 +33,14 @@ const Header = () => {
     socket?.emit('newUser', user);
   }, [socket, user]);
 
+  //마이페이지url에 사용할 유저정보 가져오기
+  const userInfo = useSelector((state) => state.user.info);
+
   //로그아웃
   const logout = () => {
-    console.log('로그아웃');
+    dispatch(userActions.logout());
   };
+
   return (
     <Wrap>
       <div className="innerWrap">
@@ -50,6 +54,7 @@ const Header = () => {
         </div>
 
         <ul className="navBarWrap">
+          <li>언어</li>
           <li
             className="icon"
             onClick={() => {
@@ -58,12 +63,20 @@ const Header = () => {
           >
             선생님 찾기
           </li>
-          <li>알림</li>
           {token ? (
             <>
               <li
                 onClick={() => {
-                  history.push('/mypage');
+                  alert('알림창 나오게 해야돰!!');
+                }}
+              >
+                알림
+              </li>
+              <li
+                onClick={() => {
+                  history.push(
+                    `/mypage/${userInfo.userName}/${userInfo.isTutor}`,
+                  );
                 }}
               >
                 마이페이지
@@ -82,17 +95,18 @@ const Header = () => {
             <>
               <li
                 onClick={() => {
+                  alert('로그인후 사용가능합니다~!');
                   history.push('/login');
                 }}
               >
-                로그인
+                알림
               </li>
               <li
                 onClick={() => {
-                  history.push('/signup');
+                  history.push('/login');
                 }}
               >
-                회원가입
+                로그인/회원가입
               </li>
             </>
           )}
@@ -107,26 +121,27 @@ export default Header;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 240px;
+  height: 120px;
   background: #fff;
 
   .innerWrap {
     width: 90%;
     max-width: 1400px;
     height: 100%;
-    padding: 50px 16px 0;
+    /* padding: 50px 16px 0; */
+    padding: 36px 16px 0;
     margin: auto;
 
     /* text-align: center; */
 
-    /* display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center; */
-    /* background: #eee; */
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    /* background: #aaaaaa; */
     .logoWrap {
-      width: 313px;
-      margin: 0 auto 53px;
+      min-width: 245px;
+      /* margin: 0 auto 53px; */
       cursor: pointer;
       .logo {
         width: 100%;
@@ -135,13 +150,13 @@ const Wrap = styled.div`
     }
 
     .navBarWrap {
-      max-width: 612px;
-      /* width: auto; */
+      max-width: 672px;
+      width: 100%;
       height: 36px;
-      margin: auto;
+      /* margin: auto; */
       display: flex;
-      /* justify-content: center; */
-      justify-content: space-around;
+      justify-content: flex-end;
+      /* justify-content: space-around; */
       align-items: center;
       position: relative;
 
@@ -157,18 +172,18 @@ const Wrap = styled.div`
         cursor: pointer;
         position: relative;
         /* font-size: 16px; */
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 800;
         letter-spacing: 1px;
 
-        /* margin-right: 54px; */
+        margin-left: 3.375rem;
         /* background: #8e8e8e; */
 
         cursor: pointer;
         /* background: #8e8e8e; */
 
         &:nth-child(5) {
-          margin: 0;
+          /* margin: 0; */
         }
 
         /* 알림 갯수 */

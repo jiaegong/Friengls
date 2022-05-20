@@ -7,6 +7,7 @@ import axios from 'axios';
 const SET_USER = 'SET_USER'; //유저정보 불러오기
 const EDIT_USER = 'EDIT_USER'; //유저정보 수정
 const SET_USER_DETAIL = 'SET_USER_DETAIL'; //상세페이지 불러오기
+const UNSET_USER = 'UNSET_USER'; //유저정보 지우기
 
 //액션생성
 const setUser = createAction(SET_USER, (userInfo) => ({ userInfo }));
@@ -14,29 +15,31 @@ const editUser = createAction(EDIT_USER, (userInfo) => ({ userInfo }));
 const setUserDetail = createAction(SET_USER_DETAIL, (userInfo) => ({
   userInfo,
 }));
+const unsetUser = createAction(UNSET_USER, (user) => ({ user }));
 
 //이니셜스테이트
 const initialState = {
+  //info: 로그인한 유저의 정보
   info: {
-    userEmail: '',
-    userName: '',
-    pwd: '',
-    pwdCheck: '',
-    isTutor: 0,
-    tag: ',,',
-    language1: '',
-    language2: '',
-    language3: '',
-    comment: '',
-    contents: '',
-    startTime: '',
-    endTime: '',
-    //최대 12시간
+    // userEmail: '',
+    // userName: '',
+    // pwd: '',
+    // pwdCheck: '',
+    // isTutor: '0',
+    // tag: ',,',
+    // language1: '',
+    // language2: '',
+    // language3: '',
+    // comment: '',
+    // contents: '',
+    // startTime: '',
+    // endTime: '',
   },
-  isLogin: false, //확인해보기
+  isLogin: false,
+  //detailInfo: detail페이지의 유저정보
   detailInfo: {
     userName: '',
-    isTutor: 1,
+    isTutor: '1',
     tag: ',,',
     language1: '',
     language2: '',
@@ -50,65 +53,20 @@ const initialState = {
 
 //미들웨어
 
-//이메일 중복확인
-const emailCheckDB = (userEmail) => {
-  console.log('emailCheckDB시작', userEmail);
-  return function () {
-    axios({
-      method: 'post',
-      url: 'https://jg-jg.shop/signUp/emailCheck',
-      data: {
-        userEmail: userEmail,
-      },
-    })
-      .then((response) => {
-        console.log('emailCheckDB성공', response.data);
-        window.alert('사용 가능한 이메일입니다!');
-      })
-      .catch((error) => {
-        console.log(error);
-        window.alert('사용할 수 없는 이메일입니다!');
-      });
-  };
-};
-
-//닉네임 중복확인
-const userNameCheckDB = (userName) => {
-  console.log('userNameCheckDB시작', userName);
-  return function () {
-    axios({
-      method: 'post',
-      url: 'https://jg-jg.shop/signUp/nameCheck',
-      data: {
-        userName: userName,
-      },
-    })
-      .then((response) => {
-        console.log('userNameCheckDB성공', response.data);
-        window.alert('사용 가능한 닉네임입니다!');
-      })
-      .catch((error) => {
-        window.alert('사용할 수 없는 닉네임입니다!');
-      });
-  };
-};
-
-const signupDB = (signupInfo) => {
+const signupDB = (formData, loginInfo) => {
   return function (dispatch, getState, { history }) {
-    console.log('signupDB시작', signupInfo);
+    console.log('signupDB시작', formData, loginInfo);
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp',
-      data: signupInfo,
+      // url: 'https://jg-jg.shop/signUp',
+      url: 'http://13.124.206.190/signUp',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then((response) => {
         console.log('signupDB성공', response);
-        const loginInfo = {
-          userEmail: signupInfo.userEmail,
-          pwd: signupInfo.pwd,
-        };
-        console.log('회원가입DB후로그인정보', loginInfo);
+
         dispatch(loginDB(loginInfo));
       })
       .catch((error) => {
@@ -130,8 +88,11 @@ const loginDB = (loginForm) => {
       .then((response) => {
         console.log('loginDB성공', response.data);
         setCookie('token', response.data.token);
+        // localStorage.setItem('token', response.data.token);
         history.replace('/');
         window.location.reload();
+        // 아이디없을 경우 msg
+        // 비밀번호 틀렸을 경우 msg
       })
       .catch((error) => {
         window.alert('로그인에 실패하셨습니다.');
@@ -143,22 +104,22 @@ const loginDB = (loginForm) => {
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
     // console.log('loginCheckDB시작');
-
+    // console.log(getCookie('token'));
     axios({
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
     })
       .then((response) => {
         // console.log('loginCheckDB성공', response.data);
         dispatch(setUser(response.data));
       })
       .catch((error) => {
-        window.alert('로그인체크에 실패하셨습니다.');
-        console.log(error);
-        //메인으로 백
+        console.log('로그인체크 실패', error);
+        //메인으로 돌아가기
       });
   };
 };
@@ -191,9 +152,7 @@ const editUserDB = (userInfo) => {
     axios({
       method: 'put',
       url: 'https://jg-jg.shop/editUserInfo',
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
       .then((response) => {
@@ -212,23 +171,30 @@ const editUserDB = (userInfo) => {
 
 const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
-    // console.log('getUserDetailDB시작', userApi);
+    console.log('getUserDetailDB시작', userApi);
 
     axios({
       method: 'get',
       // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
+      headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
-        // console.log('getUserDetailDB성공', response.data.data[0]);
+        console.log('getUserDetailDB성공', response.data.data[0]);
         dispatch(setUserDetail(response.data.data[0]));
       })
       .catch((error) => {
         console.log('getUserDetailDB실패', error);
       });
+  };
+};
+
+const logout = () => {
+  return function (dispatch, getState, { history }) {
+    deleteCookie('token');
+    dispatch(unsetUser);
+    history.replace('/');
+    window.location.reload();
   };
 };
 
@@ -252,14 +218,18 @@ export default handleActions(
         // console.log('setUserDetail리듀서시작', action.payload.userInfo);
         draft.detailInfo = action.payload.userInfo;
       }),
+    [UNSET_USER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.info = null;
+        draft.isLogin = false;
+        draft.detailInfo = null;
+      }),
   },
   initialState,
 );
 
 //익스포트
 const actionCreators = {
-  emailCheckDB,
-  userNameCheckDB,
   signupDB,
   loginDB,
   loginCheckDB,
@@ -269,6 +239,8 @@ const actionCreators = {
   editUser,
   getUserDetailDB,
   setUserDetail,
+  logout,
+  unsetUser,
 };
 
 export { actionCreators };

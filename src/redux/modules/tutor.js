@@ -8,14 +8,14 @@ const getTutors = createAction(GET_TUTOR_LIST, (list) => ({ list }));
 
 const initialState = {
   list: [
-    {
-      userName: 'aaa',
-      userProfile: '',
-      tag: 'bbb',
-      comment: 'bbb',
-      contents: 'bbb',
-      isTutor: true,
-    },
+    // {
+    //   userName: 'aaa',
+    //   userProfile: '',
+    //   tag: 'bbb',
+    //   comment: 'bbb',
+    //   contents: 'bbb',
+    //   isTutor: true,
+    // },
   ],
 };
 

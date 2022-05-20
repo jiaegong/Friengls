@@ -17,36 +17,31 @@ const Detail = (props) => {
 
   //디테일페이지에서 불러올 유저 api
   const userApi = props.match.params;
-  // console.log(userApi);
-
-  useEffect(() => {
-    // dispatch(userActions.getUserDetailDB(userApi));
-  }, []);
+  console.log(userApi);
 
   //디테일페이지에 사용할 유저 정보
-  // const isTutor = detailInfo.isTutor;
-  const tutorName = props.match.params.userName;
-  // console.log(tutorName);
   const detailInfo = useSelector((state) => state.user.detailInfo);
-  // console.log(detailInfo);
+  const tutorName = props.match.params.userName;
+
+  // 초기값으로 리듀서에서 불러오는 값을 넣어둠
+  const [availability, setAvailability] = React.useState([]);
 
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
-  // useEffect(() => {
-  //   dispatch(bookingAction.getBookingDB());
-  // }, []);
-
   useEffect(() => {
     dispatch(userActions.getUserDetailDB(userApi));
+    dispatch(reviewActions.getOneReviewDB(tutorName));
+    window.scrollTo(0, 0);
+
     // 예약 리스트 불러오기
     axios({
       method: 'get',
       // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
-      url: `http://13.124.206.190/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
-      // url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=${isTutor}`, // 학생 또는 선생님
+      // url: `http://13.124.206.190/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
+      url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
     })
       .then((doc) => {
-        // console.log(doc);
-        // console.log(doc.data.datas1);
+        let data = doc.data.datas1;
+        console.log('DB 예약 리스트 : ', { data });
         setAvailability(doc.data.datas1);
       })
       .catch((err) => {
@@ -54,14 +49,10 @@ const Detail = (props) => {
       });
   }, []);
 
-  // 초기값으로 리듀서에서 불러오는 값을 넣어둠
-  const [availability, setAvailability] = React.useState([]);
-
   const Calendar = CalendarTemplate({
     tutorName,
     availability,
     setAvailability: (timeList) => {
-      // performAdditionalAction(update)
       setAvailability(timeList);
     },
   });
@@ -69,17 +60,14 @@ const Detail = (props) => {
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
 
-  useEffect(() => {
-    dispatch(reviewActions.getOneReviewDB(tutorName));
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   return (
     <Wrap>
       <div className="innerWrap">
         {/* 유저 정보 */}
-        <div className="userInfoWrap">
-          <DetailUser detailInfo={detailInfo} props={props} />
-        </div>
+        <DetailUser userInfo={detailInfo} props={props} />
 
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
@@ -103,21 +91,12 @@ const Detail = (props) => {
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  /* background-color: #ddd; */
+  // background-color: #ddd;
 
   .innerWrap {
     max-width: 1400px;
     width: 90%;
     margin: auto;
-
-    /* 유저정보 wrap */
-    .userInfoWrap {
-      width: 95%;
-      height: 300px;
-      margin: 30px auto;
-
-      /* background-color: #aaa; */
-    }
 
     /* 예약 캘린더 */
     .bookingWrap {

@@ -1,27 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { history } from '../redux/configureStore';
-import { Flex, Text, Input, Button } from '../elements/index';
-import { ProfileMedium } from '../image';
+import DetailUser from '../components/DetailUser';
 
-const Mypage = () => {
+const Mypage = (props) => {
   const dispatch = useDispatch();
+  // 마이페이지에서 불러올 유저 api
+  const userApi = props.match.params;
+
+  //마이페이지 유저정보
+  const userInfo = useSelector((state) => state.user.detailInfo);
+  console.log(userInfo);
+
   // 마이페이지 예약정보 불러오기 위한 값들
-  const isTutor = useSelector((state) => state.user.info.isTutor);
-  const userName = useSelector((state) => state.user.info.userName);
-  // console.log({ isTutor, userName });
+  const isTutor = userApi.isTutor;
+  const userName = userApi.userName;
 
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
-  console.log(bookingList);
-  useEffect(() => {
-    dispatch(bookingAction.getBookingDB({ isTutor, userName }));
-  }, []);
 
-  //마이페이지 유저정보
-  const userInfo = useSelector((state) => state.user.info);
+  useEffect(() => {
+    dispatch(userActions.getUserDetailDB(userApi));
+    dispatch(bookingAction.getBookingDB({ isTutor, userName }));
+  }, [userName]);
 
   return (
     // <>
@@ -37,46 +41,13 @@ const Mypage = () => {
     <Wrap>
       <div className="innerWrap">
         {/* 유저 정보 */}
-        <div className="userInfoWrap">
-          <div>
-            <div>
-              <button>좋아요</button>
-              <button
-                onClick={() => {
-                  history.push('/mypage');
-                }}
-              >
-                수정
-              </button>
-            </div>
-            <UserInfoBox>
-              <ImageBox>
-                <Image src={ProfileMedium} />
-              </ImageBox>
-              <div>
-                <TextInfo>
-                  <span>닉네임</span>: <span>닉네임불러오기</span>
-                </TextInfo>
-                <TextInfo>
-                  <span>한 줄 소개</span>: <span>닉네임불러오기</span>
-                </TextInfo>
-                <TextInfo>
-                  <span>태그</span>: <span>태그불러오기</span>
-                </TextInfo>
-                <TextInfo>
-                  <span>구사 가능 언어</span>: <span>언어불러오기</span>
-                </TextInfo>
-              </div>
-            </UserInfoBox>
-            <div>
-              <h2>자기소개</h2>
-              <TextInfo>자기소개 불러오기</TextInfo>
-            </div>
-          </div>
-        </div>
+        <DetailUser userInfo={userInfo} props={props} />
         {/* 예약 캘린더 */}
+        <h2>예약 관리</h2>
         <div className="bookingWrap">
-          <p className="bookingTitle">예약 리스트</p>
+          <p className="bookingTitle">
+            예약 리스트 <span>/ 수업 일정</span>
+          </p>
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {
               let startTime = item.start;
@@ -95,11 +66,15 @@ const Mypage = () => {
                     ) : (
                       <div className="userName">{item.Tutee_userName}</div>
                     )}
-                    <div className="userBooking">
-                      {week} {month} {day} {year} &emsp; {start} ~ {end}
+                    <div className="userBookingWrap">
+                      <span>
+                        {week} {month} {day} {year} &emsp;
+                      </span>
+                      <span>
+                        {start}&emsp; ~ &emsp;{end}
+                      </span>
                     </div>
                   </div>
-                  {/* <List> */}
                   <button
                     className="videoBtn"
                     onClick={() => {
@@ -110,9 +85,8 @@ const Mypage = () => {
                       );
                     }}
                   >
-                    채팅하기
+                    수업 시작
                   </button>
-                  {/* </List> */}
                 </li>
               );
             })}
@@ -128,65 +102,84 @@ export default Mypage;
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  background-color: #ddd;
+  // background-color: #ddd;
 
   .innerWrap {
     max-width: 1400px;
     width: 90%;
     margin: auto;
 
-    /* 유저정보 wrap */
-    .userInfoWrap {
-      width: 95%;
-      min-height: 300px;
-      margin: 30px auto 0;
-
-      background-color: #aaa;
-
-      /* 유저 정보 */
-      .userInfo {
-        width: 100%;
-        height: 300px;
-
-        background-color: #686868;
-      }
-    }
-
     /* 예약 리스트 Wrap */
     .bookingWrap {
-      width: 80%;
-      max-width: 1000px;
+      width: 100%;
+      max-width: 1400px;
       height: auto;
       margin-top: 30px;
       margin: 30px auto;
       min-height: 100px;
       padding: 10px;
 
-      background-color: #686868;
+      /* background-color: #0076ed; */
 
       /* 예약 리스트 타이틀 */
       .bookingTitle {
+        font-size: 60px;
+        font-weight: bolder;
+        margin-bottom: 60px;
+
+        span {
+          font-size: 40px;
+          color: #969696;
+          margin-left: 15px;
+        }
       }
 
       /* 예약 리스트 */
-      .bookingList {
-        min-height: 100px;
-        margin-top: 10px;
-        padding: 10px;
 
-        background: #a9a9a9;
+      .bookingList {
+        max-height: 520px;
+        min-height: 300px;
+        /* display: flex; */
+        /* justify-content: center; */
+        /* flex-direction: column; */
+        /* align-items: center; */
+        border: 2px solid #c7c7c7;
+        border-radius: 4px;
+        /* padding: 40px 60px 40px 40px; */
+        padding: 40px 30px 40px 40px;
+        box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.15);
+        overflow-y: scroll;
+
+        background: #fff;
+
+        /* 스크롤 버튼 조절 */
+        ::-webkit-scrollbar {
+          width: 20px; /*스크롤바의 너비*/
+        }
+        ::-webkit-scrollbar-thumb {
+          height: 20%;
+          background-color: #e4e4e4; /*스크롤바의 색상*/
+          border-radius: 15px;
+          /* display: none; */
+        }
+        ::-webkit-scrollbar-track {
+          background-color: #d7d7d7;
+          border-radius: 15px;
+          display: none;
+          /*스크롤바 트랙 색상 */
+        }
 
         /* 예약 카드 */
         .booking {
           width: 100%;
+          max-width: 1300px;
           min-height: 50px;
           border-radius: 10px;
           display: flex;
-          justify-content: space-around;
-          /* justify-content: center; */
+          justify-content: space-between;
           align-items: center;
 
-          background-color: #fff;
+          /* background-color: #fff; */
 
           + .booking {
             margin-top: 10px;
@@ -194,57 +187,63 @@ const Wrap = styled.div`
 
           /* 예약 정보 */
           .bookingInfo {
-            width: 75%;
+            width: 80%;
+            height: 80px;
             padding: 10px;
             display: flex;
-            justify-content: space-between;
+            /* justify-content: space-between; */
+            justify-content: space-around;
             text-align: center;
+            border: 2px solid #c7c7c7;
+            border-radius: 4px;
+            margin-right: 20px;
+
+            /* background-color: #f30b0b; */
 
             .userName {
               width: 20%;
+              font-size: 28px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              /* background-color: #aaaaaa; */
             }
 
-            .userBooking {
+            .userBookingWrap {
               width: 70%;
               text-align: left;
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+
+              span {
+                display: inline-block;
+                font-size: 24px;
+              }
+              /* background-color: #aaaaaa; */
             }
 
-            background: #eee;
+            /* background: #eee; */
           }
 
           .videoBtn {
+            width: 20%;
+            max-width: 240px;
+            height: 80px;
             border: none;
             padding: 10px 8px 9px;
             border-radius: 5px;
+            font-size: 24px;
+            font-weight: bolder;
+            color: #fff;
             cursor: pointer;
 
-            background-color: #c1c1c1;
+            background-color: #153587;
+            /* background-color: #c1c1c1; */
           }
         }
       }
     }
   }
-`;
-const UserInfoBox = styled.div`
-  display: flex;
-`;
-
-const ImageBox = styled.div`
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-`;
-
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-`;
-
-const TextInfo = styled.p`
-  margin-top: 10px;
 `;
