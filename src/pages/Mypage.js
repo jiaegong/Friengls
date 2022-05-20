@@ -13,7 +13,7 @@ const Mypage = (props) => {
 
   //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.detailInfo);
-  console.log(userInfo);
+  console.log(userApi);
 
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = userApi.isTutor;

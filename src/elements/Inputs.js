@@ -6,27 +6,32 @@ const Inputs = (props) => {
     defaultStyles,
     styles,
     type,
+    name,
     placeholder,
     _onChange,
     value,
-    multiLine,
     disabled,
+    multiLine,
   } = props;
 
-  console.log(props);
-
   if (multiLine) {
-    <TextareaStyled
-      style={{ ...styles }}
-      placeholder={placeholder}
-      onChange={_onChange}
-      {...defaultStyles}
-    />;
+    return (
+      <TextareaStyled
+        style={{ ...styles }}
+        type={type}
+        placeholder={placeholder}
+        onChange={_onChange}
+        defaultValue={value}
+        disabled={disabled}
+        {...defaultStyles}
+      />
+    );
   }
   return (
     <InputStyled
       style={{ ...styles }}
       type={type}
+      name={name}
       placeholder={placeholder}
       onChange={_onChange}
       defaultValue={value}
@@ -39,43 +44,45 @@ const Inputs = (props) => {
 Inputs.defaultProps = {
   multiLine: false,
   type: 'text',
-  placeholder: '',
   _onChange: () => {},
   disabled: false,
+  placeholder: '',
   defaultStyles: {
-    width: '860px',
-    height: '80px',
-    margin: false,
-    padding: '0 0 0 10px',
-    borderRadius: '8px',
     fontSize: '26px',
     fontWeight: '400',
-    color: '#000',
-    placeholderFontSize: '26px',
   },
 };
 
 const InputStyled = styled.input`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding};
-  border: 2px solid #8a8a8a;
-  border-radius: ${(props) => props.borderRadius};
+  width: 100%;
+  height: 35px;
+  border: none;
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
-  ::placeholder {
-    font-size: ${(props) => props.placeholderFontSize};
+  ::-webkit-input-placeholder {
+    font-size: 20px;
+    color: b5b5b5;
+  }
+  &: focus {
+    outline: none;
   }
 `;
 
 const TextareaStyled = styled.textarea`
+  width: 100%;
+  height: 160px;
+  border: none;
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
-  color: ${(props) => props.color};
-  width: ${(props) => props.width};
-  padding: ${(props) => props.padding};
-  box-sizing: border-box;
+  ::-webkit-input-placeholder {
+    padding: 10px 0;
+    font-size: 20px;
+    color: b5b5b5;
+  }
+  &: focus {
+    outline: none;
+  }
+  resize: none;
 `;
 
 export default Inputs;

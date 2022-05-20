@@ -1,5 +1,7 @@
+import { Rowing } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
+import { InputBox, InputLabel } from '../elements/index';
 
 const SelectLanguage = (props) => {
   const {
@@ -34,64 +36,63 @@ const SelectLanguage = (props) => {
   );
 
   return (
-    <React.Fragment>
-      <Grid>
+    <InputBox>
+      <LabelBox>
+        <InputLabel>활용 가능 언어 선택</InputLabel>
+        <InputLabel>최대 3개</InputLabel>
+      </LabelBox>
+      <SelectContainer>
         {/* 사용언어1 */}
-        <SelectBox>
-          <span>사용하는 언어1:&nbsp;&nbsp;</span>
-          <select name="language1" onChange={handleLanguage1}>
-            <option value="">선택</option>
-            {languageList.map((language, index) => (
-              <option value={language} key={language + index}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </SelectBox>
-      </Grid>
-      {/* 사용언어2 */}
-      <Grid>
-        <SelectBox>
-          <span>사용하는 언어2:&nbsp;&nbsp;</span>
-          <select name="language2" onChange={handleLanguage2}>
-            <option value="">선택</option>
-            {language2List.map((language, index) => (
-              <option value={language} key={language + index}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </SelectBox>
-      </Grid>
-      {/* 사용언어3 */}
-      <Grid>
-        <SelectBox>
-          <span>사용하는 언어3:&nbsp;&nbsp;</span>
-          <select name="language3" onChange={handleLanguage3}>
-            <option value="">선택</option>
-            {language3List.map((language, index) => (
-              <option value={language} key={language + index}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </SelectBox>
-        <Grid>
-          <span>※ 사용하는 언어는 최소 한 종류의 언어를 선택해 주세요.</span>
-        </Grid>
-      </Grid>
-    </React.Fragment>
+        <Select name="language1" onChange={handleLanguage1}>
+          <option value="">선택</option>
+          {languageList.map((language, index) => (
+            <option value={language} key={language + index}>
+              {language}
+            </option>
+          ))}
+        </Select>
+
+        {/* 사용언어2 */}
+        <Select name="language2" onChange={handleLanguage2}>
+          <option value="">선택</option>
+          {language2List.map((language, index) => (
+            <option value={language} key={language + index}>
+              {language}
+            </option>
+          ))}
+        </Select>
+
+        {/* 사용언어3 */}
+        <Select name="language3" onChange={handleLanguage3}>
+          <option value="">선택</option>
+          {language3List.map((language, index) => (
+            <option value={language} key={language + index}>
+              {language}
+            </option>
+          ))}
+        </Select>
+      </SelectContainer>
+    </InputBox>
   );
 };
 
 export default SelectLanguage;
 
-const Grid = styled.div`
-  margin: 10px;
+const LabelBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 
-const SelectBox = styled.div`
-  margin: 5px;
+const SelectContainer = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const Select = styled.select`
+  margin-right: 20px;
+  width: 160px;
+  height: 35px;
+  border: 1px solid #8a8a8a;
+  border-radius: 8px;
 `;

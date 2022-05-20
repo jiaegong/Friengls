@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Portal from '../shared/Portal';
 import styled from 'styled-components';
-import { Buttons, Inputs } from '../elements/index';
+import { Buttons, InputBox, Inputs } from '../elements/index';
 import EditUser from './EditUser';
 
 const MyPagePwdModal = (props) => {
@@ -84,15 +84,6 @@ const Content = styled.div`
   // overflow: scroll;
 `;
 
-const Grid = styled.div`
-  margin-bottom: 60px;
-
-  p {
-    font-size: 40px;
-    font-weight: 700;
-  }
-`;
-
 const CloseBtnBox = styled.label`
   width: 50px;
   height: 50px;
@@ -101,12 +92,23 @@ const CloseBtnBox = styled.label`
   left: 40px;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const CloseBtn = styled.button`
   background: none;
   border: none;
   font-size: 30px;
+  cursor: pointer;
+`;
+
+const Grid = styled.div`
+  margin-bottom: 60px;
+
+  p {
+    font-size: 40px;
+    font-weight: 700;
+  }
 `;
 
 const UserImg = styled.div`

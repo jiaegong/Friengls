@@ -82,15 +82,15 @@ const Login = (props) => {
       >
         Login
       </Button>
-      {/* <div>
-              <Button _onClick={() => history.push('/signup')}>회원가입</Button>
-            </div> */}
+      <div>
+        <Button _onClick={() => history.push('/signup')}>회원가입</Button>
+      </div>
       {/* <A href={KAKAO_AUTH_URL}>
-              <Img src={KakaoLoginIcon} alt="카카오 로그인 버튼" />
-            </A>
-            <A href={GOOGLE_AUTH_URL}>
-              <Img src={GoogleLoginIcon} alt="구글 로그인 버튼" />
-            </A> */}
+        <Img src={KakaoLoginIcon} alt="카카오 로그인 버튼" />
+      </A>
+      <A href={GOOGLE_AUTH_URL}>
+        <Img src={GoogleLoginIcon} alt="구글 로그인 버튼" />
+      </A> */}
     </Wrap>
   );
 };

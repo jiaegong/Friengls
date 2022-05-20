@@ -38,16 +38,16 @@ const initialState = {
   isLogin: false,
   //detailInfo: detail페이지의 유저정보
   detailInfo: {
-    userName: '',
-    isTutor: '1',
-    tag: ',,',
-    language1: '',
-    language2: '',
-    language3: '',
-    comment: '',
-    contents: '',
-    startTime: '',
-    endTime: '',
+    // userName: '',
+    // isTutor: '',
+    // tag: ',,',
+    // language1: '',
+    // language2: '',
+    // language3: '',
+    // comment: '',
+    // contents: '',
+    // startTime: '',
+    // endTime: '',
   },
 };
 

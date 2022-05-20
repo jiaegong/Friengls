@@ -8,6 +8,7 @@ import { actionCreators as profileActions } from '../redux/modules/profile';
 import { ProfileMedium } from '../image';
 import { checkSpelling } from '../shared/common';
 import SelectLanguage from '../components/SelectLanguage';
+import { getCookie } from '../shared/Cookie';
 
 const DetailInfo = (props) => {
   const location = useLocation();
@@ -166,8 +167,8 @@ const DetailInfo = (props) => {
     formData.append('endTime', endTime);
     //로그인에 필요한 유저정보
     const loginInfo = { userEmail: signupInfo.userEmail, pwd: signupInfo.pwd };
-
-    dispatch(userActions.signupDB(formData, loginInfo));
+    console.log(language1, language2, language3);
+    // dispatch(userActions.signupDB(formData, loginInfo));
 
     // //추가정보 디스패치
     // const userForm = {
@@ -195,6 +196,8 @@ const DetailInfo = (props) => {
     window.alert('새로고침 처음 화면으로 돌아갑니다.');
     history.replace('/signup');
   }
+
+  //to do: 로그인상태에서 로그인 회원가입 페이지는 들어가져야 할까?
 
   return (
     <Container>
