@@ -1,5 +1,5 @@
 import React from 'react';
-import Portal from './Portal';
+import Portal from '../shared/Portal';
 import styled from 'styled-components';
 import { Image, Text } from '../elements/index';
 

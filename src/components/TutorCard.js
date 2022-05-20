@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { CgProfile } from 'react-icons/cg';
-import Portal from './Portal';
+import Portal from '../shared/Portal';
 import MainModal from './MainModal';
 
 const TutorCard = ({ tutor, urlCheck }) => {
