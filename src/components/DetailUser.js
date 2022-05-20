@@ -34,13 +34,6 @@ const DetailUser = (props) => {
         ) : (
           <AiOutlineHeart onClick={like} />
         )}
-        <button
-          onClick={() => {
-            history.push('/mypage');
-          }}
-        >
-          수정
-        </button>
       </div>
       <UserInfoBox>
         <UserImgWrap>

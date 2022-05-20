@@ -48,7 +48,7 @@ const Main = () => {
         <TutorListWrap>
           <TutorTitleWrap>
             <div>
-              <span>지난 주 가장 예약이 많았던 튜터에요</span>
+              <span>지난 주 가장 예약이 많았던 튜터예요</span>
               <span className="tutorMoreBtn">더보기 ></span>
             </div>
             <p>인기 선생님 리스트</p>
