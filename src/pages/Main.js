@@ -62,7 +62,14 @@ const Main = () => {
           <TutorTitleWrap>
             <div>
               <span>지난주 가장 예약이 많았던 튜터에요</span>
-              <span className="tutorMoreBtn">더보기 ></span>
+              <span
+                className="tutorMoreBtn"
+                onClick={() => {
+                  history.push('/search');
+                }}
+              >
+                더보기 >
+              </span>
             </div>
             <p>인기 선생님 리스트</p>
           </TutorTitleWrap>

@@ -23,10 +23,14 @@ const Detail = (props) => {
   const detailInfo = useSelector((state) => state.user.detailInfo);
   const tutorName = props.match.params.userName;
 
+  // 초기값으로 리듀서에서 불러오는 값을 넣어둠
+  const [availability, setAvailability] = React.useState([]);
+
   // 새로고침이나, 페이지 진입시,db에 데이터 있는지 요청보냄
   useEffect(() => {
     dispatch(userActions.getUserDetailDB(userApi));
     dispatch(reviewActions.getOneReviewDB(tutorName));
+    window.scrollTo(0, 0);
 
     // 예약 리스트 불러오기
     axios({
@@ -44,9 +48,6 @@ const Detail = (props) => {
         console.log(err);
       });
   }, []);
-
-  // 초기값으로 리듀서에서 불러오는 값을 넣어둠
-  const [availability, setAvailability] = React.useState([]);
 
   const Calendar = CalendarTemplate({
     tutorName,
