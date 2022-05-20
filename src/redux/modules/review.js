@@ -101,7 +101,7 @@ const editReviewDB = (reviewId, rate, text) => {
     })
       .then((res) => {
         dispatch(editReview(res));
-        // 새로고침 해주기
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -118,7 +118,7 @@ const deleteReviewDB = (reviewId) => {
     })
       .then((res) => {
         dispatch(deleteReview());
-        window.location.reload(); // 새로고침 해주기
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

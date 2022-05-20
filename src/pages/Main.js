@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
 
-// 모듈
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
+// 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
-import { actionCreators as bookingAction } from '../redux/modules/booking';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 컴포넌트
-import { Grid, Flex, Text } from '../elements/index';
-import Tutor from '../components/Tutor';
+import { Text } from '../elements/index';
 import Review from '../components/Review';
 import TutorCard from '../components/TutorCard';
 import DivBanner from '../elements/DivBanner';
@@ -22,6 +20,7 @@ const Main = () => {
 
   React.useEffect(() => {
     dispatch(tutorActions.getTutorListDB());
+
     dispatch(reviewActions.getReviewDB());
   }, []);
 
@@ -40,13 +39,14 @@ const Main = () => {
       <DivBanner>
         <Banner>
           <p className="bannerTitle">
-            <span>프랭글스에서</span> <span>프랭글과 대화하고</span>
-            <span> 영어실력 쌓기!</span>
+            <span>Wanna learn Korean?</span>
+            <span>We are here!</span>
+            <span>Your closest Korean friends, Friengls😎</span>
           </p>
           <p className="bannerText">
-            <span>온라인 언어교환으로 놀면서 스펙쌓자!</span>
-            <span> 님도보고 뽕도따는 두마리 토끼 전략~</span>
-            <span> 수다떨면서 영어실력 올리는 사람 나야나!</span>
+            <span>온라인 언어 교환으로 놀면서 스펙 쌓자!</span>
+            <span> 님도 보고 뽕도 따는 두 마리 토끼 전략~</span>
+            <span> 수다 떨면서 한국어 실력 올리는 사람 나야 나!</span>
           </p>
           <button
             onClick={() => {
@@ -75,9 +75,9 @@ const Main = () => {
           </TutorTitleWrap>
           <CardList>
             {tutorList
-              ? tutorList.map((item, idx) => {
+              ? tutorList.map((tutor, idx) => {
                   // console.log(item);
-                  return <TutorCard item={item} key={`tutorCard_${idx}`} />;
+                  return <TutorCard tutor={tutor} key={`tutorCard_${idx}`} />;
                 })
               : null}
           </CardList>
@@ -85,13 +85,12 @@ const Main = () => {
 
         {/* 리뷰 부분 */}
         <ReviewWrap>
-          <div className="reviewInner">
+          <ReviewContainer>
             <ReviewTitleWrap>
               <div>
                 <span className="subTitle">
                   다른 튜티들의 리뷰를 들어보세요
                 </span>
-                <span className="reviewMoreBtn">더보기 ></span>
               </div>
               <p className="title">수강 추천 리뷰</p>
             </ReviewTitleWrap>
@@ -102,7 +101,7 @@ const Main = () => {
                   })
                 : null}
             </ReviewList>
-          </div>
+          </ReviewContainer>
         </ReviewWrap>
       </InnerWrap>
     </Wrap>
@@ -228,16 +227,15 @@ const CardList = styled.div`
 
 // 리뷰 부분
 const ReviewWrap = styled.div`
-  width: 100%;
+  width: 70%;
   min-height: 600px;
   /* margin-top: 131px; */
-  margin: 60px 0 200px;
+  margin: 60px auto 200px;
+`;
 
-  .reviewInner {
-    width: 100%;
-    margin: auto;
-    background-color: #fff;
-  }
+const ReviewContainer = styled.div`
+  width: 100%;
+  margin: auto;
 `;
 
 const ReviewTitleWrap = styled.div`
@@ -271,12 +269,4 @@ const ReviewList = styled.div`
   width: 100%;
   min-height: 188px;
   margin: auto;
-
-  li {
-    display: flex;
-    padding: 24px;
-    border-radius: 20px;
-    box-shadow: 0px 2px 12px 0px #00000040;
-    margin-bottom: 16px;
-  }
 `;

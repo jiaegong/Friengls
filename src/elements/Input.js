@@ -47,7 +47,7 @@ Input.defaultProps = {
     fontWeight: '400',
     color: '#000',
     width: '300px',
-    padding: '20px',
+    padding: '10px',
   },
 };
 

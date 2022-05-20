@@ -75,10 +75,10 @@ const Search = (props) => {
 
       <InnerWrap>
         <ul>
-          {tutorList.map((item, idx) => {
+          {tutorList.map((tutor, idx) => {
             return (
               <TutorCard
-                item={item}
+                tutor={tutor}
                 key={`searchCard${idx}`}
                 urlCheck={urlCheck}
               />
