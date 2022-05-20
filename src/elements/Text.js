@@ -18,8 +18,8 @@ const Text = (props) => {
 
 Text.defaultProps = {
   defaultStyles: {
-    fontSize: '14px',
-    fontWeight: '400',
+    fontSize: '16px',
+    fontWeight: '500',
     color: '#000',
   },
 };

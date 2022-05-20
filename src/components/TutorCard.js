@@ -1,31 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { CgProfile } from 'react-icons/cg';
+import Portal from './Portal';
+import MainModal from './MainModal';
 
-const TutorCard = ({ item, urlCheck }) => {
+const TutorCard = ({ tutor, urlCheck }) => {
+  const [modal, setModal] = useState(false);
+  const handleModal = () => {
+    setModal(!modal);
+  };
+
   return (
     <Card
       className="card"
       onClick={() => {
-        history.push(`/detail/${item.userName}/1`);
+        history.push(`/detail/${tutor.userName}/1`);
       }}
     >
       <img
         className="user_img"
-        src={item.userProfile}
+        src={tutor.userProfile}
         // src={'https://via.placeholder.com/300x200'}
         alt="#"
-      ></img>
+      />
       <div className="user_info">
-        <p className="userName">{item.userName}</p>
+        <p className="userName">{tutor.userName}</p>
         {/* {urlCheck ? <p>search</p> : <p>main</p>} */}
-        <p className="userContents">{item.contents}</p>
-        <p className="userTag">{item.tag}</p>
+        <p className="userContents">{tutor.contents}</p>
+        <p className="userTag">{tutor.tag}</p>
       </div>
       <ModalBtn>
-        <CgProfile className="modalBtn" />
+        <CgProfile
+          className="modalBtn"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleModal();
+          }}
+        />
+        <Portal>
+          {modal && <MainModal tutor={tutor} onClose={handleModal} />}
+        </Portal>
       </ModalBtn>
     </Card>
   );
