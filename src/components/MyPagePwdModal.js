@@ -1,54 +1,54 @@
 import React, { useState } from 'react';
 import Portal from '../shared/Portal';
 import styled from 'styled-components';
-import MyPageInfoModal from './MyPageInfoModal';
 import { Buttons, Inputs } from '../elements/index';
+import EditUser from './EditUser';
 
 const MyPagePwdModal = (props) => {
   const { onClose, userInfo } = props;
 
-  const [infoModalOn, setInfoModalOn] = useState(false);
-
-  const handleInfoModal = () => {
-    setInfoModalOn(!infoModalOn);
+  //비밀번호 검증 될 경우 editUser컴포넌트 렌더링
+  const [editUser, setEditUser] = useState(false);
+  const handleEditUser = () => {
+    setEditUser(true);
   };
 
   return (
     <Portal>
       <Background>
-        <Content>
-          <CloseBtnBox>
-            <CloseBtn onClick={onClose}>X</CloseBtn>
-          </CloseBtnBox>
-          <Grid>
-            <p>본인확인</p>
-          </Grid>
-          <Grid>
-            <UserImg>
-              <img className="userImg" src={userInfo.userProfile} alt="" />
-            </UserImg>
-          </Grid>
-          <Grid>
-            <div>
-              <Inputs
-                placeholder={'이메일'}
-                styles={{ margin: '0 0 20px 0' }}
-                value={userInfo.userEmail}
-                disabled
-              />
-            </div>
-            <div>
-              <Inputs placeholder={'비밀번호'} />
-            </div>
-          </Grid>
-          <Grid>
-            <Buttons _onClick={handleInfoModal}>프로필 수정하기</Buttons>
-          </Grid>
-
-          {infoModalOn && (
-            <MyPageInfoModal onClose={handleInfoModal} userInfo={userInfo} />
-          )}
-        </Content>
+        {editUser ? (
+          <EditUser onClose={onClose} userInfo={userInfo} />
+        ) : (
+          <Content>
+            <CloseBtnBox>
+              <CloseBtn onClick={onClose}>X</CloseBtn>
+            </CloseBtnBox>
+            <Grid>
+              <p>본인확인</p>
+            </Grid>
+            <Grid>
+              <UserImg>
+                <img className="userImg" src={userInfo.userProfile} alt="" />
+              </UserImg>
+            </Grid>
+            <Grid>
+              <div>
+                <Inputs
+                  placeholder={'이메일'}
+                  styles={{ margin: '0 0 20px 0' }}
+                  value={userInfo.userEmail}
+                  disabled
+                />
+              </div>
+              <div>
+                <Inputs placeholder={'비밀번호'} />
+              </div>
+            </Grid>
+            <Grid>
+              <Buttons _onClick={handleEditUser}>프로필 수정하기</Buttons>
+            </Grid>
+          </Content>
+        )}
       </Background>
     </Portal>
   );

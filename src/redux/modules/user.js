@@ -59,8 +59,8 @@ const signupDB = (formData, loginInfo) => {
 
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/signUp',
-      url: 'http://13.124.206.190/signUp',
+      url: 'https://jg-jg.shop/signUp',
+      // url: 'http://13.124.206.190/signUp',
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })

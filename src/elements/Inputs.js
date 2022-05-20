@@ -60,14 +60,13 @@ const InputStyled = styled.input`
   height: ${(props) => props.height};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
+  border: 2px solid #8a8a8a;
   border-radius: ${(props) => props.borderRadius};
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   ::placeholder {
     font-size: ${(props) => props.placeholderFontSize};
   }
-  //   padding: ${(props) => props.padding};
-  //   box-sizing: border-box;
 `;
 
 const TextareaStyled = styled.textarea`

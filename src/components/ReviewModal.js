@@ -10,7 +10,7 @@ import { modalOff } from '../redux/modules/modal';
 const ReviewModal = () => {
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch(modalOff());
+    dispatch(modalOff('review'));
   };
 
   const token = getCookie('token');

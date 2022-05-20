@@ -7,6 +7,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as profileActions } from '../redux/modules/profile';
 import { ProfileMedium } from '../image';
 import { checkSpelling } from '../shared/common';
+import SelectLanguage from '../components/SelectLanguage';
 
 const DetailInfo = (props) => {
   const location = useLocation();
@@ -27,37 +28,18 @@ const DetailInfo = (props) => {
     };
   };
 
-  //사용언어1 option
-  const languageList = [
-    '한국어',
-    'English',
-    '日本語',
-    '中文',
-    'Русский',
-    'tiếng Việt',
-    'ภาษาไทย',
-    'français',
-    'español',
-    'हिन्दी भाषा',
-  ];
   //사용언어1 input값
   const [language1, setLanguage1] = useState('');
   const handleLanguage1 = (e) => {
     setLanguage1(e.target.value);
   };
-  //사용언어2 option
-  const language2List = languageList.filter(
-    (language) => language !== language1,
-  );
+
   //사용언어2 input값
   const [language2, setLanguage2] = useState('');
   const handleLanguage2 = (e) => {
     setLanguage2(e.target.value);
   };
-  //사용언어3 option
-  const language3List = language2List.filter(
-    (language) => language !== language2,
-  );
+
   //사용언어3 input값
   const [language3, setLanguage3] = useState('');
   const handleLanguage3 = (e) => {
@@ -90,12 +72,24 @@ const DetailInfo = (props) => {
   const exampleTag = ['언어교환', '일상회화'];
   const inputTag = (e) => {
     if (e.keyCode === 32) {
-      if (tagInput === ' ') {
+      //공백일 경우 거르기
+      if (tagInput.split('').filter((word) => word !== ' ').length === 0) {
         window.alert('태그를 입력해주세요');
         setTagInput('');
         return;
       }
+      //중복일 경우 거르기
+      //to do: 대소문자 중복도 걸러야 할듯
+      if (tagList.indexOf(tagInput) !== -1) {
+        if (tagInput.length === tagList[tagList.indexOf(tagInput)].length) {
+          window.alert('중복x');
+          setTagInput('');
+          return;
+        }
+      }
+      //태그리스트에 담기
       setTagList([...tagList, tagInput]);
+      //태그 갯수 제한
       if (tagList.length > 8) {
         setTagLimit(true);
       }
@@ -170,9 +164,9 @@ const DetailInfo = (props) => {
     formData.append('isTutor', isTutor);
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
-
+    //로그인에 필요한 유저정보
     const loginInfo = { userEmail: signupInfo.userEmail, pwd: signupInfo.pwd };
-    console.log('작성');
+
     dispatch(userActions.signupDB(formData, loginInfo));
 
     // //추가정보 디스패치
@@ -219,51 +213,14 @@ const DetailInfo = (props) => {
           </ImageBox>
         </label>
       </form>
-      <Grid>
-        {/* 사용언어1 */}
-        <SelectBox>
-          <span>사용하는 언어1:&nbsp;&nbsp;</span>
-          <select name="language1" onChange={handleLanguage1}>
-            <option value="">선택</option>
-            {languageList.map((language, index) => (
-              <option value={language} key={language + index}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </SelectBox>
-      </Grid>
-      {/* 사용언어2 */}
-      <Grid>
-        <SelectBox>
-          <span>사용하는 언어2:&nbsp;&nbsp;</span>
-          <select name="language2" onChange={handleLanguage2}>
-            <option value="">선택</option>
-            {language2List.map((language, index) => (
-              <option value={language} key={language + index}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </SelectBox>
-      </Grid>
-      {/* 사용언어3 */}
-      <Grid>
-        <SelectBox>
-          <span>사용하는 언어3:&nbsp;&nbsp;</span>
-          <select name="language3" onChange={handleLanguage3}>
-            <option value="">선택</option>
-            {language3List.map((language, index) => (
-              <option value={language} key={language + index}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </SelectBox>
-        <Grid>
-          <span>※ 사용하는 언어는 최소 한 종류의 언어를 선택해 주세요.</span>
-        </Grid>
-      </Grid>
+      {/* 언어선택 컴포넌트 */}
+      <SelectLanguage
+        language1={language1}
+        language2={language2}
+        handleLanguage1={handleLanguage1}
+        handleLanguage2={handleLanguage2}
+        handleLanguage3={handleLanguage3}
+      />
       {/* 자기소개, 한 줄 소개 */}
       <Grid>
         <span>자신을 소개해 주세요</span>
