@@ -17,13 +17,23 @@ import DivBanner from '../elements/DivBanner';
 
 const Main = () => {
   const dispatch = useDispatch();
-  const tutorList = useSelector((state) => state.tutor.list);
+  const tutorListDB = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
 
   React.useEffect(() => {
     dispatch(tutorActions.getTutorListDB());
     dispatch(reviewActions.getReviewDB());
   }, []);
+
+  let tutorList = [];
+
+  if (tutorListDB.length > 11) {
+    for (let i = 0; i < 12; i++) {
+      tutorList.push(tutorListDB[i]);
+    }
+  }
+
+  console.log(tutorList);
 
   return (
     <Wrap>
@@ -57,9 +67,12 @@ const Main = () => {
             <p>인기 선생님 리스트</p>
           </TutorTitleWrap>
           <CardList>
-            {tutorList.map((item, idx) => {
-              return <TutorCard item={item} key={`tutorCard_${idx}`} />;
-            })}
+            {tutorList
+              ? tutorList.map((item, idx) => {
+                  // console.log(item);
+                  return <TutorCard item={item} key={`tutorCard_${idx}`} />;
+                })
+              : null}
           </CardList>
         </TutorListWrap>
 

@@ -104,7 +104,7 @@ const loginDB = (loginForm) => {
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
     // console.log('loginCheckDB시작');
-    console.log(getCookie('token'));
+    // console.log(getCookie('token'));
     axios({
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
@@ -193,8 +193,8 @@ const logout = () => {
   return function (dispatch, getState, { history }) {
     deleteCookie('token');
     dispatch(unsetUser);
-    window.location.reload();
     history.replace('/');
+    window.location.reload();
   };
 };
 
