@@ -118,8 +118,9 @@ const Wrap = styled.div`
 
 /* 배너 */
 const Banner = styled.div`
-  max-width: 1432px;
-  width: 100%;
+  /* max-width: 1432px; */
+  max-width: 1400px;
+  width: 90%;
   height: 100%;
   margin: 0 auto;
   padding: 0 16px;
@@ -130,6 +131,7 @@ const Banner = styled.div`
   }
   .bannerTitle > span {
     font-size: 64px;
+    font-size: 4rem;
     font-weight: 800;
     letter-spacing: 1px;
     color: #fff;
@@ -165,8 +167,9 @@ const Banner = styled.div`
 
 /* 컨텐츠 */
 const InnerWrap = styled.div`
-  width: 100%;
-  max-width: 1432px;
+  width: 80%;
+  /* max-width: 1432px; */
+  max-width: 1400px;
   min-height: 910px;
   padding: 0 16px;
 
@@ -202,11 +205,14 @@ const TutorTitleWrap = styled.div`
       font-weight: 400;
       margin-bottom: 6px;
     }
+
     .tutorMoreBtn {
       /* position: absolute; */
+      margin-right: 10px;
       cursor: pointer;
     }
   }
+
   p {
     /* font-size: 60px; */
     font-size: 48px;
@@ -220,14 +226,15 @@ const CardList = styled.div`
   display: grid;
   place-items: center;
   grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  /* grid-gap: 2rem; */
-  row-gap: 4rem;
-  column-gap: 3rem;
+  /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
+  grid-gap: 2rem;
+  /* row-gap: 4rem;
+  column-gap: 3rem; */
 `;
 
 // 리뷰 부분
 const ReviewWrap = styled.div`
-  width: 70%;
+  width: 100%;
   min-height: 600px;
   /* margin-top: 131px; */
   margin: 60px auto 200px;
@@ -258,6 +265,7 @@ const ReviewTitleWrap = styled.div`
       cursor: pointer;
     }
   }
+
   p {
     /* font-size: 60px; */
     font-size: 48px;
@@ -266,7 +274,7 @@ const ReviewTitleWrap = styled.div`
 `;
 
 const ReviewList = styled.div`
-  width: 100%;
+  width: 90%;
   min-height: 188px;
   margin: auto;
 `;

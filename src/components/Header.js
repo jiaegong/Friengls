@@ -171,8 +171,9 @@ const Wrap = styled.div`
         align-items: center;
         cursor: pointer;
         position: relative;
-        /* font-size: 16px; */
         font-size: 22px;
+        font-size: 16px;
+        font-size: 1.375rem;
         font-weight: 800;
         letter-spacing: 1px;
 
