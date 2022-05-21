@@ -39,6 +39,7 @@ const Login = (props) => {
 
   return (
     <Container>
+      {/* 로고 */}
       <LogoBox>
         <img src={Logo} alt="userProfileImage" />
       </LogoBox>
@@ -101,21 +102,18 @@ const Container = styled.div`
   margin: 200px auto;
 `;
 
-const LogoText = styled.p`
-  margin-bottom: 60px;
-  font-size: 44px;
-  font-weight: 700;
-  color: #153587;
-`;
-
 const LogoBox = styled.div`
   width: 97px;
   height: 60px;
   margin: 0 auto 20px;
   overflow: hidden;
+`;
 
-  img {
-  }
+const LogoText = styled.p`
+  margin-bottom: 60px;
+  font-size: 44px;
+  font-weight: 700;
+  color: #153587;
 `;
 
 const KakaoButton = styled.a`

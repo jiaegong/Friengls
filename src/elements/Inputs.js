@@ -9,6 +9,7 @@ const Inputs = (props) => {
     name,
     placeholder,
     _onChange,
+    _onBlur,
     value,
     disabled,
     multiLine,
@@ -34,6 +35,7 @@ const Inputs = (props) => {
       name={name}
       placeholder={placeholder}
       onChange={_onChange}
+      onBlur={_onBlur}
       defaultValue={value}
       disabled={disabled}
       {...defaultStyles}
