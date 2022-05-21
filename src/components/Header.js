@@ -127,15 +127,15 @@ export default Header;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 120px;
+  height: 150px;
   background: #fff;
 
   .innerWrap {
     width: 90%;
-    max-width: 1400px;
+    max-width: 1280px;
     height: 100%;
     /* padding: 50px 16px 0; */
-    padding: 36px 16px 0;
+    padding: 60px 0 0;
     margin: auto;
 
     /* text-align: center; */
@@ -146,52 +146,49 @@ const Wrap = styled.div`
     align-items: center;
     /* background: #aaaaaa; */
     .logoWrap {
-      min-width: 245px;
+      width: 210px;
       /* margin: 0 auto 53px; */
+      padding-top: 16px;
       cursor: pointer;
       .logo {
         width: 100%;
-        height: 50px;
+        height: 40px;
       }
     }
 
     .navBarWrap {
       max-width: 672px;
       width: 100%;
-      height: 36px;
-      /* margin: auto; */
+      height: 33px;
+      padding-top: 30px;
       display: flex;
       justify-content: flex-end;
-      /* justify-content: space-around; */
+      justify-content: space-around;
       align-items: center;
       position: relative;
 
       /* background: #c5c5c5; */
 
       li {
-        /* width: 80px; */
+        width: 5rem;
+        width: auto;
         height: 35px;
         display: flex;
         justify-content: center;
         vertical-align: middle;
         align-items: center;
         cursor: pointer;
+
         position: relative;
-        font-size: 22px;
-        font-size: 16px;
         font-size: 1.375rem;
-        font-weight: 800;
+        font-size: 1.125rem;
+        font-weight: bolder;
         letter-spacing: 1px;
 
-        margin-left: 3.375rem;
+        margin-left: 3.125rem;
         /* background: #8e8e8e; */
 
         cursor: pointer;
-        /* background: #8e8e8e; */
-
-        &:nth-child(5) {
-          /* margin: 0; */
-        }
 
         /* 알림 갯수 */
         .counter {

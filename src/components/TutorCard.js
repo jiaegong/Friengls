@@ -53,37 +53,33 @@ const TutorCard = ({ tutor, urlCheck }) => {
 export default TutorCard;
 
 const Card = styled.div`
-  width: 300px;
-  width: 90%;
-  height: 300px;
+  width: 77%;
+  height: 270px;
   height: auto;
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  box-shadow: 0px 2px 12px 0px #00000030;
 
   border-radius: 15px;
-  /* background: #c4c4c4; */
 
   .userImgWrap {
-    width: 300px;
     width: 100%;
-    /* height: 400px; */
     height: 300px;
 
     overflow: hidden;
     background-color: #aaa;
+
     .user_img {
       width: 100%;
       height: 100%;
-      /* height: 100%; */
-      /* width: 300px; */
-      /* height: 300px; */
     }
   }
 
   .user_info {
     width: 100%;
     height: 80px;
+    height: 70px;
     padding: 7px 20px;
     position: absolute;
     bottom: 0;
@@ -92,13 +88,13 @@ const Card = styled.div`
     background: #eee;
 
     .userName {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: bold;
       letter-spacing: 1px;
-      margin-top: 4px;
+      margin-top: 5px;
     }
 
-    .userContents {
+    /* .userContents {
       width: 88%;
       font-size: 14px;
       line-height: 20px;
@@ -108,12 +104,12 @@ const Card = styled.div`
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-    }
+    } */
 
     .userTag {
       width: 80%;
-      font-size: 16px;
-      margin-top: 10px;
+      font-size: 12px;
+      margin-top: 8px;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 1;
