@@ -123,7 +123,7 @@ const Wrap = styled.div`
   box-shadow: 0px 2px 12px 0px #00000040;
   margin-bottom: 16px;
   width: 100%;
-  height: 230px;
+  height: 190px;
   position: relative;
 `;
 
@@ -138,7 +138,7 @@ const Wrap = styled.div`
 // `;
 
 const ImageWrap = styled.div`
-  width: 129px;
+  width: 160px;
   height: 140px;
   border-radius: 50%;
   margin-right: 32px;
@@ -181,12 +181,13 @@ const RateWrap = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
+  margin-bottom: 24px;
 `;
 
 const Rate = styled.div`
   display: flex;
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
   border-radius: 30px;
   margin: 5px;
 `;
