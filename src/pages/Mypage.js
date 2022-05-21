@@ -18,6 +18,7 @@ const Mypage = (props) => {
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = userApi.isTutor;
   const userName = userApi.userName;
+  console.log(isTutor);
 
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
@@ -43,13 +44,13 @@ const Mypage = (props) => {
         {/* 유저 정보 */}
         <DetailUser userInfo={userInfo} props={props} />
         {/* 예약 캘린더 */}
-        <h2>예약 관리</h2>
         <div className="bookingWrap">
           <p className="bookingTitle">
             예약 리스트 <span>/ 수업 일정</span>
           </p>
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {
+              console.log(item);
               let startTime = item.start;
               let endTime = item.end;
 

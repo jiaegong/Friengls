@@ -21,19 +21,19 @@ const unsetUser = createAction(UNSET_USER, (user) => ({ user }));
 const initialState = {
   //info: 로그인한 유저의 정보
   info: {
-    // userEmail: '',
-    // userName: '',
-    // pwd: '',
-    // pwdCheck: '',
-    // isTutor: '0',
-    // tag: ',,',
-    // language1: '',
-    // language2: '',
-    // language3: '',
-    // comment: '',
-    // contents: '',
-    // startTime: '',
-    // endTime: '',
+    userEmail: '',
+    userName: '',
+    pwd: '',
+    pwdCheck: '',
+    isTutor: '0',
+    tag: ',,',
+    language1: '',
+    language2: '',
+    language3: '',
+    comment: '',
+    contents: '',
+    startTime: '',
+    endTime: '',
   },
   isLogin: false,
   //detailInfo: detail페이지의 유저정보
@@ -180,7 +180,7 @@ const getUserDetailDB = (userApi) => {
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
-        console.log('getUserDetailDB성공', response.data.data[0]);
+        // console.log('getUserDetailDB성공', response.data.data[0]);
         dispatch(setUserDetail(response.data.data[0]));
       })
       .catch((error) => {

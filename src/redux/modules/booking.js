@@ -52,13 +52,11 @@ const setBookingDB = (data, tutorName) => {
 
     let userName = getState().user.info.userName;
     console.log(userName);
-    // const userName = data[0].userName;
 
-    // let dataLength = data.length;
-
-    // dispatch(setBooking(data));
-    console.log(data[0]?.start);
-    console.log(data[0]?.end);
+    if (!userName) {
+      alert('로그인후 예약해주세요~!');
+      return;
+    }
 
     axios({
       method: 'post',
@@ -75,8 +73,41 @@ const setBookingDB = (data, tutorName) => {
       .then((doc) => {
         console.log('--------------');
         console.log('booking post check!!!!');
-        console.log(doc.msg);
-        // dispatch(setBooking(doc));
+        console.log({ data });
+
+        const startTime = data[0].start;
+        const endTime = data[0].end;
+
+        console.log({ startTime, endTime });
+
+        let [week, month, day, year, sTime] = startTime.toString().split(' ');
+        let start = sTime.substr(0, 5);
+        let end = endTime.toString().substr(-17, 5);
+
+        console.log({ week, month, day, year });
+        console.log({ start, end });
+
+        let Month = (month) => {
+          console.log(month);
+          if (month === 'Jan') return '1';
+          if (month === 'Feb') return '2';
+          if (month === 'Mar') return '3';
+          if (month === 'Apr') return '4';
+          if (month === 'May') return '5';
+          if (month === 'Jun') return '6';
+          if (month === 'Jul') return '7';
+          if (month === 'Aug') return '8';
+          if (month === 'Sep') return '9';
+          if (month === 'Oct') return '10';
+          if (month === 'Nov') return '11';
+          if (month === 'Dec') return '12';
+        };
+
+        alert(
+          ` 튜터 ${tutorName}님에게   ${Month(
+            month,
+          )}월  ${day}일   ${start} - ${end} 예약 되었습니다!!`,
+        );
       })
       .catch((err) => {
         console.log(err);

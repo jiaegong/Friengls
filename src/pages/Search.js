@@ -177,6 +177,6 @@ const InnerWrap = styled.div`
     display: grid;
     place-items: center;
     grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    grid-gap: 1rem;
+    grid-gap: 2rem;
   }
 `;
