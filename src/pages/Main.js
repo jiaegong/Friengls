@@ -61,7 +61,7 @@ const Main = () => {
         <TutorListWrap>
           <TutorTitleWrap>
             <div>
-              <span>지난주 가장 예약이 많았던 튜터에요</span>
+              <span>지난주 가장 예약이 많았던 튜터예요</span>
               <span
                 className="tutorMoreBtn"
                 onClick={() => {

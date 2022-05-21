@@ -61,7 +61,7 @@ const Mypage = (props) => {
                 <li className="booking" key={`booking${idx}`}>
                   <div className="bookingInfo">
                     {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}
-                    {isTutor === 0 ? (
+                    {isTutor === '0' ? (
                       <div className="userName">{item.Tutor_userName}</div>
                     ) : (
                       <div className="userName">{item.Tutee_userName}</div>

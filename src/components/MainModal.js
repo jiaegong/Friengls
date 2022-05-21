@@ -2,6 +2,7 @@ import React from 'react';
 import Portal from '../shared/Portal';
 import styled from 'styled-components';
 import { Image, Text } from '../elements/index';
+import { history } from '../redux/configureStore';
 
 const MainModal = (props) => {
   const tutor = props.tutor;
@@ -17,12 +18,12 @@ const MainModal = (props) => {
     >
       <Content onClick={(e) => e.stopPropagation()}>
         <Wrap>
-          <Image
-            styles={{ width: '150px', height: '150px' }}
-            shape="circle"
-            src={tutor.userProfile}
-          />
-          <InfoBox>
+          <ProfileBox>
+            <Image
+              styles={{ width: '150px', height: '150px' }}
+              shape="circle"
+              src={tutor.userProfile}
+            />
             <NameContainer>
               <NameWrap>
                 <Text styles={{ fontSize: '24px', fontWeight: '700' }}>
@@ -35,6 +36,8 @@ const MainModal = (props) => {
                 <Text>{tutor.language3}&nbsp;</Text>
               </LanguageWrap>
             </NameContainer>
+          </ProfileBox>
+          <InfoBox>
             <Text>{tutor.comment}</Text>
             <TagWrap>
               {tags.map((tag, idx) => (
@@ -42,6 +45,11 @@ const MainModal = (props) => {
               ))}
             </TagWrap>
           </InfoBox>
+          <ProfileLink
+            onClick={() => history.push(`/detail/${tutor.userName}/1`)}
+          >
+            튜터 프로필 보기 >
+          </ProfileLink>
         </Wrap>
       </Content>
     </Background>
@@ -83,18 +91,18 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   gap: 20px;
+  position: relative;
 `;
 
-const InfoBox = styled.div`
+const ProfileBox = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 10px;
 `;
 
 const NameContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-left: 20px;
 `;
 
 const NameWrap = styled.div`
@@ -103,6 +111,12 @@ const NameWrap = styled.div`
 
 const LanguageWrap = styled.div`
   display: flex;
+`;
+
+const InfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const TagWrap = styled.div`
@@ -114,7 +128,15 @@ const TagWrap = styled.div`
 const Tag = styled.div`
   margin: 2px 5px;
   padding: 5px 10px;
-  border-radius: 10px;
-  border: 2px solid skyblue;
+  border-radius: 40px;
+  border: 2px solid #959595;
   box-shadow: 0px 2px 6px 0px #00000040;
+`;
+
+const ProfileLink = styled.div`
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  cursor: pointer;
+  color: #959595;
 `;

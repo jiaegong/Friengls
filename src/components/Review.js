@@ -206,6 +206,6 @@ const Buttons = styled.div`
   .delete-review {
     cursor: pointer;
     text-decoration: underline;
-    color: #808080;
+    color: #959595;
   }
 `;

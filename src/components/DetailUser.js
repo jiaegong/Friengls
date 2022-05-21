@@ -106,7 +106,7 @@ const DetailUser = (props) => {
                 setContents('');
               }}
             >
-              🔽 자기소개 닫기
+              🔽자기소개 닫기
             </ContentsButton>
           ) : (
             <ContentsButton
@@ -114,7 +114,7 @@ const DetailUser = (props) => {
                 setContents(userInfo.contents);
               }}
             >
-              🔽 자기소개 열기
+              🔽자기소개 열기
             </ContentsButton>
           ))}
       </div>
