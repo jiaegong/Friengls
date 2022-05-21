@@ -486,13 +486,13 @@ const CalendarTemplate = ({
           range.end,
         ).format('H:mm')}`;
 
-        console.log({ day, time });
+        // console.log({ day, time });
 
-        // if (output[day]) {
-        //   output[day].push(time);
-        // } else {
-        //   output[day] = [time];
-        // }
+        if (output[day]) {
+          output[day].push(time);
+        } else {
+          output[day] = [time];
+        }
       }
     }
     return output;
@@ -507,13 +507,13 @@ const CalendarTemplate = ({
     const [availabilityState, setAvailabilityState] = useState(
       convertAvailabilityFromDatabase(availability),
     );
-    console.log({ availabilityState });
+    // console.log({ availabilityState });
 
     // 선택한 시간 값 받아 오는 stats
     const [quickAvailability, setQuickAvailability] = useState(
       makeQuickAvailability(availability),
     );
-    console.log({ quickAvailability });
+    // console.log({ quickAvailability });
 
     const [activeDay, setActiveDay] = useState(null);
     const [year, setYear] = useState(Number(today.format('YYYY')));
@@ -663,23 +663,6 @@ const CalendarTemplate = ({
         console.log({ data });
         dispatch(calendarActions.setBookingDB(goDB, tutorName));
         setAvailability(data);
-
-        // db로 예약 정보 넘기는 값
-        // console.log(data);
-
-        // console.log(data[dataLength].start);
-        // console.log(data[dataLength].end);
-        // const startTime = data[dataLength].start;
-        // const endTime = data[dataLength].end;
-
-        // let [week, month, day, year, sTime] = startTime.toString().split(' ');
-        // let start = sTime.substr(0, 5);
-        // let end = endTime.toString().substr(-26, 5);
-
-        // console.log({ week, month, day, year });
-        // console.log({ start, end });
-
-        // alert(`${month} ${day} ${start} - ${end} 예약 되었습니다!!`);
       }
     };
 
