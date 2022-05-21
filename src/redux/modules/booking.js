@@ -52,13 +52,11 @@ const setBookingDB = (data, tutorName) => {
 
     let userName = getState().user.info.userName;
     console.log(userName);
-    // const userName = data[0].userName;
 
-    // let dataLength = data.length;
-
-    // dispatch(setBooking(data));
-    console.log(data[0]?.start);
-    console.log(data[0]?.end);
+    if (!userName) {
+      alert('로그인후 예약해주세요~!');
+      return;
+    }
 
     axios({
       method: 'post',

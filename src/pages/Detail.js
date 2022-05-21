@@ -71,7 +71,7 @@ const Detail = (props) => {
 
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
-          {/* <div className="booking">캘린더</div> */}
+          <div className="booking">예약 하기</div>
           <Calendar />
         </div>
 
@@ -102,7 +102,7 @@ const Wrap = styled.div`
     .bookingWrap {
       width: 95%;
       height: auto;
-      margin: auto;
+      margin: 100px auto;
       min-height: 300px;
       padding: 0 10px;
 
@@ -110,8 +110,11 @@ const Wrap = styled.div`
 
       .booking {
         width: 100%;
+        font-size: 40px;
+        font-weight: bold;
+        margin-bottom: 50px;
 
-        background-color: #fff;
+        /* background-color: #aaaaaa; */
       }
     }
   }

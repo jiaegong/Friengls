@@ -32,8 +32,6 @@ const Main = () => {
     }
   }
 
-  console.log(tutorList);
-
   return (
     <Wrap>
       <DivBanner>

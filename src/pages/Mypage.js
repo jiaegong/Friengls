@@ -44,7 +44,6 @@ const Mypage = (props) => {
         {/* 유저 정보 */}
         <DetailUser userInfo={userInfo} props={props} />
         {/* 예약 캘린더 */}
-        <h2>예약 관리</h2>
         <div className="bookingWrap">
           <p className="bookingTitle">
             예약 리스트 <span>/ 수업 일정</span>

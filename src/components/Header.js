@@ -17,9 +17,9 @@ import { MainLogo } from '../image/index';
 const Header = () => {
   const dispatch = useDispatch();
   const token = getCookie('token');
-  const [username, setUsername] = useState('');
-  const [user, setUser] = useState('');
-  const [socket, setSocket] = useState(null);
+  // const [username, setUsername] = useState('');
+  // const [user, setUser] = useState('');
+  // const [socket, setSocket] = useState(null);
 
   // ⭐️
   useEffect(() => {
@@ -29,9 +29,9 @@ const Header = () => {
 
   // ⭐️
   // user ==> socket DB로 이동.
-  useEffect(() => {
-    socket?.emit('newUser', user);
-  }, [socket, user]);
+  // useEffect(() => {
+  //   socket?.emit('newUser', user);
+  // }, [socket, user]);
 
   //마이페이지url에 사용할 유저정보 가져오기
   const userInfo = useSelector((state) => state.user.info);
@@ -84,10 +84,17 @@ const Header = () => {
               <li onClick={logout}>로그아웃</li>
               {/* {open && ( */}
               {/* <div className="notifications">
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <button className="notificationBtn">확인</button>
+                <div className="notificationsInnerWrap">
+                  <div className="text">
+                    누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
+                  </div>
+                  <div className="text">
+                    누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
+                  </div>
+
+                  <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
+                  <button className="notificationBtn">확인</button>
+                </div>
               </div> */}
               {/* // )} */}
             </>
@@ -111,7 +118,6 @@ const Header = () => {
             </>
           )}
         </ul>
-        {/* 로그인시 회원이름 나오게 할것인지?? */}
       </div>
     </Wrap>
   );
@@ -212,30 +218,43 @@ const Wrap = styled.div`
       /* 알림창 */
       .notifications {
         position: absolute;
-        width: 90%;
-        /* min-height: 200px; */
+        width: 70%;
+        min-height: 200px;
         right: 0;
         top: 50px;
         padding: 10px;
+        border-radius: 15px;
         text-align: center;
 
-        background-color: #fff;
+        background-color: #aaaaaa;
 
-        .text {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 40px;
-          margin-bottom: 10px;
-          background-color: #aaa;
-          cursor: pointer;
-        }
+        .notificationsInnerWrap {
+          position: relative;
+          min-height: 200px;
+          padding: 10px;
 
-        .notificationBtn {
-          border: 1px solid #a2a2a2;
-          border-radius: 5px;
-          padding: 3px 10px;
-          cursor: pointer;
+          .text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #ff9c9c;
+            cursor: pointer;
+          }
+
+          .notificationBtn {
+            border: 1px solid #a2a2a2;
+            border-radius: 5px;
+            padding: 3px 10px;
+            width: 100px;
+            height: 30px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 0;
+            right: 40%;
+          }
         }
       }
     }
