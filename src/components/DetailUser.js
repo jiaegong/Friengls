@@ -56,7 +56,12 @@ const DetailUser = (props) => {
           `/mypage/${userInfo.userName}/${userInfo.isTutor}` && (
           <Buttons
             _onClick={handleModal}
-            styles={{ margin: '40px 0 0 0', width: '240px', height: '42px' }}
+            styles={{
+              margin: '40px 0 0 0',
+              width: '240px',
+              height: '42px',
+              fontSize: '20px',
+            }}
           >
             내 프로필 수정
           </Buttons>

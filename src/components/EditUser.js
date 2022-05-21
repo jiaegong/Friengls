@@ -27,7 +27,10 @@ const EditUser = (props) => {
           {/* 닉네임 */}
           <InputBox>
             <InputLabel>닉네임</InputLabel>
-            <Inputs placeholder={'변경할 닉네임을 입력해 주세요.'} />
+            <Inputs
+              placeholder={'변경할 닉네임을 입력해 주세요.'}
+              value={userInfo.userName}
+            />
           </InputBox>
           {/* 비밀번호 */}
           <InputBox>
@@ -47,7 +50,7 @@ const EditUser = (props) => {
         <p>추가 정보</p>
         {/* 언어선택 */}
         <LanguageBox>
-          <SelectLanguage />
+          <SelectLanguage userInfo={userInfo} />
         </LanguageBox>
         {/* 자기 소개 */}
         <InputBox
@@ -155,7 +158,9 @@ const EditUser = (props) => {
         </InputBox>
       </GroupBox>
       <GroupBox>
-        <Buttons>수정내용 저장하기</Buttons>
+        <Buttons styles={{ width: '380px', height: '60px' }}>
+          수정내용 저장하기
+        </Buttons>
         {/* 회원탈퇴버튼 */}
       </GroupBox>
     </Content>

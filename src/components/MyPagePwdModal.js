@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Portal from '../shared/Portal';
 import styled from 'styled-components';
-import { Buttons, InputBox, Inputs } from '../elements/index';
+import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import EditUser from './EditUser';
 
 const MyPagePwdModal = (props) => {
@@ -32,20 +32,25 @@ const MyPagePwdModal = (props) => {
               </UserImg>
             </Grid>
             <Grid>
-              <div>
-                <Inputs
-                  placeholder={'이메일'}
-                  styles={{ margin: '0 0 20px 0' }}
-                  value={userInfo.userEmail}
-                  disabled
-                />
-              </div>
-              <div>
-                <Inputs placeholder={'비밀번호'} />
-              </div>
+              {/* 닉네임 */}
+              <InputBox styles={{ width: '860px', margin: '0 auto 20px' }}>
+                <InputLabel>이메일</InputLabel>
+                <Inputs value={userInfo.userEmail} disabled />
+              </InputBox>
+              {/* 비밀번호 */}
+              <InputBox styles={{ width: '860px', margin: '0 auto' }}>
+                <InputLabel>비밀번호</InputLabel>
+                <Inputs placeholder={'비밀번호를 입력해 주세요.'} />
+              </InputBox>
             </Grid>
+
             <Grid>
-              <Buttons _onClick={handleEditUser}>프로필 수정하기</Buttons>
+              <Buttons
+                _onClick={handleEditUser}
+                styles={{ width: '380px', height: '60px' }}
+              >
+                프로필 수정하기
+              </Buttons>
             </Grid>
           </Content>
         )}

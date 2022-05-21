@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../shared/OAuth';
 import { emailForm, pwdForm } from '../shared/common';
-import { HomeIcon, BackIcon, GoogleLoginIcon, KakaoLoginIcon } from '../image/';
-import { Grid, Flex, Input, Button, Text, Icon } from '../elements';
+import { Logo } from '../image/';
+import { InputBox, Inputs, Buttons } from '../elements';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -38,94 +38,119 @@ const Login = (props) => {
   };
 
   return (
-    <Wrap>
-      <InputContainer>
-        <Input
-          placeholder="Email"
+    <Container>
+      <LogoBox>
+        <img src={Logo} alt="userProfileImage" />
+      </LogoBox>
+      <LogoText>Sign in</LogoText>
+      {/* 이메일 인풋 */}
+      <InputBox>
+        <Inputs
+          placeholder="이메일을 입력해 주세요."
           type="text"
           name="userEmail"
           value={userEmail}
           _onChange={handleUserEmail}
-          styles={{
-            width: '240px',
-            height: '40px',
-            borderRadius: '10px',
-            textAlign: 'center',
-            fontSize: '12px',
-            fontWeight: 700,
-          }}
         />
-        <Input
-          placeholder="Password"
+      </InputBox>
+      {/* 비밀번호 인풋 */}
+      <InputBox>
+        <Inputs
+          placeholder="비밀번호를 입력해 주세요."
           type="text"
           name="pwd"
           value={pwd}
           _onChange={handlePwd}
-          styles={{
-            width: '240px',
-            height: '40px',
-            borderRadius: '10px',
-            textAlign: 'center',
-            fontSize: '12px',
-            fontWeight: 700,
-          }}
+          styles={{}}
         />
-      </InputContainer>
-      <Button
+      </InputBox>
+      {/* 로그인 버튼 */}
+      <Buttons
         styles={{
-          width: '120px',
-          height: '40px',
-          background: '#000',
-          color: '#fff',
+          margin: '80px auto 60px',
         }}
         _onClick={login}
       >
         Login
-      </Button>
-      <div>
-        <Button _onClick={() => history.push('/signup')}>회원가입</Button>
-      </div>
-      {/* <A href={KAKAO_AUTH_URL}>
-        <Img src={KakaoLoginIcon} alt="카카오 로그인 버튼" />
-      </A>
-      <A href={GOOGLE_AUTH_URL}>
-        <Img src={GoogleLoginIcon} alt="구글 로그인 버튼" />
-      </A> */}
-    </Wrap>
+      </Buttons>
+      {/* 소셜로그인 버튼*/}
+      <KakaoButton href={KAKAO_AUTH_URL}>카카오 계정으로 로그인</KakaoButton>
+      <GoogleButton href={GOOGLE_AUTH_URL}>구글 계정으로 로그인</GoogleButton>
+      {/* 회원가입 버튼 */}
+      <LoginText>아직 프링글즈 계정이 없으신가요 ?</LoginText>
+      <Buttons
+        _onClick={() => history.push('/signup')}
+        styles={{
+          background: '#fff',
+          border: '1px solid #171b78',
+          color: '#171b78',
+        }}
+      >
+        회원 가입
+      </Buttons>
+    </Container>
   );
 };
 
-const Img = styled.img`
-  // width: 100px;
-  height: 50px;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  margin: 200px auto;
 `;
 
-const A = styled.a`
-  width: 100px;
-  height: 50px;
+const LogoText = styled.p`
+  margin-bottom: 60px;
+  font-size: 44px;
+  font-weight: 700;
+  color: #153587;
+`;
+
+const LogoBox = styled.div`
+  width: 97px;
+  height: 60px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+
+  img {
+  }
+`;
+
+const KakaoButton = styled.a`
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffe900;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-size: 24px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #3c1e1e;
+`;
+
+const GoogleButton = styled.a`
+  width: 100%;
+  height: 80px;
+  margin: 20px auto 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-size: 24px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #3c1e1e;
+`;
+
+const LoginText = styled.p`
+  height: 27px;
+  margin-bottom: 20px;
+  font-size: 20px;
 `;
 
 export default Login;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 430px;
-  height: 500px;
-  padding: 20px;
-  border: 2px solid black;
-  border-radius: 10px;
-  margin: 60px auto;
-  gap: 20px;
-  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-`;

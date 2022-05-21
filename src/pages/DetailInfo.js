@@ -16,7 +16,7 @@ const DetailInfo = (props) => {
   const dispatch = useDispatch();
 
   //singup페이지에서 가져온 데이터
-  const signupInfo = location.signupForm;
+  const userInfo = location.signupForm;
 
   // 이미지 미리보기
   const [previewProfile, setPreviewProfile] = useState(ProfileMedium);
@@ -152,10 +152,10 @@ const DetailInfo = (props) => {
     //폼데이터에 유저정보 담기
     const formData = new FormData();
     formData.append('userProfile', profileImage);
-    formData.append('userEmail', signupInfo.userEmail);
-    formData.append('userName', signupInfo.userName);
-    formData.append('pwd', signupInfo.pwd);
-    formData.append('pwdCheck', signupInfo.pwdCheck);
+    formData.append('userEmail', userInfo.userEmail);
+    formData.append('userName', userInfo.userName);
+    formData.append('pwd', userInfo.pwd);
+    formData.append('pwdCheck', userInfo.pwdCheck);
     formData.append('language1', language1);
     formData.append('language2', language2);
     formData.append('language3', language3);
@@ -166,17 +166,17 @@ const DetailInfo = (props) => {
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
     //로그인에 필요한 유저정보
-    const loginInfo = { userEmail: signupInfo.userEmail, pwd: signupInfo.pwd };
+    const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
     console.log(language1, language2, language3);
     // dispatch(userActions.signupDB(formData, loginInfo));
 
     // //추가정보 디스패치
     // const userForm = {
     //   //유저정보 추가하기
-    //   userEmail: signupInfo.userEmail,
-    //   userName: signupInfo.userName,
-    //   pwd: signupInfo.pwd,
-    //   pwdCheck: signupInfo.pwdCheck,
+    //   userEmail: userInfo.userEmail,
+    //   userName: userInfo.userName,
+    //   pwd: userInfo.pwd,
+    //   pwdCheck: userInfo.pwdCheck,
     //   tag: tagList.join(),
     //   language1: language1,
     //   language2: language2,
@@ -192,7 +192,7 @@ const DetailInfo = (props) => {
     // // dispatch(profileActions.uploadProfileDB(formData));
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
-  if (!signupInfo) {
+  if (!userInfo) {
     window.alert('새로고침 처음 화면으로 돌아갑니다.');
     history.replace('/signup');
   }
