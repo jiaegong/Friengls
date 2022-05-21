@@ -62,10 +62,10 @@ const InputStyled = styled.input`
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   ::-webkit-input-placeholder {
-    font-size: 20px;
+    font-size: 14px;
     color: b5b5b5;
   }
-  &: focus {
+  &:focus {
     outline: none;
   }
 `;
@@ -81,7 +81,7 @@ const TextareaStyled = styled.textarea`
     font-size: 20px;
     color: b5b5b5;
   }
-  &: focus {
+  &:focus {
     outline: none;
   }
   resize: none;

@@ -41,7 +41,7 @@ const Login = (props) => {
     <Container>
       {/* 로고 */}
       <LogoBox>
-        <img src={Logo} alt="userProfileImage" />
+        <img src={Logo} alt="userProfileImage" style={{ width: '100%' }} />
       </LogoBox>
       <LogoText>Sign in</LogoText>
       {/* 이메일 인풋 */}
@@ -56,6 +56,8 @@ const Login = (props) => {
       </InputBox>
       {/* 비밀번호 인풋 */}
       <InputBox>
+        {/* input 사이즈 기본적으로 width : 340px, height: 54px 맞춰주세요~*/}
+        {/* input font-size: 14px, 로그인 버튼이나 일반적인 font는 16px로 맞춰주세요~ */}
         <Inputs
           placeholder="비밀번호를 입력해 주세요."
           type="text"
@@ -98,20 +100,21 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 800px;
+  width: 50%;
   margin: 200px auto;
 `;
 
 const LogoBox = styled.div`
   width: 97px;
-  height: 60px;
-  margin: 0 auto 20px;
+  width: 74px;
+  margin: 0 auto;
   overflow: hidden;
 `;
 
 const LogoText = styled.p`
   margin-bottom: 60px;
-  font-size: 44px;
+  /* font-size: 20px; */
+  font-size: 26px;
   font-weight: 700;
   color: #153587;
 `;
@@ -124,8 +127,8 @@ const KakaoButton = styled.a`
   justify-content: center;
   background: #ffe900;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 800;
   text-decoration: none;
   color: #3c1e1e;
 `;
@@ -139,8 +142,8 @@ const GoogleButton = styled.a`
   justify-content: center;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 800;
   text-decoration: none;
   color: #3c1e1e;
 `;
@@ -148,7 +151,8 @@ const GoogleButton = styled.a`
 const LoginText = styled.p`
   height: 27px;
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: 14px;
+  /* background-color: red; */
 `;
 
 export default Login;
