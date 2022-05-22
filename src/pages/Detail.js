@@ -71,7 +71,9 @@ const Detail = (props) => {
 
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
-          <div className="booking">예약 하기</div>
+          <div className="booking">
+            예약 하기 <span>/ 수업 일정</span>
+          </div>
           <Calendar />
         </div>
 
@@ -94,27 +96,30 @@ const Wrap = styled.div`
   // background-color: #ddd;
 
   .innerWrap {
-    max-width: 1400px;
+    max-width: 1280px;
     width: 90%;
     margin: auto;
 
     /* 예약 캘린더 */
     .bookingWrap {
-      width: 95%;
+      width: 90%;
       height: auto;
       margin: 100px auto;
       min-height: 300px;
       padding: 0 10px;
 
-      /* background-color: #686868; */
-
       .booking {
         width: 100%;
-        font-size: 40px;
+        font-size: 30px;
         font-weight: bold;
         margin-bottom: 50px;
+        padding-left: 10%;
 
-        /* background-color: #aaaaaa; */
+        span {
+          color: #aaa;
+          font-size: 22px;
+          font-weight: 600;
+        }
       }
     }
   }
@@ -122,7 +127,7 @@ const Wrap = styled.div`
 
 const ReviewList = styled.div`
   width: 100%;
-  min-height: 188px;
+  min-height: 300px;
   margin: auto;
 `;
 

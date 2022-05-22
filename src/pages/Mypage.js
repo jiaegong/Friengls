@@ -29,16 +29,6 @@ const Mypage = (props) => {
   }, [userName]);
 
   return (
-    // <>
-    //   {/* 예약리스트 맵 돌리기 */}
-    //   <Flex styles={{ border: '1px solid black', width: '300px' }}>
-    //     <Flex styles={{ justifyContent: 'flex-start' }}>
-    //       <Text>선생님 이름</Text>
-    //       <Text>시간</Text>
-    //     </Flex>
-    //     <Button onClick={videoChatHandler}>Video Call</Button>
-    //   </Flex>
-    // </>
     <Wrap>
       <div className="innerWrap">
         {/* 유저 정보 */}
@@ -103,20 +93,18 @@ export default Mypage;
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  // background-color: #ddd;
+  /* background-color: #ddd; */
 
   .innerWrap {
-    max-width: 1400px;
-    width: 90%;
+    max-width: 1280px;
+    width: 80%;
     margin: auto;
 
     /* 예약 리스트 Wrap */
     .bookingWrap {
-      width: 100%;
-      max-width: 1400px;
+      width: 90%;
       height: auto;
-      margin-top: 30px;
-      margin: 30px auto;
+      margin: 70px auto;
       min-height: 100px;
       padding: 10px;
 
@@ -124,12 +112,12 @@ const Wrap = styled.div`
 
       /* 예약 리스트 타이틀 */
       .bookingTitle {
-        font-size: 60px;
+        font-size: 38px;
         font-weight: bolder;
         margin-bottom: 60px;
 
         span {
-          font-size: 40px;
+          font-size: 26px;
           color: #969696;
           margin-left: 15px;
         }

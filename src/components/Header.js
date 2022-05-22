@@ -128,6 +128,7 @@ export default Header;
 const Wrap = styled.div`
   width: 100%;
   height: 150px;
+  box-shadow: 0px -2px 8px 1px grey;
   background: #fff;
 
   .innerWrap {

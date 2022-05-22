@@ -147,6 +147,7 @@ const Wrap = styled.div`
         padding: 6px 80px;
         font-size: 34px;
         font-size: 24px;
+        font-size: 22px;
         line-height: 84px;
         font-weight: 500;
         box-shadow: 0px 6px 8px 0px #00000040;
@@ -161,13 +162,16 @@ const Wrap = styled.div`
       .keyWord {
         display: inline-block;
         background-color: #fff;
-        padding: 12px 18px;
-        margin: 0 16px 18px 0;
+        /* padding: 12px 18px; */
+        padding: 10px 14px;
+        /* margin: 0 16px 18px 0; */
+        margin: 0 10px 14px 0;
         border: 2px solid #959595;
         border-radius: 40px;
         box-shadow: 0px 2px 6px 0px #00000040;
 
         font-size: 18px;
+        font-size: 16px;
         font-weight: 500;
         cursor: pointer;
       }

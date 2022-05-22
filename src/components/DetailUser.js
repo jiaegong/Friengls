@@ -89,15 +89,15 @@ const DetailUser = (props) => {
           ))}
         </Tags>
         {/* 팔로우 */}
-        <div>
-          {isLiked ? (
+        <Like>
+          {/* {isLiked ? (
             <AiFillHeart onClick={unlike} />
           ) : (
             <AiOutlineHeart onClick={like} />
-          )}
-          {/* <AiOutlineHeart className="likeIcon" />
-          {userInfo.like} */}
-        </div>
+          )} */}
+          <AiOutlineHeart className="likeIcon" />
+          {userInfo.like}
+        </Like>
         {/* 자기소개버튼: 자기소개 있을 때 열기/접기 가능 */}
         {userInfo.contents &&
           (contents ? (
@@ -106,7 +106,8 @@ const DetailUser = (props) => {
                 setContents('');
               }}
             >
-              🔽자기소개 닫기
+              {/* 🔽 */}
+              ⬆️ 자기소개 닫기
             </ContentsButton>
           ) : (
             <ContentsButton
@@ -114,7 +115,7 @@ const DetailUser = (props) => {
                 setContents(userInfo.contents);
               }}
             >
-              🔽자기소개 열기
+              {/* 🔽 */}⬇ 자기소개 열기
             </ContentsButton>
           ))}
       </div>
@@ -126,75 +127,97 @@ export default DetailUser;
 
 const UserInfoBox = styled.div`
   width: 100%;
-  min-height: 541px;
+  /* width: 90%; */
+  /* max-width: 1280px; */
+  /* min-height: 520px; */
+  margin: auto;
   display: flex;
   justify-content: space-around;
-  padding-top: 138px;
-  padding-bottom: 80px;
+  justify-content: center;
+  padding: 120px 20px 100px;
+  padding: 120px 20px 60px;
   border-bottom: 1px solid #c4c4c4;
 
   .userInfo {
-    width: 76%;
+    width: 80%;
     position: relative;
   }
 `;
 
-const ImageBox = styled.div``;
+const ImageBox = styled.div`
+  margin-right: 40px;
+`;
 
 const UserImgWrap = styled.div`
-  width: 240px;
-  height: 240px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   overflow: hidden;
 
   .userImg {
-    width: 240px;
-    height: 240px;
+    width: 100%;
   }
 `;
 
 const UserTitle = styled.div`
   margin-bottom: 20px;
+  /* background-color: red; */
 
   .tutorName {
     display: inline-block;
-    font-size: 34px;
+    font-size: 22px;
     font-weight: 600;
-    margin-right: 90px;
+    margin-right: 30px;
+    /* background-color: blue; */
   }
 
   span {
     display: inline-block;
+    font-size: 16px;
     margin: 0 5px;
-    font-size: 26px;
     color: #5e5e5e;
   }
 `;
 
 const Comment = styled.p`
   width: 80%;
-  font-size: 30px;
+  min-height: 80px;
+  font-size: 16px;
+  font-weight: 500;
   margin-bottom: 20px;
   line-height: 40px;
+  letter-spacing: 1px;
 `;
 
 const ContentsBox = styled.div`
-  margin-bottom: 40px;
-  padding-left: 20px;
-  font-size: 30px;
+  width: 90%;
+  /* min-height: 100px; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: 1px;
   border-left: 4px solid #000000;
+  /* padding: 6px 10px; */
+  margin-bottom: 30px;
+  padding: 0px 10px;
 `;
 
 const Tags = styled.div`
   width: 1085px;
+  width: 100%; //1
+  width: 85%; //2
 
   span {
     display: inline-block;
-    font-size: 26px;
-    padding: 12px 22px;
-    margin-bottom: 20px;
-    margin-right: 10px;
-    border: 2px solid #959595;
+    font-size: 14px;
+    /* padding: 12px 22px; */
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    margin-right: 6px;
+    border: 1px solid #959595;
     border-radius: 40px;
     box-shadow: 0px 2px 6px 0px #00000040;
     background-color: #fff;
@@ -204,21 +227,26 @@ const Tags = styled.div`
 const Like = styled.div`
   position: absolute;
   right: 0;
+  /* right: 60px; */
+  right: 30px;
   top: 0;
-  font-size: 30px;
+  font-size: 18px;
 
   .likeIcon {
-    font-size: 32px;
-    padding-top: 5px;
-    margin-right: 16px;
+    font-size: 22px;
+    padding-top: 6px;
+    margin-right: 6px;
   }
 `;
 
 const ContentsButton = styled.button`
   position: absolute;
   right: 0;
+  /* right: 60px; */
+  right: 30px;
   top: 66px;
-  font-size: 26px;
+  top: 50px;
+  font-size: 16px;
   background: transparent;
   border: none;
 `;

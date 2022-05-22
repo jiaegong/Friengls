@@ -148,7 +148,7 @@ const Banner = styled.div`
   button {
     width: 210px;
     height: 56px;
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: 900;
     cursor: pointer;
     background: #fff;
