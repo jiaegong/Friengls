@@ -187,12 +187,13 @@ const Wrap = styled.div`
             .userName {
               width: 20%;
               width: auto;
+              min-width: 100px;
               font-size: 16px;
               display: flex;
               align-items: center;
-              justify-content: center;
-              margin-left: 20px;
-              margin-right: 40px;
+              justify-content: flex-start;
+              margin-left: 10px;
+              margin-right: 30px;
 
               /* background-color: #aaaaaa; */
             }
@@ -208,6 +209,7 @@ const Wrap = styled.div`
                 display: inline-block;
                 font-size: 16px;
                 margin-right: 50px;
+                min-width: 150px;
               }
               /* background-color: #aaaaaa; */
             }

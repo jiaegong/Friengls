@@ -8,15 +8,18 @@ import { io } from 'socket.io-client';
 // 모듈
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
+import { actionCreators as notiActions } from '../redux/modules/booking';
 
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
 import { MainLogo } from '../image/index';
+import NotiModal from './NotiModal';
 
 const Header = () => {
   const dispatch = useDispatch();
   const token = getCookie('token');
+  const [notiOpen, setNotiOpen] = useState(false);
+
   // const [username, setUsername] = useState('');
   // const [user, setUser] = useState('');
   // const [socket, setSocket] = useState(null);
@@ -25,7 +28,14 @@ const Header = () => {
   useEffect(() => {
     // setSocket(io('소켓을 받을 주소'));
     // setSocket(io('http://localhost:4000'));
-  }, []);
+    if (token) {
+      dispatch(notiActions.getBookingNotiDB());
+    }
+  }, [token]);
+
+  const handleNotiModal = () => {
+    setNotiOpen(!notiOpen);
+  };
 
   // ⭐️
   // user ==> socket DB로 이동.
@@ -67,7 +77,7 @@ const Header = () => {
             <>
               <li
                 onClick={() => {
-                  alert('알림창 나오게 해야돰!!');
+                  handleNotiModal();
                 }}
               >
                 알림
@@ -82,21 +92,58 @@ const Header = () => {
                 마이페이지
               </li>
               <li onClick={logout}>로그아웃</li>
-              {/* {open && ( */}
-              {/* <div className="notifications">
-                <div className="notificationsInnerWrap">
-                  <div className="text">
-                    누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
-                  </div>
-                  <div className="text">
-                    누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
-                  </div>
+              {notiOpen && (
+                // <Background
+                //   onClick={(e) => {
+                //     setNotiOpen(!notiOpen);
+                //   }}
+                // >
+                //   <div className="notifications">
+                //     <div className="notificationsInnerWrap">
+                //       {notiList.map((notiItem, idx) => {
+                //         console.log(notiItem);
+                //         let startTime = notiItem.start;
+                //         let endTime = notiItem.end;
 
-                  <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                  <button className="notificationBtn">확인</button>
-                </div>
-              </div> */}
-              {/* // )} */}
+                //         if (!notiItem) return; // 이 부분 불확실...
+                //         let [week, month, day, year, sTime] =
+                //           startTime.split(' ');
+                //         let start = sTime.substr(0, 5);
+                //         let end = endTime.substr(-17, 5);
+                //         console.log({ start, end });
+
+                //         return (
+                //           <div className="text" key={`noti_${idx}`}>
+                //             튜티 &nbsp;{notiItem.Tutee_userName}님이 &nbsp;
+                //             {week} {month} {day} &nbsp; {start}시에 수업을 예약
+                //             하셨습니다.
+                //           </div>
+                //         );
+                //       })}
+                //       {/* <div className="text">
+                //         누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
+                //       </div>
+                //       <div className="text">
+                //         누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
+                //       </div>
+
+                //       <div className="text">
+                //         누구님이 HH:MM에 예약 하셨습니다.
+                //       </div>
+
+                //       <button
+                //         className="notificationBtn"
+                //         onClick={() => {
+                //           setNotiOpen(!notiOpen);
+                //         }}
+                //       >
+                //         지우기
+                //       </button> */}
+                //     </div>
+                //   </div>
+                // </Background>
+                <NotiModal ModalAction={handleNotiModal} />
+              )}
             </>
           ) : (
             <>
@@ -216,13 +263,14 @@ const Wrap = styled.div`
       /* 알림창 */
       .notifications {
         position: absolute;
-        width: 70%;
+        max-width: 460px;
+        width: 100%;
         min-height: 200px;
-        right: 0;
-        top: 50px;
+        right: 15%;
+        top: 144px;
         padding: 10px;
         border-radius: 15px;
-        text-align: center;
+        z-index: 9999;
 
         background-color: #aaaaaa;
 
@@ -233,10 +281,11 @@ const Wrap = styled.div`
 
           .text {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             height: 40px;
             margin-bottom: 10px;
+            padding-left: 10px;
             border-radius: 5px;
             background-color: #ff9c9c;
             cursor: pointer;
@@ -249,9 +298,11 @@ const Wrap = styled.div`
             width: 100px;
             height: 30px;
             cursor: pointer;
+
             position: absolute;
             bottom: 0;
-            right: 40%;
+            right: 37%;
+            text-align: center;
           }
         }
       }

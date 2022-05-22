@@ -6,9 +6,19 @@ import { getCookie } from '../../shared/Cookie';
 
 const SET_BOOKING = 'SET_BOOKING';
 const GET_BOOKING = 'GET_BOOKING';
+const GET_NOTI = 'GET_NOTI';
+const CLEAR_NOTI = 'CLEAR_NOTI';
+const DEL_NOTI = 'DEL_NOTI';
+const DEL_CHECK_NOTI = 'DEL_CHECK_NOTI';
+const DEL_ALL_NOTI = 'DEL_ALL_NOTI';
 
 const setBooking = createAction(SET_BOOKING, (data) => ({ data }));
 const getBooking = createAction(GET_BOOKING, (data) => ({ data }));
+const getNoti = createAction(GET_NOTI, (data) => ({ data }));
+const clearNoti = createAction(CLEAR_NOTI, (data) => ({ data }));
+const delNoti = createAction(DEL_NOTI, (data) => ({ data }));
+const delCheckNoti = createAction(DEL_CHECK_NOTI, (data) => ({ data }));
+const delAllNoti = createAction(DEL_ALL_NOTI, (data) => ({ data }));
 
 // moment의 서포터 경고를 멈춰주는 코드
 moment.suppressDeprecationWarnings = true;
@@ -43,6 +53,7 @@ const initialState = {
     //   ),
     // },
   ],
+  noti: [],
 };
 
 // 예약하기.
@@ -143,6 +154,91 @@ const getBookingDB = ({ userName, isTutor }) => {
   };
 };
 
+// 알림 예약 불러오기
+const getBookingNotiDB = () => {
+  return function (dispatch, getState, { history }) {
+    console.log('work!!');
+    axios({
+      method: 'get',
+      url: `https://jg-jg.shop/getNoti`,
+      headers: { token: `${getCookie('token')}` },
+    })
+      .then((doc) => {
+        console.log(doc);
+        dispatch(getNoti(doc.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+// 알림 확인 ( 한개씩 )
+const clearNotiDB = (timeId) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: 'patch',
+
+      url: `https://jg-jg.shop/delNoti/?timeId=${timeId}`,
+    })
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+// 예약 취소 알림
+const delBookingNotiDB = (timeId) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: 'patch',
+
+      url: `https://jg-jg.shop/delBooking/?timeId=${timeId}`,
+    })
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+// 예약 삭제 확정
+const delCheckNotiDB = (timeId) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: 'delete',
+      url: `https://jg-jg.shop/delBookingCheck/?timeId=${timeId}`,
+    })
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+// 알림 전체 제게
+const delAllNotiDB = () => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: 'patch',
+      url: `https://jg-jg.shop/delAllNoti`,
+    })
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [SET_BOOKING]: (state, action) =>
@@ -154,6 +250,30 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.data.datas1;
       }),
+    [GET_NOTI]: (state, action) =>
+      produce(state, (draft) => {
+        draft.noti = action.payload.data;
+      }),
+    [CLEAR_NOTI]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action);
+        draft.noti = action.payload.data;
+      }),
+    [DEL_NOTI]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action);
+        // draft.list = action.payload.data;
+      }),
+    [DEL_CHECK_NOTI]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action);
+        // draft.list = action.payload.data;
+      }),
+    [DEL_ALL_NOTI]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action);
+        // draft.list = action.payload.data;
+      }),
   },
   initialState,
 );
@@ -161,6 +281,11 @@ export default handleActions(
 const actionCreators = {
   setBookingDB,
   getBookingDB,
+  getBookingNotiDB,
+  clearNotiDB,
+  delBookingNotiDB,
+  delCheckNotiDB,
+  delAllNotiDB,
 };
 
 export { actionCreators };
