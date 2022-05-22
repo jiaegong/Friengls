@@ -108,6 +108,7 @@ const loginCheckDB = () => {
     axios({
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
+      // url: 'http://13.124.206.190/login/getUser',
       headers: { token: `${getCookie('token')}` },
       // headers: {
       //   authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -127,21 +128,21 @@ const loginCheckDB = () => {
 const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
     console.log(code);
-    axios({
-      method: 'GET',
-      url: `https://jg-jg.shop?code=${code}`,
-    })
-      .then((response) => {
-        // localStorage.setItem('token', response.data.token);
-        getCookie('token', response.data.token);
-        //서버에서 유저 데이터도 같이 받아올 수 있을까?
-        //상세정보 작성페이지로 연결
-      })
-      .catch((error) => {
-        window.alert('로그인에 실패했습니다!');
-        console.log('로그인실패', error);
-        history.replace('/login');
-      });
+    // axios({
+    //   method: 'GET',
+    //   url: `https://jg-jg.shop?code=${code}`,
+    // })
+    //   .then((response) => {
+    //     // localStorage.setItem('token', response.data.token);
+    //     getCookie('token', response.data.token);
+    //     //서버에서 유저 데이터도 같이 받아올 수 있을까?
+    //     //상세정보 작성페이지로 연결
+    //   })
+    //   .catch((error) => {
+    //     window.alert('로그인에 실패했습니다!');
+    //     console.log('로그인실패', error);
+    //     history.replace('/login');
+    //   });
   };
 };
 

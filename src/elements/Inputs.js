@@ -9,9 +9,11 @@ const Inputs = (props) => {
     name,
     placeholder,
     _onChange,
+    _onKeyUp,
     _onBlur,
     value,
     disabled,
+    maxLength,
     multiLine,
   } = props;
 
@@ -24,6 +26,7 @@ const Inputs = (props) => {
         onChange={_onChange}
         defaultValue={value}
         disabled={disabled}
+        maxLength={maxLength}
         {...defaultStyles}
       />
     );
@@ -35,9 +38,11 @@ const Inputs = (props) => {
       name={name}
       placeholder={placeholder}
       onChange={_onChange}
+      onKeyUp={_onKeyUp}
       onBlur={_onBlur}
       defaultValue={value}
       disabled={disabled}
+      maxLength={maxLength}
       {...defaultStyles}
     />
   );
