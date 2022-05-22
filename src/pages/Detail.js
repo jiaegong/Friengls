@@ -81,6 +81,14 @@ const Detail = (props) => {
         {/* 리뷰 리스트 맵 돌릴 때, 작성자 이름이 접속한 이름과 같으면 수정, 삭제 버튼 보이게
         현재 접속한 이름이 없는 경우에 대한 처리도 필요(옵셔널 체이닝) */}
         <ReviewList>
+          <ReviewTitleWrap>
+            <div>
+              <span className="subTitle">
+                선생님의 수업을 수강하고 리뷰를 남겨보세요!
+              </span>
+            </div>
+            <p className="title">수강 추천 리뷰</p>
+          </ReviewTitleWrap>
           {reviewList?.map((r, idx) => {
             return <Review key={idx} {...r} />;
           })}
@@ -125,10 +133,35 @@ const Wrap = styled.div`
   }
 `;
 
+const ReviewTitleWrap = styled.div`
+  margin-bottom: 70px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .reviewMoreBtn {
+      cursor: pointer;
+    }
+  }
+
+  p {
+    font-size: 30px;
+    font-weight: bold;
+  }
+`;
+
 const ReviewList = styled.div`
-  width: 100%;
+  width: 76%;
   min-height: 300px;
-  margin: auto;
+  margin: 0 auto 180px;
 `;
 
 export default Detail;

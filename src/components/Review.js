@@ -121,10 +121,12 @@ const Wrap = styled.div`
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0px 2px 12px 0px #00000040;
-  margin-bottom: 16px;
+  margin: 0 auto 20px;
+  width: 80%;
   width: 100%;
   height: 190px;
   position: relative;
+  /* background-color: red; */
 `;
 
 // const ReviewImgWrap1 = styled.div`
