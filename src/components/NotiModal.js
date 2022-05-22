@@ -7,6 +7,8 @@ const NotiModal = (props) => {
   const dispactch = useDispatch();
   const notiList = useSelector((state) => state.booking.noti);
   const ModalAction = props.ModalAction;
+  const userInfo = props.userInfo;
+  const isTutor = userInfo.isTutor;
 
   React.useEffect(() => {
     document.body.style.cssText = `
@@ -61,29 +63,18 @@ const NotiModal = (props) => {
                       // key={notiItem.timeId}
                       key={`noti_${timeId}`}
                       onClick={() => {
-                        console.log(timeId);
-                        // dispactch(notiActions.clearNotiDB(timeId));
                         clearNoti(timeId);
                       }}
                     >
-                      튜티 &nbsp;{notiItem.Tutee_userName}님이 &nbsp;
-                      {week} {month} {day} &nbsp; {start}시에 수업을 예약
-                      하셨습니다.
+                      {isTutor === 0
+                        ? ` 튜터 ${notiItem.Tutor_userName}님에게
+                      ${week} ${month} ${day}    ${start}시에 예약
+                      하셨습니다.`
+                        : `튜터 ${notiItem.Tutee_userName}님이 &nbsp;
+                      ${week} ${month} ${day} &nbsp; ${start}시에 수업을 예약
+                      하셨습니다.`}
                     </div>
                   )}
-                  {/* <div
-                    className="text"
-                    key={`noti_${timeId}`}
-                    onClick={() => {
-                      console.log(timeId);
-                      // dispactch(notiActions.clearNotiDB(timeId));
-                      clearNoti(timeId);
-                    }}
-                  >
-                    튜티 &nbsp;{notiItem.Tutee_userName}님이 &nbsp;
-                    {week} {month} {day} &nbsp; {start}시에 수업을 예약
-                    하셨습니다.
-                  </div> */}
                 </>
               );
             })}

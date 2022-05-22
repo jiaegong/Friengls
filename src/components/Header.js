@@ -92,7 +92,9 @@ const Header = () => {
                 마이페이지
               </li>
               <li onClick={logout}>로그아웃</li>
-              {notiOpen && <NotiModal ModalAction={handleNotiModal} />}
+              {notiOpen && (
+                <NotiModal ModalAction={handleNotiModal} userInfo={userInfo} />
+              )}
             </>
           ) : (
             <>
