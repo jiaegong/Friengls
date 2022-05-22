@@ -59,10 +59,10 @@ const Mypage = (props) => {
                     )}
                     <div className="userBookingWrap">
                       <span>
-                        {week} {month} {day} {year} &emsp;
+                        {week} &nbsp; {month} &nbsp; {day} &nbsp; {year} &emsp;
                       </span>
                       <span>
-                        {start}&emsp; ~ &emsp;{end}
+                        {start}&emsp;~&emsp;{end}
                       </span>
                     </div>
                   </div>
@@ -107,8 +107,8 @@ const Wrap = styled.div`
       margin: 70px auto;
       min-height: 100px;
       padding: 10px;
+      /* 
 
-      /* background-color: #0076ed; */
 
       /* 예약 리스트 타이틀 */
       .bookingTitle {
@@ -126,20 +126,20 @@ const Wrap = styled.div`
       /* 예약 리스트 */
 
       .bookingList {
-        max-height: 520px;
-        min-height: 300px;
-        /* display: flex; */
-        /* justify-content: center; */
-        /* flex-direction: column; */
-        /* align-items: center; */
+        width: 100%;
+        margin: auto;
+        max-height: 400px;
+        min-height: 260px;
         border: 2px solid #c7c7c7;
+        border: 1px solid #c7c7c7;
         border-radius: 4px;
         /* padding: 40px 60px 40px 40px; */
-        padding: 40px 30px 40px 40px;
-        box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.15);
+        /* padding: 40px 30px 40px 40px; */
+        padding: 20px 10px 20px 20px;
+        box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.15);
         overflow-y: scroll;
 
-        background: #fff;
+        /* background: red; */
 
         /* 스크롤 버튼 조절 */
         ::-webkit-scrollbar {
@@ -161,14 +161,10 @@ const Wrap = styled.div`
         /* 예약 카드 */
         .booking {
           width: 100%;
-          max-width: 1300px;
-          min-height: 50px;
           border-radius: 10px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-
-          /* background-color: #fff; */
 
           + .booking {
             margin-top: 10px;
@@ -176,25 +172,27 @@ const Wrap = styled.div`
 
           /* 예약 정보 */
           .bookingInfo {
-            width: 80%;
-            height: 80px;
+            width: 100%;
+            height: 50px;
             padding: 10px;
             display: flex;
             /* justify-content: space-between; */
-            justify-content: space-around;
+            /* justify-content: space-around; */
             text-align: center;
-            border: 2px solid #c7c7c7;
+            /* border: 2px solid #c7c7c7; */
+            border: 1px solid #c7c7c7;
             border-radius: 4px;
             margin-right: 20px;
 
-            /* background-color: #f30b0b; */
-
             .userName {
               width: 20%;
-              font-size: 28px;
+              width: auto;
+              font-size: 16px;
               display: flex;
               align-items: center;
               justify-content: center;
+              margin-left: 20px;
+              margin-right: 40px;
 
               /* background-color: #aaaaaa; */
             }
@@ -204,11 +202,12 @@ const Wrap = styled.div`
               text-align: left;
               display: flex;
               align-items: center;
-              justify-content: space-around;
+              /* justify-content: space-around; */
 
               span {
                 display: inline-block;
-                font-size: 24px;
+                font-size: 16px;
+                margin-right: 50px;
               }
               /* background-color: #aaaaaa; */
             }
@@ -219,11 +218,11 @@ const Wrap = styled.div`
           .videoBtn {
             width: 20%;
             max-width: 240px;
-            height: 80px;
+            height: 50px;
             border: none;
             padding: 10px 8px 9px;
             border-radius: 5px;
-            font-size: 24px;
+            font-size: 16px;
             font-weight: bolder;
             color: #fff;
             cursor: pointer;
