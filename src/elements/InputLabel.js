@@ -2,15 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 const InputLabel = (props) => {
-  const { defaultStyles, styles, children } = props;
+  const { _onClick, defaultStyles, styles, children } = props;
   return (
-    <Label style={{ ...styles }} {...defaultStyles}>
+    <Label onClick={_onClick} style={{ ...styles }} {...defaultStyles}>
       {children}
     </Label>
   );
 };
 
 InputLabel.defaultProps = {
+  _onClick: () => {},
   defaultStyles: {},
 };
 
