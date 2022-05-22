@@ -159,9 +159,7 @@ const Signup = (props) => {
   };
 
   //DetailInfo페이지로 넘어가는 버튼 활성화
-  const [disabled, setDisabled] = useState(true);
-
-  const isTrue = !(
+  const isDisabled = !(
     emailCheck === '사용 가능한 이메일입니다.' &&
     userNameCheck === '사용 가능한 닉네임입니다.' &&
     pwdForm(pwd) &&
@@ -169,6 +167,8 @@ const Signup = (props) => {
   )
     ? true
     : false;
+
+  const [returnMessage, setReturnMessage] = useState('');
 
   return (
     <Container>
@@ -210,7 +210,7 @@ const Signup = (props) => {
         <InputLabel styles={{ color: '#8A8A8A' }}>{pwdCheck}</InputLabel>
       </InputBox>
       {/* 비밀번호 확인 인풋 */}
-      <InputBox styles={{ marginBottom: '80px' }}>
+      <InputBox styles={{ marginBottom: '60px' }}>
         <Inputs
           placeholder="비밀번호를 다시 한 번 입력해 주세요."
           type="text"
@@ -220,9 +220,19 @@ const Signup = (props) => {
         <InputLabel styles={{ color: '#8a8a8a' }}>{confirmPwdCheck}</InputLabel>
       </InputBox>
       {/* 상세정보 페이지로 넘어가기 */}
-      <Link to={{ pathname: '/signup/detail', signupForm }}>
-        <NextButton type="button" value="다음" disabled={isTrue} />
-      </Link>
+
+      {isDisabled ? (
+        <NextButton
+          isDisabled
+          type="button"
+          value="다음"
+          onClick={() => window.alert('조건에 맞지 않는 항목이 있습니다.')}
+        />
+      ) : (
+        <Link to={{ pathname: '/signup/detail', signupForm }}>
+          <NextButton type="button" value="다음" disabled={isDisabled} />
+        </Link>
+      )}
     </Container>
   );
 };
@@ -248,18 +258,20 @@ const LogoText = styled.p`
   font-size: 44px;
   font-weight: 700;
   color: #153587;
+  cursor: default;
 `;
 
 const NextButton = styled.input`
   width: 800px;
   height: 80px;
-  background: #171b78;
+  background: ${(props) => (props.isDisabled ? '#999999' : '#171b78')};
   border: none;
   border-radius: 4px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
+  cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
   font-size: 24px;
   font-weight: 600;
   color: #fff;
 `;
+
 export default Signup;

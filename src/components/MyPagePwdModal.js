@@ -1,23 +1,49 @@
 import React, { useState } from 'react';
-import Portal from '../shared/Portal';
 import styled from 'styled-components';
-import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import Portal from '../shared/Portal';
 import EditUser from './EditUser';
+import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
+import { getCookie } from '../shared/Cookie';
 
 const MyPagePwdModal = (props) => {
   const { onClose, userInfo } = props;
 
+  const [pwd, setPwd] = useState('');
+  const handlePwd = (e) => {
+    setPwd(e.target.value);
+  };
+  const userPwd = { pwd: pwd };
+
   //비밀번호 검증 될 경우 editUser컴포넌트 렌더링
   const [editUser, setEditUser] = useState(false);
-  const handleEditUser = () => {
-    setEditUser(true);
+  const handleEditUser = async () => {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'https://jg-jg.shop/myPage/pwdCheck',
+        headers: { token: `${getCookie('token')}` },
+        data: {
+          pwd: pwd,
+        },
+      });
+      const result = response.data.msg;
+      console.log(result);
+
+      result === 'success'
+        ? setEditUser(true)
+        : window.alert('비밀번호가 틀림');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <Portal>
       <Background>
         {editUser ? (
-          <EditUser onClose={onClose} userInfo={userInfo} />
+          <EditUser onClose={onClose} userInfo={userInfo} userPwd={userPwd} />
         ) : (
           <Content>
             <CloseBtnBox>
@@ -40,7 +66,10 @@ const MyPagePwdModal = (props) => {
               {/* 비밀번호 */}
               <InputBox styles={{ width: '860px', margin: '0 auto' }}>
                 <InputLabel>비밀번호</InputLabel>
-                <Inputs placeholder={'비밀번호를 입력해 주세요.'} />
+                <Inputs
+                  _onChange={handlePwd}
+                  placeholder={'비밀번호를 입력해 주세요.'}
+                />
               </InputBox>
             </Grid>
 
