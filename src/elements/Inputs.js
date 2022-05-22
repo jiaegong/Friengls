@@ -55,7 +55,7 @@ Inputs.defaultProps = {
   disabled: false,
   placeholder: '',
   defaultStyles: {
-    fontSize: '26px',
+    fontSize: '16px',
     fontWeight: '400',
   },
 };
@@ -78,12 +78,13 @@ const InputStyled = styled.input`
 const TextareaStyled = styled.textarea`
   width: 100%;
   height: 160px;
+  font-size: 16px !important;
   border: none;
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   ::-webkit-input-placeholder {
-    padding: 10px 0;
-    font-size: 20px;
+    /* padding: 10px 0; */
+    font-size: 16px;
     color: b5b5b5;
   }
   &:focus {

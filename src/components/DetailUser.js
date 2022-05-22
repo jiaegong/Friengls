@@ -57,10 +57,11 @@ const DetailUser = (props) => {
           <Buttons
             _onClick={handleModal}
             styles={{
-              margin: '40px 0 0 0',
-              width: '240px',
-              height: '42px',
-              fontSize: '20px',
+              // margin: '20px 10px 0',
+              margin: '20px 20px 0',
+              width: '140px',
+              height: '44px',
+              fontSize: '16px',
             }}
           >
             내 프로필 수정
@@ -149,6 +150,8 @@ const ImageBox = styled.div`
 `;
 
 const UserImgWrap = styled.div`
+  width: 160px;
+  height: 160px;
   width: 180px;
   height: 180px;
   border-radius: 50%;

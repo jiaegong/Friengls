@@ -121,7 +121,7 @@ const Wrap = styled.div`
         font-size: 30px;
         font-weight: bold;
         margin-bottom: 50px;
-        padding-left: 10%;
+        padding-left: 8%;
 
         span {
           color: #aaa;

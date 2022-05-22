@@ -120,8 +120,8 @@ const Card = styled.div`
 
 const ModalBtn = styled.div`
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: 12px;
+  bottom: 12px;
 
   .modalBtn {
     width: 32px;

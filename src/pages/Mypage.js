@@ -93,7 +93,7 @@ export default Mypage;
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  /* background-color: #ddd; */
+  margin-bottom: 100px;
 
   .innerWrap {
     max-width: 1280px;

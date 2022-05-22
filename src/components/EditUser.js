@@ -25,23 +25,34 @@ const EditUser = (props) => {
         <UserInfoBox>
           <p>기본 정보</p>
           {/* 닉네임 */}
-          <InputBox>
-            <InputLabel>닉네임</InputLabel>
+          <InputBox styles={{ height: '60px', padding: '10px' }}>
+            <InputLabel styles={{ fontSize: '14px', marginBottom: '5px' }}>
+              닉네임
+            </InputLabel>
             <Inputs
               placeholder={'변경할 닉네임을 입력해 주세요.'}
               value={userInfo.userName}
+              styles={{ fontSize: '16px', fontWeight: '500' }}
             />
           </InputBox>
           {/* 비밀번호 */}
-          <InputBox>
-            <InputLabel>새 비밀번호</InputLabel>
-            <Inputs placeholder={'변경할 비밀번호를 입력해 주세요.'} />
+          <InputBox styles={{ height: '60px', padding: '10px' }}>
+            <InputLabel styles={{ fontSize: '14px', marginBottom: '5px' }}>
+              새 비밀번호
+            </InputLabel>
+            <Inputs
+              placeholder={'변경할 비밀번호를 입력해 주세요.'}
+              styles={{ fontSize: '16px', fontWeight: '500' }}
+            />
           </InputBox>
           {/* 비밀번호 확인 */}
-          <InputBox>
-            <InputLabel>비밀번호 확인</InputLabel>
+          <InputBox styles={{ height: '60px', padding: '10px' }}>
+            <InputLabel styles={{ fontSize: '14px', marginBottom: '5px' }}>
+              비밀번호 확인
+            </InputLabel>
             <Inputs
               placeholder={'변경할 비밀번호를 다시 한 번 입력해 주세요.'}
+              styles={{ fontSize: '16px', fontWeight: '500' }}
             />
           </InputBox>
         </UserInfoBox>
@@ -55,27 +66,37 @@ const EditUser = (props) => {
         {/* 자기 소개 */}
         <InputBox
           styles={{
-            height: '210px',
+            height: '100px',
+            // height 값은 모달창 스크롤 기능 될때 더 추가 가능 할꺼 같아요...
             justifyContent: 'flex-start',
           }}
         >
-          <InputLabel styles={{ margin: '10px 0' }}>자기 소개</InputLabel>
+          <InputLabel styles={{ margin: '10px 0', fontSize: '14px' }}>
+            자기 소개
+          </InputLabel>
           <Inputs
             multiLine
             placeholder={
               '하고 있는 일, 취미, 성격 등 자유롭게 자신을 소개해 주세요.'
             }
+            styles={{ fontSize: '16px', fontWeight: '500', height: 'auto' }}
           />
         </InputBox>
         {/* 한 줄 소개 */}
-        <InputBox>
-          <InputLabel>한 줄 소개</InputLabel>
-          <Inputs placeholder={'간략한 인사말을 작성해 주세요.'} />
+        <InputBox styles={{ height: '63px', padding: '10px' }}>
+          <InputLabel styles={{ fontSize: '14px' }}>한 줄 소개</InputLabel>
+          <Inputs
+            placeholder={'간략한 인사말을 작성해 주세요.'}
+            styles={{ fontSize: '16px', fontWeight: '500' }}
+          />
         </InputBox>
         {/* 태그 */}
-        <InputBox>
-          <InputLabel>태그</InputLabel>
-          <Inputs placeholder={'태그'} />
+        <InputBox styles={{ height: '63px', padding: '10px' }}>
+          <InputLabel styles={{ fontSize: '14px' }}>태그</InputLabel>
+          <Inputs
+            placeholder={'태그'}
+            styles={{ fontSize: '16px', fontWeight: '500' }}
+          />
         </InputBox>
       </GroupBox>
       <GroupBox>
@@ -86,8 +107,9 @@ const EditUser = (props) => {
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            fontSize: '26px',
+            fontSize: '16px',
             cursor: 'default',
+            height: '54px',
           }}
         >
           프랭글스에서 한국어를
@@ -96,7 +118,7 @@ const EditUser = (props) => {
               width: '140px',
               marginLeft: '10px',
               alignItems: 'center',
-              fontSize: '26px',
+              fontSize: '16px',
               cursor: 'pointer',
             }}
           >
@@ -118,7 +140,7 @@ const EditUser = (props) => {
               width: '180px',
               marginLeft: '10px',
               alignItems: 'center',
-              fontSize: '26px',
+              fontSize: '16px',
               cursor: 'pointer',
             }}
           >
@@ -142,8 +164,9 @@ const EditUser = (props) => {
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            fontSize: '26px',
+            fontSize: '16px',
             cursor: 'default',
+            height: '54px',
           }}
         >
           수업 가능한 시간 :&nbsp;&nbsp;
@@ -158,7 +181,14 @@ const EditUser = (props) => {
         </InputBox>
       </GroupBox>
       <GroupBox>
-        <Buttons styles={{ width: '380px', height: '60px' }}>
+        <Buttons
+          styles={{
+            width: '280px',
+            height: '46px',
+            fontSize: '16px',
+            margin: '10px',
+          }}
+        >
           수정내용 저장하기
         </Buttons>
         {/* 회원탈퇴버튼 */}
@@ -170,8 +200,10 @@ const EditUser = (props) => {
 export default EditUser;
 
 const Content = styled.div`
-  //   height: 954px;
-  width: 1240px;
+  width: 100%;
+  max-width: 800px;
+  /* height: 900px; */
+  min-height: 900px;
   // margin-top: 120px;
   background: #fff;
   border-radius: 20px;
@@ -188,8 +220,8 @@ const CloseBtnBox = styled.label`
   width: 50px;
   height: 50px;
   position: absolute;
-  top: 40px;
-  left: 40px;
+  top: 20px;
+  left: 20px;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -203,18 +235,20 @@ const CloseBtn = styled.button`
 `;
 
 const GroupBox1 = styled.div`
-  margin: 150px 40px 20px;
+  margin: 50px 40px 20px;
   display: flex;
 `;
 
 const ImageBox = styled.div`
   width: 320px;
+  width: 25%;
+  padding-top: 20px;
 
   p {
     margin-top: 20px;
-    font-size: 20px;
-    font-weight: 300;
-    color: #b5b5b5;
+    font-size: 16px;
+    font-weight: 400;
+    color: #8f8f8f;
     cursor: default;
   }
   button {
@@ -222,7 +256,7 @@ const ImageBox = styled.div`
     border: none;
     border-bottom: 1px solid #153587;
     background: none;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     color: #153587;
     cursor: pointer;
@@ -230,53 +264,52 @@ const ImageBox = styled.div`
 `;
 
 const UserImg = styled.div`
-  width: 240px;
-  height: 240px;
+  width: 180px;
+  height: 180px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
 
   img {
-    width: 240px;
-    height: 240px;
+    width: 100%;
   }
 `;
 
 const UserInfoBox = styled.div`
-  width: 880px;
+  width: 75%;
   margin-left: 20px;
 
   p {
-    height: 80px;
     text-align: start;
-    font-size: 40px;
+    font-size: 22px;
     font-weight: 600;
+    margin-bottom: 10px;
   }
 `;
 
 const GroupBox = styled.div`
-  // width: 1160px;
   margin: 0 40px;
-  padding: 20px 0;
+  padding: 10px 0;
   border-top: 1px solid #c4c4c4;
 
   p {
-    height: 80px;
+    /* height: 80px; */
     text-align: start;
-    font-size: 40px;
+    font-size: 22px;
     font-weight: 600;
+    margin-bottom: 10px;
   }
 `;
 
 const LanguageBox = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const Select = styled.select`
   margin-right: 20px;
-  height: 50px;
+  height: 35px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
-  font-size: 26px;
+  font-size: 16px;
 `;

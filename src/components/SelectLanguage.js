@@ -36,10 +36,12 @@ const SelectLanguage = (props) => {
   );
 
   return (
-    <InputBox>
+    <InputBox styles={{ height: '70px' }}>
       <LabelBox>
-        <InputLabel>활용 가능 언어 선택</InputLabel>
-        <InputLabel>최대 3개</InputLabel>
+        <InputLabel styles={{ fontSize: '14px', marginBottom: '4px' }}>
+          활용 가능 언어 선택
+        </InputLabel>
+        <InputLabel styles={{ fontSize: '14px' }}>최대 3개</InputLabel>
       </LabelBox>
       <SelectContainer>
         {/* 사용언어1 */}
@@ -92,7 +94,7 @@ const SelectContainer = styled.div`
 const Select = styled.select`
   margin-right: 20px;
   width: 160px;
-  height: 35px;
+  height: 30px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
 `;
