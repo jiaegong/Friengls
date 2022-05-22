@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as notiActions } from '../redux/modules/booking';
 
 const NotiModal = (props) => {
+  const dispactch = useDispatch();
   const notiList = useSelector((state) => state.booking.noti);
-  console.log(props);
   const ModalAction = props.ModalAction;
 
   React.useEffect(() => {
@@ -20,6 +21,14 @@ const NotiModal = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    dispactch(notiActions.getBookingNotiDB());
+  }, []);
+
+  function clearNoti(timeId) {
+    dispactch(notiActions.clearNotiDB(timeId));
+  }
+
   return (
     <>
       <Background
@@ -31,6 +40,10 @@ const NotiModal = (props) => {
           <div className="notificationsInnerWrap">
             {notiList.map((notiItem, idx) => {
               console.log(notiItem);
+              const timeId = notiItem.timeId;
+              const noti = notiItem.noti;
+              const del = notiItem.del;
+
               let startTime = notiItem.start;
               let endTime = notiItem.end;
 
@@ -41,32 +54,48 @@ const NotiModal = (props) => {
               console.log({ start, end });
 
               return (
-                <div className="text" key={`noti_${idx}`}>
-                  튜티 &nbsp;{notiItem.Tutee_userName}님이 &nbsp;
-                  {week} {month} {day} &nbsp; {start}시에 수업을 예약
-                  하셨습니다.
-                </div>
+                <>
+                  {((noti === 1 && del === 0) || del === 1) && (
+                    <div
+                      className="text"
+                      // key={notiItem.timeId}
+                      key={`noti_${timeId}`}
+                      onClick={() => {
+                        console.log(timeId);
+                        // dispactch(notiActions.clearNotiDB(timeId));
+                        clearNoti(timeId);
+                      }}
+                    >
+                      튜티 &nbsp;{notiItem.Tutee_userName}님이 &nbsp;
+                      {week} {month} {day} &nbsp; {start}시에 수업을 예약
+                      하셨습니다.
+                    </div>
+                  )}
+                  {/* <div
+                    className="text"
+                    key={`noti_${timeId}`}
+                    onClick={() => {
+                      console.log(timeId);
+                      // dispactch(notiActions.clearNotiDB(timeId));
+                      clearNoti(timeId);
+                    }}
+                  >
+                    튜티 &nbsp;{notiItem.Tutee_userName}님이 &nbsp;
+                    {week} {month} {day} &nbsp; {start}시에 수업을 예약
+                    하셨습니다.
+                  </div> */}
+                </>
               );
             })}
-            {/* <div className="text">
-                        누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
-                      </div>
-                      <div className="text">
-                        누구님이 몇일 HH:MM에 수업을 예약 하셨습니다.
-                      </div>
 
-                      <div className="text">
-                        누구님이 HH:MM에 예약 하셨습니다.
-                      </div>
-
-                      <button
-                        className="notificationBtn"
-                        onClick={() => {
-                          setNotiOpen(!notiOpen);
-                        }}
-                      >
-                        지우기
-                      </button> */}
+            <button
+              className="notificationBtn"
+              onClick={() => {
+                // dispactch(notiActions.delAllNotiDB())
+              }}
+            >
+              지우기
+            </button>
           </div>
         </div>
       </Background>

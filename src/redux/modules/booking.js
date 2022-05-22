@@ -176,10 +176,11 @@ const getBookingNotiDB = () => {
 // 알림 확인 ( 한개씩 )
 const clearNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
+    console.log(timeId);
     axios({
       method: 'patch',
-
       url: `https://jg-jg.shop/delNoti/?timeId=${timeId}`,
+      headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
         console.log(doc);
@@ -195,8 +196,8 @@ const delBookingNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'patch',
-
       url: `https://jg-jg.shop/delBooking/?timeId=${timeId}`,
+      headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
         console.log(doc);
@@ -213,6 +214,7 @@ const delCheckNotiDB = (timeId) => {
     axios({
       method: 'delete',
       url: `https://jg-jg.shop/delBookingCheck/?timeId=${timeId}`,
+      headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
         console.log(doc);
@@ -229,6 +231,7 @@ const delAllNotiDB = () => {
     axios({
       method: 'patch',
       url: `https://jg-jg.shop/delAllNoti`,
+      headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
         console.log(doc);
