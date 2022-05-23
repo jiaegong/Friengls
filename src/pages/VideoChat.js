@@ -2,22 +2,27 @@ import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import Peer from 'peerjs';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { modalOn } from '../redux/modules/modal';
+import Translator from '../components/Translator';
+import Chat from '../components/Chat';
 
-const VideoChat = () => {
+const VideoChat = (props) => {
   const dispatch = useDispatch();
 
   const myVideo = useRef(null);
   const userVideo = useRef(null); // userVideo ref말고 생성하는 걸로 해야 할지도..
   const peers = {};
-  const roomId = '123'; // roomId params로
+  const roomId = props.match.params.roomName;
+  const userName = useSelector((state) => state.user.info);
   const [videoOn, setVideoOn] = useState(true);
   const [audioOn, setAudioOn] = useState(true);
 
+  const socket = io('https://jg-jg.shop');
+
   useEffect(() => {
     const peer = new Peer();
-    const socket = io('https://jg-jg.shop');
+    // const socket = io('https://jg-jg.shop');
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
@@ -115,10 +120,9 @@ const VideoChat = () => {
           통화종료
         </button>
       </VideoContainer>
+      <Chat socket={socket} roomId={roomId} userName={userName} />
       <TranslatorWrap>
-        <textarea className="translate-text" />
-        <button className="translate-button">번역하기</button>
-        <div className="translate-result">번역한 내용</div>
+        <Translator />
       </TranslatorWrap>
     </Container>
   );
@@ -183,24 +187,4 @@ const TranslatorWrap = styled.div`
   width: 100%;
   height: 100%;
   gap: 10px;
-
-  .translate-text {
-    width: 100%;
-    height: 100%;
-    outline-color: #171b78;
-    border: 1px solid #171b78;
-  }
-
-  .translate-button {
-    width: 100px;
-    background-color: #171b78;
-    color: #fff;
-    padding: 10px;
-  }
-
-  .translate-result {
-    width: 100%;
-    height: 100%;
-    border: 1px solid #171b78;
-  }
 `;
