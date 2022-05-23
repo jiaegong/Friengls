@@ -65,7 +65,7 @@ const signupDB = (formData, loginInfo) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then((response) => {
-        console.log('signupDB성공', response);
+        // console.log('signupDB성공', response);
 
         dispatch(loginDB(loginInfo));
       })
@@ -78,7 +78,7 @@ const signupDB = (formData, loginInfo) => {
 
 const loginDB = (loginForm) => {
   return function (dispatch, getState, { history }) {
-    console.log('login시작', loginForm);
+    // console.log('login시작', loginForm);
 
     axios({
       method: 'post',
@@ -86,7 +86,8 @@ const loginDB = (loginForm) => {
       data: loginForm,
     })
       .then((response) => {
-        console.log('loginDB성공', response.data);
+        // console.log('loginDB성공', response.data);
+
         setCookie('token', response.data.token);
         // localStorage.setItem('token', response.data.token);
         history.replace('/');
@@ -104,7 +105,6 @@ const loginDB = (loginForm) => {
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
     // console.log('loginCheckDB시작');
-    // console.log(getCookie('token'));
     axios({
       method: 'get',
       url: 'https://jg-jg.shop/login/getUser',
@@ -127,22 +127,23 @@ const loginCheckDB = () => {
 
 const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
-    console.log(code);
-    // axios({
-    //   method: 'GET',
-    //   url: `https://jg-jg.shop?code=${code}`,
-    // })
-    //   .then((response) => {
-    //     // localStorage.setItem('token', response.data.token);
-    //     getCookie('token', response.data.token);
-    //     //서버에서 유저 데이터도 같이 받아올 수 있을까?
-    //     //상세정보 작성페이지로 연결
-    //   })
-    //   .catch((error) => {
-    //     window.alert('로그인에 실패했습니다!');
-    //     console.log('로그인실패', error);
-    //     history.replace('/login');
-    //   });
+    // console.log(code);
+    axios({
+      method: 'GET',
+      url: `https://jg-jg.shop?code=${code}`,
+    })
+      .then((response) => {
+        console.log('소셜로그인 서버에서 온 정보', response);
+        // localStorage.setItem('token', response.data.token);
+        // getCookie('token', response.data.token);
+        //서버에서 유저 데이터도 같이 받아올 수 있을까?
+        //상세정보 작성페이지로 연결
+      })
+      .catch((error) => {
+        window.alert('로그인에 실패했습니다!');
+        console.log('로그인실패', error);
+        history.replace('/login');
+      });
   };
 };
 
@@ -151,17 +152,16 @@ const editUserDB = (userInfo) => {
     console.log('editUserDB시작', userInfo);
 
     axios({
-      method: 'put',
-      url: 'https://jg-jg.shop/editUserInfo',
+      method: 'patch',
+      url: 'https://jg-jg.shop/editUser',
       headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
       .then((response) => {
-        // console.log('editUserDB성공', response);
-        const userInfo = {};
-        // console.log('editUserDB 후 로그인정보', userInfo);
-        dispatch(editUser(userInfo));
-        // 상제정보페이지에서는 메인으로 전환, 마이페이지에서는 새로고침
+        console.log('editUserDB성공', response);
+        const editUserInfo = userInfo;
+        console.log('editUserDB 후 로그인정보', userInfo);
+        dispatch(editUser(editUserInfo));
       })
       .catch((error) => {
         window.alert('정보 저장에 실패하셨습니다.');
@@ -176,12 +176,11 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
-      // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
-        console.log('getUserDetailDB성공', response.data.data[0]);
+        // console.log('getUserDetailDB성공', response.data.data[0]);
         dispatch(setUserDetail(response.data.data[0]));
       })
       .catch((error) => {
@@ -216,7 +215,7 @@ export default handleActions(
       }),
     [SET_USER_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        // console.log('setUserDetail리듀서시작', action.payload.userInfo);
+        console.log('setUserDetail리듀서시작', action.payload.userInfo);
         draft.detailInfo = action.payload.userInfo;
       }),
     [UNSET_USER]: (state, action) =>

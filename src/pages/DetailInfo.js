@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as profileActions } from '../redux/modules/profile';
 import { Logo, ProfileMedium } from '../image';
 import SelectLanguage from '../components/SelectLanguage';
 import { InputBox, InputLabel, Inputs, Buttons } from '../elements';
@@ -56,7 +55,6 @@ const DetailInfo = (props) => {
   const handleContents = (e) => {
     setContents(e.target.value);
   };
-  // console.log(contents);
 
   //한줄소개 input값
   const [comment, setComment] = useState('');
@@ -86,7 +84,7 @@ const DetailInfo = (props) => {
 
       if (tagList.indexOf(tagInput) !== -1) {
         if (tagInput.length === tagList[tagList.indexOf(tagInput)].length) {
-          window.alert('중복x');
+          window.alert('중복된 태그를 등록할 수 없습니다.');
           setTagInput('');
           return;
         }
@@ -139,12 +137,28 @@ const DetailInfo = (props) => {
 
   //유저정보 디스패치
   const addUser = (e) => {
+    //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
+    if (contents.split('').filter((word) => word !== ' ').length === 0) {
+      if (contents.length > 0) {
+        window.alert('자기 소개를 공백으로 채울 수 없습니다.');
+        setContents('');
+        return;
+      }
+    }
+
+    if (comment.split('').filter((word) => word !== ' ').length === 0) {
+      if (comment.length > 0) {
+        window.alert('한 줄 소개를 공백으로 채울 수 없습니다.');
+        setComment('');
+        return;
+      }
+    }
     //선생님일 경우 모든 정보를 입력하도록 조건
     if (isTutor === '1') {
       if (
         language1 === '' ||
-        comment === '' ||
-        contents === '' ||
+        comment.split('').filter((word) => word !== ' ').length === 0 ||
+        contents.split('').filter((word) => word !== ' ').length === 0 ||
         tagList.length === 0 ||
         startTime === '' ||
         endTime === ''
@@ -175,31 +189,10 @@ const DetailInfo = (props) => {
     const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
 
     dispatch(userActions.signupDB(formData, loginInfo));
-
-    // //추가정보 디스패치
-    // const userForm = {
-    //   //유저정보 추가하기
-    //   userEmail: userInfo.userEmail,
-    //   userName: userInfo.userName,
-    //   pwd: userInfo.pwd,
-    //   pwdCheck: userInfo.pwdCheck,
-    //   tag: tagList.join(),
-    //   language1: language1,
-    //   language2: language2,
-    //   language3: language3,
-    //   comment: comment,
-    //   contents: contents,
-    //   isTutor: isTutor,
-    //   startTime: startTime,
-    //   endTime: endTime,
-    // };
-    // console.log('전송할 유저정보', userForm);
-
-    // // dispatch(profileActions.uploadProfileDB(formData));
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
-    window.alert('새로고침 처음 화면으로 돌아갑니다.');
+    window.alert('새로고침 시 처음 화면으로 돌아갑니다.');
     history.replace('/signup');
   }
 
@@ -222,6 +215,7 @@ const DetailInfo = (props) => {
             accept="image/*"
             id="file"
           />
+          <ProfileAddButton htmlFor="file">+</ProfileAddButton>
         </ImageBox>
       </label>
 
@@ -374,7 +368,7 @@ const DetailInfo = (props) => {
         </InputBox>
         {/* 선생님인 경우 수업시간 선택 */}
         {isTutor === '1' && (
-          <Grid>
+          <TimeSelectContainer>
             <InputBox
               styles={{
                 display: 'flex',
@@ -419,7 +413,7 @@ const DetailInfo = (props) => {
               <span>※ 수업은 2회차 단위로 구성할 수 있습니다.</span>
               <span>※ 최소 2회차, 최대 12회차까지 수업할 수 있습니다.</span>
             </InfoBox>
-          </Grid>
+          </TimeSelectContainer>
         )}
       </TimeBox>
 
@@ -492,7 +486,25 @@ const ImgInput = styled.input`
   overflow: hidden;
 `;
 
-// 라벨, 글자수제한 정렬
+const ProfileAddButton = styled.label`
+  width: 60px;
+  height: 60px;
+  padding-bottom: 10px;
+  border-radius: 50px;
+  background: #153587;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 700px;
+  left: 1370px;
+  font-size: 50px;
+  font-weight: 600;
+  color: #fff;
+`;
+
+// 자기소개/한줄소개 라벨, 글자수제한 정렬
 const LabelWrap = styled.div`
   width: 100%;
   display: flex;
@@ -540,6 +552,7 @@ const TagBox = styled.div`
   p {
     margin-right: 10px;
     font-size: 16px;
+    cursor: default;
   }
 
   button {
@@ -573,7 +586,7 @@ const TimeBox = styled.div`
   }
 `;
 
-const Grid = styled.div`
+const TimeSelectContainer = styled.div`
   // margin: 10px;
 `;
 

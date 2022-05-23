@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { actionCreators as likeActions } from '../redux/modules/like';
 import { getCookie } from '../shared/Cookie';
-import MyPagePwdModal from '../components/MyPagePwdModal';
-import Portal from '../shared/Portal';
+import MyPageModal from './MyPageModal';
 import { Buttons } from '../elements/index';
 
 const DetailUser = (props) => {
@@ -22,8 +21,10 @@ const DetailUser = (props) => {
   // 자기소개 열기, 닫기
   const [contents, setContents] = useState('');
   // 태그목록 배열로 변환
-  const tagList = userInfo.tag ? userInfo.tag.split(' ,') : null;
 
+  const tagList = userInfo.tag ? userInfo.tag.split(' ,') : null;
+  console.log(userInfo.tag);
+  console.log(tagList);
   const like = () => {
     dispatch(likeActions.likeDB(token, tutorName));
   };
@@ -66,9 +67,7 @@ const DetailUser = (props) => {
             내 프로필 수정
           </Buttons>
         )}
-        {modalOn && (
-          <MyPagePwdModal onClose={handleModal} userInfo={userInfo} />
-        )}
+        {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
       </ImageBox>
       <div className="userInfo">
         {/* 유저닉네임 + 사용언어 */}

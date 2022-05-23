@@ -98,7 +98,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 800px;
+  width: 500px;
   margin: 200px auto;
 `;
 

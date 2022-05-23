@@ -19,8 +19,9 @@ const uploadProfileDB = (formData) => {
     console.log('uploadProfileDB시작', formData);
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/editUser/profile',
-      url: 'http://13.124.206.190/editUser/profile',
+      url: 'https://jg-jg.shop/editUser/profile',
+      // url: 'http://13.124.206.190/editUser/profile',
+      data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then((response) => {
