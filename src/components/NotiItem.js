@@ -28,15 +28,9 @@ const NotiItem = (props) => {
   let end = endTime.substr(-17, 5);
   console.log({ start, end });
 
-
   function clearNoti(timeId) {
     dispactch(notiActions.clearNotiDB(timeId));
   }
-
-
-
-  var today = new Date();
-  console.log(today);
 
   if (isTutor === 0) {
 

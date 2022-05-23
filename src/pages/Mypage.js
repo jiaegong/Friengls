@@ -28,6 +28,11 @@ const Mypage = (props) => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, [userName]);
 
+  // 현재 시간 구하는 방법
+  var today = new Date();
+  console.log(today);
+
+
   return (
     <Wrap>
       <div className="innerWrap">
@@ -41,7 +46,13 @@ const Mypage = (props) => {
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {
               console.log(item);
+
+              // 조건에 필요한 정보
+              const del = item.del
               let timeId = item.timeId
+              console.log({ del, timeId })
+
+              // 예약 정보 
               let startTime = item.start;
               let endTime = item.end;
 
@@ -50,43 +61,46 @@ const Mypage = (props) => {
               let start = sTime.substr(0, 5);
               let end = endTime.substr(-17, 5);
               return (
-                <li className="booking" key={`booking${idx}`}>
-                  <div className="bookingInfo">
-                    {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}
-                    {isTutor === '0' ? (
-                      <div className="userName">{item.Tutor_userName}</div>
-                    ) : (
-                      <div className="userName">{item.Tutee_userName}</div>
-                    )}
-                    <div className="userBookingWrap">
-                      <span>
-                        {week} &nbsp; {month} &nbsp; {day} &nbsp; {year} &emsp;
-                      </span>
-                      <span>
-                        {start}&emsp;~&emsp;{end}
-                      </span>
+                <>
+                  {del === 0 ? (<li className="booking" key={`booking${idx}`}>
+                    <div className="bookingInfo">
+                      {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}
+                      {isTutor === '0' ? (
+                        <div className="userName">{item.Tutor_userName}</div>
+                      ) : (
+                        <div className="userName">{item.Tutee_userName}</div>
+                      )}
+                      <div className="userBookingWrap">
+                        <span>
+                          {week} &nbsp; {month} &nbsp; {day} &nbsp; {year} &emsp;
+                        </span>
+                        <span>
+                          {start}&emsp;~&emsp;{end}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <button
-                    className="videoBtn"
-                    onClick={() => {
-                      history.push(
-                        `/videochat/${item.Tutor_userName + item.Tutee_userName
-                        }`,
-                      );
-                    }}
-                  >
-                    수업 시작
-                  </button>
-                  <button
-                    className="delBtn"
-                    onClick={() => {
-                      dispatch(bookingAction.delBookingNotiDB(timeId))
-                    }}
-                  >
-                    예약 취소
-                  </button>
-                </li>
+                    <button
+                      className="videoBtn"
+                      onClick={() => {
+                        history.push(
+                          `/videochat/${item.Tutor_userName + item.Tutee_userName
+                          }`,
+                        );
+                      }}
+                    >
+                      수업 시작
+                    </button>
+                    <button
+                      className="delBtn"
+                      onClick={() => {
+                        dispatch(bookingAction.delBookingNotiDB(timeId))
+                      }}
+                    >
+                      예약 취소
+                    </button>
+                  </li>) : null}
+
+                </>
               );
             })}
           </ul>
