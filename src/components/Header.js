@@ -181,6 +181,7 @@ const Wrap = styled.div`
         position: relative;
         font-size: 1.375rem;
         font-size: 1.125rem;
+        font-size: 16px;
         font-weight: bolder;
         letter-spacing: 1px;
 

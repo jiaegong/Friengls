@@ -126,7 +126,6 @@ const LanguageWrap = styled.div`
   margin-top: 10px;
   P {
     font-size: 14px;
-    /* margin-right: 4px; */
     color: #5e5e5e;
   }
 `;
@@ -149,9 +148,7 @@ const Tag = styled.div`
   padding: 5px 10px;
   border-radius: 40px;
   font-size: 14px;
-  border: 2px solid #959595;
-  /* border: 1px solid #959595; */
-  /* border: 1px solid #5e5e5e; */
+  border: 1px solid #959595;
   box-shadow: 0px 2px 6px 0px #00000040;
 `;
 
