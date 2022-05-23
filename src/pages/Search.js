@@ -74,6 +74,12 @@ const Search = (props) => {
       </DivBanner>
 
       <InnerWrap>
+        <TutorTitleWrap>
+          <div>
+            <span>지금 수강가능한 선생님들이에요 👍</span>
+          </div>
+          <p>선생님 리스트</p>
+        </TutorTitleWrap>
         <ul>
           {tutorList.map((tutor, idx) => {
             return (
@@ -100,10 +106,11 @@ const Wrap = styled.div`
   /* background: #aaa; */
 
   .bannerWrap {
-    padding-top: 176px;
+    padding-top: 50px;
   }
 
   .bannerInner {
+    width: 863px;
     width: 863px;
     height: 337px;
     margin: auto;
@@ -116,16 +123,19 @@ const Wrap = styled.div`
 
     .searchWrap {
       max-width: 858px;
+      max-width: 600px;
+
       width: 100%;
-      height: 96px;
-      margin-bottom: 90px;
+      height: 76px;
+      margin-bottom: 40px;
       position: relative;
 
       .searchIcon {
         position: absolute;
-        top: 28px;
-        left: 40px;
+        top: 23px;
+        left: 36px;
         font-size: 50px;
+        font-size: 32px;
       }
 
       .searchInput {
@@ -133,8 +143,11 @@ const Wrap = styled.div`
         height: 100%;
         border-radius: 60px;
         border: none;
-        padding: 6px 120px;
+        outline: none;
+        padding: 6px 80px;
         font-size: 34px;
+        font-size: 24px;
+        font-size: 22px;
         line-height: 84px;
         font-weight: 500;
         box-shadow: 0px 6px 8px 0px #00000040;
@@ -149,14 +162,17 @@ const Wrap = styled.div`
       .keyWord {
         display: inline-block;
         background-color: #fff;
-        padding: 12px 22px;
-        margin: 0 18px 20px 0;
+        /* padding: 12px 18px; */
+        padding: 10px 14px;
+        /* margin: 0 16px 18px 0; */
+        margin: 0 10px 14px 0;
         border: 2px solid #959595;
         border-radius: 40px;
         box-shadow: 0px 2px 6px 0px #00000040;
 
-        font-size: 26px;
-        font-weight: 400;
+        font-size: 18px;
+        font-size: 16px;
+        font-weight: 500;
         cursor: pointer;
       }
     }
@@ -165,18 +181,42 @@ const Wrap = styled.div`
 
 const InnerWrap = styled.div`
   width: 90%;
-  max-width: 1400px;
+  max-width: 1280px;
   min-height: 910px;
-  margin: auto;
-
-  background: white;
+  margin: 120px auto 180px;
 
   ul {
     width: 100%;
-    padding: 20px 16px;
     display: grid;
     place-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    row-gap: 4rem;
+    column-gap: 0rem;
+  }
+`;
+
+const TutorTitleWrap = styled.div`
+  margin-bottom: 50px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .tutorMoreBtn {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+
+  p {
+    font-size: 38px;
+    font-weight: bold;
   }
 `;

@@ -14,12 +14,20 @@ import DivBanner from '../elements/DivBanner';
 
 const Main = () => {
   const dispatch = useDispatch();
-  const tutorList = useSelector((state) => state.tutor.list);
+  const tutorListDB = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
 
   useEffect(() => {
     dispatch(reviewActions.getReviewDB());
   }, []);
+
+  let tutorList = [];
+
+  if (tutorListDB.length > 11) {
+    for (let i = 0; i < 12; i++) {
+      tutorList.push(tutorListDB[i]);
+    }
+  }
 
   return (
     <Wrap>
@@ -96,42 +104,40 @@ const Wrap = styled.div`
 
 /* 배너 */
 const Banner = styled.div`
-  max-width: 1432px;
-  width: 100%;
+  max-width: 1280px;
+  width: 80%;
   height: 100%;
   margin: 0 auto;
-  padding: 0 16px;
 
   .bannerTitle {
     display: flex;
     flex-direction: column;
   }
   .bannerTitle > span {
-    font-size: 64px;
-    font-weight: 800;
+    font-size: 34px;
+    font-weight: bolder;
     letter-spacing: 1px;
     color: #fff;
   }
   .bannerText {
     display: flex;
     flex-direction: column;
-    margin: 10px 0 36px;
+    margin: 10px 0 28px;
+    /* background-color: red; */
   }
   .bannerText > span {
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 600;
     margin-top: 5px;
     letter-spacing: 1px;
     color: #fff;
   }
 
   button {
-    /* width: 332px; */
-    /* height: 80px; */
-    width: 290px;
-    height: 70px;
+    width: 210px;
+    height: 56px;
     font-size: 18px;
-    font-weight: 800;
+    font-weight: 900;
     cursor: pointer;
     background: #fff;
 
@@ -143,30 +149,19 @@ const Banner = styled.div`
 
 /* 컨텐츠 */
 const InnerWrap = styled.div`
-  width: 100%;
-  max-width: 1432px;
-  min-height: 910px;
-  padding: 0 16px;
-
+  width: 80%;
+  max-width: 1280px;
+  padding-top: 70px;
   margin: auto;
-
-  background: white;
-
-  /* 인기 선생님 리스트 Wrap */
-  .contentWrap {
-    width: 100%;
-    margin-top: 20px;
-  }
 `;
 
 // 튜터 리스트 부분
 const TutorListWrap = styled.div`
   width: 100%;
-  margin-top: 20px;
 `;
 
 const TutorTitleWrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 
   div {
     display: flex;
@@ -174,41 +169,39 @@ const TutorTitleWrap = styled.div`
     align-items: center;
 
     span {
-      /* font-size: 26px;
-    font-weight: 400; */
-      font-size: 18px;
-      font-weight: 400;
+      font-size: 16px;
+      font-weight: 600;
       margin-bottom: 6px;
     }
+
     .tutorMoreBtn {
-      /* position: absolute; */
+      margin-right: 10px;
       cursor: pointer;
     }
   }
+
   p {
-    /* font-size: 60px; */
-    font-size: 48px;
+    font-size: 38px;
     font-weight: bold;
   }
 `;
 
 const CardList = styled.div`
   width: 100%;
-  padding: 20px 0;
   display: grid;
   place-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
   /* grid-gap: 2rem; */
-  row-gap: 4rem;
-  column-gap: 3rem;
+  row-gap: 2rem;
+  column-gap: 0rem;
 `;
 
 // 리뷰 부분
 const ReviewWrap = styled.div`
-  width: 70%;
+  width: 100%;
   min-height: 600px;
-  /* margin-top: 131px; */
-  margin: 60px auto 200px;
+  margin: 140px auto 200px;
 `;
 
 const ReviewContainer = styled.div`
@@ -217,7 +210,7 @@ const ReviewContainer = styled.div`
 `;
 
 const ReviewTitleWrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 80px;
 
   div {
     display: flex;
@@ -225,10 +218,8 @@ const ReviewTitleWrap = styled.div`
     align-items: center;
 
     span {
-      /* font-size: 26px;
-      font-weight: 400; */
-      font-size: 18px;
-      font-weight: 400;
+      font-size: 16px;
+      font-weight: 600;
       margin-bottom: 6px;
     }
 
@@ -236,15 +227,15 @@ const ReviewTitleWrap = styled.div`
       cursor: pointer;
     }
   }
+
   p {
-    /* font-size: 60px; */
-    font-size: 48px;
+    font-size: 36px;
     font-weight: bold;
   }
 `;
 
 const ReviewList = styled.div`
-  width: 100%;
+  width: 90%;
   min-height: 188px;
   margin: auto;
 `;

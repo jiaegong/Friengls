@@ -40,7 +40,7 @@ function App() {
   // }, []);
 
   const modalOn = useSelector((state) => state.modal.modalOn);
-  console.log(modalOn);
+  // console.log(modalOn);
 
   return (
     <ConnectedRouter history={history}>

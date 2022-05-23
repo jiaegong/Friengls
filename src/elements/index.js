@@ -7,6 +7,8 @@ import Grid from './Grid';
 import Input from './Input';
 import Icon from './Icon';
 import Buttons from './Buttons';
+import InputBox from './InputBox';
+import InputLabel from './InputLabel';
 import Inputs from './Inputs';
 
 export {
@@ -19,5 +21,7 @@ export {
   Grid,
   Input,
   Icon,
+  InputBox,
+  InputLabel,
   Inputs,
 };

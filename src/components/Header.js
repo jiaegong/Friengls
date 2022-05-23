@@ -8,30 +8,40 @@ import { io } from 'socket.io-client';
 // 모듈
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
+import { actionCreators as notiActions } from '../redux/modules/booking';
 
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
 import { MainLogo } from '../image/index';
+import NotiModal from './NotiModal';
 
 const Header = () => {
   const dispatch = useDispatch();
   const token = getCookie('token');
-  const [username, setUsername] = useState('');
-  const [user, setUser] = useState('');
-  const [socket, setSocket] = useState(null);
+  const [notiOpen, setNotiOpen] = useState(false);
+
+  // const [username, setUsername] = useState('');
+  // const [user, setUser] = useState('');
+  // const [socket, setSocket] = useState(null);
 
   // ⭐️
   useEffect(() => {
     // setSocket(io('소켓을 받을 주소'));
     // setSocket(io('http://localhost:4000'));
-  }, []);
+    if (token) {
+      dispatch(notiActions.getBookingNotiDB());
+    }
+  }, [token]);
+
+  const handleNotiModal = () => {
+    setNotiOpen(!notiOpen);
+  };
 
   // ⭐️
   // user ==> socket DB로 이동.
-  useEffect(() => {
-    socket?.emit('newUser', user);
-  }, [socket, user]);
+  // useEffect(() => {
+  //   socket?.emit('newUser', user);
+  // }, [socket, user]);
 
   //마이페이지url에 사용할 유저정보 가져오기
   const userInfo = useSelector((state) => state.user.info);
@@ -67,7 +77,7 @@ const Header = () => {
             <>
               <li
                 onClick={() => {
-                  alert('알림창 나오게 해야돰!!');
+                  handleNotiModal();
                 }}
               >
                 알림
@@ -82,14 +92,9 @@ const Header = () => {
                 마이페이지
               </li>
               <li onClick={logout}>로그아웃</li>
-              {/* {open && ( */}
-              {/* <div className="notifications">
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <button className="notificationBtn">확인</button>
-              </div> */}
-              {/* // )} */}
+              {notiOpen && (
+                <NotiModal ModalAction={handleNotiModal} userInfo={userInfo} />
+              )}
             </>
           ) : (
             <>
@@ -111,7 +116,6 @@ const Header = () => {
             </>
           )}
         </ul>
-        {/* 로그인시 회원이름 나오게 할것인지?? */}
       </div>
     </Wrap>
   );
@@ -121,15 +125,16 @@ export default Header;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 120px;
+  height: 150px;
+  box-shadow: 0px -2px 8px 1px grey;
   background: #fff;
 
   .innerWrap {
     width: 90%;
-    max-width: 1400px;
+    max-width: 1280px;
     height: 100%;
     /* padding: 50px 16px 0; */
-    padding: 36px 16px 0;
+    padding: 60px 0 0;
     margin: auto;
 
     /* text-align: center; */
@@ -140,51 +145,50 @@ const Wrap = styled.div`
     align-items: center;
     /* background: #aaaaaa; */
     .logoWrap {
-      min-width: 245px;
+      width: 210px;
       /* margin: 0 auto 53px; */
+      padding-top: 16px;
       cursor: pointer;
       .logo {
         width: 100%;
-        height: 50px;
+        height: 40px;
       }
     }
 
     .navBarWrap {
       max-width: 672px;
       width: 100%;
-      height: 36px;
-      /* margin: auto; */
+      height: 33px;
+      padding-top: 30px;
       display: flex;
       justify-content: flex-end;
-      /* justify-content: space-around; */
+      justify-content: space-around;
       align-items: center;
       position: relative;
 
       /* background: #c5c5c5; */
 
       li {
-        /* width: 80px; */
+        width: 5rem;
+        width: auto;
         height: 35px;
         display: flex;
         justify-content: center;
         vertical-align: middle;
         align-items: center;
         cursor: pointer;
+
         position: relative;
-        /* font-size: 16px; */
-        font-size: 22px;
-        font-weight: 800;
+        font-size: 1.375rem;
+        font-size: 1.125rem;
+        font-size: 16px;
+        font-weight: bolder;
         letter-spacing: 1px;
 
-        margin-left: 3.375rem;
+        margin-left: 3.125rem;
         /* background: #8e8e8e; */
 
         cursor: pointer;
-        /* background: #8e8e8e; */
-
-        &:nth-child(5) {
-          /* margin: 0; */
-        }
 
         /* 알림 갯수 */
         .counter {
@@ -211,30 +215,47 @@ const Wrap = styled.div`
       /* 알림창 */
       .notifications {
         position: absolute;
-        width: 90%;
-        /* min-height: 200px; */
-        right: 0;
-        top: 50px;
+        max-width: 460px;
+        width: 100%;
+        min-height: 200px;
+        right: 15%;
+        top: 144px;
         padding: 10px;
-        text-align: center;
+        border-radius: 15px;
+        z-index: 9999;
 
-        background-color: #fff;
+        background-color: #aaaaaa;
 
-        .text {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 40px;
-          margin-bottom: 10px;
-          background-color: #aaa;
-          cursor: pointer;
-        }
+        .notificationsInnerWrap {
+          position: relative;
+          min-height: 200px;
+          padding: 10px;
 
-        .notificationBtn {
-          border: 1px solid #a2a2a2;
-          border-radius: 5px;
-          padding: 3px 10px;
-          cursor: pointer;
+          .text {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 40px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-radius: 5px;
+            background-color: #ff9c9c;
+            cursor: pointer;
+          }
+
+          .notificationBtn {
+            border: 1px solid #a2a2a2;
+            border-radius: 5px;
+            padding: 3px 10px;
+            width: 100px;
+            height: 30px;
+            cursor: pointer;
+
+            position: absolute;
+            bottom: 0;
+            right: 37%;
+            text-align: center;
+          }
         }
       }
     }

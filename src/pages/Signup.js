@@ -2,22 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { history } from '../redux/configureStore';
-import { actionCreators as userActions } from '../redux/modules/user';
-import { emailForm, pwdForm, userNameForm } from '../shared/common';
 import axios from 'axios';
-import { Grid, Flex, Input, Button, Text, Icon } from '../elements';
-
+import { Logo } from '../image/';
+import { InputBox, Inputs, Buttons, InputLabel } from '../elements';
+import { emailForm, pwdForm, userNameForm } from '../shared/common';
+// to do: 유효성 검사에 따라 박스 색 변화
+// to do: 유효성 검사 조건 일치하는지 확인
+// to do: 닉네임 유효성 검사 개선(글자수)
 const Signup = (props) => {
   const dispatch = useDispatch();
 
   // userEmail 유효성 검사, input값 가져오기
   const [userEmail, setUserEmail] = useState('');
   const [emailCheck, setEmailCheck] = useState(
-    '이메일 형식을 지켜주세요 예)example@gmail.com',
+    '이메일 형식: 예) example@example.com',
   );
-
-  console.log(userEmail.split('@'));
 
   const handleEmail = (e) => {
     const email = e.target.value;
@@ -25,7 +24,7 @@ const Signup = (props) => {
     if (emailForm(email)) {
       setEmailCheck('올바른 이메일 형식입니다.');
     } else {
-      setEmailCheck('이메일 형식을 지켜주세요 예)example@gmail.com');
+      setEmailCheck('이메일 형식: 예) example@example.com');
     }
   };
 
@@ -50,7 +49,7 @@ const Signup = (props) => {
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
   const [pwdCheck, setPwdCheck] = useState(
-    '비밀번호는 영어대소문자, 숫자, 특수문자를 포함한 8-20자로 만들어주세요.',
+    '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
   );
 
   const handlePwd = (e) => {
@@ -67,7 +66,7 @@ const Signup = (props) => {
         setPwdCheck('비밀번호에 닉네임 또는 이메일을 포함할 수 없습니다.');
       } else {
         setPwdCheck(
-          '비밀번호는 영어대소문자, 숫자, 특수문자를 포함한 8-20자로 만들어주세요.',
+          '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
         );
       }
     }
@@ -101,8 +100,8 @@ const Signup = (props) => {
 
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/signUp/emailCheck',
-      url: 'http://13.124.206.190/signUp/emailCheck',
+      url: 'https://jg-jg.shop/signUp/emailCheck',
+      // url: 'http://13.124.206.190/signUp/emailCheck',
       data: {
         userEmail: userEmail,
       },
@@ -130,8 +129,8 @@ const Signup = (props) => {
 
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/signUp/nameCheck',
-      url: 'http://13.124.206.190/signUp/nameCheck',
+      url: 'https://jg-jg.shop/signUp/nameCheck',
+      // url: 'http://13.124.206.190/signUp/nameCheck',
       data: {
         userName: userName,
       },
@@ -159,12 +158,8 @@ const Signup = (props) => {
     pwdCheck: confirmPwd,
   };
 
-  console.log(signupForm);
-
   //DetailInfo페이지로 넘어가는 버튼 활성화
-  const [disabled, setDisabled] = useState(true);
-
-  const isTrue = !(
+  const isDisabled = !(
     emailCheck === '사용 가능한 이메일입니다.' &&
     userNameCheck === '사용 가능한 닉네임입니다.' &&
     pwdForm(pwd) &&
@@ -173,77 +168,71 @@ const Signup = (props) => {
     ? true
     : false;
 
+  const [returnMessage, setReturnMessage] = useState('');
+
   return (
     <Container>
-      <input
-        style={{
-          width: '293px',
-          height: '46px',
-          marginBottom: '11px',
-          borderRadius: '10px',
-          textAlign: 'center',
-          fontSize: '12px',
-          fontWeight: 700,
-        }}
-        placeholder="이메일"
-        type="text"
-        name="userEmail"
-        onChange={handleEmail}
-        onBlur={checkDuplicatedEmail} //자동 이메일 체크
-      />
-      <span>{emailCheck}</span>
-      <input
-        style={{
-          width: '293px',
-          height: '46px',
-          marginBottom: '11px',
-          borderRadius: '10px',
-          textAlign: 'center',
-          fontSize: '12px',
-          fontWeight: 700,
-        }}
-        placeholder="닉네임"
-        type="text"
-        name="userName"
-        onChange={handleUserName}
-        onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
-      />
-      <span>{userNameCheck}</span>
-      <input
-        style={{
-          width: '293px',
-          height: '46px',
-          marginBottom: '11px',
-          borderRadius: '10px',
-          textAlign: 'center',
-          fontSize: '12px',
-          fontWeight: 700,
-        }}
-        placeholder="비밀번호"
-        type="text"
-        name="pwd"
-        onChange={handlePwd}
-      />
-      <span>{pwdCheck}</span>
-      <input
-        style={{
-          width: '293px',
-          height: '46px',
-          marginBottom: '11px',
-          borderRadius: '10px',
-          textAlign: 'center',
-          fontSize: '12px',
-          fontWeight: 700,
-        }}
-        placeholder="비밀번호확인"
-        type="text"
-        name="pwdCheck"
-        onChange={handleConfirmPwd}
-      />
-      <span>{confirmPwdCheck}</span>
-      <Link to={{ pathname: '/signup/detail', signupForm }}>
-        <input type="button" value="다음" disabled={isTrue} />
-      </Link>
+      {/* 로고 */}
+      <LogoBox>
+        <img src={Logo} alt="userProfileImage" />
+      </LogoBox>
+      <LogoText>Sign in</LogoText>
+      {/* 이메일 인풋 */}
+      <InputBox>
+        <Inputs
+          placeholder="이메일을 입력해 주세요."
+          type="text"
+          name="userEmail"
+          _onChange={handleEmail}
+          _onBlur={checkDuplicatedEmail} //자동 이메일 체크
+        />
+        <InputLabel styles={{ color: '#8A8A8A' }}>{emailCheck}</InputLabel>
+      </InputBox>
+      {/* 유저네임 인풋 */}
+      <InputBox>
+        <Inputs
+          placeholder="닉네임을 입력해 주세요."
+          type="text"
+          name="userName"
+          _onChange={handleUserName}
+          _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
+        />
+        <InputLabel styles={{ color: '#8A8A8A' }}>{userNameCheck}</InputLabel>
+      </InputBox>
+      {/* 비밀번호 인풋 */}
+      <InputBox>
+        <Inputs
+          placeholder="비밀번호를 입력해 주세요."
+          type="text"
+          name="pwd"
+          _onChange={handlePwd}
+        />
+        <InputLabel styles={{ color: '#8A8A8A' }}>{pwdCheck}</InputLabel>
+      </InputBox>
+      {/* 비밀번호 확인 인풋 */}
+      <InputBox styles={{ marginBottom: '60px' }}>
+        <Inputs
+          placeholder="비밀번호를 다시 한 번 입력해 주세요."
+          type="text"
+          name="pwdCheck"
+          _onChange={handleConfirmPwd}
+        />
+        <InputLabel styles={{ color: '#8a8a8a' }}>{confirmPwdCheck}</InputLabel>
+      </InputBox>
+      {/* 상세정보 페이지로 넘어가기 */}
+
+      {isDisabled ? (
+        <NextButton
+          isDisabled
+          type="button"
+          value="다음"
+          onClick={() => window.alert('조건에 맞지 않는 항목이 있습니다.')}
+        />
+      ) : (
+        <Link to={{ pathname: '/signup/detail', signupForm }}>
+          <NextButton type="button" value="다음" disabled={isDisabled} />
+        </Link>
+      )}
     </Container>
   );
 };
@@ -253,14 +242,36 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  width: 500px;
-  height: 680px;
-  border: 2px solid black;
-  border-radius: 10px;
-  margin: 60px auto;
-  gap: 10px;
-  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+  width: 800px;
+  margin: 200px auto;
+`;
+
+const LogoBox = styled.div`
+  width: 97px;
+  height: 60px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+`;
+
+const LogoText = styled.p`
+  margin-bottom: 60px;
+  font-size: 44px;
+  font-weight: 700;
+  color: #153587;
+  cursor: default;
+`;
+
+const NextButton = styled.input`
+  width: 800px;
+  height: 80px;
+  background: ${(props) => (props.isDisabled ? '#999999' : '#171b78')};
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
 `;
 
 export default Signup;

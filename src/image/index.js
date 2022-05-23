@@ -1,17 +1,6 @@
-import HomeIcon from './home.png';
-import BackIcon from './back.png';
-import GoogleLoginIcon from './googleLoginIcon.png';
-import KakaoLoginIcon from './kakaoLoginIcon.png';
 import ProfileMedium from './profileMedium.png';
 import MainLogo from './MainLogo.png';
 import BannerImg from './BannerImg.png';
+import Logo from './Logo.svg';
 
-export {
-  HomeIcon,
-  BackIcon,
-  GoogleLoginIcon,
-  KakaoLoginIcon,
-  ProfileMedium,
-  MainLogo,
-  BannerImg,
-};
+export { ProfileMedium, MainLogo, BannerImg, Logo };

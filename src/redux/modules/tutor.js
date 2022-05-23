@@ -23,7 +23,9 @@ const getTutorListDB = () => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
+      // url: 'https://6251cd887f7fa1b1dddf398b.mockapi.io/user',
       url: `https://jg-jg.shop/getPopularTutor`,
+      // url: `http://13.124.206.190/getPopularTutor`,
     })
       .then((res) => {
         dispatch(getTutors(res.data.data));
