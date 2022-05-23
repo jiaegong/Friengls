@@ -19,7 +19,7 @@ const likeDB = (token, tutorName) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'patch',
-      url: 'https://jg-jg.shop/like',
+      url: 'https://hjg521.link/like',
       data: { tutorName },
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ const unlikeDB = (token, tutorName) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'patch',
-      url: 'https://jg-jg.shop/unlike',
+      url: 'https://hjg521.link/unlike',
       data: { tutorName },
       headers: {
         Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ const getLikeDB = (token) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
-      url: 'https://jg-jg.shop/getLikeList',
+      url: 'https://hjg521.link/getLikeList',
       headers: {
         Authorization: `Bearer ${token}`,
       },

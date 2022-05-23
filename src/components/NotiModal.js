@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as notiActions } from '../redux/modules/booking';
+import NotiItem from "../components/NotiItem"
 
 const NotiModal = (props) => {
   const dispactch = useDispatch();
@@ -27,10 +28,6 @@ const NotiModal = (props) => {
     dispactch(notiActions.getBookingNotiDB());
   }, []);
 
-  function clearNoti(timeId) {
-    dispactch(notiActions.clearNotiDB(timeId));
-  }
-
   return (
     <>
       <Background
@@ -41,40 +38,32 @@ const NotiModal = (props) => {
         <div className="notifications">
           <div className="notificationsInnerWrap">
             {notiList.map((notiItem, idx) => {
-              console.log(notiItem);
-              const timeId = notiItem.timeId;
-              const noti = notiItem.noti;
-              const del = notiItem.del;
+              // const timeId = notiItem.timeId;
+              // const noti = notiItem.noti;
+              // const del = notiItem.del;
 
-              let startTime = notiItem.start;
-              let endTime = notiItem.end;
+              // let startTime = notiItem.start;
+              // let endTime = notiItem.end;
 
-              if (!notiItem) return; // 이 부분 불확실...
-              let [week, month, day, year, sTime] = startTime.split(' ');
-              let start = sTime.substr(0, 5);
-              let end = endTime.substr(-17, 5);
-              console.log({ start, end });
+              // if (!notiItem) return; // 이 부분 불확실...
+              // let [week, month, day, year, sTime] = startTime.split(' ');
+              // let start = sTime.substr(0, 5);
+              // let end = endTime.substr(-17, 5);
+              // console.log({ start, end });
 
               return (
                 <>
-                  {((noti === 1 && del === 0) || del === 1) && (
-                    <div
-                      className="text"
-                      // key={notiItem.timeId}
-                      key={`noti_${timeId}`}
-                      onClick={() => {
-                        clearNoti(timeId);
-                      }}
-                    >
-                      {isTutor === 0
-                        ? ` 튜터 ${notiItem.Tutor_userName}님에게
-                      ${week} ${month} ${day}    ${start}시에 예약
-                      하셨습니다.`
-                        : `튜터 ${notiItem.Tutee_userName}님이 &nbsp;
-                      ${week} ${month} ${day} &nbsp; ${start}시에 수업을 예약
-                      하셨습니다.`}
-                    </div>
-                  )}
+                  {/* <div
+                    className="text"
+                    // key={notiItem.timeId}
+                    key={`noti_${timeId}`}
+                    onClick={() => {
+                      clearNoti(timeId);
+                    }}
+                  >
+                    test
+                  </div> */}
+                  <NotiItem notiItem={notiItem} userInfo={userInfo} key={notiItem.timeId} />
                 </>
               );
             })}
@@ -82,7 +71,7 @@ const NotiModal = (props) => {
             <button
               className="notificationBtn"
               onClick={() => {
-                // dispactch(notiActions.delAllNotiDB())
+                dispactch(notiActions.delAllNotiDB())
               }}
             >
               지우기

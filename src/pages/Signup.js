@@ -100,7 +100,7 @@ const Signup = (props) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp/emailCheck',
+      url: 'https://hjg521.link/signUp/emailCheck',
       // url: 'http://13.124.206.190/signUp/emailCheck',
       data: {
         userEmail: userEmail,
@@ -129,7 +129,7 @@ const Signup = (props) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp/nameCheck',
+      url: 'https://hjg521.link/signUp/nameCheck',
       // url: 'http://13.124.206.190/signUp/nameCheck',
       data: {
         userName: userName,

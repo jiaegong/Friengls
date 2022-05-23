@@ -71,9 +71,9 @@ const setBookingDB = (data, tutorName) => {
 
     axios({
       method: 'post',
-      // url: `https://jg-jg.shop/addBooking/jungi521`,
+      // url: `https://hjg521.link/addBooking/jungi521`,
       // url: `https://13.124.206.190/addBooking/yoonha3331`, // 학생 또는 선생님
-      url: `https://jg-jg.shop/addBooking/${tutorName}`,
+      url: `https://hjg521.link/addBooking/${tutorName}`,
       // url: `http://13.124.206.190/addBooking/${tutorName}`,
       data: {
         start: data[0].start,
@@ -136,9 +136,9 @@ const getBookingDB = ({ userName, isTutor }) => {
 
     axios({
       method: 'get',
-      // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
-      // url: `https://jg-jg.shop/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
-      url: `https://jg-jg.shop/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
+      // url: `https://hjg521.link/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
+      // url: `https://hjg521.link/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
+      url: `https://hjg521.link/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {
         // console.log(doc.data.datas1[0].endTime);
@@ -160,7 +160,7 @@ const getBookingNotiDB = () => {
     console.log('work!!');
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getNoti`,
+      url: `https://hjg521.link/getNoti`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
@@ -176,10 +176,10 @@ const getBookingNotiDB = () => {
 // 알림 확인 ( 한개씩 )
 const clearNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
-    console.log(timeId);
+    console.log({ timeId });
     axios({
       method: 'patch',
-      url: `https://jg-jg.shop/delNoti/?timeId=${timeId}`,
+      url: `https://hjg521.link/delNoti/?timeId=${timeId}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
@@ -194,9 +194,10 @@ const clearNotiDB = (timeId) => {
 // 예약 취소 알림
 const delBookingNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
+    console.log(timeId)
     axios({
       method: 'patch',
-      url: `https://jg-jg.shop/delBooking/?timeId=${timeId}`,
+      url: `https://hjg521.link/delBooking/?timeId=${timeId}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
@@ -213,7 +214,7 @@ const delCheckNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'delete',
-      url: `https://jg-jg.shop/delBookingCheck/?timeId=${timeId}`,
+      url: `https://hjg521.link/delBookingCheck/?timeId=${timeId}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
@@ -228,9 +229,10 @@ const delCheckNotiDB = (timeId) => {
 // 알림 전체 제게
 const delAllNotiDB = () => {
   return function (dispatch, getState, { history }) {
+    console.log("알림 전체 지우기 버튼 활성화!")
     axios({
       method: 'patch',
-      url: `https://jg-jg.shop/delAllNoti`,
+      url: `https://hjg521.link/delAllNoti`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {

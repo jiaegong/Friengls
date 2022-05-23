@@ -20,7 +20,7 @@ const uploadProfileDB = (formData) => {
     axios({
       method: 'post',
       // url: 'https://jg-jg.shop/editUser/profile',
-      url: 'http://13.124.206.190/editUser/profile',
+      url: 'https://hjg521.link/editUser/profile',
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then((response) => {
@@ -36,7 +36,7 @@ const uploadProfileDB = (formData) => {
 //리듀서
 export default handleActions(
   {
-    [UPLOAD_PROFILE]: (state, action) => produce(state, (draft) => {}),
+    [UPLOAD_PROFILE]: (state, action) => produce(state, (draft) => { }),
   },
   initialState,
 );

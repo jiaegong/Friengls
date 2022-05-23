@@ -22,7 +22,7 @@ const Search = (props) => {
 
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getTag`,
+      url: `https://hjg521.link/getTag`,
       // url: `http://13.124.206.190/getTag`, // 태그 불러오는 url
     })
       .then((doc) => {
@@ -181,6 +181,7 @@ const Wrap = styled.div`
 
 const InnerWrap = styled.div`
   width: 90%;
+  width: 80%;
   max-width: 1280px;
   min-height: 910px;
   margin: 120px auto 180px;

@@ -24,7 +24,7 @@ const getTutorListDB = () => {
     axios({
       method: 'get',
       // url: 'https://6251cd887f7fa1b1dddf398b.mockapi.io/user',
-      url: `https://jg-jg.shop/getPopularTutor`,
+      url: `https://hjg521.link/getPopularTutor`,
       // url: `http://13.124.206.190/getPopularTutor`,
     })
       .then((res) => {
@@ -41,7 +41,7 @@ const getSearchTutorsDB = (keyWord) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getTutorTag?keyword=${keyWord}`,
+      url: `https://hjg521.link/getTutorTag?keyword=${keyWord}`,
     })
       .then((res) => {
         dispatch(getTutors(res.data));

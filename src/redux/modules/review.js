@@ -38,7 +38,7 @@ const addReviewDB = (token, tutorName, rate, text) => {
   return function (dispatch) {
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/addReview',
+      url: 'https://hjg521.link/addReview',
       data: {
         tutor_userName: tutorName,
         rate,
@@ -62,7 +62,7 @@ const getReviewDB = () => {
   return function (dispatch) {
     axios({
       method: 'get',
-      url: 'https://jg-jg.shop/getReview',
+      url: 'https://hjg521.link/getReview',
     })
       .then((res) => {
         dispatch(setReview(res.data.data));
@@ -77,7 +77,7 @@ const getOneReviewDB = (tutorName = null) => {
   return function (dispatch) {
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getReview/${tutorName}`,
+      url: `https://hjg521.link/getReview/${tutorName}`,
     })
       .then((res) => {
         dispatch(setReview(res.data.data));
@@ -92,7 +92,7 @@ const editReviewDB = (reviewId, rate, text) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'patch',
-      url: 'https://jg-jg.shop/editReview',
+      url: 'https://hjg521.link/editReview',
       data: {
         reviewId,
         rate,
@@ -113,7 +113,7 @@ const deleteReviewDB = (reviewId) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'delete',
-      url: `https://jg-jg.shop/deleteReview`,
+      url: `https://hjg521.link/deleteReview`,
       data: { reviewId },
     })
       .then((res) => {

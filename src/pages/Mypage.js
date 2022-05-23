@@ -41,6 +41,7 @@ const Mypage = (props) => {
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {
               console.log(item);
+              let timeId = item.timeId
               let startTime = item.start;
               let endTime = item.end;
 
@@ -70,13 +71,20 @@ const Mypage = (props) => {
                     className="videoBtn"
                     onClick={() => {
                       history.push(
-                        `/videochat/${
-                          item.Tutor_userName + item.Tutee_userName
+                        `/videochat/${item.Tutor_userName + item.Tutee_userName
                         }`,
                       );
                     }}
                   >
                     수업 시작
+                  </button>
+                  <button
+                    className="delBtn"
+                    onClick={() => {
+                      dispatch(bookingAction.delBookingNotiDB(timeId))
+                    }}
+                  >
+                    예약 취소
                   </button>
                 </li>
               );

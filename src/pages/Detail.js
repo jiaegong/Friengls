@@ -35,9 +35,9 @@ const Detail = (props) => {
     // 예약 리스트 불러오기
     axios({
       method: 'get',
-      // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
+      // url: `https://hjg521.link/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
       // url: `http://13.124.206.190/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
-      url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
+      url: `https://hjg521.link/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
     })
       .then((doc) => {
         let data = doc.data.datas1;
