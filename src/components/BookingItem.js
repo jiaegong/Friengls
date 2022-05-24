@@ -34,7 +34,7 @@ const BookingItem = (props) => {
   if (isTutor === 0) {
     return (
       <>
-        {TutorDel === 0 && (
+        {TuteeDel === 0 && (
           <li className="booking" key={`booking${timeId}`}>
             <div className="bookingInfo">
               {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}
@@ -75,7 +75,7 @@ const BookingItem = (props) => {
   } else if (isTutor === 1) {
     return (
       <>
-        {TuteeDel === 0 && (
+        {TutorDel === 0 && (
           <li className="booking" key={`booking${timeId}`}>
             <div className="bookingInfo">
               {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}

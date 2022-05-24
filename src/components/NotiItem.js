@@ -3,15 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as notiActions } from '../redux/modules/booking';
 
 const NotiItem = (props) => {
-  const dispactch = useDispatch();
+  const dispatch = useDispatch();
   const { userInfo, notiItem } = props;
 
   console.log({ notiItem });
-  // console.log(notiItem.length)
 
   //  조건에 필요한 정보
   const timeId = notiItem.timeId;
-  console.log({ timeId });
+  // console.log({ timeId });
 
   const TutorNoti = notiItem.TutorNoti;
   const TuteeNoti = notiItem.TuteeNoti;
@@ -33,7 +32,7 @@ const NotiItem = (props) => {
   // console.log({ start, end });
 
   function clearNoti(timeId) {
-    dispactch(notiActions.clearNotiDB(timeId));
+    dispatch(notiActions.clearNotiDB(timeId));
   }
 
   if (isTutor === 0) {
@@ -51,19 +50,7 @@ const NotiItem = (props) => {
                 {/* {month}월 {day}일 2시에 예약이 되었습니다. */}
                 내가 {month}월 {day}일 2시에 예약함.
               </div>
-            ) : (
-              <div
-                className="text"
-                onClick={() => {
-                  // 데이터 삭제하는 함수
-                  dispactch(notiActions.delCheckNotiDB(timeId));
-                }}
-              >
-                내가 신청했던 강의가 거절됨.
-                {/* 신청하신 튜터님의 강의가 거절되셨습니다. */}
-                {/* 선생이 강의를 거절되셨습니다. */}
-              </div>
-            )}
+            ) : null}
           </div>
         </>
       );
@@ -72,16 +59,16 @@ const NotiItem = (props) => {
     if (TuteeNoti === 0) {
       return (
         <>
-          {TuteeDel === 0 ? null : (
+          {TutorDel === 0 ? null : (
             <div
               className="text"
               onClick={() => {
                 //  삭제하는 함수 ( DB에 데이터 삭제 )
-                dispactch(notiActions.delCheckNotiDB(timeId));
+                dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
-              튜터 {notiItem.Tutor_userName}님이 강의를 취소하셨습니다.
-              {/* 튜터님이 강의를 취소하셨습니다. */}
+              {/* 튜터 {notiItem.Tutor_userName}님이 강의를 취소하셨습니다. */}
+              선생이 강의를 취소하셨습니다.
             </div>
           )}
         </>
@@ -105,20 +92,16 @@ const NotiItem = (props) => {
               >
                 학생이 {month}월 {day}일 2시에 예약있습니다.
               </div>
-            ) : (
+            ) : TuteeDel === 1 && TutorDel === 0 ? (
               <div
                 className="text"
                 onClick={() => {
-                  // 데이터 삭제하는 함수
-                  dispactch(notiActions.delCheckNotiDB(timeId));
+                  clearNoti(timeId);
                 }}
               >
-                {/* 튜티 {notiItem.Tutee_userName}님이 신청하신 강의를
-                취소하셨습니다. */}
-                선생이 학생의 강의를 취소함
-                {/* 튜티님이 신청하신 강의를 취소하셨습니다. */}
+                학생이 {month}월 {day}일 2시에 예약있습니다.
               </div>
-            )}
+            ) : null}
           </div>
         </>
       );
@@ -127,19 +110,19 @@ const NotiItem = (props) => {
     if (TutorNoti === 0) {
       return (
         <>
-          {TutorDel === 0 ? null : (
+          {TuteeDel === 0 ? null : (
             <div
               className="text"
               onClick={() => {
                 //  삭제하는 함수 ( DB에 데이터 삭제 )
-                dispactch(notiActions.delCheckNotiDB(timeId));
+                dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
               {/* {notiItem.Tutee_userName}이 강의를 취소하셨습니다. */}
               {/* 튜티 {notiItem.Tutee_userName}님이 신청하신 강의를
                 취소하셨습니다. */}
-              학생이 강의를 취소함
               {/* 튜티님이 강의를 취소하셨습니다. */}
+              학생이 강의를 취소함 --> 강사는 메세지를 확인했었음
             </div>
           )}
         </>

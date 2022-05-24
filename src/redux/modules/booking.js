@@ -216,6 +216,8 @@ const clearNotiDB = (timeId) => {
 // 예약 취소 알림
 const delBookingNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
+    dispatch(clearNotiDB(timeId));
+
     console.log(timeId);
     axios({
       method: 'patch',
@@ -223,9 +225,18 @@ const delBookingNotiDB = (timeId) => {
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
-        console.log(doc);
-        alert('예약을 취소하셨습니다');
-        // window.location.reload()
+        Swal.fire({
+          // position: 'top-end',
+          icon: 'success',
+          text: `예약을 취소하셨습니다~!`,
+          showConfirmButton: true,
+          confirmButtonColor: '#3085d6',
+          // timer: 2000,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        });
       })
       .catch((err) => {
         console.log(err);
