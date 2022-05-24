@@ -43,6 +43,7 @@ const SelectLanguage = (props) => {
         <InputLabel>최대 3개</InputLabel>
       </LabelBox>
       <SelectContainer>
+        {/* 맵으로 돌리기 */}
         {/* 사용언어1 */}
         <Select name="language1" onChange={handleLanguage1}>
           <option value="">{language1 ? language1 : '선택'}</option>

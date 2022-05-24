@@ -12,13 +12,15 @@ import { pwdForm, userNameForm } from '../shared/common';
 const EditUser = (props) => {
   const { onClose, userInfo, accessInfo } = props;
   console.log(userInfo);
+  console.log(userInfo.isTutor.toString());
+
   const dispatch = useDispatch();
   //  사진 미리보기
   const imageRef = useRef();
   const [previewProfile, setPreviewProfile] = useState(
     userInfo.userProfile ? userInfo.userProfile : ProfileMedium,
   );
-  const selectFile = (e) => {
+  const selectFile = () => {
     const previewFile = imageRef.current.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(previewFile);
@@ -98,7 +100,7 @@ const EditUser = (props) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp/nameCheck',
+      url: 'https://hjg521.link/signUp/nameCheck',
       data: {
         userName: userName,
       },
@@ -135,7 +137,7 @@ const EditUser = (props) => {
   const handleLanguage3 = (e) => {
     setLanguage3(e.target.value);
   };
-
+  // 자기소개 한줄소개 setState onBlur로 바꾸기
   //자기소개 input값
   const [contents, setContents] = useState(userInfo.contents);
   const handleContents = (e) => {
@@ -321,14 +323,13 @@ const EditUser = (props) => {
       userEmail: userInfo.userEmail,
       userName: userName ? userName : userInfo.userName,
       pwd: pwd ? pwd : accessInfo,
-      pwdCheck: confirmPwd ? confirmPwd : accessInfo,
       language1: language1,
       language2: language2,
       language3: language3,
       contents: contents,
       comment: comment,
       tag: tagList.join(),
-      isTutor: isTutor ? isTutor : userInfo.isTutor,
+      isTutor: isTutor ? isTutor : userInfo.isTutor.toString(),
       startTime: startTime,
       endTime: endTime,
     };
@@ -512,7 +513,7 @@ const EditUser = (props) => {
             cursor: 'default',
           }}
         >
-          프랭글스에서 한국어를
+          프랜글스에서 한국어를
           <InputLabel
             _onClick={handleIstutor}
             styles={{

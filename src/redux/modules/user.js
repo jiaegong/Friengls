@@ -59,8 +59,7 @@ const signupDB = (formData, loginInfo) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp',
-      // url: 'http://13.124.206.190/signUp',
+      url: 'https://hjg521.link/signUp',
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
@@ -82,14 +81,21 @@ const loginDB = (loginForm) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/login',
+      url: 'https://hjg521.link/login',
       data: loginForm,
     })
       .then((response) => {
-        // console.log('loginDB성공', response.data);
+        console.log('loginDB성공', response.data);
+        if (response.data.msg === '비밀번호가 틀렸습니다.') {
+          window.alert('비밀번호를 확인해 주세요.');
+          return;
+        }
 
+        if (response.data.msg === '존재하지 않는 아이디입니다.') {
+          window.alert('존재하지 않는 아이디 입니다.');
+          return;
+        }
         setCookie('token', response.data.token);
-        // localStorage.setItem('token', response.data.token);
         history.replace('/');
         window.location.reload();
         // 아이디없을 경우 msg
@@ -107,12 +113,8 @@ const loginCheckDB = () => {
     // console.log('loginCheckDB시작');
     axios({
       method: 'get',
-      url: 'https://jg-jg.shop/login/getUser',
-      // url: 'http://13.124.206.190/login/getUser',
+      url: 'https://hjg521.link/login/getUser',
       headers: { token: `${getCookie('token')}` },
-      // headers: {
-      //   authorization: `Bearer ${localStorage.getItem('token')}`,
-      // },
     })
       .then((response) => {
         // console.log('loginCheckDB성공', response.data);
@@ -125,25 +127,32 @@ const loginCheckDB = () => {
   };
 };
 
-const kakaoLogin = (code) => {
+// const kakaoLogin = (code) => {
+//   console.log('kakaoLogin시작');
+//   return function (dispatch, getState, { history }) {
+//     axios({
+//       method: 'GET',
+//       url: `https://hjg521.link/auth/kakao/callback?code=${code}`,
+//     })
+//       .then((response) => {
+//         console.log('소셜로그인 서버에서 온 정보', response);
+//         // getCookie('token', response.data.token);
+//         //서버에서 유저 데이터도 같이 받아올 수 있을까?
+//         //상세정보 작성페이지로 연결
+//       })
+//       .catch((error) => {
+//         window.alert('로그인에 실패했습니다!');
+//         console.log('로그인실패', error);
+//         // history.replace('/login');
+//       });
+//   };
+// };
+
+//테스트
+const kakaoLogin = () => {
+  console.log('kakaoLogin시작');
   return function (dispatch, getState, { history }) {
-    // console.log(code);
-    axios({
-      method: 'GET',
-      url: `https://jg-jg.shop?code=${code}`,
-    })
-      .then((response) => {
-        console.log('소셜로그인 서버에서 온 정보', response);
-        // localStorage.setItem('token', response.data.token);
-        // getCookie('token', response.data.token);
-        //서버에서 유저 데이터도 같이 받아올 수 있을까?
-        //상세정보 작성페이지로 연결
-      })
-      .catch((error) => {
-        window.alert('로그인에 실패했습니다!');
-        console.log('로그인실패', error);
-        history.replace('/login');
-      });
+    console.log(window.location.href);
   };
 };
 
@@ -153,7 +162,7 @@ const editUserDB = (userInfo) => {
 
     axios({
       method: 'patch',
-      url: 'https://jg-jg.shop/editUser',
+      url: 'https://hjg521.link/editUser',
       headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
@@ -176,7 +185,7 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
-      url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+      url: `https://hjg521.link/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
@@ -210,7 +219,7 @@ export default handleActions(
     [EDIT_USER]: (state, action) =>
       produce(state, (draft) => {
         // console.log('editUser리듀서시작', action.payload.userInfo);
-        draft.info = action.payload.userInfo; // 이거맞나? 확인
+        draft.detailInfo = action.payload.userInfo; // 이거맞나? 확인
         draft.isLogin = true;
       }),
     [SET_USER_DETAIL]: (state, action) =>

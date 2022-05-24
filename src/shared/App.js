@@ -33,14 +33,9 @@ function App() {
       dispatch(userActions.loginCheckDB());
     }
   }, []);
-  // useEffect(() => {
-  //   if (localStorage.getItem('token')) {
-  //     dispatch(userActions.loginCheckDB());
-  //   }
-  // }, []);
 
   const modalOn = useSelector((state) => state.modal.modalOn);
-  console.log(modalOn);
+  // console.log(modalOn);
 
   return (
     <ConnectedRouter history={history}>

@@ -22,7 +22,7 @@ const MyPageModal = (props) => {
     try {
       const response = await axios({
         method: 'post',
-        url: 'https://jg-jg.shop/myPage/pwdCheck',
+        url: 'https://hjg521.link/myPage/pwdCheck',
         headers: { token: `${getCookie('token')}` },
         data: {
           pwd: pwd,

@@ -187,7 +187,6 @@ const DetailInfo = (props) => {
     formData.append('endTime', endTime);
     //로그인에 필요한 유저정보
     const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
-
     dispatch(userActions.signupDB(formData, loginInfo));
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도

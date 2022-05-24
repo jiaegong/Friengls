@@ -7,6 +7,7 @@ import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../shared/OAuth';
 import { emailForm, pwdForm } from '../shared/common';
 import { Logo } from '../image/';
 import { InputBox, Inputs, Buttons } from '../elements';
+// import MySwal from '../components/MySwal';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -37,8 +38,15 @@ const Login = (props) => {
     dispatch(userActions.loginDB(loginForm));
   };
 
+  // 소셜로그인 테스트
+  const kakaoLogin = () => {
+    const kakaoApi = `https://hjg521.link/auth/kakao`;
+    window.location.assign(kakaoApi);
+  };
+
   return (
     <Container>
+      {/* <MySwal /> */}
       {/* 로고 */}
       <LogoBox>
         <img src={Logo} alt="userProfileImage" />
@@ -76,6 +84,7 @@ const Login = (props) => {
       </Buttons>
       {/* 소셜로그인 버튼*/}
       <KakaoButton href={KAKAO_AUTH_URL}>카카오 계정으로 로그인</KakaoButton>
+      <button onClick={kakaoLogin}>카카오테스트</button>
       <GoogleButton href={GOOGLE_AUTH_URL}>구글 계정으로 로그인</GoogleButton>
       {/* 회원가입 버튼 */}
       <LoginText>아직 프링글즈 계정이 없으신가요 ?</LoginText>

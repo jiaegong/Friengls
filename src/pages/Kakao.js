@@ -7,8 +7,10 @@ const Kakao = (props) => {
   const dispatch = useDispatch();
   //인가코드
   let code = new URL(window.location.href).searchParams.get('code');
+  console.log(code);
 
   React.useEffect(async () => {
+    console.log('리다이렉트useEffect시작');
     await dispatch(userActions.kakaoLogin(code));
   }, []);
 
