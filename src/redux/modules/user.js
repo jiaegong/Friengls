@@ -98,8 +98,6 @@ const loginDB = (loginForm) => {
         setCookie('token', response.data.token);
         history.replace('/');
         window.location.reload();
-        // 아이디없을 경우 msg
-        // 비밀번호 틀렸을 경우 msg
       })
       .catch((error) => {
         window.alert('로그인에 실패하셨습니다.');
@@ -110,49 +108,19 @@ const loginDB = (loginForm) => {
 
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
-    // console.log('loginCheckDB시작');
+    console.log('loginCheckDB시작');
     axios({
       method: 'get',
       url: 'https://hjg521.link/login/getUser',
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
-        // console.log('loginCheckDB성공', response.data);
         dispatch(setUser(response.data));
       })
       .catch((error) => {
         console.log('로그인체크 실패', error);
         //메인으로 돌아가기
       });
-  };
-};
-
-// const kakaoLogin = (code) => {
-//   console.log('kakaoLogin시작');
-//   return function (dispatch, getState, { history }) {
-//     axios({
-//       method: 'GET',
-//       url: `https://hjg521.link/auth/kakao/callback?code=${code}`,
-//     })
-//       .then((response) => {
-//         console.log('소셜로그인 서버에서 온 정보', response);
-//         // getCookie('token', response.data.token);
-//         //서버에서 유저 데이터도 같이 받아올 수 있을까?
-//         //상세정보 작성페이지로 연결
-//       })
-//       .catch((error) => {
-//         window.alert('로그인에 실패했습니다!');
-//         console.log('로그인실패', error);
-//         // history.replace('/login');
-//       });
-//   };
-// };
-
-//테스트
-const kakaoLogin = () => {
-  console.log('kakaoLogin시작');
-  return function (dispatch, getState, { history }) {
-    console.log(window.location.href);
   };
 };
 
@@ -243,7 +211,6 @@ const actionCreators = {
   loginDB,
   loginCheckDB,
   setUser,
-  kakaoLogin,
   editUserDB,
   editUser,
   getUserDetailDB,

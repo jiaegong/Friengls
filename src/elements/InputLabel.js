@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const InputLabel = (props) => {
-  const { _onClick, _for, defaultStyles, styles, children } = props;
+  const { _onClick, defaultStyles, styles, children } = props;
   return (
     <Label onClick={_onClick} style={{ ...styles }} {...defaultStyles}>
       {children}

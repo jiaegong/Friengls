@@ -33,6 +33,7 @@ const Box = styled.div`
   align-items: flex-start;
   flex-direction: column;
   justify-content: space-around;
+  position: relative;
 `;
 
 export default InputBox;

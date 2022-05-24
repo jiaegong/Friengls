@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 
 // 패키지
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { ConnectedRouter } from 'connected-react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import Main from '../pages/Main';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
-import Kakao from '../pages/Kakao';
-import Google from '../pages/Google';
+import SocialLogin from '../pages/SocialLogin';
 import DetailInfo from '../pages/DetailInfo';
 import Mypage from '../pages/Mypage';
 import Detail from '../pages/Detail';
@@ -22,7 +21,6 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
-import Portal from '../shared/Portal';
 import ReviewModal from '../components/ReviewModal';
 
 function App() {
@@ -41,13 +39,11 @@ function App() {
     <ConnectedRouter history={history}>
       {modalOn && <ReviewModal />}
       <Header />
-      <Switch>
-        <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={Signup} />
-        <Route path="/auth/kakao" component={Kakao} />
-        <Route path="/oauth2/callback/google" component={Google} />
-        <Route path="/signup/detail" component={DetailInfo} />
-      </Switch>
+      <Route path="/login" exact component={Login} />
+      <Route path="/signup" exact component={Signup} />
+      <Route path="/kakaoUser" component={SocialLogin} />
+      <Route path="/googleUser" component={SocialLogin} />
+      <Route path="/signup/detail" component={DetailInfo} />
       <Route path="/" exact component={Main} />
       <Route path="/mypage/:userName/:isTutor" exact component={Mypage} />
       <Route path="/detail/:userName/:isTutor" exact component={Detail} />

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Portal from '../shared/Portal';
 import EditUser from './EditUser';
@@ -109,7 +108,7 @@ const Background = styled.div`
 const Content = styled.div`
   height: 954px;
   width: 1240px;
-  // margin-top: 120px;
+  margin-top: 420px;
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);

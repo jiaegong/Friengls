@@ -3,21 +3,37 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { history } from '../redux/configureStore';
 import { Logo } from '../image/';
 import { InputBox, Inputs, Buttons, InputLabel } from '../elements';
 import { emailForm, pwdForm, userNameForm } from '../shared/common';
+import { useEffect } from 'react';
+import SelectIsTutor from '../components/SelectIstutor';
 // to do: 유효성 검사에 따라 박스 색 변화
 // to do: 유효성 검사 조건 일치하는지 확인
 // to do: 닉네임 유효성 검사 개선(글자수)
-const Signup = (props) => {
+// to do: 소셜로그인에 사용할 이메일이 이미 가입된 이메일일 경우
+const Signup = ({ userInfo }) => {
   const dispatch = useDispatch();
-
-  // userEmail 유효성 검사, input값 가져오기
-  const [userEmail, setUserEmail] = useState('');
+  //소셜로그인의 경우 닉네임체크 바로 할 수 있도록
+  useEffect(() => {
+    if (userInfo) {
+      checkDuplicatedEmail(userInfo.userEmail);
+      //유저네임은 선택사항이라 가져올 경우만(테스트해볼 것)
+      if (userInfo.userName) {
+        checkDuplicatedUserName(userInfo.userName);
+      }
+    }
+  }, []);
+  // userEmail 상태값
+  const [userEmail, setUserEmail] = useState(
+    userInfo?.userEmail ? userInfo.userEmail : '',
+  );
+  // userEmail 형식 라벨로 표시
   const [emailCheck, setEmailCheck] = useState(
     '이메일 형식: 예) example@example.com',
   );
-
+  // userEmail 유효성 검사
   const handleEmail = (e) => {
     const email = e.target.value;
     setUserEmail(email);
@@ -28,12 +44,15 @@ const Signup = (props) => {
     }
   };
 
-  // userName 유효성 검사, input값 가져오기
-  const [userName, setUserName] = useState('');
+  // userName 상태값
+  const [userName, setUserName] = useState(
+    userInfo?.userName ? userInfo.userName : '',
+  );
+  // userName 형식 라벨로 표시
   const [userNameCheck, setUserNameCheck] = useState(
     '영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
   );
-
+  // userName 유효성 검사
   const handleUserName = (e) => {
     const userName = e.target.value;
     setUserName(userName);
@@ -46,12 +65,13 @@ const Signup = (props) => {
     }
   };
 
-  //pwd 유효성 검사, input값 가져오기
+  //pwd 상태값
   const [pwd, setPwd] = useState('');
+  //pwd 형식 라벨로 표시
   const [pwdCheck, setPwdCheck] = useState(
     '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
   );
-
+  //pwd 유효성 검사
   const handlePwd = (e) => {
     const pwd = e.target.value;
     setPwd(pwd);
@@ -93,7 +113,6 @@ const Signup = (props) => {
   //이메일 중복체크
   const checkDuplicatedEmail = () => {
     if (!emailForm(userEmail)) {
-      //조건 깜빡이게 할 수 있을까?
       return;
     }
     console.log('중복확인할 이메일', userEmail);
@@ -101,7 +120,6 @@ const Signup = (props) => {
     axios({
       method: 'post',
       url: 'https://hjg521.link/signUp/emailCheck',
-      // url: 'http://13.124.206.190/signUp/emailCheck',
       data: {
         userEmail: userEmail,
       },
@@ -109,6 +127,14 @@ const Signup = (props) => {
       .then((response) => {
         console.log('emailCheckDB성공', response.data.msg);
         if (response.data.msg === '이미 있는 이메일 주소입니다.') {
+          // 소셜로그인에 사용할 이메일이 이미 가입된 이메일일 경우
+          // if (userInfo) {
+          //   window.alert(
+          //     '이미 가입된 이메일입니다. 다른 방법으로 가입해 주세요.',
+          //   );
+          //   history.replace('/login');
+          // }
+
           setEmailCheck(
             '이미 가입된 이메일입니다. 다른 이메일을 입력해주세요.',
           );
@@ -130,7 +156,6 @@ const Signup = (props) => {
     axios({
       method: 'post',
       url: 'https://hjg521.link/signUp/nameCheck',
-      // url: 'http://13.124.206.190/signUp/nameCheck',
       data: {
         userName: userName,
       },
@@ -150,12 +175,39 @@ const Signup = (props) => {
       });
   };
 
+  //isTutor input값
+  const [isTutor, setIsTutor] = useState('');
+  const handleIstutor = (e) => {
+    setIsTutor(e.target.value);
+  };
+
+  //수업가능시간(시작) input값
+  const [startTime, setStartTime] = useState('');
+  const handleStartTime = (e) => {
+    setStartTime(e.target.value);
+  };
+  //수업가능시간(종료) option설정
+  const endTimeArray = [];
+  for (let i = 1; i < 7; i++) {
+    Number(startTime) + (2 * i - 1) < 24
+      ? endTimeArray.push(Number(startTime) + (2 * i - 1))
+      : endTimeArray.push(Number(startTime) + (2 * i - 1) - 24);
+  }
+  //수업가능시간(종료) input값
+  const [endTime, setEndTime] = useState('');
+  const handleEndTime = (e) => {
+    setEndTime(e.target.value);
+  };
+
   //signup페이지에서 받는 유저정보
   const signupForm = {
     userEmail: userEmail,
     userName: userName,
     pwd: pwd,
     pwdCheck: confirmPwd,
+    isTutor: isTutor,
+    startTime: startTime,
+    endTime: endTime,
   };
 
   //DetailInfo페이지로 넘어가는 버튼 활성화
@@ -163,12 +215,13 @@ const Signup = (props) => {
     emailCheck === '사용 가능한 이메일입니다.' &&
     userNameCheck === '사용 가능한 닉네임입니다.' &&
     pwdForm(pwd) &&
-    pwd === confirmPwd
+    pwd === confirmPwd &&
+    isTutor &&
+    startTime &&
+    endTime
   )
     ? true
     : false;
-
-  const [returnMessage, setReturnMessage] = useState('');
 
   return (
     <Container>
@@ -182,18 +235,20 @@ const Signup = (props) => {
         <Inputs
           placeholder="이메일을 입력해 주세요."
           type="text"
-          name="userEmail"
+          value={userInfo?.userEmail}
           _onChange={handleEmail}
           _onBlur={checkDuplicatedEmail} //자동 이메일 체크
+          disabled={userInfo ? true : false}
         />
         <InputLabel styles={{ color: '#8A8A8A' }}>{emailCheck}</InputLabel>
       </InputBox>
+
       {/* 유저네임 인풋 */}
       <InputBox>
         <Inputs
           placeholder="닉네임을 입력해 주세요."
           type="text"
-          name="userName"
+          value={userInfo?.userName}
           _onChange={handleUserName}
           _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
         />
@@ -219,8 +274,16 @@ const Signup = (props) => {
         />
         <InputLabel styles={{ color: '#8a8a8a' }}>{confirmPwdCheck}</InputLabel>
       </InputBox>
+      {/* 선생님/학생 선택 */}
+      {/* isTutor */}
+      <SelectIsTutor
+        startTime={startTime}
+        _onClick={handleIstutor}
+        isTutor={isTutor}
+        handleStartTime={handleStartTime}
+        handleEndTime={handleEndTime}
+      />
       {/* 상세정보 페이지로 넘어가기 */}
-
       {isDisabled ? (
         <NextButton
           isDisabled
@@ -264,6 +327,7 @@ const LogoText = styled.p`
 const NextButton = styled.input`
   width: 800px;
   height: 80px;
+  margin-top: 40px;
   background: ${(props) => (props.isDisabled ? '#999999' : '#171b78')};
   border: none;
   border-radius: 4px;

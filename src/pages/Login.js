@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../shared/OAuth';
 import { emailForm, pwdForm } from '../shared/common';
 import { Logo } from '../image/';
 import { InputBox, Inputs, Buttons } from '../elements';
@@ -42,6 +41,11 @@ const Login = (props) => {
   const kakaoLogin = () => {
     const kakaoApi = `https://hjg521.link/auth/kakao`;
     window.location.assign(kakaoApi);
+  };
+
+  const googleLogin = () => {
+    const googleApi = `https://hjg521.link/auth/google`;
+    window.location.assign(googleApi);
   };
 
   return (
@@ -83,9 +87,23 @@ const Login = (props) => {
         Login
       </Buttons>
       {/* 소셜로그인 버튼*/}
-      <KakaoButton href={KAKAO_AUTH_URL}>카카오 계정으로 로그인</KakaoButton>
-      <button onClick={kakaoLogin}>카카오테스트</button>
-      <GoogleButton href={GOOGLE_AUTH_URL}>구글 계정으로 로그인</GoogleButton>
+      <Buttons
+        _onClick={kakaoLogin}
+        styles={{ height: '60px', background: '#ffe900', color: '#3c1e1e' }}
+      >
+        카카오 계정으로 로그인
+      </Buttons>
+      <Buttons
+        _onClick={googleLogin}
+        styles={{
+          height: '60px',
+          margin: '20px auto 66px',
+          background: '#fff',
+          color: '#3c1e1e',
+        }}
+      >
+        구글 계정으로 로그인
+      </Buttons>
       {/* 회원가입 버튼 */}
       <LoginText>아직 프링글즈 계정이 없으신가요 ?</LoginText>
       <Buttons
@@ -123,35 +141,6 @@ const LogoText = styled.p`
   font-size: 44px;
   font-weight: 700;
   color: #153587;
-`;
-
-const KakaoButton = styled.a`
-  width: 100%;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffe900;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  font-size: 24px;
-  font-weight: 600;
-  text-decoration: none;
-  color: #3c1e1e;
-`;
-
-const GoogleButton = styled.a`
-  width: 100%;
-  height: 80px;
-  margin: 20px auto 66px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  font-size: 24px;
-  font-weight: 600;
-  text-decoration: none;
-  color: #3c1e1e;
 `;
 
 const LoginText = styled.p`

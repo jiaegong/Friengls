@@ -505,23 +505,24 @@ const EditUser = (props) => {
         <p>사용자 설정 변경</p>
         <InputBox
           styles={{
+            background: 'rgba(0,0,0,0.05)',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
             fontSize: '26px',
             cursor: 'default',
+            color: '#999',
           }}
         >
           프랜글스에서 한국어를
           <InputLabel
-            _onClick={handleIstutor}
             styles={{
               width: '140px',
               marginLeft: '10px',
               alignItems: 'center',
               fontSize: '26px',
-              cursor: 'pointer',
+              color: '#999',
             }}
           >
             <Inputs
@@ -531,29 +532,19 @@ const EditUser = (props) => {
               styles={{
                 width: '20px',
                 margin: '5px 5px 0 0',
-                cursor: 'pointer',
               }}
-              checked={
-                isTutor
-                  ? isTutor === '0'
-                    ? true
-                    : false
-                  : userInfo.isTutor === 0
-                  ? true
-                  : false
-              }
+              checked={userInfo.isTutor === 0 ? true : false}
             />
             배울래요!
           </InputLabel>
           &nbsp;&nbsp;/&nbsp;&nbsp;
           <InputLabel
-            _onClick={handleIstutor}
             styles={{
               width: '180px',
               marginLeft: '10px',
               alignItems: 'center',
               fontSize: '26px',
-              cursor: 'pointer',
+              color: '#999',
             }}
           >
             <Inputs
@@ -563,23 +554,14 @@ const EditUser = (props) => {
               styles={{
                 width: '20px',
                 margin: '5px 5px 0 0',
-                cursor: 'pointer',
               }}
-              checked={
-                isTutor
-                  ? isTutor === '1'
-                    ? true
-                    : false
-                  : userInfo.isTutor === 1
-                  ? true
-                  : false
-              }
+              checked={userInfo.isTutor === 1 ? true : false}
             />
             가르칠래요!
           </InputLabel>
         </InputBox>
         {/* 선생님인 경우 수업시간 선택 */}
-        {(isTutor ? isTutor === '1' : userInfo.isTutor === 1) && (
+        {userInfo.isTutor === 1 && (
           <TimeSelectContainer>
             <InputBox
               styles={{
