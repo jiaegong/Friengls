@@ -54,7 +54,6 @@ const initialState = {
     //   ),
     // },
   ],
-  noti: [],
 };
 
 // 예약하기.
