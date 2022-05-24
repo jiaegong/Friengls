@@ -25,6 +25,9 @@ const Mypage = (props) => {
 
   useEffect(() => {
     dispatch(userActions.getUserDetailDB(userApi));
+  }, [])
+
+  useEffect(() => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
   }, [userName]);
 
@@ -56,13 +59,13 @@ const Mypage = (props) => {
               let startTime = item.start;
               let endTime = item.end;
 
-              if (!item) return; // 이 부분 불확실...
+              if (!item) return null; // 이 부분 불확실...
               let [week, month, day, year, sTime] = startTime.split(' ');
               let start = sTime.substr(0, 5);
               let end = endTime.substr(-17, 5);
               return (
                 <>
-                  {del === 0 ? (<li className="booking" key={`booking${idx}`}>
+                  {del === 0 ? (<li className="booking" key={`booking${timeId}`}>
                     <div className="bookingInfo">
                       {/* 선생인지 학생인지에 따라서 userName 다르게 보이게 함 */}
                       {isTutor === '0' ? (

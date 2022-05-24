@@ -6,7 +6,9 @@ import NotiItem from "../components/NotiItem"
 
 const NotiModal = (props) => {
   const dispactch = useDispatch();
-  const notiList = useSelector((state) => state.booking.noti);
+  const notiList = useSelector((state) => state.booking.list);
+  console.log({ notiList })
+  console.log(notiList.length)
   const ModalAction = props.ModalAction;
   const userInfo = props.userInfo;
   const isTutor = userInfo.isTutor;
@@ -39,8 +41,8 @@ const NotiModal = (props) => {
           <div className="notificationsInnerWrap">
             {notiList.map((notiItem, idx) => {
               // const timeId = notiItem.timeId;
-              // const noti = notiItem.noti;
-              // const del = notiItem.del;
+              const noti = notiItem.noti;
+              const del = notiItem.del;
 
               // let startTime = notiItem.start;
               // let endTime = notiItem.end;
@@ -53,16 +55,7 @@ const NotiModal = (props) => {
 
               return (
                 <>
-                  {/* <div
-                    className="text"
-                    // key={notiItem.timeId}
-                    key={`noti_${timeId}`}
-                    onClick={() => {
-                      clearNoti(timeId);
-                    }}
-                  >
-                    test
-                  </div> */}
+                  {/* {} */}
                   <NotiItem notiItem={notiItem} userInfo={userInfo} key={notiItem.timeId} />
                 </>
               );

@@ -145,6 +145,7 @@ const getBookingDB = ({ userName, isTutor }) => {
         // let endTimeDB = doc.data.datas1[0].endTime;
         // let endTime = moment(endTimeDB, 'ddd, DD MMM YYYY HH:mm:ss ZZ');
         // console.log(endTime);
+        console.log(doc.data)
 
         dispatch(getBooking(doc.data));
       })
@@ -202,6 +203,8 @@ const delBookingNotiDB = (timeId) => {
     })
       .then((doc) => {
         console.log(doc);
+        alert("예약을 취소하셨습니다")
+        window.location.reload()
       })
       .catch((err) => {
         console.log(err);
@@ -257,12 +260,12 @@ export default handleActions(
       }),
     [GET_NOTI]: (state, action) =>
       produce(state, (draft) => {
-        draft.noti = action.payload.data;
+        draft.list = action.payload.data;
       }),
     [CLEAR_NOTI]: (state, action) =>
       produce(state, (draft) => {
         console.log(action);
-        draft.noti = action.payload.data;
+        // draft.list = action.payload.data;
       }),
     [DEL_NOTI]: (state, action) =>
       produce(state, (draft) => {

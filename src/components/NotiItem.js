@@ -38,11 +38,7 @@ const NotiItem = (props) => {
       return (
         <>
           {del === 0 ? (
-            <div
-              className="text"
-            >
-              알림이 없습니다.
-            </div>
+            null
           ) : (
             <div
               className="text"
@@ -51,7 +47,7 @@ const NotiItem = (props) => {
                 dispactch(notiActions.delCheckNotiDB(timeId))
               }}
             >
-              선생님이 강의를 취소하셨습니다.
+              튜터 {notiItem.Tutor_userName}님이 강의를 취소하셨습니다.
               {/* 튜터님이 강의를 취소하셨습니다. */}
             </div>
           )}
@@ -70,7 +66,7 @@ const NotiItem = (props) => {
                   clearNoti(timeId);
                 }}
               >
-                5월 **일 2시에 예약되셨습니다
+                {month}월 {day}일 2시에 예약있습니다.
               </div>
             ) : (
               <div
@@ -80,8 +76,8 @@ const NotiItem = (props) => {
                   dispactch(notiActions.delCheckNotiDB(timeId))
                 }}
               >
-                {/* 신청하신 튜터님의 강의가 거절되셨습니다. */}
-                선생이 강의를 거절되셨습니다.
+                신청하신 튜터님의 강의가 거절되셨습니다.
+                {/* 선생이 강의를 거절되셨습니다. */}
               </div>
             )}
           </div>
@@ -99,11 +95,7 @@ const NotiItem = (props) => {
       return (
         <>
           {del === 0 ? (
-            <div
-              className="text"
-            >
-              알림이 없습니다.
-            </div>
+            null
           ) : (
             <div
               className="text"
@@ -113,7 +105,7 @@ const NotiItem = (props) => {
 
               }}
             >
-              학생이 강의를 취소하셨습니다.
+              {notiItem.Tutee_userName}이 강의를 취소하셨습니다.
               {/* 튜티님이 강의를 취소하셨습니다. */}
             </div>
           )}
@@ -133,7 +125,7 @@ const NotiItem = (props) => {
                   clearNoti(timeId);
                 }}
               >
-                5월 **일 2시에 예약있습니다.
+                {month}월 {day}일 2시에 예약있습니다.
               </div>
             ) : (
               <div
@@ -143,7 +135,7 @@ const NotiItem = (props) => {
                   dispactch(notiActions.delCheckNotiDB(timeId))
                 }}
               >
-                학생이 신청하신 강의를 취소하셨습니다.
+                튜티 {notiItem.Tutee_userName}님이 신청하신 강의를 취소하셨습니다.
                 {/* 튜티님이 신청하신 강의를 취소하셨습니다. */}
 
               </div>
