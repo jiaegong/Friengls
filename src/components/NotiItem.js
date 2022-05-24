@@ -83,16 +83,18 @@ const NotiItem = (props) => {
       return (
         <>
           <div>
-            {TutorDel === 0 ? (
+            {TutorDel === 0 && TuteeDel === 1 ? (
               <div
                 className="text"
                 onClick={() => {
-                  clearNoti(timeId);
+                  dispatch(notiActions.delCheckNotiDB(timeId));
+
                 }}
               >
-                학생이 {month}월 {day}일 2시에 예약있습니다.
+                {/* 학생이 {month}월 {day}일 2시에 예약있습니다. */}
+                학생이 예약을 취소했습니다.
               </div>
-            ) : TuteeDel === 1 && TutorDel === 0 ? (
+            ) : TutorDel === 0 ? (
               <div
                 className="text"
                 onClick={() => {

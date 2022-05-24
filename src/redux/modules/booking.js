@@ -254,6 +254,7 @@ const delCheckNotiDB = (timeId) => {
     })
       .then((doc) => {
         console.log(doc);
+        window.location.reload()
       })
       .catch((err) => {
         console.log(err);
