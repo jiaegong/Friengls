@@ -40,7 +40,17 @@ const NotiItem = (props) => {
       return (
         <>
           <div>
-            {TuteeDel === 0 ? (
+            {TuteeDel === 0 && TutorDel === 1 ? (
+              <div
+                className="text"
+                onClick={() => {
+                  clearNoti(timeId);
+                }}
+              >
+                {/* {month}월 {day}일 2시에 예약이 되었습니다. */}
+                선생이 예약을 취소함
+              </div>
+            ) : TuteeDel === 0 ? (
               <div
                 className="text"
                 onClick={() => {
