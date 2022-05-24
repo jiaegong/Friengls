@@ -3,6 +3,7 @@ import { produce } from 'immer';
 import moment from 'moment';
 import axios from 'axios';
 import { getCookie } from '../../shared/Cookie';
+import Swal from 'sweetalert2';
 
 const SET_BOOKING = 'SET_BOOKING';
 const GET_BOOKING = 'GET_BOOKING';
@@ -69,6 +70,22 @@ const setBookingDB = (data, tutorName) => {
       return;
     }
 
+    if (data.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        text: '시간과 날짜를 선택해주세요~',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '확인',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // history.push('/login');
+          window.location.reload();
+        }
+      });
+    }
+
+    console.log(data);
+
     axios({
       method: 'post',
       // url: `https://hjg521.link/addBooking/jungi521`,
@@ -76,8 +93,8 @@ const setBookingDB = (data, tutorName) => {
       url: `https://hjg521.link/addBooking/${tutorName}`,
       // url: `http://13.124.206.190/addBooking/${tutorName}`,
       data: {
-        start: data[0].start,
-        end: data[0].end,
+        start: data[0]?.start,
+        end: data[0]?.end,
         userName: userName,
       },
     })
@@ -114,11 +131,16 @@ const setBookingDB = (data, tutorName) => {
           if (month === 'Dec') return '12';
         };
 
-        alert(
-          ` 튜터 ${tutorName}님에게   ${Month(
+        Swal.fire({
+          // position: 'top-end',
+          icon: 'success',
+          text: `${Month(
             month,
           )}월  ${day}일   ${start} - ${end} 예약 되었습니다!!`,
-        );
+          showConfirmButton: true,
+          confirmButtonColor: '#3085d6',
+          // timer: 2000,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -145,7 +167,7 @@ const getBookingDB = ({ userName, isTutor }) => {
         // let endTimeDB = doc.data.datas1[0].endTime;
         // let endTime = moment(endTimeDB, 'ddd, DD MMM YYYY HH:mm:ss ZZ');
         // console.log(endTime);
-        console.log(doc.data)
+        console.log(doc.data);
 
         dispatch(getBooking(doc.data));
       })
@@ -195,7 +217,7 @@ const clearNotiDB = (timeId) => {
 // 예약 취소 알림
 const delBookingNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
-    console.log(timeId)
+    console.log(timeId);
     axios({
       method: 'patch',
       url: `https://hjg521.link/delBooking/?timeId=${timeId}`,
@@ -203,8 +225,8 @@ const delBookingNotiDB = (timeId) => {
     })
       .then((doc) => {
         console.log(doc);
-        alert("예약을 취소하셨습니다")
-        window.location.reload()
+        alert('예약을 취소하셨습니다');
+        // window.location.reload()
       })
       .catch((err) => {
         console.log(err);
@@ -232,7 +254,7 @@ const delCheckNotiDB = (timeId) => {
 // 알림 전체 제게
 const delAllNotiDB = () => {
   return function (dispatch, getState, { history }) {
-    console.log("알림 전체 지우기 버튼 활성화!")
+    console.log('알림 전체 지우기 버튼 활성화!');
     axios({
       method: 'patch',
       url: `https://hjg521.link/delAllNoti`,
