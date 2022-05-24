@@ -62,12 +62,29 @@ const setBookingDB = (data, tutorName) => {
     console.log('DB 저장으로 가는 데이터 : ', { data, tutorName });
 
     let userName = getState().user.info.userName;
+    let isTutor = getState().user.info.isTutor;
     console.log(userName);
 
     if (!userName) {
       alert('로그인후 예약해주세요~!');
       return;
     }
+
+
+    if (isTutor === 1) {
+      // alert("선생님은.. 예약 할수 없어요... ㅠㅠ")
+      Swal.fire({
+        // position: 'center',
+        icon: 'error',
+        text: `선생님은.. 예약 할수 없어요... ㅠㅠ`,
+        showConfirmButton: true,
+        confirmButtonColor: '#3085d6',
+        // timer: 2000,
+      });
+      return
+    }
+
+
 
     if (data.length === 0) {
       Swal.fire({
@@ -82,6 +99,8 @@ const setBookingDB = (data, tutorName) => {
         }
       });
     }
+
+
 
     console.log(data);
 
@@ -154,6 +173,7 @@ const getBookingDB = ({ userName, isTutor }) => {
     // userName 없을시 에러 뜨는 경우 방지 ??? 없어도 되나??
     // if (!userName) return;
     console.log({ userName, isTutor });
+
 
     axios({
       method: 'get',

@@ -31,6 +31,8 @@ const BookingItem = (props) => {
   let start = sTime.substr(0, 5);
   let end = endTime.substr(-17, 5);
 
+  console.log(end)
+
   if (isTutor === 0) {
     return (
       <>
