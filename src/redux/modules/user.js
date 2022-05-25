@@ -60,6 +60,10 @@ const signupDB = (formData, loginInfo) => {
     axios({
       method: 'post',
       url: 'https://hjg521.link/signUp',
+<<<<<<< HEAD
+=======
+      // url: 'http://13.124.206.190/signUp',
+>>>>>>> 375abd9e0cfd6e32e82da952efa12c7e33bdc192
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
@@ -175,7 +179,11 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
+<<<<<<< HEAD
       // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+=======
+      // url: `https://hjg521.link/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+>>>>>>> 375abd9e0cfd6e32e82da952efa12c7e33bdc192
       url: `https://hjg521.link/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: { token: `${getCookie('token')}` },
     })

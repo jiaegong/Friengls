@@ -36,7 +36,7 @@ const uploadProfileDB = (formData) => {
 //리듀서
 export default handleActions(
   {
-    [UPLOAD_PROFILE]: (state, action) => produce(state, (draft) => {}),
+    [UPLOAD_PROFILE]: (state, action) => produce(state, (draft) => { }),
   },
   initialState,
 );

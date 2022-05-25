@@ -15,8 +15,9 @@ import { createTheme } from '@material-ui/core/styles';
 import { ArrowLeft, ArrowRight } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as calendarActions } from '../../redux/modules/booking';
-import { getCookie } from '../../shared/Cookie';
-import styled from 'styled-components';
+import { history } from '../../redux/configureStore';
+
+import Swal from 'sweetalert2';
 
 const CalendarTemplate = ({
   tutorName,
@@ -39,6 +40,7 @@ const CalendarTemplate = ({
   // endTime = "24:00",
 }) => {
   const dispatch = useDispatch();
+  // const Swal = require('sweetalert2');
   const isLogin = useSelector((state) => state.user.isLogin);
   console.log(isLogin);
 
@@ -605,11 +607,17 @@ const CalendarTemplate = ({
         (isLogin === false && activeDay === null) ||
         (activeDay && isLogin === false)
       ) {
-        alert('로그인후 이용해주세요~!');
-        window.location.reload();
-      } else if (activeDay === null) {
-        alert('날짜를 선택해주세요~!');
-        window.location.reload();
+        Swal.fire({
+          title: '로그인 하셨나요?',
+          text: '로그인후 사용이 가능 합니다!~',
+          icon: 'warning',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: '확인',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history.push('/login');
+          }
+        });
       }
 
       if (isLogin === true) {
@@ -892,39 +900,24 @@ const CalendarTemplate = ({
               </Grid> */}
 
               <Grid item>
-                {saving ? (
-                  <CircularProgress />
-                ) : (
-                  <div className="saveBtn">
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      onClick={handleSaveAvailability}
-                      className={classes.button}
-                    >
-                      수강 예약하기
-                    </Button>
-                    <span
-                      style={{
-                        display: 'inline-block',
-                        marginLeft: '10px',
-                        marginTop: '10px',
-                        width: '30px',
-                        height: '30px',
-                        fontSize: '34px',
-                        position: 'absolute',
-                        right: '-80px',
-                        top: '0px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => {
-                        window.location.reload();
-                      }}
-                    >
-                      ♻️
-                    </span>
-                  </div>
-                )}
+                <div className="saveBtn">
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleSaveAvailability}
+                    className={classes.button}
+                  >
+                    수강 예약하기
+                  </Button>
+                  <span
+                    className="resetBtn"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    ♻️ 초기화
+                  </span>
+                </div>
               </Grid>
             </Grid>
           </Grid>

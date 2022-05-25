@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as notiActions } from '../redux/modules/booking';
+import NotiItem from '../components/NotiItem';
 
 const NotiModal = (props) => {
   const dispactch = useDispatch();
-  const notiList = useSelector((state) => state.booking.noti);
-  const ModalAction = props.ModalAction;
-  const userInfo = props.userInfo;
-  const isTutor = userInfo.isTutor;
+  const notiList = useSelector((state) => state.booking.list);
+  console.log({ notiList });
+  console.log(notiList.length);
+  const { ModalAction, userInfo } = props;
 
   React.useEffect(() => {
     document.body.style.cssText = `
@@ -27,10 +28,6 @@ const NotiModal = (props) => {
     dispactch(notiActions.getBookingNotiDB());
   }, []);
 
-  function clearNoti(timeId) {
-    dispactch(notiActions.clearNotiDB(timeId));
-  }
-
   return (
     <>
       <Background
@@ -40,53 +37,32 @@ const NotiModal = (props) => {
       >
         <div className="notifications">
           <div className="notificationsInnerWrap">
-            {notiList.map((notiItem, idx) => {
-              console.log(notiItem);
-              const timeId = notiItem.timeId;
-              const noti = notiItem.noti;
-              const del = notiItem.del;
+            <ul>
+              {notiList.map((notiItem, idx) => {
+                const timeId = notiItem.timeId;
+                // const noti = notiItem.noti;
+                // const del = notiItem.del;
 
-              let startTime = notiItem.start;
-              let endTime = notiItem.end;
-
-              if (!notiItem) return; // 이 부분 불확실...
-              let [week, month, day, year, sTime] = startTime.split(' ');
-              let start = sTime.substr(0, 5);
-              let end = endTime.substr(-17, 5);
-              console.log({ start, end });
-
-              return (
-                <>
-                  {((noti === 1 && del === 0) || del === 1) && (
-                    <div
-                      className="text"
-                      // key={notiItem.timeId}
-                      key={`noti_${timeId}`}
-                      onClick={() => {
-                        clearNoti(timeId);
-                      }}
-                    >
-                      {isTutor === 0
-                        ? ` 튜터 ${notiItem.Tutor_userName}님에게
-                      ${week} ${month} ${day}    ${start}시에 예약
-                      하셨습니다.`
-                        : `튜터 ${notiItem.Tutee_userName}님이 &nbsp;
-                      ${week} ${month} ${day} &nbsp; ${start}시에 수업을 예약
-                      하셨습니다.`}
-                    </div>
-                  )}
-                </>
-              );
-            })}
-
-            <button
+                return (
+                  <>
+                    <NotiItem
+                      notiItem={notiItem}
+                      userInfo={userInfo}
+                      // key={`noti_${timeId}`}
+                      key={`noti_${idx}`}
+                    />
+                  </>
+                );
+              })}
+            </ul>
+            {/* <button
               className="notificationBtn"
               onClick={() => {
-                // dispactch(notiActions.delAllNotiDB())
+                dispactch(notiActions.delAllNotiDB());
               }}
             >
               지우기
-            </button>
+            </button> */}
           </div>
         </div>
       </Background>
@@ -104,4 +80,44 @@ const Background = styled.div`
   bottom: 0;
   z-index: 1000;
   background-color: none;
+
+  /* 알림창 */
+  .notifications {
+    position: absolute;
+    max-width: 420px;
+    width: 100%;
+    min-height: 140px;
+    right: 15%;
+    top: 144px;
+    padding: 10px;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    box-shadow: 0px -2px 3px 0px #d7d7d7;
+
+    background-color: #f4f4f4;
+    background-color: #ffffff;
+
+    /*  */
+    .notificationsInnerWrap {
+      position: relative;
+      height: 100%;
+      padding: 10px;
+
+      ul > li:last-child {
+        margin: 0;
+      }
+
+      .textItem {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 40px;
+        margin-bottom: 10px;
+        padding-left: 14px;
+        border-radius: 5px;
+        border: 1px solid #d1d1d1;
+        cursor: pointer;
+      }
+    }
+  }
 `;
