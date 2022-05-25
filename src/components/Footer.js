@@ -180,7 +180,8 @@ const Wrap = styled.div`
       background-color: #808080;
       width: 1150px;
       height: 1.5px;
-      margin: 22px auto 25px;
+      /* margin: 22px auto 25px; */
+      margin: 30px auto 25px;
     }
 
     .copyright {
