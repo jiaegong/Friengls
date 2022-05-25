@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
+import { useTranslation } from 'react-i18next';
 
 // 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
@@ -13,6 +14,7 @@ import TutorCard from '../components/TutorCard';
 import DivBanner from '../elements/DivBanner';
 
 const Main = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const tutorListDB = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
@@ -20,6 +22,8 @@ const Main = () => {
   useEffect(() => {
     dispatch(reviewActions.getReviewDB());
   }, []);
+
+  if (!reviewList) return null;
 
   let tutorList = [];
 
@@ -34,14 +38,9 @@ const Main = () => {
       <DivBanner>
         <Banner>
           <p className="bannerTitle">
-            <span>Wanna learn Korean?</span>
-            <span>We are here!</span>
-            <span>Your closest Korean friends, Friengls😎</span>
-          </p>
-          <p className="bannerText">
-            <span>온라인 언어 교환으로 놀면서 스펙 쌓자!</span>
-            <span> 님도 보고 뽕도 따는 두 마리 토끼 전략~</span>
-            <span> 수다 떨면서 한국어 실력 올리는 사람 나야 나!</span>
+            <span>{t('wanna learn korean?')}</span>
+            <span>{t('we are here!')}</span>
+            <span>{t('your closest korean friends, friengls')}</span>
           </p>
           <button
             onClick={() => {
@@ -56,10 +55,10 @@ const Main = () => {
         <TutorListWrap>
           <TutorTitleWrap>
             <div>
-              <span>지난 주 가장 예약이 많았던 튜터에요</span>
+              <span>{t('the most liked tutors in friengls')}</span>
               <span className="tutorMoreBtn">더보기 ></span>
             </div>
-            <p>인기 선생님 리스트</p>
+            <p>{t('popular tutor list')}</p>
           </TutorTitleWrap>
           <CardList>
             {tutorList.map((tutor, idx) => {
@@ -73,12 +72,10 @@ const Main = () => {
           <ReviewContainer>
             <ReviewTitleWrap>
               <div>
-                <span className="subTitle">
-                  다른 튜티들의 리뷰를 들어보세요
-                </span>
+                <span className="subTitle">{t('check out tutor reviews')}</span>
                 <span className="reviewMoreBtn">더보기 ></span>
               </div>
-              <p className="title">수강 추천 리뷰</p>
+              <p className="title">{t('best reviews')}</p>
             </ReviewTitleWrap>
             <ReviewList>
               {reviewList

@@ -14,23 +14,27 @@ const DetailUser = (props) => {
   const dispatch = useDispatch();
 
   const urlCheck = props.props.match.url;
-  // like 누르기, 토큰 같이 보내기, likeList랑 tutor유저 리스트 인덱스랑 비교해서 같으면 넣기
-  let isLiked = true; // 테스트차, 서버에서 보내주는 값으로 접속한 유저가 해당 페이지 튜터를 좋아요 했는지 체크하기
-  const tutorName = props.userName; // props로 유저 정보 받아서 넣기
-  const token = getCookie('token');
+  const tutorName = userInfo.userName;
+  const isLike = useSelector((state) => state.like.isLike);
 
-  // 자기소개 열기, 닫기
-  const [contents, setContents] = useState('');
-  // 태그목록 배열로 변환
-  const tagList = userInfo.tag ? userInfo.tag.split(' ,') : null;
+  // 좋아요 상태 확인, 좋아요 누르기
+  useEffect(() => {
+    dispatch(likeActions.isLikeDB(tutorName));
+  }, []);
 
   const like = () => {
-    dispatch(likeActions.likeDB(token, tutorName));
+    dispatch(likeActions.likeDB(tutorName));
   };
 
   const unlike = () => {
-    dispatch(likeActions.unlikeDB(token, tutorName));
+    dispatch(likeActions.unlikeDB(tutorName));
   };
+
+  // 자기소개 열기, 닫기
+  const [contents, setContents] = useState('');
+
+  // 태그목록 배열로 변환
+  const tagList = userInfo.tag ? userInfo.tag.split(' ,') : null;
 
   //마이페이지모달
   const [modalOn, setModalOn] = useState(false);
@@ -42,12 +46,11 @@ const DetailUser = (props) => {
   //유저인포없을 때
   //to do: 스피너
   if (!userInfo) {
-    return <></>;
+    return null;
   }
 
   return (
     <UserInfoBox>
-      {/* 프로필사진 + 모달버튼 + 모달컴포넌트 */}
       <ImageBox>
         <UserImgWrap>
           <img className="userImg" src={userInfo.userProfile} alt="" />
@@ -72,34 +75,27 @@ const DetailUser = (props) => {
         )}
       </ImageBox>
       <div className="userInfo">
-        {/* 유저닉네임 + 사용언어 */}
         <UserTitle>
           <p className="tutorName">{userInfo.userName}</p>
           {userInfo.language1 ? <span>{userInfo.language1}</span> : ''}
           {userInfo.language2 ? <span>/ {userInfo.language2}</span> : ''}
           {userInfo.language3 ? <span>/ {userInfo.language3}</span> : ''}
         </UserTitle>
-        {/* 한 줄 소개 */}
         <Comment>{userInfo.comment}</Comment>
-        {/* 자기 소개 */}
         <ContentsBox>{contents}</ContentsBox>
-        {/* 태그 */}
         <Tags>
           {tagList?.map((tag, index) => (
             <span key={tag + index}>{tag}</span>
           ))}
         </Tags>
-        {/* 팔로우 */}
         <Like>
-          {/* {isLiked ? (
+          {isLike ? (
             <AiFillHeart onClick={unlike} />
           ) : (
             <AiOutlineHeart onClick={like} />
-          )} */}
-          <AiOutlineHeart className="likeIcon" />
+          )}
           {userInfo.like}
         </Like>
-        {/* 자기소개버튼: 자기소개 있을 때 열기/접기 가능 */}
         {userInfo.contents &&
           (contents ? (
             <ContentsButton
@@ -229,23 +225,12 @@ const Tags = styled.div`
 
 const Like = styled.div`
   position: absolute;
-  right: 0;
-  /* right: 60px; */
   right: 30px;
   top: 0;
-  font-size: 18px;
-
-  .likeIcon {
-    font-size: 22px;
-    padding-top: 6px;
-    margin-right: 6px;
-  }
 `;
 
 const ContentsButton = styled.button`
   position: absolute;
-  right: 0;
-  /* right: 60px; */
   right: 30px;
   top: 66px;
   top: 50px;

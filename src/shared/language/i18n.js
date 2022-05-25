@@ -21,10 +21,10 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources: resource,
-    lng: 'en',
+    lng: 'en', // 초기 설정 언어
     fallbackLng: 'en',
-    // ns: ['translation'],
-    // defaultNS: "translation",
+    ns: ['translation'],
+    defaultNS: 'translation',
     debug: true,
     keySeparator: false, // we do not use keys in form messages.welcome
     interpolation: {

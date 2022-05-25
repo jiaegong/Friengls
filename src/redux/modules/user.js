@@ -59,8 +59,7 @@ const signupDB = (formData, loginInfo) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/signUp',
-      // url: 'http://13.124.206.190/signUp',
+      url: 'https://hjg521.link/signUp',
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
@@ -82,7 +81,7 @@ const loginDB = (loginForm) => {
 
     axios({
       method: 'post',
-      url: 'https://jg-jg.shop/login',
+      url: 'https://hjg521.link/login',
       data: loginForm,
     })
       .then((response) => {
@@ -107,7 +106,7 @@ const loginCheckDB = () => {
     // console.log(getCookie('token'));
     axios({
       method: 'get',
-      url: 'https://jg-jg.shop/login/getUser',
+      url: 'https://hjg521.link/login/getUser',
       // url: 'http://13.124.206.190/login/getUser',
       headers: { token: `${getCookie('token')}` },
       // headers: {
@@ -152,7 +151,7 @@ const editUserDB = (userInfo) => {
 
     axios({
       method: 'put',
-      url: 'https://jg-jg.shop/editUserInfo',
+      url: 'https://hjg521.link/editUserInfo',
       headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
@@ -177,7 +176,7 @@ const getUserDetailDB = (userApi) => {
     axios({
       method: 'get',
       // url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
-      url: `https://jg-jg.shop/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
+      url: `https://hjg521.link/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {

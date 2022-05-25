@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { io } from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 
 // 모듈
 import { history } from '../redux/configureStore';
@@ -19,6 +20,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const token = getCookie('token');
   const [notiOpen, setNotiOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+
+  // 다국어 처리
+  const { i18n } = useTranslation();
+  const changeLanguageEn = () => i18n.changeLanguage('en');
+  const changeLanguageKo = () => i18n.changeLanguage('ko');
+  const changeLanguageJa = () => i18n.changeLanguage('ja');
 
   // const [username, setUsername] = useState('');
   // const [user, setUser] = useState('');
@@ -64,7 +72,26 @@ const Header = () => {
         </div>
 
         <ul className="navBarWrap">
-          <li>언어</li>
+          <li
+            onClick={() => {
+              setLangOpen(!langOpen);
+            }}
+          >
+            언어
+          </li>
+          {langOpen && (
+            <SelectLang>
+              <p className="en" onClick={changeLanguageEn}>
+                English
+              </p>
+              <p className="ko" onClick={changeLanguageKo}>
+                한국어
+              </p>
+              <p className="ja" onClick={changeLanguageJa}>
+                日本語
+              </p>
+            </SelectLang>
+          )}
           <li
             className="icon"
             onClick={() => {
@@ -122,6 +149,49 @@ const Header = () => {
 };
 
 export default Header;
+
+const SelectLang = styled.div`
+  width: 90px;
+  height: 105px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 12px 0px #00000040;
+  position: absolute;
+  top: 55px;
+  left: 35px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  .en {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .en:hover {
+    color: #7f83ea;
+  }
+
+  .ko {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .ko:hover {
+    color: #7f83ea;
+  }
+
+  .ja {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .ja:hover {
+    color: #7f83ea;
+  }
+`;
 
 const Wrap = styled.div`
   width: 100%;

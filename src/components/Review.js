@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Image, Text, Input } from '../elements/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as reviewActions } from '../redux/modules/review';
-
 import styled from 'styled-components';
+import { AiFillStar } from 'react-icons/ai';
 
 const Review = (props) => {
   const dispatch = useDispatch();
@@ -27,17 +27,13 @@ const Review = (props) => {
   const deleteReview = () => {
     dispatch(reviewActions.deleteReviewDB(reviewId));
   };
+
   return (
     <Wrap>
-      {/* 메인페이지 이미지 */}
       <ImageWrap>
-        <img className="reviewImg" src="" alt=""></img>
-        <img className="userProfileImg" src="" alt=""></img>
+        <img className="reviewImg" src="" alt="튜터 프로필"></img>
+        <img className="userProfileImg" src="" alt="튜티 프로필"></img>
       </ImageWrap>
-      {/* 상세페이지 이미지 */}
-      {/* <ReviewImgWrap1 className="reviewImgWrap">
-        <img className="userProfileImg" src="" alt=""></img>
-      </ReviewImgWrap1> */}
       <ReviewWrap>
         <Text>Tutee: {props.Tutee_userName}</Text>
         <Text
@@ -51,20 +47,22 @@ const Review = (props) => {
         <RateWrap>
           {Array.from({ length: 5 }, (c, idx) => {
             return edit ? (
-              <Rate
+              <AiFillStar
+                size={20}
                 key={idx}
                 onClick={() => {
                   setRate(idx + 1);
                 }}
                 style={{
-                  backgroundColor: rate < idx + 1 ? '#ddd' : '#000',
+                  color: rate < idx + 1 ? '#ddd' : '#ffdf65',
                 }}
               />
             ) : (
-              <Rate
+              <AiFillStar
+                size={20}
                 key={idx}
                 style={{
-                  backgroundColor: rate < idx + 1 ? '#ddd' : '#000',
+                  color: rate < idx + 1 ? '#ddd' : '#ffdf65',
                 }}
               />
             );
@@ -77,9 +75,16 @@ const Review = (props) => {
           <Text>{props.text}</Text>
         )}
       </ReviewWrap>
-      {/* 메인페이지 BTN */}
-      {/* <BtnPosition>나도 선생님 예약하기</BtnPosition> */}
-      {/* 상세페이지 BTN */}
+      <Text
+        styles={{
+          display: 'flex',
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+        }}
+      >
+        {props.createdAt.substr(0, 10)}
+      </Text>
       {userName === tuteeName && (
         <Buttons>
           {edit ? (
@@ -126,18 +131,7 @@ const Wrap = styled.div`
   width: 100%;
   height: 190px;
   position: relative;
-  /* background-color: red; */
 `;
-
-// const ReviewImgWrap1 = styled.div`
-//   width: 140px;
-//   height: 140px;
-//   border-radius: 50%;
-//   margin-right: 32px;
-//   overflow: hidden;
-
-//   background-color: #aaa;
-// `;
 
 const ImageWrap = styled.div`
   width: 160px;
@@ -186,19 +180,11 @@ const RateWrap = styled.div`
   margin-bottom: 24px;
 `;
 
-const Rate = styled.div`
-  display: flex;
-  width: 18px;
-  height: 18px;
-  border-radius: 30px;
-  margin: 5px;
-`;
-
 const Buttons = styled.div`
   display: flex;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  bottom: 20px;
+  left: 20px;
 
   .edit-review {
     cursor: pointer;
