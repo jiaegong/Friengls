@@ -115,7 +115,8 @@ const Wrap = styled.div`
           display: inline-block;
           width: 1px;
           height: 10px;
-          margin-left: 23px;
+          /* margin-left: 23px; */
+          margin-left: 17px;
           background-color: #5e5e5e;
         }
       }
