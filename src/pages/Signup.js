@@ -230,9 +230,9 @@ const Signup = ({ userInfo }) => {
     <Container>
       {/* 로고 */}
       <LogoBox>
-        <img src={Logo} alt="userProfileImage" />
+        <img src={Logo} alt="logo" />
       </LogoBox>
-      <LogoText>Sign in</LogoText>
+      <LogoText>Sign up</LogoText>
       {/* 이메일 인풋 */}
       <InputBox>
         <Inputs
@@ -317,6 +317,10 @@ const LogoBox = styled.div`
   height: 60px;
   margin: 0 auto 20px;
   overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const LogoText = styled.p`

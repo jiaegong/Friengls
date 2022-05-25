@@ -4,8 +4,8 @@ import { history } from '../redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { actionCreators as likeActions } from '../redux/modules/like';
-import { getCookie } from '../shared/Cookie';
 import MyPageModal from './MyPageModal';
+import { Profile, OpenToggle, CloseToggle } from '../image/index';
 import { Buttons } from '../elements/index';
 
 const DetailUser = (props) => {
@@ -33,7 +33,7 @@ const DetailUser = (props) => {
   const [contents, setContents] = useState('');
 
   // 태그목록 배열로 변환
-  const tagList = userInfo.tag ? userInfo.tag.split(' ,') : null;
+  const tagList = userInfo.tag ? userInfo.tag.split(',') : null;
 
   //마이페이지모달
   const [modalOn, setModalOn] = useState(false);
@@ -49,12 +49,15 @@ const DetailUser = (props) => {
   }
 
   return (
-    <UserInfoBox>
+    <Container>
       <ImageBox>
         <UserImgWrap>
-          <img className="userImg" src={userInfo.userProfile} alt="" />
+          <img
+            src={userInfo.userProfile ? userInfo.userProfile : Profile}
+            alt="userProfile"
+          />
         </UserImgWrap>
-        {window.location.pathname ===
+        {decodeURI(window.location.pathname) ===
           `/mypage/${userInfo.userName}/${userInfo.isTutor}` && (
           <Buttons
             _onClick={handleModal}
@@ -71,9 +74,9 @@ const DetailUser = (props) => {
         )}
         {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
       </ImageBox>
-      <div className="userInfo">
+      <UserInfoBox>
         <UserTitle>
-          <p className="tutorName">{userInfo.userName}</p>
+          <p>{userInfo.userName}</p>
           {userInfo.language1 ? <span>{userInfo.language1}</span> : ''}
           {userInfo.language2 ? <span>/ {userInfo.language2}</span> : ''}
           {userInfo.language3 ? <span>/ {userInfo.language3}</span> : ''}
@@ -100,8 +103,10 @@ const DetailUser = (props) => {
                 setContents('');
               }}
             >
-              {/* 🔽 */}
-              ⬆️ 자기소개 닫기
+              <div>
+                <img src={CloseToggle} alt="CloseContents" />
+              </div>
+              자기소개 닫기
             </ContentsButton>
           ) : (
             <ContentsButton
@@ -109,64 +114,68 @@ const DetailUser = (props) => {
                 setContents(userInfo.contents);
               }}
             >
-              {/* 🔽 */}⬇ 자기소개 열기
+              <div>
+                <img src={OpenToggle} alt="openContents" />
+              </div>
+              자기소개 열기
             </ContentsButton>
           ))}
-      </div>
-    </UserInfoBox>
+        {/* 자기소개, 한줄소개 없을 경우 띄우기 */}
+        {userInfo.comment === '' &&
+          userInfo.contents === '' &&
+          userInfo.tag === '' && (
+            <NoInfoBox>작성된 유저정보가 없습니다.</NoInfoBox>
+          )}
+      </UserInfoBox>
+    </Container>
   );
 };
 
 export default DetailUser;
 
-const UserInfoBox = styled.div`
-  width: 100%;
-  /* width: 90%; */
+const Container = styled.div`
+  width: 88%;
   /* max-width: 1280px; */
   /* min-height: 520px; */
-  margin: auto;
+  margin: 70px auto;
+  padding: 50px 10px;
   display: flex;
   justify-content: space-around;
-  justify-content: center;
-  padding: 120px 20px 100px;
-  padding: 120px 20px 60px;
   border-bottom: 1px solid #c4c4c4;
-
-  .userInfo {
-    width: 80%;
-    position: relative;
-  }
+  // 물어볼 것
+  // border: 1px solid #c4c4c4;
+  // border-radius: 4px;
+  // box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.15);
 `;
 
 const ImageBox = styled.div`
-  margin-right: 40px;
+  margin: 0 auto;
 `;
 
 const UserImgWrap = styled.div`
-  width: 160px;
-  height: 160px;
   width: 180px;
   height: 180px;
   border-radius: 50%;
   overflow: hidden;
-
-  .userImg {
+  img {
     width: 100%;
+    height: 100%;
   }
+`;
+
+const UserInfoBox = styled.div`
+  width: 80%;
+  position: relative;
 `;
 
 const UserTitle = styled.div`
   margin-bottom: 20px;
-  /* background-color: red; */
-
-  .tutorName {
+  p {
     display: inline-block;
     font-size: 22px;
     font-weight: 600;
     margin-right: 30px;
-    /* background-color: blue; */
   }
-
   span {
     display: inline-block;
     font-size: 16px;
@@ -180,25 +189,19 @@ const Comment = styled.p`
   min-height: 80px;
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 20px;
-  line-height: 40px;
   letter-spacing: 1px;
 `;
 
 const ContentsBox = styled.div`
-  width: 90%;
-  /* min-height: 100px; */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 26px;
-  letter-spacing: 1px;
-  border-left: 4px solid #000000;
-  /* padding: 6px 10px; */
+  width: 100%;
+  // min-height: 100px;
   margin-bottom: 30px;
   padding: 0px 10px;
+  border-left: 4px solid #000000;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: 1px;
 `;
 
 const Tags = styled.div`
@@ -227,6 +230,7 @@ const Like = styled.div`
 `;
 
 const ContentsButton = styled.button`
+display: flex;  
   position: absolute;
   right: 30px;
   top: 66px;
@@ -234,4 +238,16 @@ const ContentsButton = styled.button`
   font-size: 16px;
   background: transparent;
   border: none;
+  div {
+    width: 30px;
+  }
+  img {
+    width: 100%
+    height: 100%
+  }
+`;
+
+const NoInfoBox = styled.div`
+  text-align: center;
+  font-size: 20px;
 `;

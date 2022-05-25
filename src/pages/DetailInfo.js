@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { Logo, ProfileMedium } from '../image';
+import { Logo, Profile } from '../image/index';
 import SelectLanguage from '../components/SelectLanguage';
 import { InputBox, InputLabel, Inputs, Buttons } from '../elements';
 
@@ -22,7 +22,7 @@ const DetailInfo = (props) => {
   const userInfo = location.signupForm;
 
   // 이미지 미리보기
-  const [previewProfile, setPreviewProfile] = useState(ProfileMedium);
+  const [previewProfile, setPreviewProfile] = useState(Profile);
   const selectFile = (e) => {
     const previewFile = imageRef.current.files[0];
     const reader = new FileReader();

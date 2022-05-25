@@ -8,6 +8,7 @@ const SET_USER = 'SET_USER'; //유저정보 불러오기
 const EDIT_USER = 'EDIT_USER'; //유저정보 수정
 const SET_USER_DETAIL = 'SET_USER_DETAIL'; //상세페이지 불러오기
 const UNSET_USER = 'UNSET_USER'; //유저정보 지우기
+const DELETE_PROFILE = 'DELETE_PROFILE'; //유저프로필 삭제
 
 //액션생성
 const setUser = createAction(SET_USER, (userInfo) => ({ userInfo }));
@@ -16,24 +17,27 @@ const setUserDetail = createAction(SET_USER_DETAIL, (userInfo) => ({
   userInfo,
 }));
 const unsetUser = createAction(UNSET_USER, (user) => ({ user }));
+const deleteProfile = createAction(DELETE_PROFILE, (userProfile) => ({
+  userProfile,
+}));
 
 //이니셜스테이트
 const initialState = {
   //info: 로그인한 유저의 정보
   info: {
-    userEmail: '',
-    userName: '',
-    pwd: '',
-    pwdCheck: '',
-    isTutor: '0',
-    tag: ',,',
-    language1: '',
-    language2: '',
-    language3: '',
-    comment: '',
-    contents: '',
-    startTime: '',
-    endTime: '',
+    // userEmail: '',
+    // userName: '',
+    // pwd: '',
+    // pwdCheck: '',
+    // isTutor: '0',
+    // tag: ',,',
+    // language1: '',
+    // language2: '',
+    // language3: '',
+    // comment: '',
+    // contents: '',
+    // startTime: '',
+    // endTime: '',
   },
   isLogin: false,
   //detailInfo: detail페이지의 유저정보
@@ -72,6 +76,33 @@ const signupDB = (formData, loginInfo) => {
         window.alert('회원가입에 실패하셨습니다.');
         console.log(error);
       });
+  };
+};
+
+const uploadProfileDB = (formData) => {
+  return function (dispatch, getState, { history }) {
+    console.log('uploadProfileDB시작', formData);
+    axios({
+      method: 'post',
+      url: 'https://hjg521.link/editUser/profile',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then((response) => {
+        console.log('uploadProfileDB성공', response.data);
+      })
+      .catch((error) => {
+        window.alert('프로필 저장에 실패하셨습니다.');
+        console.log(error);
+      });
+  };
+};
+
+const deleteProfileDB = (userProfile) => {
+  return function (dispatch, getState, { history }) {
+    console.log('deleteProfileDB시작', userProfile);
+    // 악시오스 연결
+    dispatch(deleteProfile);
   };
 };
 
@@ -139,6 +170,8 @@ const editUserDB = (userInfo) => {
         const editUserInfo = userInfo;
         console.log('editUserDB 후 로그인정보', userInfo);
         dispatch(editUser(editUserInfo));
+        history.replace(`/mypage/${userInfo.userName}/${userInfo.isTutor}`);
+        window.location.reload();
       })
       .catch((error) => {
         window.alert('정보 저장에 실패하셨습니다.');
@@ -168,8 +201,7 @@ const getUserDetailDB = (userApi) => {
 
 const logout = () => {
   return function (dispatch, getState, { history }) {
-    deleteCookie('token');
-    dispatch(unsetUser);
+    dispatch(unsetUser());
     history.replace('/');
     window.location.reload();
   };
@@ -192,14 +224,19 @@ export default handleActions(
       }),
     [SET_USER_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        console.log('setUserDetail리듀서시작', action.payload.userInfo);
+        // console.log('setUserDetail리듀서시작', action.payload.userInfo);
         draft.detailInfo = action.payload.userInfo;
       }),
     [UNSET_USER]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload);
         draft.info = null;
         draft.isLogin = false;
         draft.detailInfo = null;
+      }),
+    [DELETE_PROFILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.info.userProfile = '';
       }),
   },
   initialState,
@@ -208,6 +245,7 @@ export default handleActions(
 //익스포트
 const actionCreators = {
   signupDB,
+  uploadProfileDB,
   loginDB,
   loginCheckDB,
   setUser,
@@ -217,6 +255,7 @@ const actionCreators = {
   setUserDetail,
   logout,
   unsetUser,
+  deleteProfileDB,
 };
 
 export { actionCreators };

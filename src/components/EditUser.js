@@ -3,22 +3,19 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as profileActions } from '../redux/modules/profile';
 import SelectLanguage from '../components/SelectLanguage';
-import { ProfileMedium } from '../image';
+import { Profile, CloseIcon } from '../image';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { pwdForm, userNameForm } from '../shared/common';
 
 const EditUser = (props) => {
   const { onClose, userInfo, accessInfo } = props;
-  console.log(userInfo);
-  console.log(userInfo.isTutor.toString());
 
   const dispatch = useDispatch();
   //  사진 미리보기
   const imageRef = useRef();
   const [previewProfile, setPreviewProfile] = useState(
-    userInfo.userProfile ? userInfo.userProfile : ProfileMedium,
+    userInfo.userProfile ? userInfo.userProfile : Profile,
   );
   const selectFile = () => {
     const previewFile = imageRef.current.files[0];
@@ -28,6 +25,12 @@ const EditUser = (props) => {
       setPreviewProfile(reader.result);
     };
   };
+  //프로필사진 삭제
+  const deleteProfile = () => {
+    dispatch(userActions.deleteProfileDB());
+    setPreviewProfile(Profile);
+  };
+
   // userName 유효성 검사, input값 가져오기
   const [userName, setUserName] = useState(userInfo.userName);
   const [userNameCheck, setUserNameCheck] = useState('');
@@ -238,6 +241,7 @@ const EditUser = (props) => {
     if (userInfo.userName !== userName) {
       if (userNameCheck !== '사용 가능한 닉네임입니다.') {
         window.alert('변경할 닉네임을 확인해 주세요.');
+        return;
       }
     }
 
@@ -286,7 +290,7 @@ const EditUser = (props) => {
       }
     }
     //선생님일 경우 모든 정보를 입력하도록 조건
-    if (isTutor === '1') {
+    if (userInfo.isTutor === 1) {
       if (
         language1 === '' ||
         comment.split('').filter((word) => word !== ' ').length === 0 ||
@@ -315,7 +319,7 @@ const EditUser = (props) => {
         console.log(value);
       }
 
-      dispatch(profileActions.uploadProfileDB(formData));
+      dispatch(userActions.uploadProfileDB(formData));
     }
     //추가정보 디스패치
     const userForm = {
@@ -338,17 +342,27 @@ const EditUser = (props) => {
     dispatch(userActions.editUserDB(userForm));
   };
 
+  const closeModal = () => {
+    // 프로필사진만 바꾸고 나가는 경우
+    if (userInfo.userProfile !== previewProfile) {
+      window.location.reload();
+    }
+    onClose();
+  };
+
   return (
     <Content>
       <CloseBtnBox>
-        <CloseBtn onClick={onClose}>X</CloseBtn>
+        <CloseBtn onClick={closeModal}>
+          <img src={CloseIcon} alt="close" />
+        </CloseBtn>
       </CloseBtnBox>
       <GroupBox1>
         <ImageBox>
           {/* 프로필이미지선택 */}
           <UserImg>
             <label htmlFor="file">
-              <img src={previewProfile} alt="userProfileImage" />
+              <img src={previewProfile} alt="userProfile" />
               <input
                 type="file"
                 ref={imageRef}
@@ -360,7 +374,7 @@ const EditUser = (props) => {
           </UserImg>
           <ProfileAddButton htmlFor="file">+</ProfileAddButton>
           {/* 프로필이미지삭제: url제거하고 기본이미지 띄우기 */}
-          <button>이미지 제거</button>
+          <button onClick={deleteProfile}>이미지 제거</button>
         </ImageBox>
         <UserInfoBox>
           <p>기본 정보</p>
@@ -510,7 +524,7 @@ const EditUser = (props) => {
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            fontSize: '26px',
+            fontSize: '20px',
             cursor: 'default',
             color: '#999',
           }}
@@ -521,7 +535,7 @@ const EditUser = (props) => {
               width: '140px',
               marginLeft: '10px',
               alignItems: 'center',
-              fontSize: '26px',
+              fontSize: '20px',
               color: '#999',
             }}
           >
@@ -537,13 +551,13 @@ const EditUser = (props) => {
             />
             배울래요!
           </InputLabel>
-          &nbsp;&nbsp;/&nbsp;&nbsp;
+          /&nbsp;&nbsp;&nbsp;
           <InputLabel
             styles={{
               width: '180px',
               marginLeft: '10px',
               alignItems: 'center',
-              fontSize: '26px',
+              fontSize: '20px',
               color: '#999',
             }}
           >
@@ -569,7 +583,7 @@ const EditUser = (props) => {
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                fontSize: '26px',
+                fontSize: '22px',
                 cursor: 'default',
               }}
             >
@@ -645,18 +659,33 @@ const EditUser = (props) => {
 export default EditUser;
 
 const Content = styled.div`
-  //   height: 954px;
+  height: 700px;
   width: 1240px;
-  // margin-top: 120px;
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
-  overflow: scroll;
+  //스크롤바 관련
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    margin: 20px;
+    background-color: #fff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d3d3d3;
+  }
 `;
 // 닫기 버튼
 const CloseBtnBox = styled.label`
@@ -673,17 +702,18 @@ const CloseBtnBox = styled.label`
 const CloseBtn = styled.button`
   background: none;
   border: none;
-  font-size: 30px;
   cursor: pointer;
 `;
 
 const GroupBox1 = styled.div`
-  margin: 150px 40px 20px;
+  width: 1160px;
+  margin: 1100px auto 20px;
   display: flex;
 `;
 // 프로필사진 관련
 const ImageBox = styled.div`
   width: 320px;
+  position: relative;
   button {
     margin-top: 25px;
     border: none;
@@ -708,7 +738,6 @@ const UserImg = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     cursor: pointer;
   }
 
@@ -732,8 +761,8 @@ const ProfileAddButton = styled.label`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 330px;
-  left: 250px;
+  top: 180px;
+  left: 180px;
   font-size: 50px;
   font-weight: 600;
   color: #fff;
@@ -741,7 +770,7 @@ const ProfileAddButton = styled.label`
 
 // 기본 정보
 const UserInfoBox = styled.div`
-  width: 880px;
+  width: 100%;
   margin-left: 20px;
   p {
     height: 80px;
@@ -752,8 +781,8 @@ const UserInfoBox = styled.div`
 `;
 
 const GroupBox = styled.div`
-  // width: 1160px;
-  margin: 0 40px;
+  width: 1160px;
+  margin: 0 auto;
   padding: 20px 0;
   border-top: 1px solid #c4c4c4;
 
@@ -846,7 +875,7 @@ const Select = styled.select`
   height: 50px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
-  font-size: 26px;
+  font-size: 22px;
 `;
 
 const TimeSelectContainer = styled.div`
@@ -857,10 +886,4 @@ const InfoBox = styled.div`
   margin: 10px;
   display: flex;
   flex-direction: column;
-`;
-
-//버튼 관련
-const ButtonBox = styled.div`
-  width: 100%;
-  margin-top: 60px;
 `;

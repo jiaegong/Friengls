@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import Portal from '../shared/Portal';
 import EditUser from './EditUser';
+import { Profile, CloseIcon } from '../image/index';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
 // to do: 스크롤 뒷배경 안 움직이도록
@@ -36,6 +37,13 @@ const MyPageModal = (props) => {
       console.log(err);
     }
   };
+  // 모달 켜질 때 페이지 스크롤 막기
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   return (
     <Portal>
@@ -49,14 +57,19 @@ const MyPageModal = (props) => {
         ) : (
           <Content>
             <CloseBtnBox>
-              <CloseBtn onClick={onClose}>X</CloseBtn>
+              <CloseBtn onClick={onClose}>
+                <img src={CloseIcon} alt="close" />
+              </CloseBtn>
             </CloseBtnBox>
             <Grid>
               <p>본인확인</p>
             </Grid>
             <Grid>
               <UserImg>
-                <img className="userImg" src={userInfo.userProfile} alt="" />
+                <img
+                  src={userInfo.userProfile ? userInfo.userProfile : Profile}
+                  alt="userProfile"
+                />
               </UserImg>
             </Grid>
             <Grid>
@@ -151,21 +164,17 @@ const Background = styled.div`
 `;
 
 const Content = styled.div`
-  max-width: 800px;
-  min-height: 800px;
-  height: 800px;
   width: 100%;
-  // margin-top: 120px;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-
+  height: 700px;
+  max-width: 800px;
+  // min-height: 800px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
-
-  // overflow: scroll;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 `;
 
 const CloseBtnBox = styled.label`
@@ -182,13 +191,10 @@ const CloseBtnBox = styled.label`
 const CloseBtn = styled.button`
   background: none;
   border: none;
-  font-size: 30px;
-  font-weight: 600;
   cursor: pointer;
 `;
 
 const Grid = styled.div`
-  margin-bottom: 60px;
   margin-bottom: 50px;
 
   p {
@@ -198,15 +204,13 @@ const Grid = styled.div`
 `;
 
 const UserImg = styled.div`
-  width: 240px;
-  height: 240px;
   width: 180px;
   height: 180px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
-
-  .userImg {
+  img {
     width: 100%;
+    height: 100%;
   }
 `;

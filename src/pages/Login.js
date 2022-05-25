@@ -53,7 +53,7 @@ const Login = (props) => {
       {/* <MySwal /> */}
       {/* 로고 */}
       <LogoBox>
-        <img src={Logo} alt="userProfileImage" style={{ width: '100%' }} />
+        <img src={Logo} alt="logo" style={{ width: '100%' }} />
       </LogoBox>
       <LogoText>Sign in</LogoText>
       {/* 이메일 인풋 */}
@@ -133,9 +133,13 @@ const Container = styled.div`
 
 const LogoBox = styled.div`
   width: 97px;
-  width: 74px;
+  height: 60px;
   margin: 0 auto;
   overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const LogoText = styled.p`
