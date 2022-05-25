@@ -19,8 +19,8 @@ const uploadProfileDB = (formData) => {
     console.log('uploadProfileDB시작', formData);
     axios({
       method: 'post',
-      // url: 'https://jg-jg.shop/editUser/profile',
       url: 'https://hjg521.link/editUser/profile',
+      data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then((response) => {
@@ -36,7 +36,7 @@ const uploadProfileDB = (formData) => {
 //리듀서
 export default handleActions(
   {
-    [UPLOAD_PROFILE]: (state, action) => produce(state, (draft) => { }),
+    [UPLOAD_PROFILE]: (state, action) => produce(state, (draft) => {}),
   },
   initialState,
 );

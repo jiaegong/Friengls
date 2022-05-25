@@ -33,8 +33,9 @@ const Box = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  /* justify-content: space-around; */
-  justify-content: center;
+  justify-content: space-around;
+  // 현수님: justify-content: center;
+  position: relative;
 `;
 
 export default InputBox;

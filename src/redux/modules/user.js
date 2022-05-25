@@ -64,7 +64,7 @@ const signupDB = (formData, loginInfo) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then((response) => {
-        console.log('signupDB성공', response);
+        // console.log('signupDB성공', response);
 
         dispatch(loginDB(loginInfo));
       })
@@ -77,7 +77,7 @@ const signupDB = (formData, loginInfo) => {
 
 const loginDB = (loginForm) => {
   return function (dispatch, getState, { history }) {
-    console.log('login시작', loginForm);
+    // console.log('login시작', loginForm);
 
     axios({
       method: 'post',
@@ -86,12 +86,18 @@ const loginDB = (loginForm) => {
     })
       .then((response) => {
         console.log('loginDB성공', response.data);
+        if (response.data.msg === '비밀번호가 틀렸습니다.') {
+          window.alert('비밀번호를 확인해 주세요.');
+          return;
+        }
+
+        if (response.data.msg === '존재하지 않는 아이디입니다.') {
+          window.alert('존재하지 않는 아이디 입니다.');
+          return;
+        }
         setCookie('token', response.data.token);
-        // localStorage.setItem('token', response.data.token);
         history.replace('/');
         window.location.reload();
-        // 아이디없을 경우 msg
-        // 비밀번호 틀렸을 경우 msg
       })
       .catch((error) => {
         window.alert('로그인에 실패하셨습니다.');
@@ -102,19 +108,13 @@ const loginDB = (loginForm) => {
 
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
-    // console.log('loginCheckDB시작');
-    // console.log(getCookie('token'));
+    console.log('loginCheckDB시작');
     axios({
       method: 'get',
       url: 'https://hjg521.link/login/getUser',
-      // url: 'http://13.124.206.190/login/getUser',
       headers: { token: `${getCookie('token')}` },
-      // headers: {
-      //   authorization: `Bearer ${localStorage.getItem('token')}`,
-      // },
     })
       .then((response) => {
-        // console.log('loginCheckDB성공', response.data);
         dispatch(setUser(response.data));
       })
       .catch((error) => {
@@ -124,43 +124,21 @@ const loginCheckDB = () => {
   };
 };
 
-const kakaoLogin = (code) => {
-  return function (dispatch, getState, { history }) {
-    console.log(code);
-    // axios({
-    //   method: 'GET',
-    //   url: `https://jg-jg.shop?code=${code}`,
-    // })
-    //   .then((response) => {
-    //     // localStorage.setItem('token', response.data.token);
-    //     getCookie('token', response.data.token);
-    //     //서버에서 유저 데이터도 같이 받아올 수 있을까?
-    //     //상세정보 작성페이지로 연결
-    //   })
-    //   .catch((error) => {
-    //     window.alert('로그인에 실패했습니다!');
-    //     console.log('로그인실패', error);
-    //     history.replace('/login');
-    //   });
-  };
-};
-
 const editUserDB = (userInfo) => {
   return function (dispatch, getState, { history }) {
     console.log('editUserDB시작', userInfo);
 
     axios({
-      method: 'put',
-      url: 'https://hjg521.link/editUserInfo',
+      method: 'patch',
+      url: 'https://hjg521.link/editUser',
       headers: { token: `${getCookie('token')}` },
       data: userInfo,
     })
       .then((response) => {
-        // console.log('editUserDB성공', response);
-        const userInfo = {};
-        // console.log('editUserDB 후 로그인정보', userInfo);
-        dispatch(editUser(userInfo));
-        // 상제정보페이지에서는 메인으로 전환, 마이페이지에서는 새로고침
+        console.log('editUserDB성공', response);
+        const editUserInfo = userInfo;
+        console.log('editUserDB 후 로그인정보', userInfo);
+        dispatch(editUser(editUserInfo));
       })
       .catch((error) => {
         window.alert('정보 저장에 실패하셨습니다.');
@@ -175,7 +153,6 @@ const getUserDetailDB = (userApi) => {
 
     axios({
       method: 'get',
-      // url: `https://hjg521.link/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       url: `https://hjg521.link/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: { token: `${getCookie('token')}` },
     })
@@ -210,12 +187,12 @@ export default handleActions(
     [EDIT_USER]: (state, action) =>
       produce(state, (draft) => {
         // console.log('editUser리듀서시작', action.payload.userInfo);
-        draft.info = action.payload.userInfo; // 이거맞나? 확인
+        draft.detailInfo = action.payload.userInfo; // 이거맞나? 확인
         draft.isLogin = true;
       }),
     [SET_USER_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        // console.log('setUserDetail리듀서시작', action.payload.userInfo);
+        console.log('setUserDetail리듀서시작', action.payload.userInfo);
         draft.detailInfo = action.payload.userInfo;
       }),
     [UNSET_USER]: (state, action) =>
@@ -234,7 +211,6 @@ const actionCreators = {
   loginDB,
   loginCheckDB,
   setUser,
-  kakaoLogin,
   editUserDB,
   editUser,
   getUserDetailDB,

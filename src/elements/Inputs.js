@@ -7,6 +7,7 @@ const Inputs = (props) => {
     styles,
     type,
     name,
+    id,
     placeholder,
     _onChange,
     _onKeyUp,
@@ -15,6 +16,7 @@ const Inputs = (props) => {
     disabled,
     maxLength,
     multiLine,
+    checked,
   } = props;
 
   if (multiLine) {
@@ -36,6 +38,7 @@ const Inputs = (props) => {
       style={{ ...styles }}
       type={type}
       name={name}
+      id={id}
       placeholder={placeholder}
       onChange={_onChange}
       onKeyUp={_onKeyUp}
@@ -44,6 +47,7 @@ const Inputs = (props) => {
       disabled={disabled}
       maxLength={maxLength}
       {...defaultStyles}
+      checked={checked}
     />
   );
 };

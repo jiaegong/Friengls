@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Portal from '../shared/Portal';
 import EditUser from './EditUser';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
-
-const MyPagePwdModal = (props) => {
+// to do: 스크롤 뒷배경 안 움직이도록
+const MyPageModal = (props) => {
   const { onClose, userInfo } = props;
 
   const [pwd, setPwd] = useState('');
   const handlePwd = (e) => {
     setPwd(e.target.value);
   };
-  const userPwd = { pwd: pwd };
+  const accessInfo = pwd;
 
   //비밀번호 검증 될 경우 editUser컴포넌트 렌더링
   const [editUser, setEditUser] = useState(false);
@@ -29,11 +28,10 @@ const MyPagePwdModal = (props) => {
         },
       });
       const result = response.data.msg;
-      console.log(result);
 
       result === 'success'
         ? setEditUser(true)
-        : window.alert('비밀번호가 틀림');
+        : window.alert('비밀번호가 틀립니다.');
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +41,11 @@ const MyPagePwdModal = (props) => {
     <Portal>
       <Background>
         {editUser ? (
-          <EditUser onClose={onClose} userInfo={userInfo} userPwd={userPwd} />
+          <EditUser
+            onClose={onClose}
+            userInfo={userInfo}
+            accessInfo={accessInfo}
+          />
         ) : (
           <Content>
             <CloseBtnBox>
@@ -133,7 +135,7 @@ const MyPagePwdModal = (props) => {
   );
 };
 
-export default MyPagePwdModal;
+export default MyPageModal;
 
 const Background = styled.div`
   height: 100%;

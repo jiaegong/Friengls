@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../shared/OAuth';
 import { emailForm, pwdForm } from '../shared/common';
 import { Logo } from '../image/';
 import { InputBox, Inputs, Buttons } from '../elements';
+// import MySwal from '../components/MySwal';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -37,8 +37,20 @@ const Login = (props) => {
     dispatch(userActions.loginDB(loginForm));
   };
 
+  // 소셜로그인 테스트
+  const kakaoLogin = () => {
+    const kakaoApi = `https://hjg521.link/auth/kakao`;
+    window.location.assign(kakaoApi);
+  };
+
+  const googleLogin = () => {
+    const googleApi = `https://hjg521.link/auth/google`;
+    window.location.assign(googleApi);
+  };
+
   return (
     <Container>
+      {/* <MySwal /> */}
       {/* 로고 */}
       <LogoBox>
         <img src={Logo} alt="userProfileImage" style={{ width: '100%' }} />
@@ -77,8 +89,23 @@ const Login = (props) => {
         Login
       </Buttons>
       {/* 소셜로그인 버튼*/}
-      <KakaoButton href={KAKAO_AUTH_URL}>카카오 계정으로 로그인</KakaoButton>
-      <GoogleButton href={GOOGLE_AUTH_URL}>구글 계정으로 로그인</GoogleButton>
+      <Buttons
+        _onClick={kakaoLogin}
+        styles={{ height: '60px', background: '#ffe900', color: '#3c1e1e' }}
+      >
+        카카오 계정으로 로그인
+      </Buttons>
+      <Buttons
+        _onClick={googleLogin}
+        styles={{
+          height: '60px',
+          margin: '20px auto 66px',
+          background: '#fff',
+          color: '#3c1e1e',
+        }}
+      >
+        구글 계정으로 로그인
+      </Buttons>
       {/* 회원가입 버튼 */}
       <LoginText>아직 프링글즈 계정이 없으신가요 ?</LoginText>
       <Buttons
@@ -100,7 +127,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 500px;
   margin: 200px auto;
 `;
 
@@ -117,35 +144,6 @@ const LogoText = styled.p`
   font-size: 26px;
   font-weight: 700;
   color: #153587;
-`;
-
-const KakaoButton = styled.a`
-  width: 100%;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffe900;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  font-size: 16px;
-  font-weight: 800;
-  text-decoration: none;
-  color: #3c1e1e;
-`;
-
-const GoogleButton = styled.a`
-  width: 100%;
-  height: 80px;
-  margin: 20px auto 66px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  font-size: 16px;
-  font-weight: 800;
-  text-decoration: none;
-  color: #3c1e1e;
 `;
 
 const LoginText = styled.p`

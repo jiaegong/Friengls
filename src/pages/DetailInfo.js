@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as profileActions } from '../redux/modules/profile';
 import { Logo, ProfileMedium } from '../image';
 import SelectLanguage from '../components/SelectLanguage';
 import { InputBox, InputLabel, Inputs, Buttons } from '../elements';
@@ -56,7 +55,6 @@ const DetailInfo = (props) => {
   const handleContents = (e) => {
     setContents(e.target.value);
   };
-  // console.log(contents);
 
   //한줄소개 input값
   const [comment, setComment] = useState('');
@@ -86,7 +84,7 @@ const DetailInfo = (props) => {
 
       if (tagList.indexOf(tagInput) !== -1) {
         if (tagInput.length === tagList[tagList.indexOf(tagInput)].length) {
-          window.alert('중복x');
+          window.alert('중복된 태그를 등록할 수 없습니다.');
           setTagInput('');
           return;
         }
@@ -107,47 +105,32 @@ const DetailInfo = (props) => {
     }
     setTagList(tagList.filter((tag, index) => index !== Number(e.target.id)));
   };
-
-  //isTutor input값
-  const [isTutor, setIsTutor] = useState('0');
-  const handleIstutor = (e) => {
-    setIsTutor(e.target.value);
-  };
-
-  //수업가능시간(시작) option
-  const startTimeArray = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23,
-  ];
-  //수업가능시간(시작) input값
-  const [startTime, setStartTime] = useState('');
-  const handleStartTime = (e) => {
-    setStartTime(e.target.value);
-  };
-  //수업가능시간(종료) option설정
-  const endTimeArray = [];
-  for (let i = 1; i < 7; i++) {
-    Number(startTime) + (2 * i - 1) < 24
-      ? endTimeArray.push(Number(startTime) + (2 * i - 1))
-      : endTimeArray.push(Number(startTime) + (2 * i - 1) - 24);
-  }
-  //수업가능시간(종료) input값
-  const [endTime, setEndTime] = useState('');
-  const handleEndTime = (e) => {
-    setEndTime(e.target.value);
-  };
-
   //유저정보 디스패치
+  console.log(userInfo);
   const addUser = (e) => {
+    //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
+    if (contents.split('').filter((word) => word !== ' ').length === 0) {
+      if (contents.length > 0) {
+        window.alert('자기 소개를 공백으로 채울 수 없습니다.');
+        setContents('');
+        return;
+      }
+    }
+
+    if (comment.split('').filter((word) => word !== ' ').length === 0) {
+      if (comment.length > 0) {
+        window.alert('한 줄 소개를 공백으로 채울 수 없습니다.');
+        setComment('');
+        return;
+      }
+    }
     //선생님일 경우 모든 정보를 입력하도록 조건
-    if (isTutor === '1') {
+    if (userInfo.isTutor === '1') {
       if (
         language1 === '' ||
-        comment === '' ||
-        contents === '' ||
-        tagList.length === 0 ||
-        startTime === '' ||
-        endTime === ''
+        comment.split('').filter((word) => word !== ' ').length === 0 ||
+        contents.split('').filter((word) => word !== ' ').length === 0 ||
+        tagList.length === 0
       ) {
         window.alert('선생님은 모든 정보를 작성해주세요');
         return;
@@ -168,38 +151,18 @@ const DetailInfo = (props) => {
     formData.append('comment', comment);
     formData.append('contents', contents);
     formData.append('tag', tagList.join());
-    formData.append('isTutor', isTutor);
-    formData.append('startTime', startTime);
-    formData.append('endTime', endTime);
+    formData.append('isTutor', userInfo.isTutor);
+    if (userInfo.isTutor === '1') {
+      formData.append('startTime', userInfo.startTime);
+      formData.append('endTime', userInfo.endTime);
+    }
     //로그인에 필요한 유저정보
     const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
-
     dispatch(userActions.signupDB(formData, loginInfo));
-
-    // //추가정보 디스패치
-    // const userForm = {
-    //   //유저정보 추가하기
-    //   userEmail: userInfo.userEmail,
-    //   userName: userInfo.userName,
-    //   pwd: userInfo.pwd,
-    //   pwdCheck: userInfo.pwdCheck,
-    //   tag: tagList.join(),
-    //   language1: language1,
-    //   language2: language2,
-    //   language3: language3,
-    //   comment: comment,
-    //   contents: contents,
-    //   isTutor: isTutor,
-    //   startTime: startTime,
-    //   endTime: endTime,
-    // };
-    // console.log('전송할 유저정보', userForm);
-
-    // // dispatch(profileActions.uploadProfileDB(formData));
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
-    window.alert('새로고침 처음 화면으로 돌아갑니다.');
+    window.alert('새로고침 시 처음 화면으로 돌아갑니다.');
     history.replace('/signup');
   }
 
@@ -222,6 +185,7 @@ const DetailInfo = (props) => {
             accept="image/*"
             id="file"
           />
+          <ProfileAddButton htmlFor="file">+</ProfileAddButton>
         </ImageBox>
       </label>
 
@@ -312,117 +276,6 @@ const DetailInfo = (props) => {
           )}
         </TagBox>
       </InputBox>
-      {/* isTutor */}
-      <TimeBox>
-        <p>사용자 설정 변경</p>
-        <InputBox
-          styles={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            fontSize: '26px',
-            cursor: 'default',
-          }}
-        >
-          프랭글스에서 한국어를
-          <InputLabel
-            _onClick={handleIstutor}
-            styles={{
-              width: '140px',
-              marginLeft: '10px',
-              alignItems: 'center',
-              fontSize: '26px',
-              cursor: 'pointer',
-            }}
-          >
-            <Inputs
-              type="radio"
-              name="isTutor"
-              value={'0'}
-              styles={{
-                width: '20px',
-                margin: '5px 5px 0 0',
-                cursor: 'pointer',
-              }}
-            />
-            배울래요!
-          </InputLabel>
-          &nbsp;&nbsp;/&nbsp;&nbsp;
-          <InputLabel
-            _onClick={handleIstutor}
-            styles={{
-              width: '180px',
-              marginLeft: '10px',
-              alignItems: 'center',
-              fontSize: '26px',
-              cursor: 'pointer',
-            }}
-          >
-            <Inputs
-              type="radio"
-              name="isTutor"
-              value={'1'}
-              styles={{
-                width: '20px',
-                margin: '5px 5px 0 0',
-                cursor: 'pointer',
-              }}
-            />
-            가르칠래요!
-          </InputLabel>
-        </InputBox>
-        {/* 선생님인 경우 수업시간 선택 */}
-        {isTutor === '1' && (
-          <Grid>
-            <InputBox
-              styles={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                fontSize: '26px',
-                cursor: 'default',
-              }}
-            >
-              <TimeSelectBox>
-                수업 가능한 시간 :
-                <Select name="startTime" onChange={handleStartTime}>
-                  <option value="">=====첫 수업=====</option>
-                  {startTimeArray.map((time, index) => (
-                    //+ 키 유저아이디 같은걸로 바꿔주기
-                    <option value={time} key={index}>
-                      {time + 1}회차: {time}:00 - {time + 1}:00
-                    </option>
-                  ))}
-                </Select>
-                부터
-                {startTime === '' ? (
-                  <></>
-                ) : (
-                  <>
-                    <Select name="endTime" onChange={handleEndTime}>
-                      <option value="">=====마지막 수업=====</option>
-                      {endTimeArray.map((time, index) => (
-                        <option value={time} key={startTime + index}>
-                          {time + 1}회차: {time}:00 - {time + 1}:00
-                        </option>
-                      ))}
-                    </Select>
-                    까지
-                  </>
-                )}
-              </TimeSelectBox>
-            </InputBox>
-            <InfoBox>
-              <span>※ 수업은 한 회차에 30분 씩 진행됩니다.</span>
-              <span>※ 수업은 2회차 단위로 구성할 수 있습니다.</span>
-              <span>※ 최소 2회차, 최대 12회차까지 수업할 수 있습니다.</span>
-            </InfoBox>
-          </Grid>
-        )}
-      </TimeBox>
-
       {/* 버튼 */}
       <ButtonBox>
         <Buttons
@@ -492,7 +345,25 @@ const ImgInput = styled.input`
   overflow: hidden;
 `;
 
-// 라벨, 글자수제한 정렬
+const ProfileAddButton = styled.label`
+  width: 60px;
+  height: 60px;
+  padding-bottom: 10px;
+  border-radius: 50px;
+  background: #153587;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 700px;
+  left: 950px;
+  font-size: 50px;
+  font-weight: 600;
+  color: #fff;
+`;
+
+// 자기소개/한줄소개 라벨, 글자수제한 정렬
 const LabelWrap = styled.div`
   width: 100%;
   display: flex;
@@ -540,6 +411,7 @@ const TagBox = styled.div`
   p {
     margin-right: 10px;
     font-size: 16px;
+    cursor: default;
   }
 
   button {
@@ -556,45 +428,6 @@ const TagBox = styled.div`
     font-size: 20px;
     color: #8a8a8a;
   }
-`;
-
-//수업시간 선택 관련
-const TimeBox = styled.div`
-  width: 100%;
-  margin: 0 40px;
-  padding: 20px 0;
-  border-top: 1px solid #c4c4c4;
-
-  p {
-    height: 80px;
-    text-align: start;
-    font-size: 40px;
-    font-weight: 600;
-  }
-`;
-
-const Grid = styled.div`
-  // margin: 10px;
-`;
-
-const TimeSelectBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Select = styled.select`
-  width: 250px;
-  height: 50px;
-  margin: 0 20px;
-  border: 1px solid #8a8a8a;
-  border-radius: 8px;
-  font-size: 20px;
-`;
-
-const InfoBox = styled.div`
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
 `;
 
 //버튼 관련

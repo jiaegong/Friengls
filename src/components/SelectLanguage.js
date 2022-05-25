@@ -7,6 +7,7 @@ const SelectLanguage = (props) => {
   const {
     language1,
     language2,
+    language3,
     handleLanguage1,
     handleLanguage2,
     handleLanguage3,
@@ -44,9 +45,10 @@ const SelectLanguage = (props) => {
         <InputLabel styles={{ fontSize: '14px' }}>최대 3개</InputLabel>
       </LabelBox>
       <SelectContainer>
+        {/* 맵으로 돌리기 */}
         {/* 사용언어1 */}
         <Select name="language1" onChange={handleLanguage1}>
-          <option value="">선택</option>
+          <option value="">{language1 ? language1 : '선택'}</option>
           {languageList.map((language, index) => (
             <option value={language} key={language + index}>
               {language}
@@ -56,7 +58,7 @@ const SelectLanguage = (props) => {
 
         {/* 사용언어2 */}
         <Select name="language2" onChange={handleLanguage2}>
-          <option value="">선택</option>
+          <option value="">{language2 ? language2 : '선택'}</option>
           {language2List.map((language, index) => (
             <option value={language} key={language + index}>
               {language}
@@ -66,7 +68,7 @@ const SelectLanguage = (props) => {
 
         {/* 사용언어3 */}
         <Select name="language3" onChange={handleLanguage3}>
-          <option value="">선택</option>
+          <option value="">{language3 ? language3 : '선택'}</option>
           {language3List.map((language, index) => (
             <option value={language} key={language + index}>
               {language}
