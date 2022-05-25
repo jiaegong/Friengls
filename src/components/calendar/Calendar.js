@@ -900,39 +900,24 @@ const CalendarTemplate = ({
               </Grid> */}
 
               <Grid item>
-                {saving ? (
-                  <CircularProgress />
-                ) : (
-                  <div className="saveBtn">
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      onClick={handleSaveAvailability}
-                      className={classes.button}
-                    >
-                      수강 예약하기
-                    </Button>
-                    <span
-                      style={{
-                        display: 'inline-block',
-                        marginLeft: '10px',
-                        marginTop: '10px',
-                        width: '30px',
-                        height: '30px',
-                        fontSize: '34px',
-                        position: 'absolute',
-                        right: '-80px',
-                        top: '0px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => {
-                        window.location.reload();
-                      }}
-                    >
-                      ♻️
-                    </span>
-                  </div>
-                )}
+                <div className="saveBtn">
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleSaveAvailability}
+                    className={classes.button}
+                  >
+                    수강 예약하기
+                  </Button>
+                  <span
+                    className="resetBtn"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    ♻️ 초기화
+                  </span>
+                </div>
               </Grid>
             </Grid>
           </Grid>
