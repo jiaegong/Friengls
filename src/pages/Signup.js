@@ -212,13 +212,16 @@ const Signup = ({ userInfo }) => {
 
   //DetailInfo페이지로 넘어가는 버튼 활성화
   const isDisabled = !(
-    emailCheck === '사용 가능한 이메일입니다.' &&
-    userNameCheck === '사용 가능한 닉네임입니다.' &&
-    pwdForm(pwd) &&
-    pwd === confirmPwd &&
-    isTutor &&
-    startTime &&
-    endTime
+    (
+      emailCheck === '사용 가능한 이메일입니다.' &&
+      userNameCheck === '사용 가능한 닉네임입니다.' &&
+      pwdForm(pwd) &&
+      pwd === confirmPwd &&
+      isTutor
+    )
+    // &&
+    // startTime &&
+    // endTime
   )
     ? true
     : false;

@@ -19,11 +19,13 @@ const MainModal = (props) => {
       <Content onClick={(e) => e.stopPropagation()}>
         <Wrap>
           <ProfileBox>
-            <Image
-              styles={{ width: '150px', height: '150px' }}
-              shape="circle"
-              src={tutor.userProfile}
-            />
+            <ImgWrap>
+              <Image
+                styles={{ width: '100%', height: '160px' }}
+                shape="circle"
+                src={tutor.userProfile}
+              />
+            </ImgWrap>
             <NameContainer>
               <NameWrap>
                 <Text styles={{ fontSize: '24px', fontWeight: '700' }}>
@@ -31,14 +33,16 @@ const MainModal = (props) => {
                 </Text>
               </NameWrap>
               <LanguageWrap>
-                <Text>{tutor.language1}&nbsp;</Text>
-                <Text>{tutor.language2}&nbsp;</Text>
-                <Text>{tutor.language3}&nbsp;</Text>
+                <Text>{tutor.language1} / </Text>
+                <Text>&nbsp;{tutor.language2} / </Text>
+                <Text>&nbsp;{tutor.language3}</Text>
               </LanguageWrap>
             </NameContainer>
           </ProfileBox>
           <InfoBox>
-            <Text>{tutor.comment}</Text>
+            <Text styles={{ padding: '0 10px', minHeight: '60px' }}>
+              {tutor.comment}
+            </Text>
             <TagWrap>
               {tags.map((tag, idx) => (
                 <Tag key={idx}>{tag}</Tag>
@@ -80,7 +84,9 @@ const Content = styled.div`
   z-index: 999;
   padding: 30px;
   width: 400px;
+  width: 440px;
   height: 500px;
+  height: 530px;
   border-radius: 10px;
   background: #f9f9f9;
 `;
@@ -98,11 +104,17 @@ const ProfileBox = styled.div`
   display: flex;
 `;
 
+const ImgWrap = styled.div`
+  width: 160px;
+  height: 160px;
+`;
+
 const NameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   margin-left: 20px;
+  padding-bottom: 10px;
 `;
 
 const NameWrap = styled.div`
@@ -111,12 +123,17 @@ const NameWrap = styled.div`
 
 const LanguageWrap = styled.div`
   display: flex;
+  margin-top: 10px;
+  P {
+    font-size: 14px;
+    color: #5e5e5e;
+  }
 `;
 
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const TagWrap = styled.div`
@@ -127,9 +144,11 @@ const TagWrap = styled.div`
 
 const Tag = styled.div`
   margin: 2px 5px;
+  margin: 4px 6px;
   padding: 5px 10px;
   border-radius: 40px;
-  border: 2px solid #959595;
+  font-size: 14px;
+  border: 1px solid #959595;
   box-shadow: 0px 2px 6px 0px #00000040;
 `;
 
@@ -137,6 +156,7 @@ const ProfileLink = styled.div`
   position: absolute;
   bottom: 0px;
   right: 0px;
+  font-size: 14px;
   cursor: pointer;
-  color: #959595;
+  color: #3e3e3e;
 `;

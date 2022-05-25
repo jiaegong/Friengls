@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
+import { useTranslation } from 'react-i18next';
 
 // 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 컴포넌트
 import { Text } from '../elements/index';
@@ -14,15 +14,16 @@ import TutorCard from '../components/TutorCard';
 import DivBanner from '../elements/DivBanner';
 
 const Main = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const tutorListDB = useSelector((state) => state.tutor.list);
   const reviewList = useSelector((state) => state.review.list);
 
-  React.useEffect(() => {
-    dispatch(tutorActions.getTutorListDB());
-
+  useEffect(() => {
     dispatch(reviewActions.getReviewDB());
   }, []);
+
+  if (!reviewList) return null;
 
   let tutorList = [];
 
@@ -32,21 +33,14 @@ const Main = () => {
     }
   }
 
-  console.log(tutorList);
-
   return (
     <Wrap>
       <DivBanner>
         <Banner>
           <p className="bannerTitle">
-            <span>Wanna learn Korean?</span>
-            <span>We are here!</span>
-            <span>Your closest Korean friends, Friengls😎</span>
-          </p>
-          <p className="bannerText">
-            <span>온라인 언어 교환으로 놀면서 스펙 쌓자!</span>
-            <span> 님도 보고 뽕도 따는 두 마리 토끼 전략~</span>
-            <span> 수다 떨면서 한국어 실력 올리는 사람 나야 나!</span>
+            <span>{t('wanna learn korean?')}</span>
+            <span>{t('we are here!')}</span>
+            <span>{t('your closest korean friends, friengls')}</span>
           </p>
           <button
             onClick={() => {
@@ -61,25 +55,15 @@ const Main = () => {
         <TutorListWrap>
           <TutorTitleWrap>
             <div>
-              <span>지난주 가장 예약이 많았던 튜터예요</span>
-              <span
-                className="tutorMoreBtn"
-                onClick={() => {
-                  history.push('/search');
-                }}
-              >
-                더보기 >
-              </span>
+              <span>{t('the most liked tutors in friengls')}</span>
+              <span className="tutorMoreBtn">더보기 ></span>
             </div>
-            <p>인기 선생님 리스트</p>
+            <p>{t('popular tutor list')}</p>
           </TutorTitleWrap>
           <CardList>
-            {tutorList
-              ? tutorList.map((tutor, idx) => {
-                  // console.log(item);
-                  return <TutorCard tutor={tutor} key={`tutorCard_${idx}`} />;
-                })
-              : null}
+            {tutorList.map((tutor, idx) => {
+              return <TutorCard tutor={tutor} key={`tutorCard_${idx}`} />;
+            })}
           </CardList>
         </TutorListWrap>
 
@@ -88,11 +72,10 @@ const Main = () => {
           <ReviewContainer>
             <ReviewTitleWrap>
               <div>
-                <span className="subTitle">
-                  다른 튜티들의 리뷰를 들어보세요
-                </span>
+                <span className="subTitle">{t('check out tutor reviews')}</span>
+                <span className="reviewMoreBtn">더보기 ></span>
               </div>
-              <p className="title">수강 추천 리뷰</p>
+              <p className="title">{t('best reviews')}</p>
             </ReviewTitleWrap>
             <ReviewList>
               {reviewList
@@ -118,42 +101,40 @@ const Wrap = styled.div`
 
 /* 배너 */
 const Banner = styled.div`
-  max-width: 1432px;
-  width: 100%;
+  max-width: 1280px;
+  width: 80%;
   height: 100%;
   margin: 0 auto;
-  padding: 0 16px;
 
   .bannerTitle {
     display: flex;
     flex-direction: column;
   }
   .bannerTitle > span {
-    font-size: 64px;
-    font-weight: 800;
+    font-size: 34px;
+    font-weight: bolder;
     letter-spacing: 1px;
     color: #fff;
   }
   .bannerText {
     display: flex;
     flex-direction: column;
-    margin: 10px 0 36px;
+    margin: 10px 0 28px;
+    /* background-color: red; */
   }
   .bannerText > span {
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 600;
     margin-top: 5px;
     letter-spacing: 1px;
     color: #fff;
   }
 
   button {
-    /* width: 332px; */
-    /* height: 80px; */
-    width: 290px;
-    height: 70px;
+    width: 210px;
+    height: 56px;
     font-size: 18px;
-    font-weight: 800;
+    font-weight: 900;
     cursor: pointer;
     background: #fff;
 
@@ -165,30 +146,19 @@ const Banner = styled.div`
 
 /* 컨텐츠 */
 const InnerWrap = styled.div`
-  width: 100%;
-  max-width: 1432px;
-  min-height: 910px;
-  padding: 0 16px;
-
+  width: 80%;
+  max-width: 1280px;
+  padding-top: 70px;
   margin: auto;
-
-  background: white;
-
-  /* 인기 선생님 리스트 Wrap */
-  .contentWrap {
-    width: 100%;
-    margin-top: 20px;
-  }
 `;
 
 // 튜터 리스트 부분
 const TutorListWrap = styled.div`
   width: 100%;
-  margin-top: 20px;
 `;
 
 const TutorTitleWrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 
   div {
     display: flex;
@@ -196,41 +166,39 @@ const TutorTitleWrap = styled.div`
     align-items: center;
 
     span {
-      /* font-size: 26px;
-    font-weight: 400; */
-      font-size: 18px;
-      font-weight: 400;
+      font-size: 16px;
+      font-weight: 600;
       margin-bottom: 6px;
     }
+
     .tutorMoreBtn {
-      /* position: absolute; */
+      margin-right: 10px;
       cursor: pointer;
     }
   }
+
   p {
-    /* font-size: 60px; */
-    font-size: 48px;
+    font-size: 38px;
     font-weight: bold;
   }
 `;
 
 const CardList = styled.div`
   width: 100%;
-  padding: 20px 0;
   display: grid;
   place-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
   /* grid-gap: 2rem; */
-  row-gap: 4rem;
-  column-gap: 3rem;
+  row-gap: 2rem;
+  column-gap: 0rem;
 `;
 
 // 리뷰 부분
 const ReviewWrap = styled.div`
-  width: 70%;
+  width: 100%;
   min-height: 600px;
-  /* margin-top: 131px; */
-  margin: 60px auto 200px;
+  margin: 140px auto 200px;
 `;
 
 const ReviewContainer = styled.div`
@@ -239,7 +207,7 @@ const ReviewContainer = styled.div`
 `;
 
 const ReviewTitleWrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 80px;
 
   div {
     display: flex;
@@ -247,10 +215,8 @@ const ReviewTitleWrap = styled.div`
     align-items: center;
 
     span {
-      /* font-size: 26px;
-      font-weight: 400; */
-      font-size: 18px;
-      font-weight: 400;
+      font-size: 16px;
+      font-weight: 600;
       margin-bottom: 6px;
     }
 
@@ -258,15 +224,15 @@ const ReviewTitleWrap = styled.div`
       cursor: pointer;
     }
   }
+
   p {
-    /* font-size: 60px; */
-    font-size: 48px;
+    font-size: 36px;
     font-weight: bold;
   }
 `;
 
 const ReviewList = styled.div`
-  width: 100%;
+  width: 90%;
   min-height: 188px;
   margin: auto;
 `;

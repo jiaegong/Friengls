@@ -12,8 +12,8 @@ export default DivBanner;
 
 const BannerWrap = styled.div`
   width: 100%;
-  height: 700px;
-  padding-top: 120px;
+  height: 420px;
+  padding-top: 60px;
   background-image: url('${BannerImg}');
   background-size: cover;
   background-position: center;

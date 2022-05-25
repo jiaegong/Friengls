@@ -18,6 +18,7 @@ InputLabel.defaultProps = {
 const Label = styled.label`
   display: flex;
   height: 22px;
+  height: auto;
   font-size: 16px;
   font-weight: 400;
   color: #404040;

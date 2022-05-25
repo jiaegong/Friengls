@@ -61,16 +61,61 @@ const MyPageModal = (props) => {
             </Grid>
             <Grid>
               {/* 닉네임 */}
-              <InputBox styles={{ width: '860px', margin: '0 auto 20px' }}>
-                <InputLabel>이메일</InputLabel>
-                <Inputs value={userInfo.userEmail} disabled />
+              <InputBox
+                styles={{
+                  width: '60%',
+                  margin: '0 auto 20px',
+                  padding: '6px 12px',
+                  height: 'auto',
+                }}
+              >
+                <InputLabel
+                  styles={{
+                    fontSize: '12px',
+                    height: '14px',
+                    marginBottom: '4px',
+                  }}
+                >
+                  이메일
+                </InputLabel>
+                <Inputs
+                  value={userInfo.userEmail}
+                  disabled
+                  styles={{
+                    width: '100%',
+                    height: '33px',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                  }}
+                />
               </InputBox>
               {/* 비밀번호 */}
-              <InputBox styles={{ width: '860px', margin: '0 auto' }}>
-                <InputLabel>비밀번호</InputLabel>
+              <InputBox
+                styles={{
+                  width: '60%',
+                  height: 'auto',
+                  margin: '0 auto',
+                  padding: '6px 12px',
+                }}
+              >
+                <InputLabel
+                  styles={{
+                    fontSize: '12px',
+                    height: '14px',
+                    marginBottom: '4px',
+                  }}
+                >
+                  비밀번호
+                </InputLabel>
                 <Inputs
                   _onChange={handlePwd}
                   placeholder={'비밀번호를 입력해 주세요.'}
+                  styles={{
+                    width: '100%',
+                    height: '33px',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                  }}
                 />
               </InputBox>
             </Grid>
@@ -78,7 +123,7 @@ const MyPageModal = (props) => {
             <Grid>
               <Buttons
                 _onClick={handleEditUser}
-                styles={{ width: '380px', height: '60px' }}
+                styles={{ width: '300px', height: '54px', fontSize: '16px' }}
               >
                 프로필 수정하기
               </Buttons>
@@ -106,9 +151,11 @@ const Background = styled.div`
 `;
 
 const Content = styled.div`
-  height: 954px;
-  width: 1240px;
-  margin-top: 420px;
+  max-width: 800px;
+  min-height: 800px;
+  height: 800px;
+  width: 100%;
+  // margin-top: 120px;
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
@@ -117,6 +164,7 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
+
   // overflow: scroll;
 `;
 
@@ -135,14 +183,16 @@ const CloseBtn = styled.button`
   background: none;
   border: none;
   font-size: 30px;
+  font-weight: 600;
   cursor: pointer;
 `;
 
 const Grid = styled.div`
   margin-bottom: 60px;
+  margin-bottom: 50px;
 
   p {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 700;
   }
 `;
@@ -150,12 +200,13 @@ const Grid = styled.div`
 const UserImg = styled.div`
   width: 240px;
   height: 240px;
+  width: 180px;
+  height: 180px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
 
   .userImg {
-    width: 240px;
-    height: 240px;
+    width: 100%;
   }
 `;

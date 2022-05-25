@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.feedback {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  color: #171b78;
+}
+
+.feedback:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}

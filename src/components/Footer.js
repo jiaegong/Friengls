@@ -15,7 +15,7 @@ export default Footer;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 340px;
+  height: 140px;
   background: #262626;
 
   .innerWrap {
@@ -33,7 +33,7 @@ const Wrap = styled.div`
     h1 {
       text-align: center;
       color: #fff;
-      font-size: 70px;
+      font-size: 16px;
     }
   }
 `;

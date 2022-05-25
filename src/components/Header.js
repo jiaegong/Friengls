@@ -4,34 +4,52 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { io } from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 
 // 모듈
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
+import { actionCreators as notiActions } from '../redux/modules/booking';
 
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
 import { MainLogo } from '../image/index';
+import NotiModal from './NotiModal';
 
 const Header = () => {
   const dispatch = useDispatch();
   const token = getCookie('token');
-  const [username, setUsername] = useState('');
-  const [user, setUser] = useState('');
-  const [socket, setSocket] = useState(null);
+  const [notiOpen, setNotiOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+
+  // 다국어 처리
+  const { i18n } = useTranslation();
+  const changeLanguageEn = () => i18n.changeLanguage('en');
+  const changeLanguageKo = () => i18n.changeLanguage('ko');
+  const changeLanguageJa = () => i18n.changeLanguage('ja');
+
+  // const [username, setUsername] = useState('');
+  // const [user, setUser] = useState('');
+  // const [socket, setSocket] = useState(null);
 
   // ⭐️
   useEffect(() => {
     // setSocket(io('소켓을 받을 주소'));
     // setSocket(io('http://localhost:4000'));
-  }, []);
+    if (token) {
+      dispatch(notiActions.getBookingNotiDB());
+    }
+  }, [token]);
+
+  const handleNotiModal = () => {
+    setNotiOpen(!notiOpen);
+  };
 
   // ⭐️
   // user ==> socket DB로 이동.
-  useEffect(() => {
-    socket?.emit('newUser', user);
-  }, [socket, user]);
+  // useEffect(() => {
+  //   socket?.emit('newUser', user);
+  // }, [socket, user]);
 
   //마이페이지url에 사용할 유저정보 가져오기
   const userInfo = useSelector((state) => state.user.info);
@@ -54,7 +72,26 @@ const Header = () => {
         </div>
 
         <ul className="navBarWrap">
-          <li>언어</li>
+          <li
+            onClick={() => {
+              setLangOpen(!langOpen);
+            }}
+          >
+            언어
+          </li>
+          {langOpen && (
+            <SelectLang>
+              <p className="en" onClick={changeLanguageEn}>
+                English
+              </p>
+              <p className="ko" onClick={changeLanguageKo}>
+                한국어
+              </p>
+              <p className="ja" onClick={changeLanguageJa}>
+                日本語
+              </p>
+            </SelectLang>
+          )}
           <li
             className="icon"
             onClick={() => {
@@ -67,7 +104,7 @@ const Header = () => {
             <>
               <li
                 onClick={() => {
-                  alert('알림창 나오게 해야돰!!');
+                  handleNotiModal();
                 }}
               >
                 알림
@@ -82,14 +119,6 @@ const Header = () => {
                 마이페이지
               </li>
               <li onClick={logout}>로그아웃</li>
-              {/* {open && ( */}
-              {/* <div className="notifications">
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <div className="text">누구님이 HH:MM에 예약 하셨습니다.</div>
-                <button className="notificationBtn">확인</button>
-              </div> */}
-              {/* // )} */}
             </>
           ) : (
             <>
@@ -111,7 +140,13 @@ const Header = () => {
             </>
           )}
         </ul>
-        {/* 로그인시 회원이름 나오게 할것인지?? */}
+        {notiOpen && (
+          <NotiModal
+            ModalAction={handleNotiModal}
+            userInfo={userInfo}
+            // key={'notiModal'}
+          />
+        )}
       </div>
     </Wrap>
   );
@@ -119,17 +154,61 @@ const Header = () => {
 
 export default Header;
 
+const SelectLang = styled.div`
+  width: 90px;
+  height: 105px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 12px 0px #00000040;
+  position: absolute;
+  top: 55px;
+  left: 35px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  .en {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .en:hover {
+    color: #7f83ea;
+  }
+
+  .ko {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .ko:hover {
+    color: #7f83ea;
+  }
+
+  .ja {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .ja:hover {
+    color: #7f83ea;
+  }
+`;
+
 const Wrap = styled.div`
   width: 100%;
-  height: 120px;
+  height: 150px;
+  box-shadow: 0px -2px 8px 1px grey;
   background: #fff;
 
   .innerWrap {
     width: 90%;
-    max-width: 1400px;
+    max-width: 1280px;
     height: 100%;
     /* padding: 50px 16px 0; */
-    padding: 36px 16px 0;
+    padding: 60px 0 0;
     margin: auto;
 
     /* text-align: center; */
@@ -140,51 +219,50 @@ const Wrap = styled.div`
     align-items: center;
     /* background: #aaaaaa; */
     .logoWrap {
-      min-width: 245px;
+      width: 210px;
       /* margin: 0 auto 53px; */
+      padding-top: 16px;
       cursor: pointer;
       .logo {
         width: 100%;
-        height: 50px;
+        height: 40px;
       }
     }
 
     .navBarWrap {
       max-width: 672px;
       width: 100%;
-      height: 36px;
-      /* margin: auto; */
+      height: 33px;
+      padding-top: 30px;
       display: flex;
       justify-content: flex-end;
-      /* justify-content: space-around; */
+      justify-content: space-around;
       align-items: center;
       position: relative;
 
       /* background: #c5c5c5; */
 
       li {
-        /* width: 80px; */
+        width: 5rem;
+        width: auto;
         height: 35px;
         display: flex;
         justify-content: center;
         vertical-align: middle;
         align-items: center;
         cursor: pointer;
+
         position: relative;
-        /* font-size: 16px; */
-        font-size: 22px;
-        font-weight: 800;
+        font-size: 1.375rem;
+        font-size: 1.125rem;
+        font-size: 16px;
+        font-weight: bolder;
         letter-spacing: 1px;
 
-        margin-left: 3.375rem;
+        margin-left: 3.125rem;
         /* background: #8e8e8e; */
 
         cursor: pointer;
-        /* background: #8e8e8e; */
-
-        &:nth-child(5) {
-          /* margin: 0; */
-        }
 
         /* 알림 갯수 */
         .counter {
@@ -205,36 +283,6 @@ const Wrap = styled.div`
           border-radius: 50%;
 
           padding: 5px;
-        }
-      }
-
-      /* 알림창 */
-      .notifications {
-        position: absolute;
-        width: 90%;
-        /* min-height: 200px; */
-        right: 0;
-        top: 50px;
-        padding: 10px;
-        text-align: center;
-
-        background-color: #fff;
-
-        .text {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 40px;
-          margin-bottom: 10px;
-          background-color: #aaa;
-          cursor: pointer;
-        }
-
-        .notificationBtn {
-          border: 1px solid #a2a2a2;
-          border-radius: 5px;
-          padding: 3px 10px;
-          cursor: pointer;
         }
       }
     }

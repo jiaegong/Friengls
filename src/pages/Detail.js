@@ -35,9 +35,9 @@ const Detail = (props) => {
     // 예약 리스트 불러오기
     axios({
       method: 'get',
-      // url: `https://jg-jg.shop/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
+      // url: `https://hjg521.link/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
       // url: `http://13.124.206.190/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
-      url: `https://jg-jg.shop/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
+      url: `https://hjg521.link/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
     })
       .then((doc) => {
         let data = doc.data.datas1;
@@ -59,9 +59,7 @@ const Detail = (props) => {
 
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
-
-  // useEffect(() => {
-  // }, []);
+  console.log(reviewList);
 
   return (
     <Wrap>
@@ -71,15 +69,26 @@ const Detail = (props) => {
 
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
-          {/* <div className="booking">캘린더</div> */}
+          <div className="booking">
+            예약 하기 <span>/ 수업 일정</span>
+          </div>
           <Calendar />
         </div>
 
-        {/* 코멘트 */}
-        {/* 리뷰 리스트 맵 돌릴 때, 작성자 이름이 접속한 이름과 같으면 수정, 삭제 버튼 보이게
-        현재 접속한 이름이 없는 경우에 대한 처리도 필요(옵셔널 체이닝) */}
+        {/* 리뷰 */}
         <ReviewList>
+          <ReviewTitleWrap>
+            <div>
+              <span className="subTitle">
+                선생님의 수업을 수강하고 리뷰를 남겨보세요!
+              </span>
+            </div>
+            <p className="title">수강 추천 리뷰</p>
+          </ReviewTitleWrap>
           {reviewList?.map((r, idx) => {
+            if (reviewList[idx].Tutor_username !== tutorName) {
+              return null;
+            }
             return <Review key={idx} {...r} />;
           })}
         </ReviewList>
@@ -94,33 +103,64 @@ const Wrap = styled.div`
   // background-color: #ddd;
 
   .innerWrap {
-    max-width: 1400px;
+    max-width: 1280px;
     width: 90%;
     margin: auto;
 
     /* 예약 캘린더 */
     .bookingWrap {
-      width: 95%;
+      width: 90%;
       height: auto;
-      margin: auto;
+      margin: 100px auto;
       min-height: 300px;
       padding: 0 10px;
 
-      /* background-color: #686868; */
-
       .booking {
         width: 100%;
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 50px;
+        padding-left: 8%;
 
-        background-color: #fff;
+        span {
+          color: #aaa;
+          font-size: 22px;
+          font-weight: 600;
+        }
       }
     }
   }
 `;
 
+const ReviewTitleWrap = styled.div`
+  margin-bottom: 70px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .reviewMoreBtn {
+      cursor: pointer;
+    }
+  }
+
+  p {
+    font-size: 30px;
+    font-weight: bold;
+  }
+`;
+
 const ReviewList = styled.div`
-  width: 100%;
-  min-height: 188px;
-  margin: auto;
+  width: 76%;
+  min-height: 300px;
+  margin: 0 auto 180px;
 `;
 
 export default Detail;
