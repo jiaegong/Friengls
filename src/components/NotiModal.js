@@ -37,30 +37,32 @@ const NotiModal = (props) => {
       >
         <div className="notifications">
           <div className="notificationsInnerWrap">
-            {notiList.map((notiItem, idx) => {
-              // const timeId = notiItem.timeId;
-              // const noti = notiItem.noti;
-              // const del = notiItem.del;
+            <ul>
+              {notiList.map((notiItem, idx) => {
+                const timeId = notiItem.timeId;
+                // const noti = notiItem.noti;
+                // const del = notiItem.del;
 
-              return (
-                <>
-                  <NotiItem
-                    notiItem={notiItem}
-                    userInfo={userInfo}
-                    key={notiItem.timeId}
-                  />
-                </>
-              );
-            })}
-
-            <button
+                return (
+                  <>
+                    <NotiItem
+                      notiItem={notiItem}
+                      userInfo={userInfo}
+                      // key={`noti_${timeId}`}
+                      key={`noti_${idx}`}
+                    />
+                  </>
+                );
+              })}
+            </ul>
+            {/* <button
               className="notificationBtn"
               onClick={() => {
                 dispactch(notiActions.delAllNotiDB());
               }}
             >
               지우기
-            </button>
+            </button> */}
           </div>
         </div>
       </Background>

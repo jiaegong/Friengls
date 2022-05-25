@@ -19,12 +19,12 @@ const NotiItem = (props) => {
   const isTutor = userInfo.isTutor;
 
   // 예약 정보
-  const tutorName = notiItem.Tutor_userName
-  const tuteeName = notiItem.Tutee_userName
+  const tutorName = notiItem.Tutor_userName;
+  const tuteeName = notiItem.Tutee_userName;
   let startTime = notiItem.start;
   let endTime = notiItem.end;
 
-  console.log({ tutorName, tuteeName })
+  console.log({ tutorName, tuteeName });
 
   // if (!notiItem) return; // 이 부분 불확실...
   let [week, month, day, year, sTime] = startTime.split(' ');
@@ -40,27 +40,27 @@ const NotiItem = (props) => {
     if (TuteeNoti === 1) {
       return (
         <>
-          <div>
-            {TuteeDel === 0 && TutorDel === 1 ? (
-              <div
-                className="text"
-                onClick={() => {
-                  clearNoti(timeId);
-                }}
-              >
-                {tutorName}튜터님이 예약을 취소하셨습니다.
-              </div>
-            ) : TuteeDel === 0 ? (
-              <div
-                className="text"
-                onClick={() => {
-                  clearNoti(timeId);
-                }}
-              >
-                {month}월 {day}일 2시에 강의를 예약하셨습니다.
-              </div>
-            ) : null}
-          </div>
+          {/* <div> */}
+          {TuteeDel === 0 && TutorDel === 1 ? (
+            <li
+              className="text"
+              onClick={() => {
+                clearNoti(timeId);
+              }}
+            >
+              {tutorName}튜터님이 예약을 취소하셨습니다.
+            </li>
+          ) : TuteeDel === 0 ? (
+            <li
+              className="text"
+              onClick={() => {
+                clearNoti(timeId);
+              }}
+            >
+              {month}월 {day}일 2시에 강의를 예약하셨습니다.
+            </li>
+          ) : null}
+          {/* </div> */}
         </>
       );
     }
@@ -69,14 +69,14 @@ const NotiItem = (props) => {
       return (
         <>
           {TutorDel === 0 ? null : (
-            <div
+            <li
               className="text"
               onClick={() => {
                 dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
               {tutorName}튜터님이 예약을 취소하셨습니다.
-            </div>
+            </li>
           )}
         </>
       );
@@ -89,35 +89,8 @@ const NotiItem = (props) => {
     if (TutorNoti === 1) {
       return (
         <>
-          <div>
-            {TutorDel === 0 && TuteeDel === 1 ? (
-              <div
-                className="text"
-                onClick={() => {
-                  dispatch(notiActions.delCheckNotiDB(timeId));
-                }}
-              >
-                {tuteeName}튜티님이 예약을 취소했습니다.
-              </div>
-            ) : TutorDel === 0 ? (
-              <div
-                className="text"
-                onClick={() => {
-                  clearNoti(timeId);
-                }}
-              >
-                {tuteeName}튜티님이 {month}월 {day}일 {startTime}시에 예약있습니다.
-              </div>
-            ) : null}
-          </div>
-        </>
-      );
-    }
-
-    if (TutorNoti === 0) {
-      return (
-        <>
-          {TuteeDel === 0 ? null : (
+          {/* <div> */}
+          {TutorDel === 0 && TuteeDel === 1 ? (
             <div
               className="text"
               onClick={() => {
@@ -126,6 +99,34 @@ const NotiItem = (props) => {
             >
               {tuteeName}튜티님이 예약을 취소했습니다.
             </div>
+          ) : TutorDel === 0 ? (
+            <div
+              className="text"
+              onClick={() => {
+                clearNoti(timeId);
+              }}
+            >
+              {tuteeName}튜티님이 {month}월 {day}일 {startTime}시에
+              예약있습니다.
+            </div>
+          ) : null}
+          {/* </div> */}
+        </>
+      );
+    }
+
+    if (TutorNoti === 0) {
+      return (
+        <>
+          {TuteeDel === 0 ? null : (
+            <li
+              className="text"
+              onClick={() => {
+                dispatch(notiActions.delCheckNotiDB(timeId));
+              }}
+            >
+              {tuteeName}튜티님이 예약을 취소했습니다.
+            </li>
           )}
         </>
       );
