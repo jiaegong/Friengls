@@ -56,7 +56,7 @@ const Main = () => {
           <TutorTitleWrap>
             <div>
               <span>{t('the most liked tutors in friengls')}</span>
-              <span className="tutorMoreBtn">더보기 ></span>
+              <span className="tutorMoreBtn">{t('see more')} ></span>
             </div>
             <p>{t('popular tutor list')}</p>
           </TutorTitleWrap>
@@ -73,7 +73,6 @@ const Main = () => {
             <ReviewTitleWrap>
               <div>
                 <span className="subTitle">{t('check out tutor reviews')}</span>
-                <span className="reviewMoreBtn">더보기 ></span>
               </div>
               <p className="title">{t('best reviews')}</p>
             </ReviewTitleWrap>
@@ -218,10 +217,6 @@ const ReviewTitleWrap = styled.div`
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 6px;
-    }
-
-    .reviewMoreBtn {
-      cursor: pointer;
     }
   }
 
