@@ -49,7 +49,11 @@ const Mypage = (props) => {
             {bookingList?.map((item, idx) => {
               return (
                 <>
-                  <BookingItem item={item} userInfo={userInfo} />
+                  <BookingItem
+                    item={item}
+                    userInfo={userInfo}
+                    // key={`mypage_${idx}`}
+                  />
                 </>
               );
             })}
@@ -155,6 +159,7 @@ const Wrap = styled.div`
             border: 1px solid #c7c7c7;
             border-radius: 4px;
             margin-right: 20px;
+            gap: 3%;
 
             .userName {
               width: 20%;
@@ -166,6 +171,7 @@ const Wrap = styled.div`
               justify-content: flex-start;
               margin-left: 10px;
               margin-right: 30px;
+              padding-left: 10px;
 
               /* background-color: #aaaaaa; */
             }
@@ -175,14 +181,22 @@ const Wrap = styled.div`
               text-align: left;
               display: flex;
               align-items: center;
-              /* justify-content: space-around; */
+              gap: 50px;
 
               span {
                 display: inline-block;
                 font-size: 16px;
-                margin-right: 50px;
-                min-width: 150px;
               }
+
+              .dayInfo {
+                min-width: 200px;
+                /* background-color: yellow; */
+              }
+
+              .timeInfo {
+                /* background-color: blue; */
+              }
+
               /* background-color: #aaaaaa; */
             }
 
@@ -190,11 +204,12 @@ const Wrap = styled.div`
           }
 
           .videoBtn {
-            width: 20%;
+            width: 15%;
             max-width: 240px;
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
+            padding: 10px 5px 5px;
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;
@@ -203,6 +218,22 @@ const Wrap = styled.div`
 
             background-color: #153587;
             /* background-color: #c1c1c1; */
+          }
+
+          .delBtn {
+            width: 15%;
+            max-width: 200px;
+            height: 50px;
+            border: none;
+            padding: 10px 5px 5px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bolder;
+            color: #fff;
+            margin-left: 5px;
+            cursor: pointer;
+
+            background-color: #981821;
           }
         }
       }

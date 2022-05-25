@@ -80,4 +80,44 @@ const Background = styled.div`
   bottom: 0;
   z-index: 1000;
   background-color: none;
+
+  /* 알림창 */
+  .notifications {
+    position: absolute;
+    max-width: 420px;
+    width: 100%;
+    min-height: 140px;
+    right: 15%;
+    top: 144px;
+    padding: 10px;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    box-shadow: 0px -2px 3px 0px #d7d7d7;
+
+    background-color: #f4f4f4;
+    background-color: #ffffff;
+
+    /*  */
+    .notificationsInnerWrap {
+      position: relative;
+      height: 100%;
+      padding: 10px;
+
+      ul > li:last-child {
+        margin: 0;
+      }
+
+      .textItem {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 40px;
+        margin-bottom: 10px;
+        padding-left: 14px;
+        border-radius: 5px;
+        border: 1px solid #d1d1d1;
+        cursor: pointer;
+      }
+    }
+  }
 `;

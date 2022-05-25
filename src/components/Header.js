@@ -92,13 +92,6 @@ const Header = () => {
                 마이페이지
               </li>
               <li onClick={logout}>로그아웃</li>
-              {notiOpen && (
-                <NotiModal
-                  ModalAction={handleNotiModal}
-                  userInfo={userInfo}
-                  // key={'notiModal'}
-                />
-              )}
             </>
           ) : (
             <>
@@ -120,6 +113,13 @@ const Header = () => {
             </>
           )}
         </ul>
+        {notiOpen && (
+          <NotiModal
+            ModalAction={handleNotiModal}
+            userInfo={userInfo}
+            // key={'notiModal'}
+          />
+        )}
       </div>
     </Wrap>
   );
@@ -213,53 +213,6 @@ const Wrap = styled.div`
           border-radius: 50%;
 
           padding: 5px;
-        }
-      }
-
-      /* 알림창 */
-      .notifications {
-        position: absolute;
-        max-width: 460px;
-        width: 100%;
-        min-height: 200px;
-        right: 15%;
-        top: 144px;
-        padding: 10px;
-        border-radius: 15px;
-        z-index: 9999;
-
-        background-color: #aaaaaa;
-
-        .notificationsInnerWrap {
-          position: relative;
-          min-height: 200px;
-          padding: 10px;
-
-          .text {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            height: 40px;
-            margin-bottom: 10px;
-            padding-left: 10px;
-            border-radius: 5px;
-            background-color: #ff9c9c;
-            cursor: pointer;
-          }
-
-          .notificationBtn {
-            border: 1px solid #a2a2a2;
-            border-radius: 5px;
-            padding: 3px 10px;
-            width: 100px;
-            height: 30px;
-            cursor: pointer;
-
-            position: absolute;
-            bottom: 0;
-            right: 37%;
-            text-align: center;
-          }
         }
       }
     }

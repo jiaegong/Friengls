@@ -43,7 +43,7 @@ const NotiItem = (props) => {
           {/* <div> */}
           {TuteeDel === 0 && TutorDel === 1 ? (
             <li
-              className="text"
+              className="textItem"
               onClick={() => {
                 clearNoti(timeId);
               }}
@@ -52,7 +52,7 @@ const NotiItem = (props) => {
             </li>
           ) : TuteeDel === 0 ? (
             <li
-              className="text"
+              className="textItem"
               onClick={() => {
                 clearNoti(timeId);
               }}
@@ -70,7 +70,7 @@ const NotiItem = (props) => {
         <>
           {TutorDel === 0 ? null : (
             <li
-              className="text"
+              className="textItem"
               onClick={() => {
                 dispatch(notiActions.delCheckNotiDB(timeId));
               }}
@@ -92,7 +92,7 @@ const NotiItem = (props) => {
           {/* <div> */}
           {TutorDel === 0 && TuteeDel === 1 ? (
             <div
-              className="text"
+              className="textItem"
               onClick={() => {
                 dispatch(notiActions.delCheckNotiDB(timeId));
               }}
@@ -101,7 +101,7 @@ const NotiItem = (props) => {
             </div>
           ) : TutorDel === 0 ? (
             <div
-              className="text"
+              className="textItem"
               onClick={() => {
                 clearNoti(timeId);
               }}
@@ -120,7 +120,7 @@ const NotiItem = (props) => {
         <>
           {TuteeDel === 0 ? null : (
             <li
-              className="text"
+              className="textItem"
               onClick={() => {
                 dispatch(notiActions.delCheckNotiDB(timeId));
               }}
