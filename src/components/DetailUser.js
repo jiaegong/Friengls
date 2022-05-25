@@ -162,9 +162,8 @@ const UserTitle = styled.div`
   .tutorName {
     display: inline-block;
     font-size: 22px;
-    font-weight: 600;
+    font-weight: 700;
     margin-right: 30px;
-    /* background-color: blue; */
   }
 
   span {

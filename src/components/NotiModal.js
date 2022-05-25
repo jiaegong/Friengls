@@ -92,7 +92,7 @@ const Background = styled.div`
     padding: 10px;
     border: 1px solid #eaeaea;
     border-radius: 10px;
-    box-shadow: 0px -2px 3px 0px #d7d7d7;
+    box-shadow: 0px 2px 12px 0px #00000040;
 
     background-color: #f4f4f4;
     background-color: #ffffff;

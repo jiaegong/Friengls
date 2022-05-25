@@ -199,7 +199,7 @@ const SelectLang = styled.div`
 
 const Wrap = styled.div`
   width: 100%;
-  height: 150px;
+  height: 110px;
   box-shadow: 0px -2px 8px 1px grey;
   background: #fff;
 
@@ -207,20 +207,16 @@ const Wrap = styled.div`
     width: 90%;
     max-width: 1280px;
     height: 100%;
-    /* padding: 50px 16px 0; */
-    padding: 60px 0 0;
+    padding: 20px 0 0;
     margin: auto;
-
-    /* text-align: center; */
 
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    /* background: #aaaaaa; */
+
     .logoWrap {
       width: 210px;
-      /* margin: 0 auto 53px; */
       padding-top: 16px;
       cursor: pointer;
       .logo {

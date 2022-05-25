@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
 import { useTranslation } from 'react-i18next';
+// import '../shared/App.css';
 
 // 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
@@ -109,10 +110,15 @@ const Banner = styled.div`
   .bannerTitle {
     display: flex;
     flex-direction: column;
+    padding-top: 40px;
+    margin-bottom: 20px;
   }
   .bannerTitle > span {
     font-size: 34px;
     font-weight: bolder;
+    font-family: 'Jalnan';
+    line-height: 34px;
+    margin-bottom: 10px;
     letter-spacing: 1px;
     color: #fff;
   }
