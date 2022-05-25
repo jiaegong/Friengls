@@ -110,6 +110,7 @@ const Card = styled.div`
       width: 80%;
       font-size: 12px;
       margin-top: 8px;
+      overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 1;

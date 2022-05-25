@@ -116,11 +116,12 @@ const Banner = styled.div`
     margin-bottom: 20px;
   }
   .bannerTitle > span {
-    font-size: 34px;
+    font-size: 40px;
     font-weight: bolder;
-    font-family: 'Jalnan';
+    /* font-family: 'Jalnan'; */
     line-height: 34px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    margin-bottom: 18px;
     letter-spacing: 1px;
     color: #fff;
   }
