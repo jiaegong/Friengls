@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
 import { useTranslation } from 'react-i18next';
-// import '../shared/App.css';
 
 // 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 컴포넌트
 import { Text } from '../elements/index';
@@ -21,6 +21,8 @@ const Main = () => {
   const reviewList = useSelector((state) => state.review.list);
 
   useEffect(() => {
+    dispatch(tutorActions.getTutorListDB());
+
     dispatch(reviewActions.getReviewDB());
   }, []);
 
