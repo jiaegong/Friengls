@@ -5,6 +5,7 @@ import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { useTranslation } from 'react-i18next';
 
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
@@ -13,6 +14,7 @@ import axios from 'axios';
 import Review from '../components/Review';
 
 const Detail = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   //디테일페이지에서 불러올 유저 api
@@ -70,7 +72,7 @@ const Detail = (props) => {
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
           <div className="booking">
-            예약 하기 <span>/ 수업 일정</span>
+            {t('book a lesson')} <span>/ {t('tutoring schedule')}</span>
           </div>
           <Calendar />
         </div>
@@ -80,15 +82,15 @@ const Detail = (props) => {
           <ReviewTitleWrap>
             <div>
               <span className="subTitle">
-                선생님의 수업을 수강하고 리뷰를 남겨보세요!
+                {t('start learning and write a review!')}
               </span>
             </div>
-            <p className="title">수강 추천 리뷰</p>
+            <p className="title">{t('best reviews')}</p>
           </ReviewTitleWrap>
           {reviewList?.map((r, idx) => {
-            if (reviewList[idx].Tutor_username !== tutorName) {
-              return null;
-            }
+            // if (reviewList[idx].Tutor_username !== tutorName) {
+            //   return null;
+            // }
             return <Review key={idx} {...r} />;
           })}
         </ReviewList>

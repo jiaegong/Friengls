@@ -6,9 +6,11 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { emailForm, pwdForm } from '../shared/common';
 import { Logo } from '../image/';
 import { InputBox, Inputs, Buttons } from '../elements';
+import { useTranslation } from 'react-i18next';
 // import MySwal from '../components/MySwal';
 
 const Login = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   //userEmail 입력값 저장
   const [userEmail, setUserEmail] = useState('');
@@ -59,7 +61,7 @@ const Login = (props) => {
       {/* 이메일 인풋 */}
       <InputBox>
         <Inputs
-          placeholder="이메일을 입력해 주세요."
+          placeholder={t('please fill in email address')}
           type="text"
           name="userEmail"
           value={userEmail}
@@ -71,7 +73,7 @@ const Login = (props) => {
         {/* input 사이즈 기본적으로 width : 340px, height: 54px 맞춰주세요~*/}
         {/* input font-size: 14px, 로그인 버튼이나 일반적인 font는 16px로 맞춰주세요~ */}
         <Inputs
-          placeholder="비밀번호를 입력해 주세요."
+          placeholder={t('please fill in password')}
           type="text"
           name="pwd"
           value={pwd}
@@ -86,14 +88,14 @@ const Login = (props) => {
         }}
         _onClick={login}
       >
-        Login
+        {t('login')}
       </Buttons>
       {/* 소셜로그인 버튼*/}
       <Buttons
         _onClick={kakaoLogin}
         styles={{ height: '60px', background: '#ffe900', color: '#3c1e1e' }}
       >
-        카카오 계정으로 로그인
+        {t('login with kakao')}
       </Buttons>
       <Buttons
         _onClick={googleLogin}
@@ -104,10 +106,10 @@ const Login = (props) => {
           color: '#3c1e1e',
         }}
       >
-        구글 계정으로 로그인
+        {t('login with google')}
       </Buttons>
       {/* 회원가입 버튼 */}
-      <LoginText>아직 프링글즈 계정이 없으신가요 ?</LoginText>
+      <LoginText>{t('do not have an account yet?')}</LoginText>
       <Buttons
         _onClick={() => history.push('/signup')}
         styles={{
@@ -116,7 +118,7 @@ const Login = (props) => {
           color: '#171b78',
         }}
       >
-        회원 가입
+        {t('signup')}
       </Buttons>
     </Container>
   );

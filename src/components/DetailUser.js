@@ -7,8 +7,10 @@ import { actionCreators as likeActions } from '../redux/modules/like';
 import { getCookie } from '../shared/Cookie';
 import MyPageModal from './MyPageModal';
 import { Buttons } from '../elements/index';
+import { useTranslation } from 'react-i18next';
 
 const DetailUser = (props) => {
+  const { t } = useTranslation();
   const { userInfo } = props;
   const dispatch = useDispatch();
 
@@ -66,7 +68,7 @@ const DetailUser = (props) => {
               fontSize: '16px',
             }}
           >
-            내 프로필 수정
+            {t('edit my profile')}
           </Buttons>
         )}
         {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
@@ -101,7 +103,7 @@ const DetailUser = (props) => {
               }}
             >
               {/* 🔽 */}
-              ⬆️ 자기소개 닫기
+              ⬆️ {t('close comment')}
             </ContentsButton>
           ) : (
             <ContentsButton
@@ -109,7 +111,7 @@ const DetailUser = (props) => {
                 setContents(userInfo.contents);
               }}
             >
-              {/* 🔽 */}⬇ 자기소개 열기
+              {/* 🔽 */}⬇ {t('open comment')}
             </ContentsButton>
           ))}
       </div>

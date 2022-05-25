@@ -5,8 +5,10 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import DetailUser from '../components/DetailUser';
 import BookingItem from '../components/BookingItem';
+import { useTranslation } from 'react-i18next';
 
 const Mypage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   // 마이페이지에서 불러올 유저 api
   const userApi = props.match.params;
@@ -43,7 +45,7 @@ const Mypage = (props) => {
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
           <p className="bookingTitle">
-            예약 리스트 <span>/ 수업 일정</span>
+            {t('booking list')} <span>/ {t('tutoring schedule')}</span>
           </p>
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {

@@ -66,14 +66,17 @@ const VideoChat = (props) => {
             console.log(3, userId, stream, userVideo.current);
             if (userVideo.current) {
               const call = peer.call(userId, stream); // call 요청
-              call.on('stream', (userVideoStream) => {
-                console.log(4);
-                userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
-              });
-              call.on('close', () => {
-                userVideo.current.remove(); // 상대방 나가면 비디오 remove
-              });
-              peers[userId] = call;
+              if (call) {
+                console.log(call);
+                call.on('stream', (userVideoStream) => {
+                  console.log(4);
+                  userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
+                });
+                call.on('close', () => {
+                  userVideo.current.remove(); // 상대방 나가면 비디오 remove
+                });
+                peers[userId] = call;
+              }
             }
           });
 

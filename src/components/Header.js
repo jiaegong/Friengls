@@ -23,6 +23,7 @@ const Header = () => {
   const [langOpen, setLangOpen] = useState(false);
 
   // 다국어 처리
+  const { t } = useTranslation();
   const { i18n } = useTranslation();
   const changeLanguageEn = () => i18n.changeLanguage('en');
   const changeLanguageKo = () => i18n.changeLanguage('ko');
@@ -77,7 +78,7 @@ const Header = () => {
               setLangOpen(!langOpen);
             }}
           >
-            언어
+            {t('language')}
           </li>
           {langOpen && (
             <SelectLang>
@@ -98,7 +99,7 @@ const Header = () => {
               history.push('/search');
             }}
           >
-            선생님 찾기
+            {t('find a tutor')}
           </li>
           {token ? (
             <>
@@ -107,7 +108,7 @@ const Header = () => {
                   handleNotiModal();
                 }}
               >
-                알림
+                {t('notification')}
               </li>
               <li
                 onClick={() => {
@@ -116,26 +117,26 @@ const Header = () => {
                   );
                 }}
               >
-                마이페이지
+                {t('my page')}
               </li>
-              <li onClick={logout}>로그아웃</li>
+              <li onClick={logout}>{t('logout')}</li>
             </>
           ) : (
             <>
               <li
                 onClick={() => {
-                  alert('로그인후 사용가능합니다~!');
+                  alert('로그인 후 사용 가능합니다!');
                   history.push('/login');
                 }}
               >
-                알림
+                {t('notification')}
               </li>
               <li
                 onClick={() => {
                   history.push('/login');
                 }}
               >
-                로그인/회원가입
+                {t('login/signup')}
               </li>
             </>
           )}
@@ -161,7 +162,7 @@ const SelectLang = styled.div`
   box-shadow: 0px 2px 12px 0px #00000040;
   position: absolute;
   top: 55px;
-  left: 35px;
+  left: 45px;
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
