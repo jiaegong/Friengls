@@ -190,13 +190,16 @@ const TutorTitleWrap = styled.div`
 `;
 
 const CardList = styled.div`
-  width: 100%;
+  /* width: 100%; */
+  width: 95%;
+  margin: auto;
   display: grid;
   place-items: center;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
   /* grid-gap: 2rem; */
-  row-gap: 2rem;
+  /* row-gap: 2rem; */
+  row-gap: 4rem;
   column-gap: 0rem;
 `;
 

@@ -187,7 +187,9 @@ const InnerWrap = styled.div`
   margin: 120px auto 180px;
 
   ul {
-    width: 100%;
+    /* width: 100%; */
+    width: 95%;
+    margin: auto;
     display: grid;
     place-items: center;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
