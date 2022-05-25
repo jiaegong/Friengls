@@ -812,6 +812,7 @@ const TagBox = styled.div`
     align-items: center;
     border-radius: 25px;
     border: 2px solid #959595;
+    cursor: default;
   }
 
   //태그 한 개의 텍스트
