@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 // 모듈
 import { history } from '../redux/configureStore';
@@ -124,8 +125,19 @@ const Header = () => {
             <>
               <li
                 onClick={() => {
-                  alert('로그인후 사용가능합니다~!');
-                  history.push('/login');
+                  Swal.fire({
+                    title: '로그인 하셨나요?',
+                    text: '로그인후 사용이 가능 합니다!~',
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      history.push('/login');
+                    }
+                  });
+
+                  // history.push('/login');
                 }}
               >
                 알림
@@ -280,6 +292,10 @@ const Wrap = styled.div`
 
           padding: 5px;
         }
+      }
+
+      li:hover {
+        color: #7f83ea;
       }
     }
   }
