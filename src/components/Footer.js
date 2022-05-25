@@ -25,7 +25,7 @@ const Footer = () => {
               This is a service created through Hanghae 99.
               <br /> Please try it, and leave feedback on any positive or
               uncomfortable points.
-              <br /> Have a nice day. 😽
+              <br /> Have a nice day. <span>😽</span>
             </p>
           </div>
 
@@ -73,7 +73,8 @@ const Wrap = styled.div`
     /* background: #8d8d8d71; */
 
     .topWrap {
-      width: 1150px;
+      max-width: 1150px;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -121,7 +122,8 @@ const Wrap = styled.div`
     }
 
     .bottomWrap {
-      width: 1150px;
+      max-width: 1150px;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       margin-top: 18px;
@@ -140,6 +142,10 @@ const Wrap = styled.div`
           margin-top: 12px;
           margin-top: 18px;
           color: #c9c9c9;
+
+          span {
+            font-size: 18px;
+          }
         }
       }
 
@@ -178,7 +184,8 @@ const Wrap = styled.div`
     .line {
       display: block;
       background-color: #808080;
-      width: 1150px;
+      max-width: 1150px;
+      width: 100%;
       height: 1.5px;
       /* margin: 22px auto 25px; */
       margin: 30px auto 25px;
