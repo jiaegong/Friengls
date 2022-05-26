@@ -42,7 +42,7 @@ const CalendarTemplate = ({
   const dispatch = useDispatch();
   // const Swal = require('sweetalert2');
   const isLogin = useSelector((state) => state.user.isLogin);
-  console.log(isLogin);
+  // console.log(isLogin);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -479,7 +479,7 @@ const CalendarTemplate = ({
   }
 
   function makeQuickAvailability(availability) {
-    console.log({ availability });
+    // console.log({ availability });
     const output = {};
     for (let range of availability) {
       if (new Date(range.start) > new Date()) {

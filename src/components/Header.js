@@ -37,13 +37,16 @@ const Header = () => {
   useEffect(() => {
     // setSocket(io('소켓을 받을 주소'));
     // setSocket(io('http://localhost:4000'));
-    if (token) {
-      dispatch(notiActions.getBookingNotiDB());
-    }
+    // if (token) {
+    //   dispatch(notiActions.getBookingNotiDB());
+    // }
   }, [token]);
 
   const handleNotiModal = () => {
     setNotiOpen(!notiOpen);
+    if (token) {
+      dispatch(notiActions.getBookingNotiDB());
+    }
   };
 
   // ⭐️
@@ -261,8 +264,7 @@ const Wrap = styled.div`
         cursor: pointer;
 
         position: relative;
-        font-size: 1.375rem;
-        font-size: 1.125rem;
+
         font-size: 16px;
         font-weight: bolder;
         letter-spacing: 1px;

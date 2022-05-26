@@ -64,7 +64,7 @@ const isLikeDB = (tutorName) => {
     })
       .then((res) => {
         dispatch(isLike(res.data.isLike));
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);

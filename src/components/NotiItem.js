@@ -24,7 +24,7 @@ const NotiItem = (props) => {
   let startTime = notiItem.start;
   let endTime = notiItem.end;
 
-  console.log({ tutorName, tuteeName });
+  // console.log({ tutorName, tuteeName });
 
   // if (!notiItem) return; // 이 부분 불확실...
   let [week, month, day, year, sTime] = startTime.split(' ');
@@ -32,20 +32,33 @@ const NotiItem = (props) => {
   let end = endTime.substr(-17, 5);
   // console.log({ start, end });
 
-  function clearNoti(timeId) {
-    dispatch(notiActions.clearNotiDB(timeId));
-  }
+  let Month = (month) => {
+    console.log(month);
+    if (month === 'Jan') return '1';
+    if (month === 'Feb') return '2';
+    if (month === 'Mar') return '3';
+    if (month === 'Apr') return '4';
+    if (month === 'May') return '5';
+    if (month === 'Jun') return '6';
+    if (month === 'Jul') return '7';
+    if (month === 'Aug') return '8';
+    if (month === 'Sep') return '9';
+    if (month === 'Oct') return '10';
+    if (month === 'Nov') return '11';
+    if (month === 'Dec') return '12';
+  };
 
+  // 유저가 학생일때
   if (isTutor === 0) {
+    // 메세지를 아직 확인 하지 않았을때
     if (TuteeNoti === 1) {
       return (
         <>
-          {/* <div> */}
-          {TuteeDel === 0 && TutorDel === 1 ? (
+          {TuteeDel === 1 ? (
             <li
               className="textItem"
               onClick={() => {
-                clearNoti(timeId);
+                dispatch(notiActions.clearNotiDB(timeId));
               }}
             >
               {tutorName}튜터님이 예약을 취소하셨습니다.
@@ -54,21 +67,21 @@ const NotiItem = (props) => {
             <li
               className="textItem"
               onClick={() => {
-                clearNoti(timeId);
+                dispatch(notiActions.clearNotiDB(timeId));
               }}
             >
-              {month}월 {day}일 2시에 강의를 예약하셨습니다.
+              {Month(month)}월 {day}일 {start}시에 강의를 예약하셨습니다.
             </li>
           ) : null}
-          {/* </div> */}
         </>
       );
     }
 
+    // 메세지를 확인했을때
     if (TuteeNoti === 0) {
       return (
         <>
-          {TutorDel === 0 ? null : (
+          {TuteeDel === 0 ? null : (
             <li
               className="textItem"
               onClick={() => {
@@ -85,12 +98,13 @@ const NotiItem = (props) => {
     return null;
   }
 
+  // 유저가 선생님일때
   if (isTutor === 1) {
+    // 메세지를 확인하지 않았을때
     if (TutorNoti === 1) {
       return (
         <>
-          {/* <div> */}
-          {TutorDel === 0 && TuteeDel === 1 ? (
+          {TutorDel === 1 ? (
             <div
               className="textItem"
               onClick={() => {
@@ -103,22 +117,22 @@ const NotiItem = (props) => {
             <div
               className="textItem"
               onClick={() => {
-                clearNoti(timeId);
+                dispatch(notiActions.clearNotiDB(timeId));
               }}
             >
-              {tuteeName}튜티님이 {month}월 {day}일 {startTime}시에
+              {tuteeName}튜티님이 {Month(month)}월 {day}일 {start}시에
               예약있습니다.
             </div>
           ) : null}
-          {/* </div> */}
         </>
       );
     }
 
+    // 메세지를 확인 했을때
     if (TutorNoti === 0) {
       return (
         <>
-          {TuteeDel === 0 ? null : (
+          {TutorDel === 0 ? null : (
             <li
               className="textItem"
               onClick={() => {

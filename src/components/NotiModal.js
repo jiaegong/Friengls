@@ -6,9 +6,10 @@ import NotiItem from '../components/NotiItem';
 
 const NotiModal = (props) => {
   const dispactch = useDispatch();
-  const notiList = useSelector((state) => state.booking.list);
+  const notiList = useSelector((state) => state.booking.noti);
+  const notiCheck = notiList?.length;
   console.log({ notiList });
-  console.log(notiList.length);
+  console.log({ notiCheck });
   const { ModalAction, userInfo } = props;
 
   React.useEffect(() => {
@@ -24,10 +25,6 @@ const NotiModal = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    dispactch(notiActions.getBookingNotiDB());
-  }, []);
-
   return (
     <>
       <Background
@@ -38,7 +35,11 @@ const NotiModal = (props) => {
         <div className="notifications">
           <div className="notificationsInnerWrap">
             <ul>
-              {notiList.map((notiItem, idx) => {
+              {notiCheck === 0 && (
+                <div className="notiNot"> 알림이 없습니다.</div>
+              )}
+
+              {notiList?.map((notiItem, idx) => {
                 const timeId = notiItem.timeId;
                 // const noti = notiItem.noti;
                 // const del = notiItem.del;
@@ -123,6 +124,7 @@ const Background = styled.div`
         align-items: center;
         height: 40px;
         font-weight: 500;
+        margin-left: 0;
         margin-bottom: 10px;
         padding-left: 14px;
         border-radius: 5px;
