@@ -14,9 +14,11 @@ const SocialLogin = (props) => {
   const token = new URL(window.location.href).searchParams.get('token');
   //회원가입 시 필요한 유저정보
   const userInfo = { userEmail: userEmail, userName: userName };
-  //토큰을 쿠키에 저장
-  setCookie('token', token);
-  //토큰이 있을 때는 바로 메인으로 이동해 유저정보 받아오기
+
+  //토큰이 있을 때는 쿠키에 저장 후 바로 메인으로 이동해 유저정보 받아오기
+  if (token) {
+    setCookie('token', token);
+  }
   React.useEffect(() => {
     if (token) {
       history.replace('/');

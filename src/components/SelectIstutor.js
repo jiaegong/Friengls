@@ -25,16 +25,19 @@ const SelectIsTutor = ({
   return (
     <TimeBox>
       <p>프랭글스 사용자 설정</p>
-
-      <div>학생 / 선생님 선택 시 변경 하실 수 없습니다.</div>
-
+      <InputLabel styles={{ padding: '0 0 5px 5px' }}>
+        학생 / 선생님 선택 시 변경 하실 수 없습니다.
+      </InputLabel>
       <InputBox
         styles={{
-          display: 'flex',
+          height: '54px',
+          border: '1px solid #8a8a8a',
+          borderRadius: '8px',
+          paddingLeft: '5px',
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          fontSize: '26px',
+          fontSize: '14px',
           cursor: 'default',
         }}
       >
@@ -42,10 +45,9 @@ const SelectIsTutor = ({
         <InputLabel
           _onClick={_onClick}
           styles={{
-            width: '140px',
-            marginLeft: '10px',
+            padding: '0 10px 0 10px',
             alignItems: 'center',
-            fontSize: '26px',
+            fontSize: '14px',
             cursor: 'pointer',
           }}
         >
@@ -54,21 +56,20 @@ const SelectIsTutor = ({
             name="isTutor"
             value="0"
             styles={{
-              width: '20px',
-              margin: '5px 5px 0 0',
+              width: '14px',
+              marginRight: '5px',
               cursor: 'pointer',
             }}
           />
           배울래요!
         </InputLabel>
-        &nbsp;&nbsp;/&nbsp;&nbsp;
+        /
         <InputLabel
           _onClick={_onClick}
           styles={{
-            width: '180px',
-            marginLeft: '10px',
+            padding: '0 0 0 10px',
             alignItems: 'center',
-            fontSize: '26px',
+            fontSize: '14px',
             cursor: 'pointer',
           }}
         >
@@ -77,8 +78,8 @@ const SelectIsTutor = ({
             name="isTutor"
             value="1"
             styles={{
-              width: '20px',
-              margin: '5px 5px 0 0',
+              width: '14px',
+              marginRight: '5px',
               cursor: 'pointer',
             }}
           />
@@ -90,11 +91,13 @@ const SelectIsTutor = ({
         <React.Fragment>
           <InputBox
             styles={{
-              display: 'flex',
+              height: '54px',
+              border: '1px solid #8a8a8a',
+              borderRadius: '8px',
+              paddingLeft: '5px',
               flexDirection: 'row',
               justifyContent: 'flex-start',
               alignItems: 'center',
-              fontSize: '26px',
               cursor: 'default',
             }}
           >
@@ -163,7 +166,7 @@ const TimeBox = styled.div`
   p {
     height: 80px;
     text-align: center;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 700;
     color: #153587;
   }
@@ -172,21 +175,24 @@ const TimeBox = styled.div`
 const TimeSelectBox = styled.div`
   display: flex;
   align-items: center;
+  font-size: 12px;
 `;
 
 const Select = styled.select`
-  width: 250px;
-  height: 50px;
-  margin: 0 20px;
+  width: 150px;
+  height: 30px;
+  margin: 0 10px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
-  font-size: 20px;
+  cursor: pointer;
+  font-size: 12px;
 `;
 
 const InfoBox = styled.div`
-  margin: 10px;
+  margin: 20px;
   display: flex;
   flex-direction: column;
+  font-size: 12px;
 `;
 
 export default SelectIsTutor;

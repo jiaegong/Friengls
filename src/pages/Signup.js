@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { history } from '../redux/configureStore';
 import { Logo } from '../image/';
-import { InputBox, Inputs, Buttons, InputLabel } from '../elements';
+import { InputBox, Inputs, InputLabel } from '../elements';
 import { emailForm, pwdForm, userNameForm } from '../shared/common';
 import { useEffect } from 'react';
 import SelectIsTutor from '../components/SelectIstutor';
@@ -17,12 +16,8 @@ const Signup = ({ userInfo }) => {
   const dispatch = useDispatch();
   //소셜로그인의 경우 닉네임체크 바로 할 수 있도록
   useEffect(() => {
-    if (userInfo) {
-      checkDuplicatedEmail(userInfo.userEmail);
-      //유저네임은 선택사항이라 가져올 경우만(테스트해볼 것)
-      if (userInfo.userName) {
-        checkDuplicatedUserName(userInfo.userName);
-      }
+    if (userInfo?.userName) {
+      checkDuplicatedUserName(userInfo.userName);
     }
   }, []);
   // userEmail 상태값
@@ -43,16 +38,77 @@ const Signup = ({ userInfo }) => {
       setEmailCheck('이메일 형식: 예) example@example.com');
     }
   };
+  //인증번호
+  const [authNumber, setAuthNumber] = useState();
 
-  // userName 상태값
+  //중복체크 + 인증번호 요청
+  const checkDuplicatedEmail = (e) => {
+    //서버에서 요청 후 인증
+    axios({
+      method: 'post',
+      url: 'https://hjg521.link/signUp/emailCheck',
+      data: {
+        userEmail: userEmail,
+      },
+    })
+      .then((response) => {
+        console.log('emailCheckDB성공', response.data.msg);
+        if (response.data.msg === '이미 있는 이메일 주소입니다.') {
+          setEmailCheck(
+            '이미 가입된 이메일입니다. 다른 이메일을 입력해주세요.',
+          );
+          return;
+        }
+        //이메일 중복 확인 후 인증번호 보내기 요청
+
+        axios({
+          method: 'post',
+          url: 'https://hjg521.link/mail',
+          data: {
+            userEmail: userEmail,
+          },
+        })
+          .then((response) => {
+            setEmailCheck('작성하신 이메일로 인증번호를 발송했습니다.');
+            console.log(response.data);
+            setAuthNumber(response.data.toString());
+            console.log(authNumber);
+            //서버에서 보내주는 번호와 인풋 값 일치하면 인증완료
+          })
+          .catch((error) => {
+            console.log('이메일인증 에러', error);
+          });
+      })
+      .catch((error) => {
+        console.log('이메일체크 에러', error);
+      });
+  };
+  //이메일 인증 확인
+  const [inputNumber, setInputNumber] = useState('');
+  const handleInputNumber = (e) => {
+    setInputNumber(e.target.value);
+  };
+
+  const [confirmEmail, setConfirmEmail] = useState('');
+
+  const checkEmail = (e) => {
+    console.log('인증번호', authNumber);
+    console.log(inputNumber);
+
+    authNumber === inputNumber
+      ? setConfirmEmail('이메일 인증이 완료되었습니다.')
+      : setConfirmEmail('인증번호를 다시 확인해 주세요.');
+  };
+
+  //userName 상태값
   const [userName, setUserName] = useState(
     userInfo?.userName ? userInfo.userName : '',
   );
-  // userName 형식 라벨로 표시
+  //userName 형식 라벨로 표시
   const [userNameCheck, setUserNameCheck] = useState(
     '영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
   );
-  // userName 유효성 검사
+  //userName 유효성 검사
   const handleUserName = (e) => {
     const userName = e.target.value;
     setUserName(userName);
@@ -63,6 +119,34 @@ const Signup = ({ userInfo }) => {
         '영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
       );
     }
+  };
+  //userName 중복체크
+  const checkDuplicatedUserName = () => {
+    if (!userNameForm(userName)) {
+      return;
+    }
+    console.log('중복확인할 닉네임', userName);
+
+    axios({
+      method: 'post',
+      url: 'https://hjg521.link/signUp/nameCheck',
+      data: {
+        userName: userName,
+      },
+    })
+      .then((response) => {
+        console.log('userNameCheckDB성공', response.data);
+        if (response.data.msg === '이미 있는 닉네임입니다.') {
+          setUserNameCheck(
+            '이미 사용중인 닉네임입니다. 다른 닉네임을 입력해주세요.',
+          );
+          return;
+        }
+        setUserNameCheck('사용 가능한 닉네임입니다.');
+      })
+      .catch((error) => {
+        console.log('닉네임체크에러', error);
+      });
   };
 
   //pwd 상태값
@@ -110,71 +194,6 @@ const Signup = ({ userInfo }) => {
     }
   };
 
-  //이메일 중복체크
-  const checkDuplicatedEmail = () => {
-    if (!emailForm(userEmail)) {
-      return;
-    }
-    console.log('중복확인할 이메일', userEmail);
-
-    axios({
-      method: 'post',
-      url: 'https://hjg521.link/signUp/emailCheck',
-      data: {
-        userEmail: userEmail,
-      },
-    })
-      .then((response) => {
-        console.log('emailCheckDB성공', response.data.msg);
-        if (response.data.msg === '이미 있는 이메일 주소입니다.') {
-          // 소셜로그인에 사용할 이메일이 이미 가입된 이메일일 경우
-          // if (userInfo) {
-          //   window.alert(
-          //     '이미 가입된 이메일입니다. 다른 방법으로 가입해 주세요.',
-          //   );
-          //   history.replace('/login');
-          // }
-
-          setEmailCheck(
-            '이미 가입된 이메일입니다. 다른 이메일을 입력해주세요.',
-          );
-          return;
-        }
-        setEmailCheck('사용 가능한 이메일입니다.');
-      })
-      .catch((error) => {
-        console.log('이메일체크 에러', error);
-      });
-  };
-  //닉네임 중복체크
-  const checkDuplicatedUserName = () => {
-    if (!userNameForm(userName)) {
-      return;
-    }
-    console.log('중복확인할 닉네임', userName);
-
-    axios({
-      method: 'post',
-      url: 'https://hjg521.link/signUp/nameCheck',
-      data: {
-        userName: userName,
-      },
-    })
-      .then((response) => {
-        console.log('userNameCheckDB성공', response.data);
-        if (response.data.msg === '이미 있는 닉네임입니다.') {
-          setUserNameCheck(
-            '이미 사용중인 닉네임입니다. 다른 닉네임을 입력해주세요.',
-          );
-          return;
-        }
-        setUserNameCheck('사용 가능한 닉네임입니다.');
-      })
-      .catch((error) => {
-        console.log('닉네임체크에러', error);
-      });
-  };
-
   //isTutor input값
   const [isTutor, setIsTutor] = useState('');
   const handleIstutor = (e) => {
@@ -212,16 +231,11 @@ const Signup = ({ userInfo }) => {
 
   //DetailInfo페이지로 넘어가는 버튼 활성화
   const isDisabled = !(
-    (
-      emailCheck === '사용 가능한 이메일입니다.' &&
-      userNameCheck === '사용 가능한 닉네임입니다.' &&
-      pwdForm(pwd) &&
-      pwd === confirmPwd &&
-      isTutor
-    )
-    // &&
-    // startTime &&
-    // endTime
+    (userInfo ? true : confirmEmail === '이메일 인증이 완료되었습니다.') &&
+    userNameCheck === '사용 가능한 닉네임입니다.' &&
+    pwdForm(pwd) &&
+    pwd === confirmPwd &&
+    isTutor
   )
     ? true
     : false;
@@ -234,17 +248,50 @@ const Signup = ({ userInfo }) => {
       </LogoBox>
       <LogoText>Sign up</LogoText>
       {/* 이메일 인풋 */}
-      <InputBox>
-        <Inputs
-          placeholder="이메일을 입력해 주세요."
-          type="text"
-          value={userInfo?.userEmail}
-          _onChange={handleEmail}
-          _onBlur={checkDuplicatedEmail} //자동 이메일 체크
-          disabled={userInfo ? true : false}
-        />
-        <InputLabel styles={{ color: '#8A8A8A' }}>{emailCheck}</InputLabel>
-      </InputBox>
+      {userInfo ? (
+        <InputBox>
+          <Inputs type="text" value={userInfo.userEmail} disabled />
+          <InputLabel styles={{ color: '#8A8A8A' }}>
+            사용 가능한 이메일입니다.
+          </InputLabel>
+        </InputBox>
+      ) : (
+        <>
+          <InputBox>
+            <EmailBox>
+              <Inputs
+                placeholder="이메일을 입력해 주세요."
+                type="text"
+                value={userInfo?.userEmail}
+                _onChange={handleEmail}
+                styles={{ borderRadius: '8px 0 0 8px' }}
+              />
+              <ConfirmButton onClick={checkDuplicatedEmail}>
+                번호요청
+              </ConfirmButton>
+            </EmailBox>
+            <InputLabel styles={{ color: '#8A8A8A' }}>{emailCheck}</InputLabel>
+          </InputBox>
+          {/* 이메일 확인 인풋 */}
+          <InputBox>
+            <EmailBox>
+              <Inputs
+                id="authNum"
+                placeholder="인증번호를 입력해 주세요."
+                type="text"
+                _onBlur={handleInputNumber}
+                styles={{ borderRadius: '8px 0 0 8px' }}
+              />
+              <ConfirmButton htmlFor="authNum" onClick={checkEmail}>
+                번호인증
+              </ConfirmButton>
+            </EmailBox>
+            <InputLabel styles={{ color: '#8A8A8A' }}>
+              {confirmEmail}
+            </InputLabel>
+          </InputBox>
+        </>
+      )}
 
       {/* 유저네임 인풋 */}
       <InputBox>
@@ -304,18 +351,18 @@ const Signup = ({ userInfo }) => {
 };
 
 const Container = styled.div`
+  width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 800px;
-  margin: 200px auto;
+  margin: 50px auto;
 `;
 
 const LogoBox = styled.div`
-  width: 97px;
-  height: 60px;
-  margin: 0 auto 20px;
+  width: 96px;
+  height: 80px;
+  margin: 30px auto 20px;
   overflow: hidden;
   img {
     width: 100%;
@@ -324,16 +371,34 @@ const LogoBox = styled.div`
 `;
 
 const LogoText = styled.p`
-  margin-bottom: 60px;
-  font-size: 44px;
+  margin-bottom: 40px;
+  font-size: 20px;
   font-weight: 700;
   color: #153587;
   cursor: default;
 `;
 
+const EmailBox = styled.div`
+  width: 100%;
+  display: flex;
+  background: ${(props) => (props.userInfo ? 'rgba(0,0,0,0.3)' : '')};
+`;
+
+const ConfirmButton = styled.button`
+  width: 102px;
+  height: 54px;
+  // background: #7f83ea;
+  background: ${(props) => (props.userInfo ? 'rgba(0,0,0,0.3)' : '#7f83ea')};
+  border: none;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+`;
+
 const NextButton = styled.input`
-  width: 800px;
-  height: 80px;
+  width: 500px;
+  height: 54px;
   margin-top: 40px;
   background: ${(props) => (props.isDisabled ? '#999999' : '#171b78')};
   border: none;

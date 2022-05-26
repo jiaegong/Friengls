@@ -14,9 +14,6 @@ const InputBox = (props) => {
 InputBox.defaultProps = {
   defaultStyles: {
     width: '100%',
-    height: '80px',
-    padding: '0 10px',
-    borderRadius: '8px',
     marginBottom: '10px',
   },
 };
@@ -27,9 +24,8 @@ const Box = styled.div`
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginBottom};
   padding: ${(props) => props.padding};
-  /* border: 2px solid #8a8a8a; */
-  border: 1px solid #8a8a8a;
-  border-radius: ${(props) => props.borderRadius};
+  border: none;
+
   display: flex;
   align-items: flex-start;
   flex-direction: column;
