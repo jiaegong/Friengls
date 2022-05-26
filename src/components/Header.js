@@ -29,19 +29,6 @@ const Header = () => {
   const changeLanguageKo = () => i18n.changeLanguage('ko');
   const changeLanguageJa = () => i18n.changeLanguage('ja');
 
-  // const [username, setUsername] = useState('');
-  // const [user, setUser] = useState('');
-  // const [socket, setSocket] = useState(null);
-
-  // ⭐️
-  useEffect(() => {
-    // setSocket(io('소켓을 받을 주소'));
-    // setSocket(io('http://localhost:4000'));
-    // if (token) {
-    //   dispatch(notiActions.getBookingNotiDB());
-    // }
-  }, [token]);
-
   const handleNotiModal = () => {
     setNotiOpen(!notiOpen);
     if (token) {
@@ -49,14 +36,17 @@ const Header = () => {
     }
   };
 
-  // ⭐️
-  // user ==> socket DB로 이동.
-  // useEffect(() => {
-  //   socket?.emit('newUser', user);
-  // }, [socket, user]);
+  useEffect(() => {
+    dispatch(notiActions.getBookingNotiDB());
+  }, []);
 
   //마이페이지url에 사용할 유저정보 가져오기
   const userInfo = useSelector((state) => state.user.info);
+
+  const notiList = useSelector((state) => state.booking.noti);
+  const notiCheck = notiList?.length;
+
+  console.log(notiCheck);
 
   //로그아웃
   const logout = () => {
@@ -76,6 +66,13 @@ const Header = () => {
         </div>
 
         <ul className="navBarWrap">
+          {notiOpen && (
+            <NotiModal
+              ModalAction={handleNotiModal}
+              userInfo={userInfo}
+              // key={'notiModal'}
+            />
+          )}
           <li
             onClick={() => {
               setLangOpen(!langOpen);
@@ -112,14 +109,9 @@ const Header = () => {
                 }}
               >
                 알림
+                {notiCheck !== 0 && <div className="counter" />}
               </li>
-              {notiOpen && (
-                <NotiModal
-                  ModalAction={handleNotiModal}
-                  userInfo={userInfo}
-                  // key={'notiModal'}
-                />
-              )}
+
               <li
                 onClick={() => {
                   history.push(
@@ -279,11 +271,13 @@ const Wrap = styled.div`
           background-color: red;
           color: #fff;
           position: absolute;
-          right: -5px;
-          top: -5px;
+          right: -8px;
+          top: 1px;
+          right: -3px;
+          top: 5px;
 
-          width: 18px;
-          height: 18px;
+          width: 10px;
+          height: 10px;
           font-size: 12px;
 
           display: flex;
