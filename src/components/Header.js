@@ -110,6 +110,13 @@ const Header = () => {
               >
                 알림
               </li>
+              {notiOpen && (
+                <NotiModal
+                  ModalAction={handleNotiModal}
+                  userInfo={userInfo}
+                  // key={'notiModal'}
+                />
+              )}
               <li
                 onClick={() => {
                   history.push(
@@ -152,13 +159,6 @@ const Header = () => {
             </>
           )}
         </ul>
-        {notiOpen && (
-          <NotiModal
-            ModalAction={handleNotiModal}
-            userInfo={userInfo}
-            // key={'notiModal'}
-          />
-        )}
       </div>
     </Wrap>
   );

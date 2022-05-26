@@ -73,28 +73,38 @@ const NotiModal = (props) => {
 export default NotiModal;
 
 const Background = styled.div`
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 1000;
-  background-color: none;
+  background-color: none; */
 
   /* 알림창 */
   .notifications {
+    /* display: none; */
     position: absolute;
     max-width: 420px;
+    min-width: 420px;
     width: 100%;
     min-height: 140px;
-    right: 15%;
-    top: 144px;
+
+    right: -270px;
+    top: 42px;
+    /* right: 15%;
+    top: 144px; */
+    right: 0px;
+    top: 52px;
+
     padding: 10px;
     border: 1px solid #eaeaea;
     border-radius: 10px;
     box-shadow: 0px 2px 12px 0px #00000040;
 
-    background-color: #f4f4f4;
+    transform-origin: top center;
+
+    z-index: 9999;
     background-color: #ffffff;
 
     /*  */
@@ -112,11 +122,16 @@ const Background = styled.div`
         justify-content: flex-start;
         align-items: center;
         height: 40px;
+        font-weight: 500;
         margin-bottom: 10px;
         padding-left: 14px;
         border-radius: 5px;
         border: 1px solid #d1d1d1;
         cursor: pointer;
+
+        &:hover {
+          color: #000;
+        }
       }
     }
   }

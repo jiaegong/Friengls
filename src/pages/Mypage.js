@@ -209,7 +209,7 @@ const Wrap = styled.div`
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
-            padding: 10px 5px 5px;
+            /* padding: 10px 5px 5px; */
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;
@@ -225,7 +225,8 @@ const Wrap = styled.div`
             max-width: 200px;
             height: 50px;
             border: none;
-            padding: 10px 5px 5px;
+            padding: 10px 8px 9px;
+            /* padding: 10px 5px 5px; */
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;
