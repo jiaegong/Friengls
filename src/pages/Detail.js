@@ -19,7 +19,7 @@ const Detail = (props) => {
 
   //디테일페이지에서 불러올 유저 api
   const userApi = props.match.params;
-  console.log(userApi);
+  // console.log(userApi);
 
   //디테일페이지에 사용할 유저 정보
   const detailInfo = useSelector((state) => state.user.detailInfo);
@@ -43,7 +43,7 @@ const Detail = (props) => {
     })
       .then((doc) => {
         let data = doc.data.datas1;
-        console.log('DB 예약 리스트 : ', { data });
+        // console.log('DB 예약 리스트 : ', { data });
         setAvailability(doc.data.datas1);
       })
       .catch((err) => {
@@ -61,7 +61,7 @@ const Detail = (props) => {
 
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
-  console.log(reviewList);
+  // console.log(reviewList);
 
   return (
     <Wrap>

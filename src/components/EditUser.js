@@ -792,7 +792,7 @@ const TagInput = styled.input`
     font-size: 20px;
     color: b5b5b5;
   }
-  &: focus {
+  &:focus {
     outline: none;
   }
 `;

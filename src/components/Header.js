@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 // 모듈
 import { history } from '../redux/configureStore';
@@ -29,31 +30,24 @@ const Header = () => {
   const changeLanguageKo = () => i18n.changeLanguage('ko');
   const changeLanguageJa = () => i18n.changeLanguage('ja');
 
-  // const [username, setUsername] = useState('');
-  // const [user, setUser] = useState('');
-  // const [socket, setSocket] = useState(null);
-
-  // ⭐️
-  useEffect(() => {
-    // setSocket(io('소켓을 받을 주소'));
-    // setSocket(io('http://localhost:4000'));
+  const handleNotiModal = () => {
+    setNotiOpen(!notiOpen);
     if (token) {
       dispatch(notiActions.getBookingNotiDB());
     }
-  }, [token]);
-
-  const handleNotiModal = () => {
-    setNotiOpen(!notiOpen);
   };
 
-  // ⭐️
-  // user ==> socket DB로 이동.
-  // useEffect(() => {
-  //   socket?.emit('newUser', user);
-  // }, [socket, user]);
+  useEffect(() => {
+    dispatch(notiActions.getBookingNotiDB());
+  }, []);
 
   //마이페이지url에 사용할 유저정보 가져오기
   const userInfo = useSelector((state) => state.user.info);
+
+  const notiList = useSelector((state) => state.booking.noti);
+  const notiCheck = notiList?.length;
+
+  console.log(notiCheck);
 
   //로그아웃
   const logout = () => {
@@ -73,6 +67,13 @@ const Header = () => {
         </div>
 
         <ul className="navBarWrap">
+          {notiOpen && (
+            <NotiModal
+              ModalAction={handleNotiModal}
+              userInfo={userInfo}
+              // key={'notiModal'}
+            />
+          )}
           <li
             onClick={() => {
               setLangOpen(!langOpen);
@@ -109,7 +110,10 @@ const Header = () => {
                 }}
               >
                 {t('notification')}
+
+                {notiCheck !== 0 && <div className="counter" />}
               </li>
+
               <li
                 onClick={() => {
                   history.push(
@@ -125,8 +129,17 @@ const Header = () => {
             <>
               <li
                 onClick={() => {
-                  alert('로그인 후 사용 가능합니다!');
-                  history.push('/login');
+                  Swal.fire({
+                    title: '로그인 하셨나요?',
+                    text: '로그인후 사용이 가능 합니다!~',
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      history.push('/login');
+                    }
+                  });
                 }}
               >
                 {t('notification')}
@@ -141,13 +154,6 @@ const Header = () => {
             </>
           )}
         </ul>
-        {notiOpen && (
-          <NotiModal
-            ModalAction={handleNotiModal}
-            userInfo={userInfo}
-            // key={'notiModal'}
-          />
-        )}
       </div>
     </Wrap>
   );
@@ -200,7 +206,7 @@ const SelectLang = styled.div`
 
 const Wrap = styled.div`
   width: 100%;
-  height: 150px;
+  height: 110px;
   box-shadow: 0px -2px 8px 1px grey;
   background: #fff;
 
@@ -208,20 +214,16 @@ const Wrap = styled.div`
     width: 90%;
     max-width: 1280px;
     height: 100%;
-    /* padding: 50px 16px 0; */
-    padding: 60px 0 0;
+    padding: 20px 0 0;
     margin: auto;
-
-    /* text-align: center; */
 
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    /* background: #aaaaaa; */
+
     .logoWrap {
       width: 210px;
-      /* margin: 0 auto 53px; */
       padding-top: 16px;
       cursor: pointer;
       .logo {
@@ -254,8 +256,7 @@ const Wrap = styled.div`
         cursor: pointer;
 
         position: relative;
-        font-size: 1.375rem;
-        font-size: 1.125rem;
+
         font-size: 16px;
         font-weight: bolder;
         letter-spacing: 1px;
@@ -270,11 +271,13 @@ const Wrap = styled.div`
           background-color: red;
           color: #fff;
           position: absolute;
-          right: -5px;
-          top: -5px;
+          right: -8px;
+          top: 1px;
+          right: -3px;
+          top: 5px;
 
-          width: 18px;
-          height: 18px;
+          width: 10px;
+          height: 10px;
           font-size: 12px;
 
           display: flex;
@@ -285,6 +288,10 @@ const Wrap = styled.div`
 
           padding: 5px;
         }
+      }
+
+      li:hover {
+        color: #7f83ea;
       }
     }
   }
