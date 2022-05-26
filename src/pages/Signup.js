@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Logo } from '../image/';
 import { InputBox, Inputs, InputLabel } from '../elements';
+import InfoInput from '../components/InfoInput';
 import { emailForm, pwdForm, userNameForm } from '../shared/common';
-import { useEffect } from 'react';
 import SelectIsTutor from '../components/SelectIstutor';
+
 // to do: 유효성 검사에 따라 박스 색 변화
 // to do: 유효성 검사 조건 일치하는지 확인
 // to do: 닉네임 유효성 검사 개선(글자수)
@@ -89,7 +90,7 @@ const Signup = ({ userInfo }) => {
     setInputNumber(e.target.value);
   };
 
-  const [confirmEmail, setConfirmEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('\u00A0');
 
   const checkEmail = (e) => {
     console.log('인증번호', authNumber);
@@ -247,83 +248,66 @@ const Signup = ({ userInfo }) => {
         <img src={Logo} alt="logo" />
       </LogoBox>
       <LogoText>Sign up</LogoText>
-      {/* 이메일 인풋 */}
+      {/* 이메일 인풋 : 소셜로그인은 이메일/닉네임 가져오기*/}
       {userInfo ? (
-        <InputBox>
-          <Inputs type="text" value={userInfo.userEmail} disabled />
-          <InputLabel styles={{ color: '#8A8A8A' }}>
-            사용 가능한 이메일입니다.
-          </InputLabel>
-        </InputBox>
+        <InfoInput
+          type="text"
+          value={userInfo.userEmail}
+          disabled
+          styles={{ marginBottom: '35px' }}
+        />
       ) : (
-        <>
-          <InputBox>
-            <EmailBox>
-              <Inputs
-                placeholder="이메일을 입력해 주세요."
-                type="text"
-                value={userInfo?.userEmail}
-                _onChange={handleEmail}
-                styles={{ borderRadius: '8px 0 0 8px' }}
-              />
-              <ConfirmButton onClick={checkDuplicatedEmail}>
-                번호요청
-              </ConfirmButton>
-            </EmailBox>
-            <InputLabel styles={{ color: '#8A8A8A' }}>{emailCheck}</InputLabel>
-          </InputBox>
+        <React.Fragment>
+          <EmailBox>
+            <InfoInput
+              placeholder="이메일을 입력해 주세요."
+              type="text"
+              _onChange={handleEmail}
+              validationLabel={emailCheck}
+              styles={{ borderRadius: '8px 0 0 8px' }}
+            />
+            <ConfirmButton onClick={checkDuplicatedEmail}>
+              번호요청
+            </ConfirmButton>
+          </EmailBox>
           {/* 이메일 확인 인풋 */}
-          <InputBox>
-            <EmailBox>
-              <Inputs
-                id="authNum"
-                placeholder="인증번호를 입력해 주세요."
-                type="text"
-                _onBlur={handleInputNumber}
-                styles={{ borderRadius: '8px 0 0 8px' }}
-              />
-              <ConfirmButton htmlFor="authNum" onClick={checkEmail}>
-                번호인증
-              </ConfirmButton>
-            </EmailBox>
-            <InputLabel styles={{ color: '#8A8A8A' }}>
-              {confirmEmail}
-            </InputLabel>
-          </InputBox>
-        </>
+          <EmailBox>
+            <InfoInput
+              placeholder="인증번호를 입력해 주세요."
+              type="text"
+              _onBlur={handleInputNumber}
+              validationLabel={confirmEmail}
+              styles={{ borderRadius: '8px 0 0 8px' }}
+            />
+            <ConfirmButton htmlFor="authNum" onClick={checkEmail}>
+              번호인증
+            </ConfirmButton>
+          </EmailBox>
+        </React.Fragment>
       )}
-
       {/* 유저네임 인풋 */}
-      <InputBox>
-        <Inputs
-          placeholder="닉네임을 입력해 주세요."
-          type="text"
-          value={userInfo?.userName}
-          _onChange={handleUserName}
-          _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
-        />
-        <InputLabel styles={{ color: '#8A8A8A' }}>{userNameCheck}</InputLabel>
-      </InputBox>
+      <InfoInput
+        placeholder="닉네임을 입력해 주세요."
+        type="text"
+        value={userInfo?.userName}
+        _onChange={handleUserName}
+        _onBlur={checkDuplicatedUserName}
+        validationLabel={userNameCheck}
+      />
       {/* 비밀번호 인풋 */}
-      <InputBox>
-        <Inputs
-          placeholder="비밀번호를 입력해 주세요."
-          type="text"
-          name="pwd"
-          _onChange={handlePwd}
-        />
-        <InputLabel styles={{ color: '#8A8A8A' }}>{pwdCheck}</InputLabel>
-      </InputBox>
+      <InfoInput
+        placeholder="비밀번호를 입력해 주세요."
+        type="text"
+        _onChange={handlePwd}
+        validationLabel={pwdCheck}
+      />
       {/* 비밀번호 확인 인풋 */}
-      <InputBox styles={{ marginBottom: '60px' }}>
-        <Inputs
-          placeholder="비밀번호를 다시 한 번 입력해 주세요."
-          type="text"
-          name="pwdCheck"
-          _onChange={handleConfirmPwd}
-        />
-        <InputLabel styles={{ color: '#8a8a8a' }}>{confirmPwdCheck}</InputLabel>
-      </InputBox>
+      <InfoInput
+        placeholder="비밀번호를 다시 한 번 입력해 주세요."
+        type="text"
+        _onChange={handleConfirmPwd}
+        validationLabel={confirmPwdCheck}
+      />
       {/* 선생님/학생 선택 */}
       {/* isTutor */}
       <SelectIsTutor
@@ -352,17 +336,17 @@ const Signup = ({ userInfo }) => {
 
 const Container = styled.div`
   width: 500px;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px auto;
 `;
 
 const LogoBox = styled.div`
   width: 96px;
   height: 80px;
-  margin: 30px auto 20px;
+  margin: 0 auto 10px;
   overflow: hidden;
   img {
     width: 100%;
@@ -371,7 +355,7 @@ const LogoBox = styled.div`
 `;
 
 const LogoText = styled.p`
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   font-size: 20px;
   font-weight: 700;
   color: #153587;
@@ -399,7 +383,7 @@ const ConfirmButton = styled.button`
 const NextButton = styled.input`
   width: 500px;
   height: 54px;
-  margin-top: 40px;
+  // margin-top: 40px;
   background: ${(props) => (props.isDisabled ? '#999999' : '#171b78')};
   border: none;
   border-radius: 4px;

@@ -6,7 +6,15 @@ import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { Logo, Profile } from '../image/index';
 import SelectLanguage from '../components/SelectLanguage';
-import { InputBox, InputLabel, Inputs, Buttons } from '../elements';
+import {
+  InputBox,
+  InputLabel,
+  Inputs,
+  Buttons,
+  NewInput,
+  NewInputLabel,
+} from '../elements';
+import InfoInput from '../components/InfoInput';
 
 // to do: 자기소개, 한 줄 소개, 태그 글자수제한
 //to do: 태그 영어 대소문자 중복 거르기
@@ -106,7 +114,6 @@ const DetailInfo = (props) => {
     setTagList(tagList.filter((tag, index) => index !== Number(e.target.id)));
   };
   //유저정보 디스패치
-  console.log(userInfo);
   const addUser = (e) => {
     //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
@@ -166,6 +173,8 @@ const DetailInfo = (props) => {
     history.replace('/signup');
   }
 
+  console.log(comment);
+
   return (
     <Container>
       {/* 로고 */}
@@ -198,47 +207,42 @@ const DetailInfo = (props) => {
         handleLanguage3={handleLanguage3}
       />
       {/* 자기소개 */}
-      <InputBox
+      <InfoInput
+        label="자기 소개"
+        label2={contents.length + `/500`}
+        placeholder="하고 있는 일, 취미, 성격 등 자유롭게 자신을 소개해 주세요."
+        _onChange={handleContents}
+        maxLength={500}
+        multiLine
         styles={{
-          height: '210px',
-          justifyContent: 'flex-start',
+          height: '160px',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
         }}
-      >
-        <LabelWrap>
-          <InputLabel>자기 소개</InputLabel>
-          <p>{contents.length}/200</p>
-        </LabelWrap>
-        <Inputs
-          multiLine
-          placeholder={
-            '하고 있는 일, 취미, 성격 등 자유롭게 자신을 소개해 주세요.'
-          }
-          name="contents"
-          _onChange={handleContents}
-          maxLength={200}
-        />
-      </InputBox>
+      />
       {/* 한 줄 소개 */}
-      <InputBox>
-        <LabelWrap>
-          <InputLabel>한 줄 소개</InputLabel>
-          <p>{comment.length}/40</p>
-        </LabelWrap>
-        <Inputs
-          placeholder={'간략한 인사말을 작성해 주세요.'}
-          name="comment"
-          _onChange={handleComment}
-          maxLength={40}
-        />
-      </InputBox>
-      {/* 태그 */}
-      <InputBox
+      <InfoInput
+        label="한 줄 소개"
+        label2={comment.length + `/40`}
+        placeholder="간략한 인사말을 작성해 주세요."
+        _onChange={handleComment}
+        maxLength={40}
         styles={{
-          height: '210px',
+          flexDirection: 'column',
           justifyContent: 'flex-start',
         }}
+      />
+      {/* 태그 */}
+      <InfoInput
+        onlyBox
+        styles={{
+          height: '100%',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+        }}
       >
-        <InputLabel>태그</InputLabel>
+        <NewInputLabel>태그</NewInputLabel>
         {/* 태그입력 */}
         <TagInput
           disabled={tagLimit}
@@ -275,20 +279,20 @@ const DetailInfo = (props) => {
             </>
           )}
         </TagBox>
-      </InputBox>
+      </InfoInput>
       {/* 버튼 */}
       <ButtonBox>
         <Buttons
           type="submit"
           _onClick={addUser}
-          styles={{ width: '200px', background: '#ababab' }}
+          styles={{ width: '125px', background: '#ababab' }}
         >
           건너뛰기
         </Buttons>
         <Buttons
           type="submit"
           _onClick={addUser}
-          styles={{ width: '590px', marginLeft: '10px' }}
+          styles={{ width: '365px', marginLeft: '10px' }}
         >
           회원가입
         </Buttons>
@@ -297,33 +301,39 @@ const DetailInfo = (props) => {
     </Container>
   );
 };
-
 const Container = styled.div`
+  width: 500px;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 800px;
-  margin: 200px auto;
+  position: relative;
 `;
 // 로고관련
 const LogoBox = styled.div`
-  width: 97px;
-  height: 60px;
-  margin: 0 auto 20px;
+  width: 96px;
+  height: 80px;
+  margin: 0 auto 10px;
   overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const LogoText = styled.p`
-  font-size: 44px;
+  font-size: 20px;
   font-weight: 700;
   color: #153587;
+  cursor: default;
 `;
 
 const ImageBox = styled.div`
-  width: 240px;
-  height: 240px;
-  margin: 60px auto;
+  width: 180px;
+  height: 180px;
+  margin: 60px auto 30px;
+  background: #c4c4c4;
   display: flex;
   justify-content: center;
   border-radius: 50%;
@@ -333,7 +343,6 @@ const ImageBox = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
   cursor: pointer;
 `;
 
@@ -346,8 +355,8 @@ const ImgInput = styled.input`
 `;
 
 const ProfileAddButton = styled.label`
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   padding-bottom: 10px;
   border-radius: 50px;
   background: #153587;
@@ -356,35 +365,23 @@ const ProfileAddButton = styled.label`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 700px;
-  left: 950px;
-  font-size: 50px;
+  top: 311px;
+  left: 295px;
+  font-size: 40px;
   font-weight: 600;
   color: #fff;
-`;
-
-// 자기소개/한줄소개 라벨, 글자수제한 정렬
-const LabelWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-
-  p {
-    color: #404040;
-    // 글씨색 조건주기
-  }
 `;
 
 // 태그 관련
 const TagInput = styled.input`
   width: 100%;
-  height: 35px;
-  margin-bottom: 20px;
+  height: 30px;
+  margin-bottom: 5px;
   border: none;
-  font-size: 26px;
+  font-size: 14px;
   font-weight: 400;
   ::-webkit-input-placeholder {
-    font-size: 20px;
+    font-size: 14px;
     color: b5b5b5;
   }
   &: focus {
@@ -394,23 +391,25 @@ const TagInput = styled.input`
 
 const TagBox = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
+  align-content: flex-start;
   flex-wrap: wrap;
-
   div {
-    height: 50px;
+    height: 30px;
     max-width: 180px;
-    margin: 0 15px 10px 0;
+    margin: 0 5px 10px 0;
     padding: 10px 10px 12px;
     display: flex;
     align-items: center;
     border-radius: 25px;
     border: 2px solid #959595;
+    // background: red;
   }
 
   p {
-    margin-right: 10px;
-    font-size: 16px;
+    margin-right: 5px;
+    font-size: 14px;
     cursor: default;
   }
 
@@ -418,14 +417,14 @@ const TagBox = styled.div`
     background: transparent;
     border: none;
     margin-top: 2px;
-    font-size: 25px;
+    font-size: 16px;
     color: #8a8a8a;
     cursor: pointer;
   }
 
   span {
-    padding: 30px 10px 30px 0;
-    font-size: 20px;
+    padding: 5px 10px 30px 0;
+    font-size: 14px;
     color: #8a8a8a;
   }
 `;

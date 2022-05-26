@@ -1,6 +1,14 @@
+import { red } from '@material-ui/core/colors';
 import React from 'react';
 import styled from 'styled-components';
-import { InputBox, InputLabel, Inputs } from '../elements/index';
+import {
+  InputBox,
+  InputLabel,
+  Inputs,
+  NewInputLabel,
+  NewInput,
+} from '../elements/index';
+import InfoInput from './InfoInput';
 
 const SelectIsTutor = ({
   startTime,
@@ -25,82 +33,50 @@ const SelectIsTutor = ({
   return (
     <TimeBox>
       <p>프랭글스 사용자 설정</p>
-      <InputLabel styles={{ padding: '0 0 5px 5px' }}>
+      <NewInputLabel styles={{ padding: '0 0 5px 5px' }}>
         학생 / 선생님 선택 시 변경 하실 수 없습니다.
-      </InputLabel>
-      <InputBox
-        styles={{
-          height: '54px',
-          border: '1px solid #8a8a8a',
-          borderRadius: '8px',
-          paddingLeft: '5px',
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          fontSize: '14px',
-          cursor: 'default',
-        }}
-      >
-        프랭글스에서 한국어를
-        <InputLabel
-          _onClick={_onClick}
+      </NewInputLabel>
+      <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
+        <NewInputLabel>프랭글스에서 한국어를</NewInputLabel>
+        <NewInput
+          type="radio"
+          name="isTutor"
+          value="0"
+          id="isTutor0"
+          styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
+          _onChange={_onClick}
+        />
+        <NewInputLabel
+          htmlFor="isTutor0"
           styles={{
             padding: '0 10px 0 10px',
             alignItems: 'center',
-            fontSize: '14px',
-            cursor: 'pointer',
           }}
         >
-          <Inputs
-            type="radio"
-            name="isTutor"
-            value="0"
-            styles={{
-              width: '14px',
-              marginRight: '5px',
-              cursor: 'pointer',
-            }}
-          />
           배울래요!
-        </InputLabel>
+        </NewInputLabel>
         /
-        <InputLabel
-          _onClick={_onClick}
+        <NewInput
+          type="radio"
+          name="isTutor"
+          value="1"
+          _onChange={_onClick}
+          styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
+        />
+        <NewInputLabel
           styles={{
             padding: '0 0 0 10px',
             alignItems: 'center',
-            fontSize: '14px',
-            cursor: 'pointer',
           }}
         >
-          <Inputs
-            type="radio"
-            name="isTutor"
-            value="1"
-            styles={{
-              width: '14px',
-              marginRight: '5px',
-              cursor: 'pointer',
-            }}
-          />
           가르칠래요!
-        </InputLabel>
-      </InputBox>
+        </NewInputLabel>
+      </InfoInput>
       {/* 선생님인 경우 수업시간 선택 */}
       {isTutor === '1' && (
         <React.Fragment>
-          <InputBox
-            styles={{
-              height: '54px',
-              border: '1px solid #8a8a8a',
-              borderRadius: '8px',
-              paddingLeft: '5px',
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              cursor: 'default',
-            }}
-          >
+          <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
+            {' '}
             <TimeSelectBox>
               수업 가능한 시간 :
               <Select name="startTime" onChange={handleStartTime}>
@@ -129,7 +105,7 @@ const SelectIsTutor = ({
                 </>
               )}
             </TimeSelectBox>
-          </InputBox>
+          </InfoInput>
           <InfoBox>
             <span>※ 수업은 한 회차에 30분 씩 진행됩니다.</span>
             <span>※ 수업은 2회차 단위로 구성 할 수 있습니다.</span>
@@ -159,12 +135,11 @@ const IsTutorTooltip = styled.div`
 
 const TimeBox = styled.div`
   width: 100%;
-  margin: 0 40px;
   padding: 20px 0;
   border-top: 1px solid #c4c4c4;
 
   p {
-    height: 80px;
+    margin: 0 auto 25px;
     text-align: center;
     font-size: 20px;
     font-weight: 700;
@@ -179,7 +154,7 @@ const TimeSelectBox = styled.div`
 `;
 
 const Select = styled.select`
-  width: 150px;
+  width: 140px;
   height: 30px;
   margin: 0 10px;
   border: 1px solid #8a8a8a;
