@@ -22,6 +22,7 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
+import FeedBack from '../components/FeedBack';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
       <Route path="/search" exact component={Search} />
       <Footer />
       <BsPatchPlus className="feedback" size={60} />
+      <FeedBack />
     </ConnectedRouter>
   );
 }
