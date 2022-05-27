@@ -273,7 +273,7 @@ const Wrap = styled.div`
 `;
 
 const LikeWrap = styled.div`
-  max-width: 1050px;
+  max-width: 1280px;
   width: 80%;
   margin: auto;
 
