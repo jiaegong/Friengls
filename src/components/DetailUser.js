@@ -103,7 +103,7 @@ const DetailUser = (props) => {
               }}
             >
               {/* 🔽 */}
-              ⬆️ {t('close comment')}
+              ⬆️ {t('close self-introduction')}
             </ContentsButton>
           ) : (
             <ContentsButton
@@ -111,7 +111,7 @@ const DetailUser = (props) => {
                 setContents(userInfo.contents);
               }}
             >
-              {/* 🔽 */}⬇ {t('open comment')}
+              {/* 🔽 */}⬇ {t('open self-introduction')}
             </ContentsButton>
           ))}
       </div>

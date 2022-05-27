@@ -7,6 +7,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { Logo, ProfileMedium } from '../image';
 import SelectLanguage from '../components/SelectLanguage';
 import { InputBox, InputLabel, Inputs, Buttons } from '../elements';
+import { useTranslation } from 'react-i18next';
 
 // to do: 자기소개, 한 줄 소개, 태그 글자수제한
 //to do: 태그 영어 대소문자 중복 거르기
@@ -14,6 +15,7 @@ import { InputBox, InputLabel, Inputs, Buttons } from '../elements';
 //to do: 로그인상태에서 로그인 회원가입 페이지는 들어가져야 할까?
 //to do: 안내 사항 호버 시 나오도록
 const DetailInfo = (props) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const imageRef = useRef();
   const dispatch = useDispatch();
@@ -71,12 +73,12 @@ const DetailInfo = (props) => {
   };
   //태그 생성(빈 값, 중복일 경우 return)
   // 특수문자 사용하지 못하도록
-  const exampleTag = ['언어교환', '일상회화'];
+  const exampleTag = [t('language exchange'), t('daily conversation')];
   const inputTag = (e) => {
     if (e.keyCode === 32) {
       //공백일 경우 거르기
       if (tagInput.split('').filter((word) => word !== ' ').length === 0) {
-        window.alert('태그를 입력해주세요');
+        window.alert(t('please enter tags.'));
         setTagInput('');
         return;
       }
@@ -84,7 +86,7 @@ const DetailInfo = (props) => {
 
       if (tagList.indexOf(tagInput) !== -1) {
         if (tagInput.length === tagList[tagList.indexOf(tagInput)].length) {
-          window.alert('중복된 태그를 등록할 수 없습니다.');
+          window.alert(t('duplicate tags are unable.'));
           setTagInput('');
           return;
         }
@@ -111,7 +113,7 @@ const DetailInfo = (props) => {
     //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
       if (contents.length > 0) {
-        window.alert('자기 소개를 공백으로 채울 수 없습니다.');
+        window.alert(t('self-introduction can not be filled with spaces.'));
         setContents('');
         return;
       }
@@ -119,7 +121,7 @@ const DetailInfo = (props) => {
 
     if (comment.split('').filter((word) => word !== ' ').length === 0) {
       if (comment.length > 0) {
-        window.alert('한 줄 소개를 공백으로 채울 수 없습니다.');
+        window.alert(t('comment can not be filled with spaces.'));
         setComment('');
         return;
       }
@@ -132,7 +134,7 @@ const DetailInfo = (props) => {
         contents.split('').filter((word) => word !== ' ').length === 0 ||
         tagList.length === 0
       ) {
-        window.alert('선생님은 모든 정보를 작성해주세요');
+        window.alert(t('tutor must fill out all the information.'));
         return;
       }
     }
@@ -162,7 +164,7 @@ const DetailInfo = (props) => {
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
-    window.alert('새로고침 시 처음 화면으로 돌아갑니다.');
+    window.alert(t('refreshing will return to the first screen.'));
     history.replace('/signup');
   }
 
@@ -172,7 +174,7 @@ const DetailInfo = (props) => {
       <LogoBox>
         <img src={Logo} alt="userProfileImage" />
       </LogoBox>
-      <LogoText>Sign in</LogoText>
+      <LogoText>{t('signup')}</LogoText>
       {/* 프로필등록 */}
       {/* <form> */}
       <label htmlFor="file">
@@ -205,14 +207,14 @@ const DetailInfo = (props) => {
         }}
       >
         <LabelWrap>
-          <InputLabel>자기 소개</InputLabel>
+          <InputLabel>{t('self-introduction')}</InputLabel>
           <p>{contents.length}/200</p>
         </LabelWrap>
         <Inputs
           multiLine
-          placeholder={
-            '하고 있는 일, 취미, 성격 등 자유롭게 자신을 소개해 주세요.'
-          }
+          placeholder={t(
+            'please feel free to introduce yourself to what you are doing, hobbies, personality, etc.',
+          )}
           name="contents"
           _onChange={handleContents}
           maxLength={200}
@@ -221,11 +223,11 @@ const DetailInfo = (props) => {
       {/* 한 줄 소개 */}
       <InputBox>
         <LabelWrap>
-          <InputLabel>한 줄 소개</InputLabel>
+          <InputLabel>{t('comment')}</InputLabel>
           <p>{comment.length}/40</p>
         </LabelWrap>
         <Inputs
-          placeholder={'간략한 인사말을 작성해 주세요.'}
+          placeholder={t('please write a comment.')}
           name="comment"
           _onChange={handleComment}
           maxLength={40}
@@ -238,14 +240,14 @@ const DetailInfo = (props) => {
           justifyContent: 'flex-start',
         }}
       >
-        <InputLabel>태그</InputLabel>
+        <InputLabel>{t('tag')}</InputLabel>
         {/* 태그입력 */}
         <TagInput
           disabled={tagLimit}
           placeholder={
             tagLimit
-              ? '10개까지 등록할 수 있어요'
-              : '단어 입력 후 스페이스로 태그 등록'
+              ? t('you can register up to 10')
+              : t('enter a word and register a tag with space key')
           }
           name="tag"
           onChange={handleTag}
@@ -266,7 +268,7 @@ const DetailInfo = (props) => {
             ))
           ) : (
             <>
-              <span>예시 :</span>
+              <span>{t('example')} :</span>
               {exampleTag.map((example, index) => (
                 <div key={example + index}>
                   <p>{example}</p>
@@ -283,14 +285,14 @@ const DetailInfo = (props) => {
           _onClick={addUser}
           styles={{ width: '200px', background: '#ababab' }}
         >
-          건너뛰기
+          {t('skip')}
         </Buttons>
         <Buttons
           type="submit"
           _onClick={addUser}
           styles={{ width: '590px', marginLeft: '10px' }}
         >
-          회원가입
+          {t('signup')}
         </Buttons>
       </ButtonBox>
       {/* </form> */}

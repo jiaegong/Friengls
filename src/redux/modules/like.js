@@ -80,7 +80,7 @@ const getLikeDB = (token) => {
       headers: { token: `${getCookie('token')}` },
     })
       .then((res) => {
-        dispatch(setLike(res));
+        dispatch(setLike(res.data));
       })
       .catch((err) => {
         console.log(err);

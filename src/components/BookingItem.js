@@ -55,9 +55,12 @@ const BookingItem = (props) => {
             <button
               className="videoBtn"
               onClick={() => {
-                history.push(
-                  `/videochat/${item.Tutor_userName + item.Tutee_userName}`,
-                );
+                history.push({
+                  pathname: `/videochat/${
+                    item.Tutor_userName + item.Tutee_userName
+                  }`,
+                  state: item.Tutor_userName,
+                });
               }}
             >
               수업 시작
