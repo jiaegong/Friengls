@@ -6,9 +6,10 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import SelectLanguage from '../components/SelectLanguage';
 import { Profile, CloseIcon } from '../image';
 import { Buttons, NewInputLabel, NewInput } from '../elements/index';
-import { pwdForm, userNameForm } from '../shared/common';
+import { pwdForm, userNameForm } from '../utils/validation';
 import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 const EditUser = (props) => {
   const { t } = useTranslation();
@@ -185,7 +186,7 @@ const EditUser = (props) => {
     if (e.keyCode === 32) {
       //공백일 경우 거르기
       if (tagInput.split('').filter((word) => word !== ' ').length === 0) {
-        window.alert(t('please enter tags.'));
+        new Swal(t('please enter tags.'));
         setTagInput('');
         return;
       }
@@ -193,7 +194,7 @@ const EditUser = (props) => {
 
       if (tagList.indexOf(tagInput) !== -1) {
         if (tagInput.length === tagList[tagList.indexOf(tagInput)].length) {
-          window.alert(t('duplicate tags are unable.'));
+          new Swal(t('duplicate tags are unable.'));
           setTagInput('');
           return;
         }
@@ -214,7 +215,6 @@ const EditUser = (props) => {
     }
     setTagList(tagList.filter((tag, index) => index !== Number(e.target.id)));
   };
-  console.log(contents);
   //isTutor input값
   const [isTutor, setIsTutor] = useState('');
   const handleIstutor = (e) => {
@@ -255,17 +255,17 @@ const EditUser = (props) => {
     //닉네임 변경 시 조건
     if (userInfo.userName !== userName) {
       if (userNameCheck !== t('this nickname is available.')) {
-        window.alert(t('please confirm the nickname you want to change.'));
+        new Swal(t('please confirm the nickname you want to change.'));
       }
     }
 
     //비밀번호 변경 시 조건
     if (pwd) {
       if (pwdCheck !== t('this is the correct password format.')) {
-        window.alert(t('please confirm the password you want to change.'));
+        new Swal(t('please confirm the password you want to change.'));
         return;
       } else if (pwd !== confirmPwd) {
-        window.alert(
+        new Swal(
           t(
             'the password you are trying to change does not match the password verification.',
           ),
@@ -276,13 +276,13 @@ const EditUser = (props) => {
     //비밀번호 확인에 입력값 있을 경우
     if (confirmPwd) {
       if (!pwd) {
-        window.alert(t('please enter the password you want to change.'));
+        new Swal(t('please enter the password you want to change.'));
         return;
       } else if (pwdCheck !== t('this is the correct password format.')) {
-        window.alert(t('please confirm the password you want to change.'));
+        new Swal(t('please confirm the password you want to change.'));
         return;
       } else if (pwd !== confirmPwd) {
-        window.alert(t('please enter the password you want to change.'));
+        new Swal(t('please enter the password you want to change.'));
         return;
       }
     }
@@ -290,7 +290,7 @@ const EditUser = (props) => {
     //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
       if (contents.length > 0) {
-        window.alert(t('self-introduction can not be filled with spaces.'));
+        new Swal(t('self-introduction can not be filled with spaces.'));
         setContents('');
         return;
       }
@@ -298,7 +298,7 @@ const EditUser = (props) => {
 
     if (comment.split('').filter((word) => word !== ' ').length === 0) {
       if (comment.length > 0) {
-        window.alert(t('comment can not be filled with spaces.'));
+        new Swal(t('comment can not be filled with spaces.'));
         setComment('');
         return;
       }
@@ -313,7 +313,7 @@ const EditUser = (props) => {
         startTime === '' ||
         endTime === ''
       ) {
-        window.alert(t('tutor must fill out all the information.'));
+        new Swal(t('tutor must fill out all the information.'));
         return;
       }
     }
@@ -572,6 +572,7 @@ const EditUser = (props) => {
                 styles={{
                   margin: '0 0 0 10px',
                   width: '15px',
+                  background: '#fff',
                   cursor: 'default',
                 }}
               />
@@ -593,6 +594,7 @@ const EditUser = (props) => {
                 >
                   <TimeSelectBox>
                     {t('available time for tutoring')} :
+                    {/* 시작시간 선택 셀렉트*/}
                     <Select name="startTime" onChange={handleStartTime}>
                       <option value="">
                         {!userInfo.startTime
@@ -607,7 +609,6 @@ const EditUser = (props) => {
                           : `=====${t('first tutoring')}=====`}
                       </option>
                       {startTimeArray.map((time, index) => (
-                        //+ 키 유저아이디 같은걸로 바꿔주기
                         <option value={time} key={index + time}>
                           {time + 1}
                           {t('session')}: {time}:00 - {time + 1}:00
@@ -615,6 +616,7 @@ const EditUser = (props) => {
                       ))}
                     </Select>
                     {t('from')}
+                    {/* 종료시간 선택 셀렉트 */}
                     {startTime === '' ? (
                       <></>
                     ) : (
@@ -780,7 +782,6 @@ const UserImg = styled.div`
 const ProfileAddButton = styled.label`
   width: 45px;
   height: 45px;
-  padding-bottom: 10px;
   border-radius: 50px;
   background: #153587;
   cursor: pointer;
@@ -790,8 +791,8 @@ const ProfileAddButton = styled.label`
   position: absolute;
   top: 155px;
   left: 152px;
-  font-size: 40px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 400;
   color: #fff;
 `;
 
@@ -898,6 +899,7 @@ const Select = styled.select`
   width: 170px;
   height: 30px;
   margin: 0 10px;
+  text-align: center;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
   cursor: pointer;

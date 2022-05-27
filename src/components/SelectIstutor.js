@@ -160,6 +160,7 @@ const Select = styled.select`
   width: 140px;
   height: 30px;
   margin: 0 10px;
+  text-align: center;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
   cursor: pointer;

@@ -18,6 +18,7 @@ import Portal from '../shared/Portal';
 import ReviewModal from '../components/ReviewModal';
 import { history } from '../redux/configureStore';
 import { useLocation } from 'react-router';
+import Swal from 'sweetalert2';
 
 const VideoChat = (props) => {
   const location = useLocation();
@@ -100,7 +101,7 @@ const VideoChat = (props) => {
         })
         .catch((err) => console.log(err));
     } else {
-      window.alert('비디오와 오디오 환경을 확인해 주세요!');
+      new Swal('비디오와 오디오 환경을 확인해 주세요!');
       history.goBack();
     }
 

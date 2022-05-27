@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Logo } from '../image/';
 import InfoInput from '../components/InfoInput';
-import { emailForm, pwdForm, userNameForm } from '../shared/common';
+import { emailForm, pwdForm, userNameForm } from '../utils/validation';
 import SelectIsTutor from '../components/SelectIstutor';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 // to do: 유효성 검사에 따라 박스 색 변화
 // to do: 유효성 검사 조건 일치하는지 확인
 // to do: 닉네임 유효성 검사 개선(글자수)
@@ -75,7 +76,6 @@ const Signup = ({ userInfo }) => {
             );
             console.log(response.data);
             setAuthNumber(response.data.toString());
-            console.log(authNumber);
             //서버에서 보내주는 번호와 인풋 값 일치하면 인증완료
           })
           .catch((error) => {
@@ -95,9 +95,6 @@ const Signup = ({ userInfo }) => {
   const [confirmEmail, setConfirmEmail] = useState('\u00A0');
 
   const checkEmail = (e) => {
-    console.log('인증번호', authNumber);
-    console.log(inputNumber);
-
     authNumber === inputNumber
       ? setConfirmEmail(t('email authentication completed'))
       : setConfirmEmail(t('please check the authentication number again.'));
@@ -282,7 +279,7 @@ const Signup = ({ userInfo }) => {
           {/* 이메일 확인 인풋 */}
           <EmailBox>
             <InfoInput
-              placeholder="인증번호를 입력해 주세요."
+              placeholder={t('please enter the authentication number.')}
               type="text"
               _onBlur={handleInputNumber}
               validationLabel={confirmEmail}
@@ -333,7 +330,7 @@ const Signup = ({ userInfo }) => {
           type="button"
           value={t('next')}
           onClick={() =>
-            window.alert(t('there are items do not meet the conditions.'))
+            new Swal(t('there are items do not meet the conditions.'))
           }
         />
       ) : (
