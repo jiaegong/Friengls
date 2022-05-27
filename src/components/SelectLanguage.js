@@ -1,7 +1,7 @@
 import { Rowing } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
-import { InputBox, InputLabel, NewInputLabel } from '../elements/index';
+import { NewInputLabel } from '../elements/index';
 import InfoInput from './InfoInput';
 
 const SelectLanguage = (props) => {

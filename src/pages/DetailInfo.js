@@ -6,14 +6,7 @@ import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { Logo, Profile } from '../image/index';
 import SelectLanguage from '../components/SelectLanguage';
-import {
-  InputBox,
-  InputLabel,
-  Inputs,
-  Buttons,
-  NewInput,
-  NewInputLabel,
-} from '../elements';
+import { Buttons, NewInputLabel } from '../elements';
 import InfoInput from '../components/InfoInput';
 
 // to do: 자기소개, 한 줄 소개, 태그 글자수제한

@@ -6,7 +6,8 @@ import EditUser from './EditUser';
 import { Profile, CloseIcon } from '../image/index';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
-// to do: 스크롤 뒷배경 안 움직이도록
+import InfoInput from './InfoInput';
+
 const MyPageModal = (props) => {
   const { onClose, userInfo } = props;
 
@@ -55,93 +56,76 @@ const MyPageModal = (props) => {
             accessInfo={accessInfo}
           />
         ) : (
-          <Content>
-            <CloseBtnBox>
-              <CloseBtn onClick={onClose}>
-                <img src={CloseIcon} alt="close" />
-              </CloseBtn>
-            </CloseBtnBox>
-            <Grid>
-              <p>본인확인</p>
-            </Grid>
-            <Grid>
-              <UserImg>
-                <img
-                  src={userInfo.userProfile ? userInfo.userProfile : Profile}
-                  alt="userProfile"
-                />
-              </UserImg>
-            </Grid>
-            <Grid>
-              {/* 닉네임 */}
-              <InputBox
-                styles={{
-                  width: '60%',
-                  margin: '0 auto 20px',
-                  padding: '6px 12px',
-                  height: 'auto',
-                }}
-              >
-                <InputLabel
-                  styles={{
-                    fontSize: '12px',
-                    height: '14px',
-                    marginBottom: '4px',
-                  }}
-                >
-                  이메일
-                </InputLabel>
-                <Inputs
+          <ContentWrap>
+            <Content>
+              <CloseBtnBox>
+                <CloseBtn onClick={onClose}>
+                  <img src={CloseIcon} alt="close" />
+                </CloseBtn>
+              </CloseBtnBox>
+              <Grid>
+                <p>본인확인</p>
+              </Grid>
+              <Grid>
+                <UserImg>
+                  <img
+                    src={userInfo.userProfile ? userInfo.userProfile : Profile}
+                    alt="userProfile"
+                  />
+                </UserImg>
+              </Grid>
+              <Grid>
+                {/* 닉네임 */}
+                <InfoInput
+                  label="이메일"
                   value={userInfo.userEmail}
                   disabled
                   styles={{
-                    width: '100%',
-                    height: '33px',
-                    fontSize: '16px',
-                    fontWeight: '500',
+                    flexDirection: 'column',
+                    justifyContent: 'space-evenly',
                   }}
                 />
-              </InputBox>
-              {/* 비밀번호 */}
-              <InputBox
-                styles={{
-                  width: '60%',
-                  height: 'auto',
-                  margin: '0 auto',
-                  padding: '6px 12px',
-                }}
-              >
-                <InputLabel
+                {/* 비밀번호 */}
+                <InputBox
                   styles={{
-                    fontSize: '12px',
-                    height: '14px',
-                    marginBottom: '4px',
+                    width: '60%',
+                    height: 'auto',
+                    margin: '0 auto',
+                    padding: '6px 12px',
                   }}
                 >
-                  비밀번호
-                </InputLabel>
-                <Inputs
-                  _onChange={handlePwd}
-                  placeholder={'비밀번호를 입력해 주세요.'}
-                  styles={{
-                    width: '100%',
-                    height: '33px',
-                    fontSize: '16px',
-                    fontWeight: '600',
-                  }}
-                />
-              </InputBox>
-            </Grid>
+                  <InputLabel
+                    styles={{
+                      fontSize: '12px',
+                      height: '14px',
+                      marginBottom: '4px',
+                    }}
+                  >
+                    비밀번호
+                  </InputLabel>
+                  <Inputs
+                    _onChange={handlePwd}
+                    placeholder={'비밀번호를 입력해 주세요.'}
+                    styles={{
+                      width: '100%',
+                      height: '33px',
+                      fontSize: '16px',
+                      fontWeight: '600',
+                    }}
+                  />
+                </InputBox>
+              </Grid>
 
-            <Grid>
-              <Buttons
-                _onClick={handleEditUser}
-                styles={{ width: '300px', height: '54px', fontSize: '16px' }}
-              >
-                프로필 수정하기
-              </Buttons>
-            </Grid>
-          </Content>
+              <Grid>
+                <Buttons
+                  _onClick={handleEditUser}
+                  styles={{ width: '300px', height: '54px', fontSize: '16px' }}
+                >
+                  프로필 수정하기
+                </Buttons>
+              </Grid>
+            </Content>
+          </ContentWrap>
         )}
       </Background>
     </Portal>
@@ -163,18 +147,23 @@ const Background = styled.div`
   text-align: center;
 `;
 
-const Content = styled.div`
-  width: 100%;
+const ContentWrap = styled.div`
+  width: 800px;
   height: 700px;
-  max-width: 800px;
   // min-height: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   position: relative;
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+`;
+
+const Content = styled.div`
+  width: 340px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const CloseBtnBox = styled.label`
@@ -195,10 +184,10 @@ const CloseBtn = styled.button`
 `;
 
 const Grid = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 
   p {
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 700;
   }
 `;

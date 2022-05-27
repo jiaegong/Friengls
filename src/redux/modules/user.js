@@ -98,10 +98,21 @@ const uploadProfileDB = (formData) => {
   };
 };
 
-const deleteProfileDB = (userProfile) => {
+const deleteProfileDB = (userInfo) => {
   return function (dispatch, getState, { history }) {
-    console.log('deleteProfileDB시작', userProfile);
-    // 악시오스 연결
+    console.log('deleteProfileDB시작', userInfo);
+    axios({
+      method: 'patch',
+      url: 'https://hjg521.link/deleteProfile',
+      data: userInfo,
+    })
+      .then((response) => {
+        console.log('uploadProfileDB성공', response.data);
+      })
+      .catch((error) => {
+        window.alert('이미지 삭제에 실패하셨습니다.');
+        console.log(error);
+      });
     dispatch(deleteProfile);
   };
 };

@@ -27,7 +27,11 @@ const EditUser = (props) => {
   };
   //프로필사진 삭제
   const deleteProfile = () => {
-    dispatch(userActions.deleteProfileDB());
+    const deleteInfo = {
+      userEmail: userInfo.userEmail,
+      isTutor: userInfo.isTutor.toString(),
+    };
+    dispatch(userActions.deleteProfileDB(deleteInfo));
     setPreviewProfile(Profile);
   };
 

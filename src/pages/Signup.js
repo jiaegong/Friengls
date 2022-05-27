@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Logo } from '../image/';
-import { InputBox, Inputs, InputLabel } from '../elements';
 import InfoInput from '../components/InfoInput';
 import { emailForm, pwdForm, userNameForm } from '../shared/common';
 import SelectIsTutor from '../components/SelectIstutor';

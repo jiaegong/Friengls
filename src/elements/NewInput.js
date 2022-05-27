@@ -57,6 +57,7 @@ NewInput.defaultProps = {};
 const Textarea = styled.textarea`
   width: 100%;
   height: 100%;
+  padding-top: 5px;
   border: none;
   font-size: 14px;
   font-weight: 400;
@@ -72,12 +73,12 @@ const Textarea = styled.textarea`
 
 const Input = styled.input`
   width: 100%;
-  height: 20px;
+  height: 25px;
   border: none;
-  font-size: 14px;
-  font-weight: 400;
   display: flex;
   align-items: center;
+  font-size: 14px;
+  font-weight: 400;
   ::-webkit-input-placeholder {
     font-size: 14px;
     color: b5b5b5;
