@@ -46,7 +46,7 @@ const TutorModal = (props) => {
               {tutor.comment}
             </Text>
             <TagWrap>
-              {tags.map((tag, idx) => (
+              {tags?.map((tag, idx) => (
                 <Tag key={idx}>{tag}</Tag>
               ))}
             </TagWrap>

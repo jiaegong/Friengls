@@ -36,6 +36,7 @@ const VideoChat = (props) => {
 
   const myVideo = useRef();
   const userVideo = useRef();
+  const connectionRef = useRef();
   const peers = {};
   const roomId = props.match.params.roomName;
   const userName = useSelector((state) => state.user.info); // props로 넘겨주는 게 더 좋을 거 같음
@@ -81,6 +82,7 @@ const VideoChat = (props) => {
                 userVideo.current.remove(); // 상대방 나가면 비디오 remove
               });
               peers[userId] = call;
+              connectionRef.current = peer;
             }
           });
 
@@ -96,6 +98,7 @@ const VideoChat = (props) => {
                 }
               });
             }
+            connectionRef.current = peer;
           });
         })
         .catch((err) => console.log(err));
@@ -117,6 +120,7 @@ const VideoChat = (props) => {
   const leaveCall = () => {
     myVideo.current.remove();
     userVideo.current.remove();
+    connectionRef.current.destroy();
   };
 
   // 오디오 온오프
