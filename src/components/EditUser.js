@@ -214,7 +214,7 @@ const EditUser = (props) => {
     }
     setTagList(tagList.filter((tag, index) => index !== Number(e.target.id)));
   };
-
+  console.log(contents);
   //isTutor input값
   const [isTutor, setIsTutor] = useState('');
   const handleIstutor = (e) => {
@@ -595,15 +595,16 @@ const EditUser = (props) => {
                     {t('available time for tutoring')} :
                     <Select name="startTime" onChange={handleStartTime}>
                       <option value="">
-                        {userInfo.startTime
+                        {!userInfo.startTime
                           ? startNum +
                             1 +
-                            `{t('session')}: ` +
+                            t('session') +
+                            ': ' +
                             startNum +
                             ':00 - ' +
                             (startNum + 1) +
                             ':00'
-                          : `====={t('first tutoring')}=====`}
+                          : `=====${t('first tutoring')}=====`}
                       </option>
                       {startTimeArray.map((time, index) => (
                         //+ 키 유저아이디 같은걸로 바꿔주기
@@ -620,16 +621,16 @@ const EditUser = (props) => {
                       <>
                         <Select name="endTime" onChange={handleEndTime}>
                           <option value="">
-                            {' '}
-                            {userInfo.endTime
+                            {!userInfo.endTime
                               ? endNum +
                                 1 +
-                                `{t('session')}: ` +
+                                t('session') +
+                                ': ' +
                                 endNum +
                                 ':00 - ' +
                                 (endNum + 1) +
                                 ':00'
-                              : `====={t('last tutoring')}=====`}
+                              : `=====${t('last tutoring')}=====`}
                           </option>
                           {endTimeArray.map((time, index) => (
                             <option value={time} key={startTime + index}>
@@ -894,7 +895,7 @@ const TimeSelectBox = styled.div`
 `;
 
 const Select = styled.select`
-  width: 140px;
+  width: 170px;
   height: 30px;
   margin: 0 10px;
   border: 1px solid #8a8a8a;

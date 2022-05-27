@@ -35,6 +35,10 @@ function App() {
   }, []);
 
   const [feedbackOn, setFeedbackOn] = useState(false);
+  // 콘솔 창 배포환경에서 안보이기
+  if (process.env.NODE_ENV === 'production') {
+    console.log = () => {};
+  }
 
   return (
     <ConnectedRouter history={history}>

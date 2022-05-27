@@ -40,7 +40,7 @@ const Login = (props) => {
     dispatch(userActions.loginDB(loginForm));
   };
 
-  // 소셜로그인 테스트
+  // 소셜로그인
   const kakaoLogin = () => {
     const kakaoApi = `https://hjg521.link/auth/kakao`;
     window.location.assign(kakaoApi);

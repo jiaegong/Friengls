@@ -1,3 +1,4 @@
+import { CenterFocusStrong } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
 import { NewInput, NewInputLabel } from '../elements/index';
@@ -59,7 +60,9 @@ const InfoInput = (props) => {
         />
       </InputBox>
       {validationLabel && (
-        <NewInputLabel styles={{ padding: '0 10px 10px 10px' }}>
+        <NewInputLabel
+          styles={{ padding: '0 10px 10px 10px', alignItems: 'flex-start' }}
+        >
           {validationLabel}
         </NewInputLabel>
       )}

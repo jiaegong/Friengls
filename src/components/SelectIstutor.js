@@ -72,7 +72,6 @@ const SelectIsTutor = ({
       {isTutor === '1' && (
         <React.Fragment>
           <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
-            {' '}
             <TimeSelectBox>
               {t('available time for tutoring')} :
               <Select name="startTime" onChange={handleStartTime}>
