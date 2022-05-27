@@ -60,7 +60,7 @@ function App() {
         onClick={() => setFeedbackOn(!feedbackOn)}
       />
       {feedbackOn && <Feedback>피드백을 남겨주세요!</Feedback>}
-      <FeedBack />
+      {/* <FeedBack /> */}
     </ConnectedRouter>
   );
 }
