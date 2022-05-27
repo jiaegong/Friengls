@@ -34,7 +34,7 @@ const ReviewModal = ({ onClose, tutorName }) => {
       >
         <Content onClick={(e) => e.stopPropagation()}>
           <ReviewWrap>
-            <Text>리뷰 남기기</Text>
+            <Text>{t('write a review')}</Text>
             <RateWrap>
               {Array.from({ length: 5 }, (c, idx) => {
                 return (
@@ -53,16 +53,16 @@ const ReviewModal = ({ onClose, tutorName }) => {
             </RateWrap>
             <textarea
               className="review-text"
-              placeholder="튜터링은 어땠나요?"
+              placeholder={t('how was tutoring?')}
               onChange={onChange}
               value={text}
             />
             <Buttons>
               <button className="add-review" onClick={addReview}>
-                등록하기
+                {t('post')}
               </button>
               <p className="back" onClick={() => onClose()}>
-                돌아가기
+                {t('back')}
               </p>
             </Buttons>
           </ReviewWrap>
