@@ -54,6 +54,7 @@ const initialState = {
     //   ),
     // },
   ],
+  noti: [],
 };
 
 // 예약하기.
@@ -163,9 +164,7 @@ const setBookingDB = (data, tutorName) => {
 
 // 예약리스트 불러오기
 const getBookingDB = ({ userName, isTutor }) => {
-  // const getBookingDB = (data) => {
   return function (dispatch, getState, { history }) {
-    // userName 없을시 에러 뜨는 경우 방지 ??? 없어도 되나??
     // if (!userName) return;
     console.log({ userName, isTutor });
 
@@ -176,10 +175,6 @@ const getBookingDB = ({ userName, isTutor }) => {
       url: `https://hjg521.link/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {
-        // console.log(doc.data.datas1[0].endTime);
-        // let endTimeDB = doc.data.datas1[0].endTime;
-        // let endTime = moment(endTimeDB, 'ddd, DD MMM YYYY HH:mm:ss ZZ');
-        // console.log(endTime);
         console.log(doc.data);
 
         dispatch(getBooking(doc.data));
@@ -200,7 +195,7 @@ const getBookingNotiDB = () => {
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
-        console.log(doc);
+        console.log('noti data : ', doc.data);
         dispatch(getNoti(doc.data));
       })
       .catch((err) => {
@@ -307,7 +302,7 @@ export default handleActions(
       }),
     [GET_NOTI]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.data;
+        draft.noti = action.payload.data;
       }),
     [CLEAR_NOTI]: (state, action) =>
       produce(state, (draft) => {

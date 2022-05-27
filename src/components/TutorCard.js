@@ -59,7 +59,11 @@ const Card = styled.div`
   overflow: hidden;
   position: relative;
   cursor: pointer;
+<<<<<<< HEAD
   box-shadow: 0px 2px 8px 0px #00000030;
+=======
+  box-shadow: 0px 2px 12px 0px #00000040;
+>>>>>>> ed2ce142bd8072e673b7878d8f986bff81d5706a
 
   border-radius: 15px;
 
@@ -110,6 +114,7 @@ const Card = styled.div`
       width: 80%;
       font-size: 12px;
       margin-top: 8px;
+      overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 1;
