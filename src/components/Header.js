@@ -35,7 +35,9 @@ const Header = () => {
   };
 
   useEffect(() => {
-    dispatch(notiActions.getBookingNotiDB());
+    if (token) {
+      dispatch(notiActions.getBookingNotiDB());
+    }
   }, [notiOpen]);
 
   //마이페이지url에 사용할 유저정보 가져오기
@@ -56,7 +58,7 @@ const Header = () => {
         <div
           className="logoWrap"
           onClick={() => {
-            history.replace('/');
+            history.push('/');
           }}
         >
           <img className="logo" src={MainLogo} alt=""></img>
@@ -144,11 +146,11 @@ const Header = () => {
               <li
                 onClick={() => {
                   Swal.fire({
-                    title: '로그인 하셨나요?',
-                    text: '로그인후 사용이 가능 합니다!~',
+                    title: t('did you sign in?'),
+                    text: t('it is available after you sign in!'),
                     icon: 'warning',
                     confirmButtonColor: '#3085d6',
-                    confirmButtonText: '확인',
+                    confirmButtonText: t('confirm'),
                   }).then((result) => {
                     if (result.isConfirmed) {
                       history.push('/login');
@@ -248,6 +250,7 @@ const Wrap = styled.div`
 
     .navBarWrap {
       max-width: 672px;
+      max-width: 680px;
       width: 100%;
       height: 33px;
       padding-top: 30px;
@@ -261,7 +264,7 @@ const Wrap = styled.div`
 
       li {
         width: 5rem;
-        width: auto;
+        width: 110px;
         height: 35px;
         display: flex;
         justify-content: center;

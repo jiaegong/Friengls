@@ -119,7 +119,7 @@ const Login = (props) => {
 
 const Container = styled.div`
   width: 500px;
-  margin: 50px auto;
+  margin: 50px auto 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;

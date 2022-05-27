@@ -31,15 +31,22 @@ const Footer = () => {
 
           <ul className="linkIcons">
             <li className="icon" onClick={() => {}}>
-              <FcGoogle className="googleIcon" />
+              <a href="mailto:officialfriengls@gmail.com">
+                <FcGoogle className="googleIcon" />
+              </a>
             </li>
-            <li className="icon" onClick={() => {}}>
+            <li
+              className="icon"
+              onClick={() => {
+                window.open('https://www.instagram.com/friengls/');
+              }}
+            >
               <BsInstagram className="instaIcon" />
             </li>
             <li
               className="icon"
               onClick={() => {
-                // window.open('https://www.naver.com/');
+                // window.open('https://깃허브 링크/');
               }}
             >
               <BsGithub className="githubIcon" />

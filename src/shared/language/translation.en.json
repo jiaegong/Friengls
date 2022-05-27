@@ -36,6 +36,7 @@
   "edit profile": "Edit profile",
   "translate": "Translate",
   "write a review": "Write a review",
+  "how was tutoring?" : "How was tutoring?",
   "post": "Post",
   "back": "Back",
   "email format: ex) example@example.com": "Email format: ex) example@example.com",
@@ -106,5 +107,15 @@
   "first tutoring": "First tutoring",
   "last tutoring": "Last tutoring",
   "you can change tutoring time on my page.": "You can change tutoring time on My page.",
-  "see tutor profile" : "See tutor profile"
+  "see tutor profile" : "See tutor profile",
+  "the authentication number has been sent to the email you wrote." : "The authentication number has been sent to the email you wrote.",
+  "email authentication completed" : "Email authentication completed",
+  "please check the authentication number again." : "Please check the authentication number again.",
+  "save" : "Save",
+  "edit" : "Edit",
+  "delete" : "Delete",
+  "did you sign in?" : "Did you sign in?",
+  "it is available after you sign in!" : "It is available after you sign in!",
+  "confirm" : "Confirm",
+  "refresh" : "Refresh"
 }

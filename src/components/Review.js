@@ -4,13 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 import styled from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
 
 const Review = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const userName = useSelector((state) => state.user.info.userName);
   const tuteeName = props.Tutee_userName;
   const reviewId = props.reviewId;
+  const tutorImg = props.Tutor_userProfile;
+  const tuteeImg = props.Tutee_userProfile;
 
   const [edit, setEdit] = useState(false);
   const [rate, setRate] = useState(props.rate);
@@ -31,8 +35,8 @@ const Review = (props) => {
   return (
     <Wrap>
       <ImageWrap>
-        <img className="reviewImg" src="" alt="튜터 프로필"></img>
-        <img className="userProfileImg" src="" alt="튜티 프로필"></img>
+        <img className="reviewImg" src={tutorImg} alt="튜터 프로필"></img>
+        <img className="userProfileImg" src={tuteeImg} alt="튜티 프로필"></img>
       </ImageWrap>
       <ReviewWrap>
         <Text>Tutee: {props.Tutee_userName}</Text>
@@ -95,7 +99,7 @@ const Review = (props) => {
                 setEdit(!edit);
               }}
             >
-              저장
+              {t('save')}
             </span>
           ) : (
             <span
@@ -104,12 +108,12 @@ const Review = (props) => {
                 setEdit(!edit);
               }}
             >
-              수정
+              {t('edit')}
             </span>
           )}
           &nbsp;/&nbsp;
           <span className="delete-review" onClick={deleteReview}>
-            삭제
+            {t('delete')}
           </span>
         </Buttons>
       )}

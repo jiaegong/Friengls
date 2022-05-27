@@ -15,7 +15,7 @@ const DetailUser = (props) => {
   const dispatch = useDispatch();
 
   const urlCheck = props.props.match.url;
-  const tutorName = userInfo.userName;
+  const tutorName = props.props.match.params.userName;
   const isLike = useSelector((state) => state.like.isLike);
 
   // 좋아요 상태 확인, 좋아요 누르기
@@ -96,7 +96,6 @@ const DetailUser = (props) => {
           ) : (
             <AiOutlineHeart onClick={like} />
           )}
-          {userInfo.like}
         </Like>
         {userInfo.contents &&
           (contents ? (

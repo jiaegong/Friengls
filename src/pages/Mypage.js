@@ -252,8 +252,8 @@ const Wrap = styled.div`
           }
 
           .deleteBtn {
-            width: 15%;
-            max-width: 200px;
+            width: 32%;
+            max-width: 253px;
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
@@ -273,7 +273,7 @@ const Wrap = styled.div`
 `;
 
 const LikeWrap = styled.div`
-  max-width: 1050px;
+  max-width: 1280px;
   width: 80%;
   margin: auto;
 

@@ -27,7 +27,7 @@ const LikeItem = (props) => {
         <ProfileWrap
           onClick={() => history.push(`/detail/${props.userName}/0`)}
         >
-          <p className="profile">프로필 보러가기</p>
+          프로필 보러가기
         </ProfileWrap>
       </Wrap>
     );
@@ -62,11 +62,9 @@ const UserWrap = styled.div`
   }
 `;
 
-const ProfileWrap = styled.div`
-  .profile {
-    cursor: pointer;
-    text-decoration: underline;
-    color: #808080;
-    font-size: 14px;
-  }
+const ProfileWrap = styled.p`
+  cursor: pointer;
+  text-decoration: underline;
+  color: #808080;
+  font-size: 14px;
 `;
