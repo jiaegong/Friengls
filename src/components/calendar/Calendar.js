@@ -16,7 +16,7 @@ import { ArrowLeft, ArrowRight } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as calendarActions } from '../../redux/modules/booking';
 import { history } from '../../redux/configureStore';
-
+import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 
 const CalendarTemplate = ({
@@ -39,6 +39,7 @@ const CalendarTemplate = ({
   // startTime = "0:00",
   // endTime = "24:00",
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   // const Swal = require('sweetalert2');
   const isLogin = useSelector((state) => state.user.isLogin);
@@ -608,11 +609,11 @@ const CalendarTemplate = ({
         (activeDay && isLogin === false)
       ) {
         Swal.fire({
-          title: '로그인 하셨나요?',
-          text: '로그인후 사용이 가능 합니다!~',
+          title: t('did you sign in?'),
+          text: t('it is available after you sign in!'),
           icon: 'warning',
           confirmButtonColor: '#3085d6',
-          confirmButtonText: '확인',
+          confirmButtonText: t('confirm'),
         }).then((result) => {
           if (result.isConfirmed) {
             history.push('/login');
@@ -907,7 +908,7 @@ const CalendarTemplate = ({
                     onClick={handleSaveAvailability}
                     className={classes.button}
                   >
-                    수강 예약하기
+                    {t('book a lesson')}
                   </Button>
                   <span
                     className="resetBtn"
@@ -915,7 +916,7 @@ const CalendarTemplate = ({
                       window.location.reload();
                     }}
                   >
-                    ♻️ 초기화
+                    ♻️ {t('refresh')}
                   </span>
                 </div>
               </Grid>
