@@ -6,8 +6,10 @@ import TutorCard from '../components/TutorCard';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import axios from 'axios';
 import { actionCreators as tutorActions } from '../redux/modules/tutor';
+import { useTranslation } from 'react-i18next';
 
 const Search = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const urlCheck = props.location.pathname;
   const formRef = React.createRef();
@@ -52,7 +54,7 @@ const Search = (props) => {
               type="text"
               ref={inputRef}
               className="searchInput"
-              placeholder="선생님 이름이나 태그 검색하기"
+              placeholder={t('find the best tutor for you')}
             ></input>
           </form>
           <div className="keyWordWrap">
@@ -76,9 +78,9 @@ const Search = (props) => {
       <InnerWrap>
         <TutorTitleWrap>
           <div>
-            <span>지금 수강가능한 선생님들이에요 👍</span>
+            <span>{t('tutors who are available now')}</span>
           </div>
-          <p>선생님 리스트</p>
+          <p>{t('tutor list')}</p>
         </TutorTitleWrap>
         <ul>
           {tutorList.map((tutor, idx) => {
@@ -187,7 +189,9 @@ const InnerWrap = styled.div`
   margin: 120px auto 180px;
 
   ul {
-    width: 100%;
+    /* width: 100%; */
+    width: 95%;
+    margin: auto;
     display: grid;
     place-items: center;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));

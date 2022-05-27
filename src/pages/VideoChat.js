@@ -16,8 +16,13 @@ import Translator from '../components/Translator';
 import Chat from '../components/Chat';
 import Portal from '../shared/Portal';
 import ReviewModal from '../components/ReviewModal';
+import { history } from '../redux/configureStore';
+import { useLocation } from 'react-router';
 
 const VideoChat = (props) => {
+  const location = useLocation();
+  const tutorName = location.state;
+
   const [modalOn, setModalOn] = useState(false);
   const [optionOn, setOptionOn] = useState(false);
 
@@ -66,14 +71,17 @@ const VideoChat = (props) => {
             console.log(3, userId, stream, userVideo.current);
             if (userVideo.current) {
               const call = peer.call(userId, stream); // call 요청
-              call.on('stream', (userVideoStream) => {
-                console.log(4);
-                userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
-              });
-              call.on('close', () => {
-                userVideo.current.remove(); // 상대방 나가면 비디오 remove
-              });
-              peers[userId] = call;
+              if (call) {
+                console.log(call);
+                call.on('stream', (userVideoStream) => {
+                  console.log(4);
+                  userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
+                });
+                call.on('close', () => {
+                  userVideo.current.remove(); // 상대방 나가면 비디오 remove
+                });
+                peers[userId] = call;
+              }
             }
           });
 
@@ -88,7 +96,8 @@ const VideoChat = (props) => {
         })
         .catch((err) => console.log(err));
     } else {
-      // 마이페이지로 이동?
+      window.alert('비디오와 오디오 환경을 확인해 주세요!');
+      history.goBack();
     }
 
     // 유저랑 연결 끊겼을 때
@@ -156,7 +165,11 @@ const VideoChat = (props) => {
           </Options>
         )}
       </LeftWrap>
-      <Portal>{modalOn && <ReviewModal onClose={modalHandler} />}</Portal>
+      <Portal>
+        {modalOn && (
+          <ReviewModal onClose={modalHandler} tutorName={tutorName} />
+        )}
+      </Portal>
       <RightWrap>
         <TranslatorWrap>
           <Translator />
@@ -205,7 +218,7 @@ const LeftWrap = styled.div`
   height: 600px;
   box-sizing: border-box;
   border-radius: 10px;
-  box-shadow: 0px 2px 12px 0px #00000040;
+  box-shadow: 0px 2px 8px 0px #00000030;
 
   .user-video {
     position: absolute;
@@ -240,7 +253,7 @@ const OptionWrap = styled.div`
   right: 20px;
   bottom: 20px;
   z-index: 999;
-  box-shadow: 0px 2px 12px 0px #00000040;
+  box-shadow: 0px 2px 8px 0px #00000030;
 
   .plus:hover {
     transition: 500ms ease-in-out;
@@ -265,7 +278,7 @@ const Options = styled.div`
   right: 20px;
   bottom: 20px;
   z-index: 1000;
-  box-shadow: 0px 2px 12px 0px #00000040;
+  box-shadow: 0px 2px 8px 0px #00000030;
 
   .leave-call {
     cursor: pointer;
@@ -302,14 +315,14 @@ const RightWrap = styled.div`
 `;
 
 const TranslatorWrap = styled.div`
-  box-shadow: 0px 2px 12px 0px #00000040;
+  box-shadow: 0px 2px 8px 0px #00000030;
   padding: 15px;
   border-radius: 10px;
   height: 100%;
 `;
 
 const MyVideoWrap = styled.div`
-  box-shadow: 0px 2px 12px 0px #00000040;
+  box-shadow: 0px 2px 8px 0px #00000030;
   border-radius: 10px;
   width: 260px;
   height: 195px;

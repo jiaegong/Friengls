@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 // 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 컴포넌트
 import { Text } from '../elements/index';
@@ -20,6 +21,8 @@ const Main = () => {
   const reviewList = useSelector((state) => state.review.list);
 
   useEffect(() => {
+    dispatch(tutorActions.getTutorListDB());
+
     dispatch(reviewActions.getReviewDB());
   }, []);
 
@@ -56,7 +59,14 @@ const Main = () => {
           <TutorTitleWrap>
             <div>
               <span>{t('the most liked tutors in friengls')}</span>
-              <span className="tutorMoreBtn">더보기 ></span>
+              <span
+                className="tutorMoreBtn"
+                onClick={() => {
+                  history.push('/search');
+                }}
+              >
+                {t('see more')} >
+              </span>
             </div>
             <p>{t('popular tutor list')}</p>
           </TutorTitleWrap>
@@ -73,7 +83,6 @@ const Main = () => {
             <ReviewTitleWrap>
               <div>
                 <span className="subTitle">{t('check out tutor reviews')}</span>
-                <span className="reviewMoreBtn">더보기 ></span>
               </div>
               <p className="title">{t('best reviews')}</p>
             </ReviewTitleWrap>
@@ -109,10 +118,16 @@ const Banner = styled.div`
   .bannerTitle {
     display: flex;
     flex-direction: column;
+    padding-top: 40px;
+    margin-bottom: 20px;
   }
   .bannerTitle > span {
-    font-size: 34px;
+    font-size: 40px;
     font-weight: bolder;
+    /* font-family: 'Jalnan'; */
+    line-height: 34px;
+    /* margin-bottom: 10px; */
+    margin-bottom: 18px;
     letter-spacing: 1px;
     color: #fff;
   }
@@ -184,13 +199,16 @@ const TutorTitleWrap = styled.div`
 `;
 
 const CardList = styled.div`
-  width: 100%;
+  /* width: 100%; */
+  width: 95%;
+  margin: auto;
   display: grid;
   place-items: center;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
   /* grid-gap: 2rem; */
-  row-gap: 2rem;
+  /* row-gap: 2rem; */
+  row-gap: 4rem;
   column-gap: 0rem;
 `;
 
@@ -218,10 +236,6 @@ const ReviewTitleWrap = styled.div`
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 6px;
-    }
-
-    .reviewMoreBtn {
-      cursor: pointer;
     }
   }
 

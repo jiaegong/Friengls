@@ -7,8 +7,10 @@ import { actionCreators as likeActions } from '../redux/modules/like';
 import MyPageModal from './MyPageModal';
 import { Profile, OpenToggle, CloseToggle } from '../image/index';
 import { Buttons } from '../elements/index';
+import { useTranslation } from 'react-i18next';
 
 const DetailUser = (props) => {
+  const { t } = useTranslation();
   const { userInfo } = props;
   const dispatch = useDispatch();
 
@@ -69,7 +71,7 @@ const DetailUser = (props) => {
               fontSize: '16px',
             }}
           >
-            내 프로필 수정
+            {t('edit my profile')}
           </Buttons>
         )}
         {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
@@ -106,7 +108,7 @@ const DetailUser = (props) => {
               <div>
                 <img src={CloseToggle} alt="CloseContents" />
               </div>
-              자기소개 닫기
+              {t('close self-introduction')}
             </ContentsButton>
           ) : (
             <ContentsButton
@@ -117,7 +119,7 @@ const DetailUser = (props) => {
               <div>
                 <img src={OpenToggle} alt="openContents" />
               </div>
-              자기소개 열기
+              {t('open self-introduction')}
             </ContentsButton>
           ))}
         {/* 자기소개, 한줄소개 없을 경우 띄우기 */}
@@ -173,7 +175,7 @@ const UserTitle = styled.div`
   p {
     display: inline-block;
     font-size: 22px;
-    font-weight: 600;
+    font-weight: 700;
     margin-right: 30px;
   }
   span {

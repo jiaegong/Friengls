@@ -7,8 +7,10 @@ import { Profile, CloseIcon } from '../image/index';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
 import InfoInput from './InfoInput';
+import { useTranslation } from 'react-i18next';
 
 const MyPageModal = (props) => {
+  const { t } = useTranslation();
   const { onClose, userInfo } = props;
 
   const [pwd, setPwd] = useState('');
@@ -37,7 +39,7 @@ const MyPageModal = (props) => {
 
       result === 'success'
         ? setEditUser(true)
-        : window.alert('비밀번호가 틀립니다.');
+        : window.alert(t('the password is incorrect.'));
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +68,7 @@ const MyPageModal = (props) => {
                 <img src={CloseIcon} alt="close" />
               </CloseBtn>
               <Grid>
-                <p>본인확인</p>
+                <p>{t('identification')}</p>
               </Grid>
               <Grid>
                 <UserImg>
@@ -79,7 +81,7 @@ const MyPageModal = (props) => {
               <Grid>
                 {/* 닉네임 */}
                 <InfoInput
-                  label="이메일"
+                  label={t('email')}
                   value={userInfo.userEmail}
                   disabled
                   styles={{
@@ -89,10 +91,10 @@ const MyPageModal = (props) => {
                 />
                 {/* 비밀번호 */}
                 <InfoInput
-                  label="비밀번호"
+                  label={t('password')}
                   type="password"
                   _onChange={handlePwd}
-                  placeholder="비밀번호를 입력해 주세요."
+                  placeholder={t('please enter your password')}
                   styles={{
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
@@ -101,7 +103,7 @@ const MyPageModal = (props) => {
               </Grid>
               <Grid>
                 <Buttons _onClick={handleEditUser} styles={{ height: '54px' }}>
-                  프로필 수정하기
+                  {t('edit profile')}
                 </Buttons>
               </Grid>
             </Content>

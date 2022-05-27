@@ -150,7 +150,7 @@ const loginDB = (loginForm) => {
 
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
-    console.log('loginCheckDB시작');
+    // console.log('loginCheckDB시작');
     axios({
       method: 'get',
       url: 'https://hjg521.link/login/getUser',
@@ -193,7 +193,7 @@ const editUserDB = (userInfo) => {
 
 const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
-    console.log('getUserDetailDB시작', userApi);
+    // console.log('getUserDetailDB시작', userApi);
 
     axios({
       method: 'get',

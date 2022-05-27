@@ -7,12 +7,13 @@ import { Logo } from '../image/';
 import InfoInput from '../components/InfoInput';
 import { emailForm, pwdForm, userNameForm } from '../shared/common';
 import SelectIsTutor from '../components/SelectIstutor';
-
+import { useTranslation } from 'react-i18next';
 // to do: 유효성 검사에 따라 박스 색 변화
 // to do: 유효성 검사 조건 일치하는지 확인
 // to do: 닉네임 유효성 검사 개선(글자수)
 // to do: 소셜로그인에 사용할 이메일이 이미 가입된 이메일일 경우
 const Signup = ({ userInfo }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   //소셜로그인의 경우 닉네임체크 바로 할 수 있도록
   useEffect(() => {
@@ -26,16 +27,16 @@ const Signup = ({ userInfo }) => {
   );
   // userEmail 형식 라벨로 표시
   const [emailCheck, setEmailCheck] = useState(
-    '이메일 형식: 예) example@example.com',
+    t('email format: ex) example@example.com'),
   );
   // userEmail 유효성 검사
   const handleEmail = (e) => {
     const email = e.target.value;
     setUserEmail(email);
     if (emailForm(email)) {
-      setEmailCheck('올바른 이메일 형식입니다.');
+      setEmailCheck(t('this is the correct email format.'));
     } else {
-      setEmailCheck('이메일 형식: 예) example@example.com');
+      setEmailCheck(t('email format: ex) example@example.com'));
     }
   };
   //인증번호
@@ -55,7 +56,7 @@ const Signup = ({ userInfo }) => {
         console.log('emailCheckDB성공', response.data.msg);
         if (response.data.msg === '이미 있는 이메일 주소입니다.') {
           setEmailCheck(
-            '이미 가입된 이메일입니다. 다른 이메일을 입력해주세요.',
+            t('this email is already subscribed. try another email.'),
           );
           return;
         }
@@ -106,17 +107,21 @@ const Signup = ({ userInfo }) => {
   );
   //userName 형식 라벨로 표시
   const [userNameCheck, setUserNameCheck] = useState(
-    '영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
+    t(
+      'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
+    ),
   );
   //userName 유효성 검사
   const handleUserName = (e) => {
     const userName = e.target.value;
     setUserName(userName);
     if (userNameForm(userName)) {
-      setUserNameCheck('올바른 닉네임 형식입니다.');
+      setUserNameCheck(t('this is the correct nickname format.'));
     } else {
       setUserNameCheck(
-        '영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
+        t(
+          'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
+        ),
       );
     }
   };
@@ -153,7 +158,9 @@ const Signup = ({ userInfo }) => {
   const [pwd, setPwd] = useState('');
   //pwd 형식 라벨로 표시
   const [pwdCheck, setPwdCheck] = useState(
-    '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
+    t(
+      'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
+    ),
   );
   //pwd 유효성 검사
   const handlePwd = (e) => {
@@ -161,16 +168,22 @@ const Signup = ({ userInfo }) => {
     setPwd(pwd);
     if (pwdForm(pwd)) {
       if (pwd.includes(userName) || pwd.includes(userEmail.split('@')[0])) {
-        setPwdCheck('비밀번호에 닉네임 또는 이메일을 포함할 수 없습니다.');
+        setPwdCheck(
+          t('you can not include nickname or email in your password.'),
+        );
       } else {
-        setPwdCheck('올바른 비밀번호 형식입니다.');
+        setPwdCheck(t('this is the correct password format.'));
       }
     } else {
       if (pwd.includes(userName) || pwd.includes(userEmail.split('@')[0])) {
-        setPwdCheck('비밀번호에 닉네임 또는 이메일을 포함할 수 없습니다.');
+        setPwdCheck(
+          t('you can not include nickname or email in your password.'),
+        );
       } else {
         setPwdCheck(
-          '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
+          t(
+            'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
+          ),
         );
       }
     }
@@ -179,18 +192,18 @@ const Signup = ({ userInfo }) => {
   //confirmPwd 유효성 검사, input값 가져오기
   const [confirmPwd, setConfirmPwd] = useState('');
   const [confirmPwdCheck, setConfirmPwdCheck] = useState(
-    '비밀번호를 한 번 더 입력해주세요.',
+    t('please fill in the password one more time.'),
   );
 
   const handleConfirmPwd = (e) => {
     const confirmPwd = e.target.value;
     setConfirmPwd(confirmPwd);
     if (pwd === confirmPwd) {
-      setConfirmPwdCheck('비밀번호와 일치합니다.');
+      setConfirmPwdCheck(t('it matches the password.'));
     } else if (confirmPwd === '') {
-      setConfirmPwdCheck('비밀번호를 한 번 더 입력해 주세요.');
+      setConfirmPwdCheck(t('please fill in the password one more time.'));
     } else {
-      setConfirmPwdCheck('비밀번호와 일치하지 않습니다.');
+      setConfirmPwdCheck(t('the password does not match'));
     }
   };
 
@@ -232,7 +245,7 @@ const Signup = ({ userInfo }) => {
   //DetailInfo페이지로 넘어가는 버튼 활성화
   const isDisabled = !(
     (userInfo ? true : confirmEmail === '이메일 인증이 완료되었습니다.') &&
-    userNameCheck === '사용 가능한 닉네임입니다.' &&
+    userNameCheck === t('this nickname is available.') &&
     pwdForm(pwd) &&
     pwd === confirmPwd &&
     isTutor
@@ -259,7 +272,7 @@ const Signup = ({ userInfo }) => {
         <React.Fragment>
           <EmailBox>
             <InfoInput
-              placeholder="이메일을 입력해 주세요."
+              placeholder={t('please fill in an email address.')}
               type="text"
               _onChange={handleEmail}
               validationLabel={emailCheck}
@@ -286,7 +299,7 @@ const Signup = ({ userInfo }) => {
       )}
       {/* 유저네임 인풋 */}
       <InfoInput
-        placeholder="닉네임을 입력해 주세요."
+        placeholder={t('please fill in a nickname.')}
         type="text"
         value={userInfo?.userName}
         _onChange={handleUserName}
@@ -295,14 +308,14 @@ const Signup = ({ userInfo }) => {
       />
       {/* 비밀번호 인풋 */}
       <InfoInput
-        placeholder="비밀번호를 입력해 주세요."
+        placeholder={t('please fill in a password.')}
         type="password"
         _onChange={handlePwd}
         validationLabel={pwdCheck}
       />
       {/* 비밀번호 확인 인풋 */}
       <InfoInput
-        placeholder="비밀번호를 다시 한 번 입력해 주세요."
+        placeholder={t('please fill in the password again.')}
         type="password"
         _onChange={handleConfirmPwd}
         validationLabel={confirmPwdCheck}
@@ -321,12 +334,14 @@ const Signup = ({ userInfo }) => {
         <NextButton
           isDisabled
           type="button"
-          value="다음"
-          onClick={() => window.alert('조건에 맞지 않는 항목이 있습니다.')}
+          value={t('next')}
+          onClick={() =>
+            window.alert(t('there are items do not meet the conditions.'))
+          }
         />
       ) : (
         <Link to={{ pathname: '/signup/detail', signupForm }}>
-          <NextButton type="button" value="다음" disabled={isDisabled} />
+          <NextButton type="button" value={t('next')} disabled={isDisabled} />
         </Link>
       )}
     </Container>

@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NewInputLabel, NewInput } from '../elements/index';
 import InfoInput from './InfoInput';
+import { useTranslation } from 'react-i18next';
 
 const SelectIsTutor = ({
   startTime,
@@ -11,6 +12,7 @@ const SelectIsTutor = ({
   handleStartTime,
   handleEndTime,
 }) => {
+  const { t } = useTranslation();
   //수업가능시간(시작) option
   const startTimeArray = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -26,12 +28,12 @@ const SelectIsTutor = ({
 
   return (
     <TimeBox>
-      <p>프랭글스 사용자 설정</p>
+      <p>{t('friengls user setting')}</p>
       <NewInputLabel styles={{ padding: '0 0 5px 5px' }}>
-        학생 / 선생님 선택 시 변경 하실 수 없습니다.
+        {t('you can not change it when you select tutor / tutee')}
       </NewInputLabel>
       <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
-        <NewInputLabel>프랭글스에서 한국어를</NewInputLabel>
+        <NewInputLabel> {t('in friengls i want to')}</NewInputLabel>
         <NewInput
           type="radio"
           name="isTutor"
@@ -47,7 +49,7 @@ const SelectIsTutor = ({
             alignItems: 'center',
           }}
         >
-          배울래요!
+          {t('learn!')}
         </NewInputLabel>
         /
         <NewInput
@@ -63,7 +65,7 @@ const SelectIsTutor = ({
             alignItems: 'center',
           }}
         >
-          가르칠래요!
+          {t('teach!')}
         </NewInputLabel>
       </InfoInput>
       {/* 선생님인 경우 수업시간 선택 */}
@@ -72,39 +74,47 @@ const SelectIsTutor = ({
           <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
             {' '}
             <TimeSelectBox>
-              수업 가능한 시간 :
+              {t('available time for tutoring')} :
               <Select name="startTime" onChange={handleStartTime}>
-                <option value="">=====첫 수업=====</option>
+                <option value="">====={t('first tutoring')}=====</option>
                 {startTimeArray.map((time, index) => (
                   //+ 키 유저아이디 같은걸로 바꿔주기
                   <option value={time} key={index}>
-                    {time + 1}회차: {time}:00 - {time + 1}:00
+                    {time + 1}
+                    {t('session')}: {time}:00 - {time + 1}:00
                   </option>
                 ))}
               </Select>
-              부터
+              {t('from')}
               {startTime === '' ? (
                 <></>
               ) : (
                 <>
                   <Select name="endTime" onChange={handleEndTime}>
-                    <option value="">=====마지막 수업=====</option>
+                    <option value="">====={t('last tutoring')}=====</option>
                     {endTimeArray.map((time, index) => (
                       <option value={time} key={startTime + index}>
-                        {time + 1}회차: {time}:00 - {time + 1}:00
+                        {time + 1}
+                        {t('session')}: {time}:00 - {time + 1}:00
                       </option>
                     ))}
                   </Select>
-                  까지
+                  {t('to')}
                 </>
               )}
             </TimeSelectBox>
           </InfoInput>
           <InfoBox>
-            <span>※ 수업은 한 회차에 30분 씩 진행됩니다.</span>
-            <span>※ 수업은 2회차 단위로 구성 할 수 있습니다.</span>
-            <span>※ 최소 2회차, 최대 12회차까지 수업 할 수 있습니다.</span>
-            <span>※ 수업 시간은 마이페이지에서 변경 할 수 있습니다.</span>
+            <span>
+              ※ {t('"the tutoring lesson lasts 30 minutes each time.')}
+            </span>
+            <span>
+              ※ {t('tutoring lessons can be organized in two sessions.')}
+            </span>
+            <span>
+              ※ {t('you can take at least 2 sessions and up to 12 sessions.')}
+            </span>
+            <span>※ {t('you can change tutoring time on my page.')}</span>
           </InfoBox>
         </React.Fragment>
       )}

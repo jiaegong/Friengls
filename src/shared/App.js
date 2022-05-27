@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 // 패키지
@@ -8,6 +8,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { BsPatchPlus } from 'react-icons/bs';
+import styled from 'styled-components';
 
 //  컴포넌트
 import Main from '../pages/Main';
@@ -33,6 +34,8 @@ function App() {
     }
   }, []);
 
+  const [feedbackOn, setFeedbackOn] = useState(false);
+
   return (
     <ConnectedRouter history={history}>
       <Header />
@@ -47,10 +50,30 @@ function App() {
       <Route path="/videochat/:roomName" exact component={VideoChat} />
       <Route path="/search" exact component={Search} />
       <Footer />
-      <BsPatchPlus className="feedback" size={60} />
+      <BsPatchPlus
+        className="feedback"
+        size={60}
+        onClick={() => setFeedbackOn(!feedbackOn)}
+      />
+      {feedbackOn && <Feedback>피드백을 남겨주세요!</Feedback>}
       <FeedBack />
     </ConnectedRouter>
   );
 }
 
 export default App;
+
+const Feedback = styled.div`
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 12px 0px #00000040;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`;

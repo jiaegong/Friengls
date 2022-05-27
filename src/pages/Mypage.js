@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
+import { actionCreators as likeActions } from '../redux/modules/like';
 import DetailUser from '../components/DetailUser';
 import BookingItem from '../components/BookingItem';
+import LikeItem from '../components/LikeItem';
+import { useTranslation } from 'react-i18next';
 
 const Mypage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   // 마이페이지에서 불러올 유저 api
   const userApi = props.match.params;
@@ -35,6 +39,12 @@ const Mypage = (props) => {
   var today = new Date();
   // console.log(today);
 
+  useEffect(() => {
+    dispatch(likeActions.getLikeDB());
+  }, []);
+
+  const likeList = useSelector((state) => state.like.myList);
+
   return (
     <Wrap>
       <div className="innerWrap">
@@ -43,22 +53,26 @@ const Mypage = (props) => {
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
           <p className="bookingTitle">
-            예약 리스트 <span>/ 수업 일정</span>
+            {t('booking list')} <span>/ {t('tutoring schedule')}</span>
           </p>
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {
               return (
-                <>
-                  <BookingItem
-                    item={item}
-                    userInfo={userInfo}
-                    // key={`mypage_${idx}`}
-                  />
-                </>
+                <BookingItem
+                  item={item}
+                  userInfo={userInfo}
+                  // key={`mypage_${idx}`}
+                />
               );
             })}
           </ul>
         </div>
+        <LikeWrap>
+          <p className="like-title">좋아요 리스트</p>
+          {likeList?.map((l, idx) => {
+            return <LikeItem key={idx} {...l} userInfo={userInfo} />;
+          })}
+        </LikeWrap>
       </div>
     </Wrap>
   );
@@ -209,7 +223,7 @@ const Wrap = styled.div`
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
-            padding: 10px 5px 5px;
+            /* padding: 10px 5px 5px; */
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;
@@ -225,7 +239,8 @@ const Wrap = styled.div`
             max-width: 200px;
             height: 50px;
             border: none;
-            padding: 10px 5px 5px;
+            padding: 10px 8px 9px;
+            /* padding: 10px 5px 5px; */
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;
@@ -235,8 +250,36 @@ const Wrap = styled.div`
 
             background-color: #981821;
           }
+
+          .deleteBtn {
+            width: 15%;
+            max-width: 200px;
+            height: 50px;
+            border: none;
+            padding: 10px 8px 9px;
+            /* padding: 10px 5px 5px; */
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bolder;
+            color: #fff;
+            margin-left: 5px;
+
+            background-color: #525252;
+          }
         }
       }
     }
+  }
+`;
+
+const LikeWrap = styled.div`
+  max-width: 1050px;
+  width: 80%;
+  margin: auto;
+
+  .like-title {
+    font-size: 38px;
+    font-weight: bolder;
+    margin-bottom: 60px;
   }
 `;

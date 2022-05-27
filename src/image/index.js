@@ -6,6 +6,7 @@ import OpenToggle from './OpenToggle.svg';
 import CloseToggle from './CloseToggle.svg';
 import CloseIcon from './CloseIcon.svg';
 import FeedBackIcon from './FeedBackIcon.svg';
+import footerLogo from './footerLogo.png';
 
 export {
   MainLogo,
@@ -16,4 +17,5 @@ export {
   CloseToggle,
   CloseIcon,
   FeedBackIcon,
+  footerLogo,
 };

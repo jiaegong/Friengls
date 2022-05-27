@@ -7,9 +7,11 @@ import { emailForm, pwdForm } from '../shared/common';
 import { Logo } from '../image/';
 import { Buttons } from '../elements';
 import InfoInput from '../components/InfoInput';
+import { useTranslation } from 'react-i18next';
 // import MySwal from '../components/MySwal';
 
 const Login = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   //userEmail 입력값 저장
   const [userEmail, setUserEmail] = useState('');
@@ -64,11 +66,11 @@ const Login = (props) => {
         type="text"
         name="userEmail"
         _onChange={handleUserEmail}
-        placeholder="이메일을 입력해 주세요."
+        placeholder={t('please fill in email address')}
       />
       {/* 비밀번호 인풋 */}
       <InfoInput
-        placeholder="비밀번호를 입력해 주세요."
+        placeholder={t('please fill in password')}
         type="password"
         name="pwd"
         _onChange={handlePwd}
@@ -80,14 +82,14 @@ const Login = (props) => {
         }}
         _onClick={login}
       >
-        Login
+        {t('login')}
       </Buttons>
       {/* 소셜로그인 버튼*/}
       <Buttons
         _onClick={kakaoLogin}
         styles={{ background: '#ffe900', color: '#3c1e1e' }}
       >
-        카카오 계정으로 로그인
+        {t('login with kakao')}
       </Buttons>
       <Buttons
         _onClick={googleLogin}
@@ -97,10 +99,10 @@ const Login = (props) => {
           color: '#3c1e1e',
         }}
       >
-        구글 계정으로 로그인
+        {t('login with google')}
       </Buttons>
       {/* 회원가입 버튼 */}
-      <LoginText>아직 프랭글스 계정이 없으신가요 ?</LoginText>
+      <LoginText>{t('do not have an account yet?')}</LoginText>
       <Buttons
         _onClick={() => history.push('/signup')}
         styles={{
@@ -109,7 +111,7 @@ const Login = (props) => {
           color: '#171b78',
         }}
       >
-        회원 가입
+        {t('signup')}
       </Buttons>
     </Container>
   );

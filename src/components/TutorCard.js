@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { CgProfile } from 'react-icons/cg';
 import Portal from '../shared/Portal';
-import MainModal from './MainModal';
+import TutorModal from './TutorModal';
 import modalBtnImg from '../image/modalBtn.png';
 
 const TutorCard = ({ tutor, urlCheck }) => {
@@ -44,7 +44,7 @@ const TutorCard = ({ tutor, urlCheck }) => {
         />
       </ModalBtn>
       <Portal>
-        {modal && <MainModal tutor={tutor} onClose={handleModal} />}
+        {modal && <TutorModal tutor={tutor} onClose={handleModal} />}
       </Portal>
     </Card>
   );
@@ -59,7 +59,11 @@ const Card = styled.div`
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  box-shadow: 0px 2px 12px 0px #00000030;
+<<<<<<< HEAD
+  box-shadow: 0px 2px 8px 0px #00000030;
+=======
+  box-shadow: 0px 2px 12px 0px #00000040;
+>>>>>>> ed2ce142bd8072e673b7878d8f986bff81d5706a
 
   border-radius: 15px;
 
@@ -110,6 +114,7 @@ const Card = styled.div`
       width: 80%;
       font-size: 12px;
       margin-top: 8px;
+      overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 1;

@@ -5,6 +5,7 @@ import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as reviewActions } from '../redux/modules/review';
+import { useTranslation } from 'react-i18next';
 
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
@@ -13,11 +14,12 @@ import axios from 'axios';
 import Review from '../components/Review';
 
 const Detail = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   //디테일페이지에서 불러올 유저 api
   const userApi = props.match.params;
-  console.log(userApi);
+  // console.log(userApi);
 
   //디테일페이지에 사용할 유저 정보
   const detailInfo = useSelector((state) => state.user.detailInfo);
@@ -41,7 +43,7 @@ const Detail = (props) => {
     })
       .then((doc) => {
         let data = doc.data.datas1;
-        console.log('DB 예약 리스트 : ', { data });
+        // console.log('DB 예약 리스트 : ', { data });
         setAvailability(doc.data.datas1);
       })
       .catch((err) => {
@@ -59,7 +61,7 @@ const Detail = (props) => {
 
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
-  console.log(reviewList);
+  // console.log(reviewList);
 
   return (
     <Wrap>
@@ -70,7 +72,7 @@ const Detail = (props) => {
         {/* 예약 캘린더 */}
         <div className="bookingWrap">
           <div className="booking">
-            예약 하기 <span>/ 수업 일정</span>
+            {t('book a lesson')} <span>/ {t('tutoring schedule')}</span>
           </div>
           <Calendar />
         </div>
@@ -80,15 +82,15 @@ const Detail = (props) => {
           <ReviewTitleWrap>
             <div>
               <span className="subTitle">
-                선생님의 수업을 수강하고 리뷰를 남겨보세요!
+                {t('start learning and write a review!')}
               </span>
             </div>
-            <p className="title">수강 추천 리뷰</p>
+            <p className="title">{t('best reviews')}</p>
           </ReviewTitleWrap>
           {reviewList?.map((r, idx) => {
-            if (reviewList[idx].Tutor_username !== tutorName) {
-              return null;
-            }
+            // if (reviewList[idx].Tutor_username !== tutorName) {
+            //   return null;
+            // }
             return <Review key={idx} {...r} />;
           })}
         </ReviewList>
