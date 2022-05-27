@@ -229,6 +229,7 @@ const Wrap = styled.div`
 
     .navBarWrap {
       max-width: 672px;
+      max-width: 680px;
       width: 100%;
       height: 33px;
       padding-top: 30px;
@@ -242,7 +243,7 @@ const Wrap = styled.div`
 
       li {
         width: 5rem;
-        width: auto;
+        width: 110px;
         height: 35px;
         display: flex;
         justify-content: center;
