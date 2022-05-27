@@ -20,6 +20,10 @@ const MyPageModal = (props) => {
   //비밀번호 검증 될 경우 editUser컴포넌트 렌더링
   const [editUser, setEditUser] = useState(false);
   const handleEditUser = async () => {
+    if (pwd.split('').filter((word) => word !== ' ').length === 0) {
+      window.alert('비밀번호를 입력해 주세요.');
+      return;
+    }
     try {
       const response = await axios({
         method: 'post',
@@ -58,11 +62,9 @@ const MyPageModal = (props) => {
         ) : (
           <ContentWrap>
             <Content>
-              <CloseBtnBox>
-                <CloseBtn onClick={onClose}>
-                  <img src={CloseIcon} alt="close" />
-                </CloseBtn>
-              </CloseBtnBox>
+              <CloseBtn onClick={onClose}>
+                <img src={CloseIcon} alt="close" />
+              </CloseBtn>
               <Grid>
                 <p>본인확인</p>
               </Grid>
@@ -86,41 +88,19 @@ const MyPageModal = (props) => {
                   }}
                 />
                 {/* 비밀번호 */}
-                <InputBox
+                <InfoInput
+                  label="비밀번호"
+                  type="password"
+                  _onChange={handlePwd}
+                  placeholder="비밀번호를 입력해 주세요."
                   styles={{
-                    width: '60%',
-                    height: 'auto',
-                    margin: '0 auto',
-                    padding: '6px 12px',
+                    flexDirection: 'column',
+                    justifyContent: 'space-evenly',
                   }}
-                >
-                  <InputLabel
-                    styles={{
-                      fontSize: '12px',
-                      height: '14px',
-                      marginBottom: '4px',
-                    }}
-                  >
-                    비밀번호
-                  </InputLabel>
-                  <Inputs
-                    _onChange={handlePwd}
-                    placeholder={'비밀번호를 입력해 주세요.'}
-                    styles={{
-                      width: '100%',
-                      height: '33px',
-                      fontSize: '16px',
-                      fontWeight: '600',
-                    }}
-                  />
-                </InputBox>
+                />
               </Grid>
-
               <Grid>
-                <Buttons
-                  _onClick={handleEditUser}
-                  styles={{ width: '300px', height: '54px', fontSize: '16px' }}
-                >
+                <Buttons _onClick={handleEditUser} styles={{ height: '54px' }}>
                   프로필 수정하기
                 </Buttons>
               </Grid>
@@ -166,21 +146,17 @@ const Content = styled.div`
   justify-content: center;
 `;
 
-const CloseBtnBox = styled.label`
-  width: 50px;
-  height: 50px;
+const CloseBtn = styled.div`
+  width: 20px;
+  height: 20px;
   position: absolute;
-  top: 40px;
-  left: 40px;
-  display: flex;
-  justify-content: center;
+  top: 30px;
+  left: 30px;
   cursor: pointer;
-`;
-
-const CloseBtn = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Grid = styled.div`

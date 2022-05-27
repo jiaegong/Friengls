@@ -138,7 +138,7 @@ const Container = styled.div`
   /* max-width: 1280px; */
   /* min-height: 520px; */
   margin: 70px auto;
-  padding: 50px 10px;
+  padding-bottom: 50px;
   display: flex;
   justify-content: space-around;
   border-bottom: 1px solid #c4c4c4;
@@ -149,7 +149,7 @@ const Container = styled.div`
 `;
 
 const ImageBox = styled.div`
-  margin: 0 auto;
+  margin-right: 50px;
 `;
 
 const UserImgWrap = styled.div`
@@ -164,7 +164,7 @@ const UserImgWrap = styled.div`
 `;
 
 const UserInfoBox = styled.div`
-  width: 80%;
+  width: 100%;
   position: relative;
 `;
 

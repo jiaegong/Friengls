@@ -1,13 +1,7 @@
 import { red } from '@material-ui/core/colors';
 import React from 'react';
 import styled from 'styled-components';
-import {
-  InputBox,
-  InputLabel,
-  Inputs,
-  NewInputLabel,
-  NewInput,
-} from '../elements/index';
+import { NewInputLabel, NewInput } from '../elements/index';
 import InfoInput from './InfoInput';
 
 const SelectIsTutor = ({

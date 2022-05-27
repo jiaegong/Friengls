@@ -5,8 +5,9 @@ import axios from 'axios';
 import { actionCreators as userActions } from '../redux/modules/user';
 import SelectLanguage from '../components/SelectLanguage';
 import { Profile, CloseIcon } from '../image';
-import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
+import { Buttons, NewInputLabel, NewInput } from '../elements/index';
 import { pwdForm, userNameForm } from '../shared/common';
+import InfoInput from './InfoInput';
 
 const EditUser = (props) => {
   const { onClose, userInfo, accessInfo } = props;
@@ -27,6 +28,10 @@ const EditUser = (props) => {
   };
   //프로필사진 삭제
   const deleteProfile = () => {
+    if (previewProfile === Profile) {
+      return;
+    }
+
     const deleteInfo = {
       userEmail: userInfo.userEmail,
       isTutor: userInfo.isTutor.toString(),
@@ -37,7 +42,7 @@ const EditUser = (props) => {
 
   // userName 유효성 검사, input값 가져오기
   const [userName, setUserName] = useState(userInfo.userName);
-  const [userNameCheck, setUserNameCheck] = useState('');
+  const [userNameCheck, setUserNameCheck] = useState('\u00A0');
   const handleUserName = (e) => {
     const userName = e.target.value;
     setUserName(userName);
@@ -52,9 +57,7 @@ const EditUser = (props) => {
 
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
-  const [pwdCheck, setPwdCheck] = useState(
-    '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
-  );
+  const [pwdCheck, setPwdCheck] = useState('\u00A0');
 
   const handlePwd = (e) => {
     const pwd = e.target.value;
@@ -78,9 +81,7 @@ const EditUser = (props) => {
 
   //confirmPwd 유효성 검사, input값 가져오기
   const [confirmPwd, setConfirmPwd] = useState('');
-  const [confirmPwdCheck, setConfirmPwdCheck] = useState(
-    '비밀번호를 한 번 더 입력해주세요.',
-  );
+  const [confirmPwdCheck, setConfirmPwdCheck] = useState('\u00A0');
 
   const handleConfirmPwd = (e) => {
     const confirmPwd = e.target.value;
@@ -355,322 +356,315 @@ const EditUser = (props) => {
   };
 
   return (
-    <Content>
-      <CloseBtnBox>
+    <ContentWrap>
+      <Content>
         <CloseBtn onClick={closeModal}>
           <img src={CloseIcon} alt="close" />
         </CloseBtn>
-      </CloseBtnBox>
-      <GroupBox1>
-        <ImageBox>
-          {/* 프로필이미지선택 */}
-          <UserImg>
-            <label htmlFor="file">
-              <img src={previewProfile} alt="userProfile" />
-              <input
-                type="file"
-                ref={imageRef}
-                onChange={selectFile}
-                accept="image/*"
-                id="file"
-              />
-            </label>
-          </UserImg>
-          <ProfileAddButton htmlFor="file">+</ProfileAddButton>
-          {/* 프로필이미지삭제: url제거하고 기본이미지 띄우기 */}
-          <button onClick={deleteProfile}>이미지 제거</button>
-        </ImageBox>
-        <UserInfoBox>
-          <p>기본 정보</p>
-          {/* 닉네임 */}
-          <InputBox>
-            <InputLabel>닉네임</InputLabel>
-            <Inputs
-              placeholder={'변경할 닉네임을 입력해 주세요.'}
-              type="text"
-              name="userName"
+        <GroupBox1>
+          <ImageBox>
+            {/* 프로필이미지선택 */}
+            <UserImg>
+              <label htmlFor="file">
+                <img src={previewProfile} alt="userProfile" />
+                <input
+                  type="file"
+                  ref={imageRef}
+                  onChange={selectFile}
+                  accept="image/*"
+                  id="file"
+                />
+              </label>
+            </UserImg>
+            <ProfileAddButton htmlFor="file">+</ProfileAddButton>
+            {/* 프로필이미지삭제: url제거하고 기본이미지 띄우기 */}
+            <button onClick={deleteProfile}>이미지 제거</button>
+          </ImageBox>
+          <UserInfoBox>
+            <p>기본 정보</p>
+            {/* 닉네임 */}
+            <InfoInput
+              label="닉네임"
+              placeholder="변경할 닉네임을 입력해 주세요."
+              validationLabel={userNameCheck}
               _onChange={handleUserName}
               _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
               value={userName}
+              styles={{
+                height: '45px',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
+              }}
             />
-            <InputLabel styles={{ color: '#8A8A8A' }}>
-              {userNameCheck}
-            </InputLabel>
-          </InputBox>
-          {/* 비밀번호 */}
-          <InputBox>
-            <InputLabel>새 비밀번호</InputLabel>
-            <Inputs
-              placeholder={'변경할 비밀번호를 입력해 주세요.'}
-              type="text"
-              name="pwd"
+            {/* 비밀번호 */}
+            <InfoInput
+              type="password"
+              label="새 비밀번호"
+              placeholder="변경할 비밀번호를 입력해 주세요."
+              validationLabel={pwdCheck}
               _onChange={handlePwd}
+              styles={{
+                height: '45px',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
+              }}
             />
-            <InputLabel styles={{ color: '#8A8A8A' }}>{pwdCheck}</InputLabel>
-          </InputBox>
-          {/* 비밀번호 확인 */}
-          <InputBox>
-            <InputLabel>비밀번호 확인</InputLabel>
-            <Inputs
-              placeholder={'변경할 비밀번호를 다시 한 번 입력해 주세요.'}
-              type="text"
-              name="pwdCheck"
+            {/* 비밀번호 확인 */}
+            <InfoInput
+              type="password"
+              label="비밀번호 확인"
+              placeholder="변경할 비밀번호를 다시 한 번 입력해 주세요."
+              validationLabel={confirmPwdCheck}
               _onChange={handleConfirmPwd}
+              styles={{
+                height: '45px',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
+              }}
             />
-            <InputLabel styles={{ color: '#8a8a8a' }}>
-              {confirmPwdCheck}
-            </InputLabel>
-          </InputBox>
-        </UserInfoBox>
-      </GroupBox1>
-      <GroupBox>
-        <p>추가 정보</p>
-        {/* 언어선택 */}
-        <LanguageBox>
-          <SelectLanguage
-            language1={language1}
-            language2={language2}
-            language3={language3}
-            handleLanguage1={handleLanguage1}
-            handleLanguage2={handleLanguage2}
-            handleLanguage3={handleLanguage3}
-          />
-        </LanguageBox>
-        {/* 자기 소개 */}
-        <InputBox
-          styles={{
-            height: '190px',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <LabelWrap>
-            <InputLabel>자기 소개</InputLabel>
-            <InputLabel>{contents.length}/200</InputLabel>
-          </LabelWrap>
-          <Inputs
-            multiLine
-            placeholder={
-              '하고 있는 일, 취미, 성격 등 자유롭게 자신을 소개해 주세요.'
-            }
-            name="contents"
+          </UserInfoBox>
+        </GroupBox1>
+        <GroupBox>
+          <p>추가 정보</p>
+          {/* 언어선택 */}
+          <LanguageBox>
+            <SelectLanguage
+              language1={language1}
+              language2={language2}
+              language3={language3}
+              handleLanguage1={handleLanguage1}
+              handleLanguage2={handleLanguage2}
+              handleLanguage3={handleLanguage3}
+            />
+          </LanguageBox>
+          {/* 자기 소개 */}
+          <InfoInput
+            label="자기 소개"
+            label2={contents.length + `/500`}
+            placeholder="하고 있는 일, 취미, 성격 등 자유롭게 자신을 소개해 주세요."
             value={userInfo.contents}
             _onChange={handleContents}
-            maxLength={200}
+            maxLength={500}
+            multiLine
+            styles={{
+              height: '160px',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}
           />
-        </InputBox>
-        {/* 한 줄 소개 */}
-        <InputBox>
-          <LabelWrap>
-            <InputLabel>한 줄 소개</InputLabel>
-            <InputLabel>{comment.length}/40</InputLabel>
-          </LabelWrap>
-          <Inputs
-            placeholder={'간략한 인사말을 작성해 주세요.'}
-            name="comment"
+          {/* 한 줄 소개 */}
+          <InfoInput
+            label="한 줄 소개"
+            label2={comment.length + `/40`}
+            placeholder="간략한 인사말을 작성해 주세요."
             value={userInfo.comment}
             _onChange={handleComment}
             maxLength={40}
+            styles={{
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+            }}
           />
-        </InputBox>
-        {/* 태그 */}
-        <InputBox
-          styles={{
-            height: '210px',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <InputLabel>태그</InputLabel>
-          {/* 태그입력 */}
-          <TagInput
-            disabled={tagLimit}
-            placeholder={
-              tagLimit
-                ? '10개까지 등록할 수 있어요'
-                : '단어 입력 후 스페이스로 태그 등록'
-            }
-            name="tag"
-            onChange={handleTag}
-            onKeyUp={inputTag}
-            value={tagInput}
-            maxLength={8}
-          />
-          {/* 태그출력 */}
-          <TagBox>
-            {tagList.length > 0 ? (
-              tagList.map((tag, index) => (
-                <div key={tag + index}>
-                  <p>{tag}</p>
-                  <button id={index} onClick={deleteTag}>
-                    {/* <img /> */}X
-                  </button>
-                </div>
-              ))
-            ) : (
-              <>
-                <span>예시 :</span>
-                {exampleTag.map((example, index) => (
-                  <div key={example + index}>
-                    <p>{example}</p>
+          {/* 태그 */}
+          <InfoInput
+            onlyBox
+            styles={{
+              height: '200px',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+            }}
+          >
+            <NewInputLabel>태그</NewInputLabel>
+            {/* 태그입력 */}
+            <TagInput
+              disabled={tagLimit}
+              placeholder={
+                tagLimit
+                  ? '10개까지 등록할 수 있어요'
+                  : '단어 입력 후 스페이스로 태그 등록'
+              }
+              name="tag"
+              onChange={handleTag}
+              onKeyUp={inputTag}
+              value={tagInput}
+              maxLength={8}
+            />
+            {/* 태그출력 */}
+            <TagBox>
+              {tagList.length > 0 ? (
+                tagList.map((tag, index) => (
+                  <div key={tag + index}>
+                    <p>{tag}</p>
+                    <button id={index} onClick={deleteTag}>
+                      {/* <img /> */}X
+                    </button>
                   </div>
-                ))}
-              </>
-            )}
-          </TagBox>
-        </InputBox>
-      </GroupBox>
-      <GroupBox>
-        {/* isTutor 선택 */}
-        <p>사용자 설정 변경</p>
-        <InputBox
-          styles={{
-            background: 'rgba(0,0,0,0.05)',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            fontSize: '20px',
-            cursor: 'default',
-            color: '#999',
-          }}
-        >
-          프랜글스에서 한국어를
-          <InputLabel
-            styles={{
-              width: '140px',
-              marginLeft: '10px',
-              alignItems: 'center',
-              fontSize: '20px',
-              color: '#999',
-            }}
-          >
-            <Inputs
-              type="radio"
-              name="isTutor"
-              value="0"
-              styles={{
-                width: '20px',
-                margin: '5px 5px 0 0',
-              }}
-              checked={userInfo.isTutor === 0 ? true : false}
-            />
-            배울래요!
-          </InputLabel>
-          /&nbsp;&nbsp;&nbsp;
-          <InputLabel
-            styles={{
-              width: '180px',
-              marginLeft: '10px',
-              alignItems: 'center',
-              fontSize: '20px',
-              color: '#999',
-            }}
-          >
-            <Inputs
-              type="radio"
-              name="isTutor"
-              value="1"
-              styles={{
-                width: '20px',
-                margin: '5px 5px 0 0',
-              }}
-              checked={userInfo.isTutor === 1 ? true : false}
-            />
-            가르칠래요!
-          </InputLabel>
-        </InputBox>
-        {/* 선생님인 경우 수업시간 선택 */}
-        {userInfo.isTutor === 1 && (
-          <TimeSelectContainer>
-            <InputBox
-              styles={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                fontSize: '22px',
-                cursor: 'default',
-              }}
-            >
-              수업 가능한 시간 :&nbsp;&nbsp;
-              {/* 기존에 수업시간이 있다면 보여주기 */}
-              <Select name="startTime" onChange={handleStartTime}>
-                <option value="">
-                  {userInfo.startTime
-                    ? startNum +
-                      1 +
-                      '회차: ' +
-                      startNum +
-                      ':00 - ' +
-                      (startNum + 1) +
-                      ':00'
-                    : '=====첫 수업====='}
-                </option>
-                {startTimeArray.map((time, index) => (
-                  //+ 키 유저아이디 같은걸로 바꿔주기
-                  <option value={time} key={index}>
-                    {time + 1}회차: {time}:00 - {time + 1}:00
-                  </option>
-                ))}
-              </Select>
-              부터&nbsp;&nbsp;&nbsp;
-              {startTime === '' ? (
-                <></>
+                ))
               ) : (
                 <>
-                  <Select name="endTime" onChange={handleEndTime}>
-                    <option value="">
-                      {userInfo.endTime
-                        ? endNum +
-                          1 +
-                          '회차: ' +
-                          endNum +
-                          ':00 - ' +
-                          (endNum + 1) +
-                          ':00'
-                        : '=====마지막 수업====='}
-                    </option>
-                    {endTimeArray.map((time, index) => (
-                      <option value={time} key={startTime + index}>
-                        {time + 1}회차: {time}:00 - {time + 1}:00
-                      </option>
-                    ))}
-                  </Select>
-                  까지
+                  <span>예시 :</span>
+                  {exampleTag.map((example, index) => (
+                    <div key={example + index}>
+                      <p>{example}</p>
+                    </div>
+                  ))}
                 </>
               )}
-            </InputBox>
-            <InfoBox>
-              <span>※ 수업은 한 회차에 30분 씩 진행됩니다.</span>
-              <span>※ 수업은 2회차 단위로 구성할 수 있습니다.</span>
-              <span>※ 최소 2회차, 최대 12회차까지 수업할 수 있습니다.</span>
-            </InfoBox>
-          </TimeSelectContainer>
-        )}
-      </GroupBox>
-      <GroupBox>
-        <Buttons
-          _onClick={editUser}
-          styles={{ width: '380px', height: '60px' }}
-        >
-          수정내용 저장하기
-        </Buttons>
-        {/* 회원탈퇴버튼 */}
-      </GroupBox>
-    </Content>
+            </TagBox>
+          </InfoInput>
+        </GroupBox>
+        {/* 수업시간 변경 */}
+        <GroupBox>
+          <TimeBox>
+            <p>사용자 설정 변경</p>
+            <InfoInput
+              onlyBox
+              styles={{
+                justifyContent: 'flex-start',
+                background: 'rgba(0,0,0,0.05)',
+                cursor: 'default',
+                color: '#999',
+              }}
+            >
+              <NewInputLabel>프랭글스에서 한국어를</NewInputLabel>
+              <NewInput
+                type="radio"
+                name="isTutor"
+                value="0"
+                _onChange={handleIstutor}
+                checked={userInfo.isTutor === 0 ? true : false}
+                styles={{
+                  margin: '0 0 0 10px',
+                  width: '15px',
+                  cursor: 'default',
+                }}
+              />
+              <NewInputLabel
+                htmlFor="isTutor0"
+                styles={{
+                  padding: '0 10px 0 10px',
+                  alignItems: 'center',
+                }}
+              >
+                배울래요!
+              </NewInputLabel>
+              /
+              <NewInput
+                type="radio"
+                name="isTutor"
+                value="1"
+                _onChange={handleIstutor}
+                checked={userInfo.isTutor === 1 ? true : false}
+                styles={{
+                  margin: '0 0 0 10px',
+                  width: '15px',
+                  cursor: 'default',
+                }}
+              />
+              <NewInputLabel
+                styles={{
+                  padding: '0 0 0 10px',
+                  alignItems: 'center',
+                }}
+              >
+                가르칠래요!
+              </NewInputLabel>
+            </InfoInput>
+            {/* 선생님인 경우 수업시간 선택 */}
+            {userInfo.isTutor === 1 && (
+              <React.Fragment>
+                <InfoInput
+                  onlyBox
+                  styles={{ justifyContent: 'flex-start', cursor: 'default' }}
+                >
+                  <TimeSelectBox>
+                    수업 가능한 시간 :
+                    <Select name="startTime" onChange={handleStartTime}>
+                      <option value="">
+                        {userInfo.startTime
+                          ? startNum +
+                            1 +
+                            '회차: ' +
+                            startNum +
+                            ':00 - ' +
+                            (startNum + 1) +
+                            ':00'
+                          : '=====첫 수업====='}
+                      </option>
+                      {startTimeArray.map((time, index) => (
+                        //+ 키 유저아이디 같은걸로 바꿔주기
+                        <option value={time} key={index + time}>
+                          {time + 1}회차: {time}:00 - {time + 1}:00
+                        </option>
+                      ))}
+                    </Select>
+                    부터
+                    {startTime === '' ? (
+                      <></>
+                    ) : (
+                      <>
+                        <Select name="endTime" onChange={handleEndTime}>
+                          <option value="">
+                            {' '}
+                            {userInfo.endTime
+                              ? endNum +
+                                1 +
+                                '회차: ' +
+                                endNum +
+                                ':00 - ' +
+                                (endNum + 1) +
+                                ':00'
+                              : '=====마지막 수업====='}
+                          </option>
+                          {endTimeArray.map((time, index) => (
+                            <option value={time} key={startTime + index}>
+                              {time + 1}회차: {time}:00 - {time + 1}:00
+                            </option>
+                          ))}
+                        </Select>
+                        까지
+                      </>
+                    )}
+                  </TimeSelectBox>
+                </InfoInput>
+                <InfoBox>
+                  <span>※ 수업은 한 회차에 30분 씩 진행됩니다.</span>
+                  <span>※ 수업은 2회차 단위로 구성 할 수 있습니다.</span>
+                  <span>
+                    ※ 최소 2회차, 최대 12회차까지 수업 할 수 있습니다.
+                  </span>
+                  <span>※ 수업 시간은 마이페이지에서 변경 할 수 있습니다.</span>
+                </InfoBox>
+              </React.Fragment>
+            )}
+          </TimeBox>
+        </GroupBox>
+        <GroupBox>
+          <Buttons
+            _onClick={editUser}
+            styles={{ width: '380px', height: '60px' }}
+          >
+            수정내용 저장하기
+          </Buttons>
+          {/* 회원탈퇴버튼 */}
+        </GroupBox>
+      </Content>
+    </ContentWrap>
   );
 };
 
 export default EditUser;
 
-const Content = styled.div`
+const ContentWrap = styled.div`
+  width: 800px;
   height: 700px;
-  width: 1240px;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   position: relative;
   //스크롤바 관련
   overflow-y: scroll;
@@ -691,49 +685,56 @@ const Content = styled.div`
     background: #d3d3d3;
   }
 `;
-// 닫기 버튼
-const CloseBtnBox = styled.label`
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  top: 40px;
-  left: 40px;
+
+const Content = styled.div`
+  width: 90%;
+  height: 500px;
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  cursor: pointer;
+  // background: red;
 `;
 
-const CloseBtn = styled.button`
-  background: none;
-  border: none;
+// 닫기 버튼
+const CloseBtn = styled.div`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
   cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const GroupBox1 = styled.div`
-  width: 1160px;
-  margin: 1100px auto 20px;
+  width: 100%;
+  margin: 800px auto 20px;
   display: flex;
 `;
 // 프로필사진 관련
 const ImageBox = styled.div`
   width: 320px;
+  padding-top: 20px;
   position: relative;
   button {
     margin-top: 25px;
     border: none;
     border-bottom: 1px solid #153587;
     background: none;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 600;
     color: #153587;
     cursor: pointer;
-    position: relative;
   }
 `;
 
 const UserImg = styled.div`
-  width: 240px;
-  height: 240px;
+  width: 180px;
+  height: 180px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
@@ -755,8 +756,8 @@ const UserImg = styled.div`
 `;
 
 const ProfileAddButton = styled.label`
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   padding-bottom: 10px;
   border-radius: 50px;
   background: #153587;
@@ -765,9 +766,9 @@ const ProfileAddButton = styled.label`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 180px;
-  left: 180px;
-  font-size: 50px;
+  top: 155px;
+  left: 152px;
+  font-size: 40px;
   font-weight: 600;
   color: #fff;
 `;
@@ -777,52 +778,40 @@ const UserInfoBox = styled.div`
   width: 100%;
   margin-left: 20px;
   p {
-    height: 80px;
+    height: 50px;
     text-align: start;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 600;
   }
 `;
 
 const GroupBox = styled.div`
-  width: 1160px;
-  margin: 0 auto;
+  width: 100%;
+  // margin: 0 auto;
   padding: 20px 0;
   border-top: 1px solid #c4c4c4;
 
   p {
-    height: 80px;
+    height: 50px;
     text-align: start;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 600;
   }
 `;
 //언어선택 컴포넌트 마진
 const LanguageBox = styled.div`
-  margin-bottom: 20px;
-`;
-//자기소개/한줄소개 라벨, 글자수제한 정렬
-const LabelWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-
-  p {
-    font-size: 20px;
-    color: #404040;
-  }
+  margin-bottom: 10px;
 `;
 
-// 태그 관련
 const TagInput = styled.input`
   width: 100%;
-  height: 35px;
-  margin-bottom: 20px;
+  height: 30px;
+  margin-bottom: 5px;
   border: none;
-  font-size: 26px;
+  font-size: 14px;
   font-weight: 400;
   ::-webkit-input-placeholder {
-    font-size: 20px;
+    font-size: 14px;
     color: b5b5b5;
   }
   &: focus {
@@ -832,62 +821,70 @@ const TagInput = styled.input`
 
 const TagBox = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
+  align-content: flex-start;
   flex-wrap: wrap;
-
-  //태그 한 개의 속성
   div {
-    height: 50px;
-    max-width: 180px;
-    margin: 0 15px 10px 0;
+    height: 30px;
+    margin: 0 5px 10px 0;
     padding: 10px 10px 12px;
     display: flex;
     align-items: center;
     border-radius: 25px;
     border: 2px solid #959595;
+  }
+
+  p {
+    height: 18px;
+    margin-right: 5px;
+    font-size: 14px;
     cursor: default;
   }
 
-  //태그 한 개의 텍스트
-  p {
-    margin-right: 10px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    cursor: default;
-  }
-  //태그삭제 버튼
   button {
     background: transparent;
     border: none;
-    margin-top: 5px;
-    font-size: 25px;
+    margin-top: 2px;
+    font-size: 16px;
     color: #8a8a8a;
     cursor: pointer;
   }
 
   span {
-    padding: 10px 10px 0 0;
-    font-size: 20px;
+    padding: 5px 10px 30px 0;
+    font-size: 14px;
     color: #8a8a8a;
   }
 `;
 
-//수업시간 선택 관련
-const Select = styled.select`
-  margin-right: 20px;
-  height: 50px;
-  border: 1px solid #8a8a8a;
-  border-radius: 8px;
-  font-size: 22px;
+const TimeBox = styled.div`
+  width: 100%;
+  p {
+    font-size: 20px;
+    font-weight: 700;
+  }
 `;
 
-const TimeSelectContainer = styled.div`
-  // margin: 10px;
+const TimeSelectBox = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+`;
+
+const Select = styled.select`
+  width: 140px;
+  height: 30px;
+  margin: 0 10px;
+  border: 1px solid #8a8a8a;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
 `;
 
 const InfoBox = styled.div`
-  margin: 10px;
+  margin: 20px;
   display: flex;
   flex-direction: column;
+  font-size: 12px;
 `;

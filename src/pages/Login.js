@@ -69,7 +69,7 @@ const Login = (props) => {
       {/* 비밀번호 인풋 */}
       <InfoInput
         placeholder="비밀번호를 입력해 주세요."
-        type="text"
+        type="password"
         name="pwd"
         _onChange={handlePwd}
       />
@@ -100,7 +100,7 @@ const Login = (props) => {
         구글 계정으로 로그인
       </Buttons>
       {/* 회원가입 버튼 */}
-      <LoginText>아직 프링글즈 계정이 없으신가요 ?</LoginText>
+      <LoginText>아직 프랭글스 계정이 없으신가요 ?</LoginText>
       <Buttons
         _onClick={() => history.push('/signup')}
         styles={{

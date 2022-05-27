@@ -38,7 +38,10 @@ const SelectLanguage = (props) => {
   );
 
   return (
-    <InfoInput onlyBox styles={{ flexDirection: 'column' }}>
+    <InfoInput
+      onlyBox
+      styles={{ flexDirection: 'column', alignItems: 'flex-start' }}
+    >
       <LabelBox>
         <NewInputLabel>활용 가능 언어 선택</NewInputLabel>
         <NewInputLabel>최대 3개</NewInputLabel>

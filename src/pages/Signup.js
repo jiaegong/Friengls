@@ -296,14 +296,14 @@ const Signup = ({ userInfo }) => {
       {/* 비밀번호 인풋 */}
       <InfoInput
         placeholder="비밀번호를 입력해 주세요."
-        type="text"
+        type="password"
         _onChange={handlePwd}
         validationLabel={pwdCheck}
       />
       {/* 비밀번호 확인 인풋 */}
       <InfoInput
         placeholder="비밀번호를 다시 한 번 입력해 주세요."
-        type="text"
+        type="password"
         _onChange={handleConfirmPwd}
         validationLabel={confirmPwdCheck}
       />
