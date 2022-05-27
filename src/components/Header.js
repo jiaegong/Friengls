@@ -35,7 +35,9 @@ const Header = () => {
   };
 
   useEffect(() => {
-    dispatch(notiActions.getBookingNotiDB());
+    if (token) {
+      dispatch(notiActions.getBookingNotiDB());
+    }
   }, [notiOpen]);
 
   //마이페이지url에 사용할 유저정보 가져오기
@@ -148,7 +150,6 @@ const Header = () => {
                     text: '로그인후 사용이 가능 합니다!~',
                     icon: 'warning',
                     confirmButtonColor: '#3085d6',
-                    confirmButtonText: '확인',
                   }).then((result) => {
                     if (result.isConfirmed) {
                       history.push('/login');

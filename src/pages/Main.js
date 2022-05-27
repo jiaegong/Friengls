@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 // 모듈;
 import { actionCreators as reviewActions } from '../redux/modules/review';
@@ -47,10 +48,15 @@ const Main = () => {
           </p>
           <button
             onClick={() => {
-              alert('여긴 어디로 가야되야나??');
+              Swal.fire({
+                title: '준비중',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                timer: 2000,
+              });
             }}
           >
-            예약하러 가기 ▶︎
+            튜토리얼 가기 ▶︎
           </button>
         </Banner>
       </DivBanner>

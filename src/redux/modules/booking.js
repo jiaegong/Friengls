@@ -235,7 +235,6 @@ const delBookingNotiDB = (timeId) => {
     })
       .then((doc) => {
         Swal.fire({
-          // position: 'top-end',
           icon: 'success',
           text: `예약을 취소하셨습니다~!`,
           showConfirmButton: true,
