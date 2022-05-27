@@ -1,6 +1,8 @@
+import { red } from '@material-ui/core/colors';
 import React from 'react';
 import styled from 'styled-components';
-import { InputBox, InputLabel, Inputs } from '../elements/index';
+import { NewInputLabel, NewInput } from '../elements/index';
+import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
 
 const SelectIsTutor = ({
@@ -27,79 +29,50 @@ const SelectIsTutor = ({
   return (
     <TimeBox>
       <p>{t('friengls user setting')}</p>
-
-      <div>{t('you can not change it when you select tutor / tutee')}</div>
-
-      <InputBox
-        styles={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          fontSize: '26px',
-          cursor: 'default',
-        }}
-      >
-        {t('in friengls i want to')}
-        <InputLabel
-          _onClick={_onClick}
+      <NewInputLabel styles={{ padding: '0 0 5px 5px' }}>
+        {t('you can not change it when you select tutor / tutee')}
+      </NewInputLabel>
+      <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
+        <NewInputLabel> {t('in friengls i want to')}</NewInputLabel>
+        <NewInput
+          type="radio"
+          name="isTutor"
+          value="0"
+          id="isTutor0"
+          styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
+          _onChange={_onClick}
+        />
+        <NewInputLabel
+          htmlFor="isTutor0"
           styles={{
-            width: '140px',
-            marginLeft: '10px',
+            padding: '0 10px 0 10px',
             alignItems: 'center',
-            fontSize: '26px',
-            cursor: 'pointer',
           }}
         >
-          <Inputs
-            type="radio"
-            name="isTutor"
-            value="0"
-            styles={{
-              width: '20px',
-              margin: '5px 5px 0 0',
-              cursor: 'pointer',
-            }}
-          />
           {t('learn!')}
-        </InputLabel>
-        &nbsp;&nbsp;/&nbsp;&nbsp;
-        <InputLabel
-          _onClick={_onClick}
+        </NewInputLabel>
+        /
+        <NewInput
+          type="radio"
+          name="isTutor"
+          value="1"
+          _onChange={_onClick}
+          styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
+        />
+        <NewInputLabel
           styles={{
-            width: '180px',
-            marginLeft: '10px',
+            padding: '0 0 0 10px',
             alignItems: 'center',
-            fontSize: '26px',
-            cursor: 'pointer',
           }}
         >
-          <Inputs
-            type="radio"
-            name="isTutor"
-            value="1"
-            styles={{
-              width: '20px',
-              margin: '5px 5px 0 0',
-              cursor: 'pointer',
-            }}
-          />
           {t('teach!')}
-        </InputLabel>
-      </InputBox>
+        </NewInputLabel>
+      </InfoInput>
       {/* 선생님인 경우 수업시간 선택 */}
       {isTutor === '1' && (
         <React.Fragment>
-          <InputBox
-            styles={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              fontSize: '26px',
-              cursor: 'default',
-            }}
-          >
+          <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
+            {' '}
             <TimeSelectBox>
               {t('available time for tutoring')} :
               <Select name="startTime" onChange={handleStartTime}>
@@ -130,7 +103,7 @@ const SelectIsTutor = ({
                 </>
               )}
             </TimeSelectBox>
-          </InputBox>
+          </InfoInput>
           <InfoBox>
             <span>
               ※ {t('"the tutoring lesson lasts 30 minutes each time.')}
@@ -166,14 +139,13 @@ const IsTutorTooltip = styled.div`
 
 const TimeBox = styled.div`
   width: 100%;
-  margin: 0 40px;
   padding: 20px 0;
   border-top: 1px solid #c4c4c4;
 
   p {
-    height: 80px;
+    margin: 0 auto 25px;
     text-align: center;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 700;
     color: #153587;
   }
@@ -182,21 +154,24 @@ const TimeBox = styled.div`
 const TimeSelectBox = styled.div`
   display: flex;
   align-items: center;
+  font-size: 12px;
 `;
 
 const Select = styled.select`
-  width: 250px;
-  height: 50px;
-  margin: 0 20px;
+  width: 140px;
+  height: 30px;
+  margin: 0 10px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
-  font-size: 20px;
+  cursor: pointer;
+  font-size: 12px;
 `;
 
 const InfoBox = styled.div`
-  margin: 10px;
+  margin: 20px;
   display: flex;
   flex-direction: column;
+  font-size: 12px;
 `;
 
 export default SelectIsTutor;

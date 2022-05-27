@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import Portal from '../shared/Portal';
 import EditUser from './EditUser';
+import { Profile, CloseIcon } from '../image/index';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
+import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
-// to do: 스크롤 뒷배경 안 움직이도록
+
 const MyPageModal = (props) => {
   const { t } = useTranslation();
   const { onClose, userInfo } = props;
@@ -20,6 +22,10 @@ const MyPageModal = (props) => {
   //비밀번호 검증 될 경우 editUser컴포넌트 렌더링
   const [editUser, setEditUser] = useState(false);
   const handleEditUser = async () => {
+    if (pwd.split('').filter((word) => word !== ' ').length === 0) {
+      window.alert('비밀번호를 입력해 주세요.');
+      return;
+    }
     try {
       const response = await axios({
         method: 'post',
@@ -38,6 +44,13 @@ const MyPageModal = (props) => {
       console.log(err);
     }
   };
+  // 모달 켜질 때 페이지 스크롤 막기
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   return (
     <Portal>
@@ -49,88 +62,52 @@ const MyPageModal = (props) => {
             accessInfo={accessInfo}
           />
         ) : (
-          <Content>
-            <CloseBtnBox>
-              <CloseBtn onClick={onClose}>X</CloseBtn>
-            </CloseBtnBox>
-            <Grid>
-              <p>{t('identification')}</p>
-            </Grid>
-            <Grid>
-              <UserImg>
-                <img className="userImg" src={userInfo.userProfile} alt="" />
-              </UserImg>
-            </Grid>
-            <Grid>
-              {/* 닉네임 */}
-              <InputBox
-                styles={{
-                  width: '60%',
-                  margin: '0 auto 20px',
-                  padding: '6px 12px',
-                  height: 'auto',
-                }}
-              >
-                <InputLabel
-                  styles={{
-                    fontSize: '12px',
-                    height: '14px',
-                    marginBottom: '4px',
-                  }}
-                >
-                  {t('email')}
-                </InputLabel>
-                <Inputs
+          <ContentWrap>
+            <Content>
+              <CloseBtn onClick={onClose}>
+                <img src={CloseIcon} alt="close" />
+              </CloseBtn>
+              <Grid>
+                <p>{t('identification')}</p>
+              </Grid>
+              <Grid>
+                <UserImg>
+                  <img
+                    src={userInfo.userProfile ? userInfo.userProfile : Profile}
+                    alt="userProfile"
+                  />
+                </UserImg>
+              </Grid>
+              <Grid>
+                {/* 닉네임 */}
+                <InfoInput
+                  label={t('email')}
                   value={userInfo.userEmail}
                   disabled
                   styles={{
-                    width: '100%',
-                    height: '33px',
-                    fontSize: '16px',
-                    fontWeight: '500',
+                    flexDirection: 'column',
+                    justifyContent: 'space-evenly',
                   }}
                 />
-              </InputBox>
-              {/* 비밀번호 */}
-              <InputBox
-                styles={{
-                  width: '60%',
-                  height: 'auto',
-                  margin: '0 auto',
-                  padding: '6px 12px',
-                }}
-              >
-                <InputLabel
-                  styles={{
-                    fontSize: '12px',
-                    height: '14px',
-                    marginBottom: '4px',
-                  }}
-                >
-                  {t('password')}
-                </InputLabel>
-                <Inputs
+                {/* 비밀번호 */}
+                <InfoInput
+                  label={t('password')}
+                  type="password"
                   _onChange={handlePwd}
                   placeholder={t('please enter your password')}
                   styles={{
-                    width: '100%',
-                    height: '33px',
-                    fontSize: '16px',
-                    fontWeight: '600',
+                    flexDirection: 'column',
+                    justifyContent: 'space-evenly',
                   }}
                 />
-              </InputBox>
-            </Grid>
-
-            <Grid>
-              <Buttons
-                _onClick={handleEditUser}
-                styles={{ width: '300px', height: '54px', fontSize: '16px' }}
-              >
-                {t('edit profile')}
-              </Buttons>
-            </Grid>
-          </Content>
+              </Grid>
+              <Grid>
+                <Buttons _onClick={handleEditUser} styles={{ height: '54px' }}>
+                  {t('edit profile')}
+                </Buttons>
+              </Grid>
+            </Content>
+          </ContentWrap>
         )}
       </Background>
     </Portal>
@@ -152,63 +129,55 @@ const Background = styled.div`
   text-align: center;
 `;
 
-const Content = styled.div`
-  max-width: 800px;
-  min-height: 800px;
-  height: 800px;
-  width: 100%;
-  // margin-top: 120px;
+const ContentWrap = styled.div`
+  width: 800px;
+  height: 700px;
+  // min-height: 800px;
+  position: relative;
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+`;
 
+const Content = styled.div`
+  width: 340px;
+  height: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: relative;
-
-  // overflow: scroll;
 `;
 
-const CloseBtnBox = styled.label`
-  width: 50px;
-  height: 50px;
+const CloseBtn = styled.div`
+  width: 20px;
+  height: 20px;
   position: absolute;
-  top: 40px;
-  left: 40px;
-  display: flex;
-  justify-content: center;
+  top: 30px;
+  left: 30px;
   cursor: pointer;
-`;
-
-const CloseBtn = styled.button`
-  background: none;
-  border: none;
-  font-size: 30px;
-  font-weight: 600;
-  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Grid = styled.div`
-  margin-bottom: 60px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 
   p {
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 700;
   }
 `;
 
 const UserImg = styled.div`
-  width: 240px;
-  height: 240px;
   width: 180px;
   height: 180px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
-
-  .userImg {
+  img {
     width: 100%;
+    height: 100%;
   }
 `;

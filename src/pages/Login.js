@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { emailForm, pwdForm } from '../shared/common';
 import { Logo } from '../image/';
-import { InputBox, Inputs, Buttons } from '../elements';
+import { Buttons } from '../elements';
+import InfoInput from '../components/InfoInput';
 import { useTranslation } from 'react-i18next';
 // import MySwal from '../components/MySwal';
 
@@ -50,41 +51,34 @@ const Login = (props) => {
     window.location.assign(googleApi);
   };
 
+  console.log(pwd);
+
   return (
     <Container>
       {/* <MySwal /> */}
       {/* 로고 */}
       <LogoBox>
-        <img src={Logo} alt="userProfileImage" style={{ width: '100%' }} />
+        <img src={Logo} alt="logo" style={{ width: '100%' }} />
       </LogoBox>
       <LogoText>Sign in</LogoText>
       {/* 이메일 인풋 */}
-      <InputBox>
-        <Inputs
-          placeholder={t('please fill in email address')}
-          type="text"
-          name="userEmail"
-          value={userEmail}
-          _onChange={handleUserEmail}
-        />
-      </InputBox>
+      <InfoInput
+        type="text"
+        name="userEmail"
+        _onChange={handleUserEmail}
+        placeholder={t('please fill in email address')}
+      />
       {/* 비밀번호 인풋 */}
-      <InputBox>
-        {/* input 사이즈 기본적으로 width : 340px, height: 54px 맞춰주세요~*/}
-        {/* input font-size: 14px, 로그인 버튼이나 일반적인 font는 16px로 맞춰주세요~ */}
-        <Inputs
-          placeholder={t('please fill in password')}
-          type="text"
-          name="pwd"
-          value={pwd}
-          _onChange={handlePwd}
-          styles={{}}
-        />
-      </InputBox>
+      <InfoInput
+        placeholder={t('please fill in password')}
+        type="password"
+        name="pwd"
+        _onChange={handlePwd}
+      />
       {/* 로그인 버튼 */}
       <Buttons
         styles={{
-          margin: '80px auto 60px',
+          margin: '50px auto 60px',
         }}
         _onClick={login}
       >
@@ -93,15 +87,14 @@ const Login = (props) => {
       {/* 소셜로그인 버튼*/}
       <Buttons
         _onClick={kakaoLogin}
-        styles={{ height: '60px', background: '#ffe900', color: '#3c1e1e' }}
+        styles={{ background: '#ffe900', color: '#3c1e1e' }}
       >
         {t('login with kakao')}
       </Buttons>
       <Buttons
         _onClick={googleLogin}
         styles={{
-          height: '60px',
-          margin: '20px auto 66px',
+          margin: '10px auto 50px',
           background: '#fff',
           color: '#3c1e1e',
         }}
@@ -125,34 +118,37 @@ const Login = (props) => {
 };
 
 const Container = styled.div`
+  width: 500px;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 500px;
-  margin: 200px auto;
 `;
 
 const LogoBox = styled.div`
-  width: 97px;
-  width: 74px;
-  margin: 0 auto;
+  width: 96px;
+  height: 80px;
+  margin: 0 auto 10px;
   overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const LogoText = styled.p`
-  margin-bottom: 60px;
-  /* font-size: 20px; */
-  font-size: 26px;
+  margin-bottom: 50px;
+  font-size: 20px;
   font-weight: 700;
   color: #153587;
+  cursor: default;
 `;
 
 const LoginText = styled.p`
-  height: 27px;
   margin-bottom: 20px;
   font-size: 14px;
-  /* background-color: red; */
+  cursor: default;
 `;
 
 export default Login;
