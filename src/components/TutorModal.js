@@ -3,8 +3,10 @@ import Portal from '../shared/Portal';
 import styled from 'styled-components';
 import { Image, Text } from '../elements/index';
 import { history } from '../redux/configureStore';
+import { useTranslation } from 'react-i18next';
 
 const TutorModal = (props) => {
+  const { t } = useTranslation();
   const tutor = props.tutor;
   const tags = tutor.tag.split(' ,');
   const onClose = props.onClose;
@@ -52,7 +54,7 @@ const TutorModal = (props) => {
           <ProfileLink
             onClick={() => history.push(`/detail/${tutor.userName}/1`)}
           >
-            튜터 프로필 보기 >
+            {t('see tutor profile')} >
           </ProfileLink>
         </Wrap>
       </Content>

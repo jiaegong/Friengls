@@ -144,11 +144,11 @@ const Header = () => {
               <li
                 onClick={() => {
                   Swal.fire({
-                    title: '로그인 하셨나요?',
-                    text: '로그인후 사용이 가능 합니다!~',
+                    title: t('did you sign in?'),
+                    text: t('it is available after you sign in!'),
                     icon: 'warning',
                     confirmButtonColor: '#3085d6',
-                    confirmButtonText: '확인',
+                    confirmButtonText: t('confirm'),
                   }).then((result) => {
                     if (result.isConfirmed) {
                       history.push('/login');
