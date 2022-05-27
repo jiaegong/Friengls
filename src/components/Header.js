@@ -262,24 +262,16 @@ const Wrap = styled.div`
       /* background: #c5c5c5; */
 
       li {
-        width: 5rem;
-        width: 120px;
+        width: 140px;
         height: 35px;
         display: flex;
         justify-content: center;
         vertical-align: middle;
         align-items: center;
-        cursor: pointer;
-
         position: relative;
-
         font-size: 16px;
         font-weight: bolder;
         letter-spacing: 1px;
-
-        margin-left: 3.125rem;
-        /* background: #8e8e8e; */
-
         cursor: pointer;
 
         /* 알림 갯수 */
@@ -301,7 +293,6 @@ const Wrap = styled.div`
           justify-content: center;
 
           border-radius: 50%;
-
           padding: 5px;
         }
       }
