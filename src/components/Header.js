@@ -263,7 +263,7 @@ const Wrap = styled.div`
 
       li {
         width: 5rem;
-        width: 110px;
+        width: 120px;
         height: 35px;
         display: flex;
         justify-content: center;
