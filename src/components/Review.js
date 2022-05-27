@@ -13,6 +13,8 @@ const Review = (props) => {
   const userName = useSelector((state) => state.user.info.userName);
   const tuteeName = props.Tutee_userName;
   const reviewId = props.reviewId;
+  const tutorImg = props.Tutor_userProfile;
+  const tuteeImg = props.Tutee_userProfile;
 
   const [edit, setEdit] = useState(false);
   const [rate, setRate] = useState(props.rate);
@@ -33,8 +35,8 @@ const Review = (props) => {
   return (
     <Wrap>
       <ImageWrap>
-        <img className="reviewImg" src="" alt="튜터 프로필"></img>
-        <img className="userProfileImg" src="" alt="튜티 프로필"></img>
+        <img className="reviewImg" src={tutorImg} alt="튜터 프로필"></img>
+        <img className="userProfileImg" src={tuteeImg} alt="튜티 프로필"></img>
       </ImageWrap>
       <ReviewWrap>
         <Text>Tutee: {props.Tutee_userName}</Text>

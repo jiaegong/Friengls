@@ -252,8 +252,8 @@ const Wrap = styled.div`
           }
 
           .deleteBtn {
-            width: 15%;
-            max-width: 200px;
+            width: 32%;
+            max-width: 253px;
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
