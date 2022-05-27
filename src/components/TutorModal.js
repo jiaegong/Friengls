@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Image, Text } from '../elements/index';
 import { history } from '../redux/configureStore';
 
-const MainModal = (props) => {
+const TutorModal = (props) => {
   const tutor = props.tutor;
   const tags = tutor.tag.split(' ,');
   const onClose = props.onClose;
@@ -60,7 +60,7 @@ const MainModal = (props) => {
   );
 };
 
-export default MainModal;
+export default TutorModal;
 
 const Background = styled.div`
   position: fixed;

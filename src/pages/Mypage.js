@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
+import { actionCreators as likeActions } from '../redux/modules/like';
 import DetailUser from '../components/DetailUser';
 import BookingItem from '../components/BookingItem';
+import LikeItem from '../components/LikeItem';
 import { useTranslation } from 'react-i18next';
 
 const Mypage = (props) => {
@@ -37,6 +39,12 @@ const Mypage = (props) => {
   var today = new Date();
   // console.log(today);
 
+  useEffect(() => {
+    dispatch(likeActions.getLikeDB());
+  }, []);
+
+  const likeList = useSelector((state) => state.like.myList);
+
   return (
     <Wrap>
       <div className="innerWrap">
@@ -50,17 +58,21 @@ const Mypage = (props) => {
           <ul className="bookingList">
             {bookingList?.map((item, idx) => {
               return (
-                <>
-                  <BookingItem
-                    item={item}
-                    userInfo={userInfo}
-                    // key={`mypage_${idx}`}
-                  />
-                </>
+                <BookingItem
+                  item={item}
+                  userInfo={userInfo}
+                  // key={`mypage_${idx}`}
+                />
               );
             })}
           </ul>
         </div>
+        <LikeWrap>
+          <p className="like-title">좋아요 리스트</p>
+          {likeList?.map((l, idx) => {
+            return <LikeItem key={idx} {...l} userInfo={userInfo} />;
+          })}
+        </LikeWrap>
       </div>
     </Wrap>
   );
@@ -240,5 +252,17 @@ const Wrap = styled.div`
         }
       }
     }
+  }
+`;
+
+const LikeWrap = styled.div`
+  max-width: 1050px;
+  width: 80%;
+  margin: auto;
+
+  .like-title {
+    font-size: 38px;
+    font-weight: bolder;
+    margin-bottom: 60px;
   }
 `;
