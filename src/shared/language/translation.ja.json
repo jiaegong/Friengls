@@ -116,5 +116,6 @@
   "delete" : "削除",
   "did you sign in?" : "ログインしましたか。",
   "it is available after you sign in!" : "ログイン後可能です！",
-  "confirm" : "確認"
+  "confirm" : "確認",
+  "refresh" : "リフレッシュ"
 }

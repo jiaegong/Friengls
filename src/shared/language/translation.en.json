@@ -116,5 +116,6 @@
   "delete" : "Delete",
   "did you sign in?" : "Did you sign in?",
   "it is available after you sign in!" : "It is available after you sign in!",
-  "confirm" : "Confirm"
+  "confirm" : "Confirm",
+  "refresh" : "Refresh"
 }
