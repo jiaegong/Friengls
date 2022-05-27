@@ -68,30 +68,34 @@ const VideoChat = (props) => {
 
           // 새로 들어 온 유저에게 call 요청
           socket.on('user-connected', (userId) => {
-            console.log(3, userId, stream, userVideo.current);
-            if (userVideo.current) {
-              const call = peer.call(userId, stream); // call 요청
-              if (call) {
-                console.log(call);
-                call.on('stream', (userVideoStream) => {
+            console.log(3);
+            const call = peer.call(userId, stream); // call 요청
+            if (call) {
+              call.on('stream', (userVideoStream) => {
+                if (userVideo.current) {
                   console.log(4);
                   userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
-                });
-                call.on('close', () => {
-                  userVideo.current.remove(); // 상대방 나가면 비디오 remove
-                });
-                peers[userId] = call;
-              }
+                }
+              });
+              call.on('close', () => {
+                userVideo.current.remove(); // 상대방 나가면 비디오 remove
+              });
+              peers[userId] = call;
             }
           });
 
           // 상대방이 보낸 요청에 응답
           peer.on('call', (call) => {
             console.log(5);
-            call.answer(stream); // 내 stream 보내주기
-            call.on('stream', (userVideoStream) => {
-              userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
-            });
+            if (call) {
+              call.answer(stream); // 내 stream 보내주기
+              call.on('stream', (userVideoStream) => {
+                if (userVideo.current) {
+                  console.log(6);
+                  userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
+                }
+              });
+            }
           });
         })
         .catch((err) => console.log(err));
@@ -143,9 +147,9 @@ const VideoChat = (props) => {
     <Container>
       <LeftWrap>
         <video className="user-video" ref={userVideo} playsInline autoPlay />
-        <ChatWrap>
+        {/* <ChatWrap>
           <Chat socket={socket} roomId={roomId} userId={userId} />
-        </ChatWrap>
+        </ChatWrap> */}
         <OptionWrap>
           <GoPlus className="plus" size={25} onClick={optionHandler} />
         </OptionWrap>

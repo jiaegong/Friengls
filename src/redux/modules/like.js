@@ -56,6 +56,7 @@ const unlikeDB = (tutorName) => {
 };
 
 const isLikeDB = (tutorName) => {
+  console.log(tutorName);
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
@@ -98,8 +99,10 @@ export default handleActions(
       produce(state, (draft) => {
         if (action.payload.isLike) {
           draft.list.unshift(action.payload.tutorName);
+          draft.isLike = action.payload.isLike;
         } else {
           draft.list = draft.list.filter((v) => v !== action.payload.tutorName);
+          draft.isLike = action.payload.isLike;
         }
       }),
     [IS_LIKE]: (state, action) =>
