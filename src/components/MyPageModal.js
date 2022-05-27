@@ -5,8 +5,10 @@ import Portal from '../shared/Portal';
 import EditUser from './EditUser';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
+import { useTranslation } from 'react-i18next';
 // to do: 스크롤 뒷배경 안 움직이도록
 const MyPageModal = (props) => {
+  const { t } = useTranslation();
   const { onClose, userInfo } = props;
 
   const [pwd, setPwd] = useState('');
@@ -31,7 +33,7 @@ const MyPageModal = (props) => {
 
       result === 'success'
         ? setEditUser(true)
-        : window.alert('비밀번호가 틀립니다.');
+        : window.alert(t('the password is incorrect.'));
     } catch (err) {
       console.log(err);
     }
@@ -52,7 +54,7 @@ const MyPageModal = (props) => {
               <CloseBtn onClick={onClose}>X</CloseBtn>
             </CloseBtnBox>
             <Grid>
-              <p>본인확인</p>
+              <p>{t('identification')}</p>
             </Grid>
             <Grid>
               <UserImg>
@@ -76,7 +78,7 @@ const MyPageModal = (props) => {
                     marginBottom: '4px',
                   }}
                 >
-                  이메일
+                  {t('email')}
                 </InputLabel>
                 <Inputs
                   value={userInfo.userEmail}
@@ -105,11 +107,11 @@ const MyPageModal = (props) => {
                     marginBottom: '4px',
                   }}
                 >
-                  비밀번호
+                  {t('password')}
                 </InputLabel>
                 <Inputs
                   _onChange={handlePwd}
-                  placeholder={'비밀번호를 입력해 주세요.'}
+                  placeholder={t('please enter your password')}
                   styles={{
                     width: '100%',
                     height: '33px',
@@ -125,7 +127,7 @@ const MyPageModal = (props) => {
                 _onClick={handleEditUser}
                 styles={{ width: '300px', height: '54px', fontSize: '16px' }}
               >
-                프로필 수정하기
+                {t('edit profile')}
               </Buttons>
             </Grid>
           </Content>

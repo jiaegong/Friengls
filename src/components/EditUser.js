@@ -8,8 +8,10 @@ import SelectLanguage from '../components/SelectLanguage';
 import { ProfileMedium } from '../image';
 import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
 import { pwdForm, userNameForm } from '../shared/common';
+import { useTranslation } from 'react-i18next';
 
 const EditUser = (props) => {
+  const { t } = useTranslation();
   const { onClose, userInfo, accessInfo } = props;
   console.log(userInfo);
   console.log(userInfo.isTutor.toString());
@@ -35,10 +37,12 @@ const EditUser = (props) => {
     const userName = e.target.value;
     setUserName(userName);
     if (userNameForm(userName)) {
-      setUserNameCheck('올바른 닉네임 형식입니다.');
+      setUserNameCheck(t('this is the correct nickname format.'));
     } else {
       setUserNameCheck(
-        '영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)',
+        t(
+          'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
+        ),
       );
     }
   };
@@ -46,7 +50,9 @@ const EditUser = (props) => {
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
   const [pwdCheck, setPwdCheck] = useState(
-    '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
+    t(
+      'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
+    ),
   );
 
   const handlePwd = (e) => {
@@ -54,16 +60,22 @@ const EditUser = (props) => {
     setPwd(pwd);
     if (pwdForm(pwd)) {
       if (pwd.includes(userName)) {
-        setPwdCheck('비밀번호에 닉네임 또는 이메일을 포함할 수 없습니다.');
+        setPwdCheck(
+          t('you can not include nickname or email in your password.'),
+        );
       } else {
-        setPwdCheck('올바른 비밀번호 형식입니다.');
+        setPwdCheck(t('this is the correct password format.'));
       }
     } else {
       if (pwd.includes(userName)) {
-        setPwdCheck('비밀번호에 닉네임 또는 이메일을 포함할 수 없습니다.');
+        setPwdCheck(
+          t('you can not include nickname or email in your password.'),
+        );
       } else {
         setPwdCheck(
-          '비밀번호 형식: 영어대소문자, 숫자를 반드시 포함한 8-20자 사이 (특수문자 가능)',
+          t(
+            'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
+          ),
         );
       }
     }
@@ -72,18 +84,18 @@ const EditUser = (props) => {
   //confirmPwd 유효성 검사, input값 가져오기
   const [confirmPwd, setConfirmPwd] = useState('');
   const [confirmPwdCheck, setConfirmPwdCheck] = useState(
-    '비밀번호를 한 번 더 입력해주세요.',
+    t('please fill in the password one more time.'),
   );
 
   const handleConfirmPwd = (e) => {
     const confirmPwd = e.target.value;
     setConfirmPwd(e.target.value);
     if (pwd === confirmPwd) {
-      setConfirmPwdCheck('비밀번호와 일치합니다.');
+      setConfirmPwdCheck(t('it matches the password.'));
     } else if (confirmPwd === '') {
-      setConfirmPwdCheck('비밀번호를 한 번 더 입력해 주세요.');
+      setConfirmPwdCheck(t('please fill in the password one more time.'));
     } else {
-      setConfirmPwdCheck('비밀번호와 일치하지 않습니다.');
+      setConfirmPwdCheck(t('the password does not match'));
     }
   };
 
@@ -109,11 +121,11 @@ const EditUser = (props) => {
         console.log('userNameCheckDB성공', response.data);
         if (response.data.msg === '이미 있는 닉네임입니다.') {
           setUserNameCheck(
-            '이미 사용중인 닉네임입니다. 다른 닉네임을 입력해주세요.',
+            t('this nickname is already in use. try another nickname.'),
           );
           return;
         }
-        setUserNameCheck('사용 가능한 닉네임입니다.');
+        setUserNameCheck(t('this nickname is available.'));
       })
       .catch((error) => {
         console.log('닉네임체크에러', error);
@@ -162,12 +174,12 @@ const EditUser = (props) => {
 
   //태그 생성(빈 값, 중복일 경우 return)
   // 특수문자 사용하지 못하도록
-  const exampleTag = ['언어교환', '일상회화'];
+  const exampleTag = [t('language exchange'), t('daily conversation')];
   const inputTag = (e) => {
     if (e.keyCode === 32) {
       //공백일 경우 거르기
       if (tagInput.split('').filter((word) => word !== ' ').length === 0) {
-        window.alert('태그를 입력해주세요');
+        window.alert(t('please enter tags.'));
         setTagInput('');
         return;
       }
@@ -175,7 +187,7 @@ const EditUser = (props) => {
 
       if (tagList.indexOf(tagInput) !== -1) {
         if (tagInput.length === tagList[tagList.indexOf(tagInput)].length) {
-          window.alert('중복된 태그를 등록할 수 없습니다.');
+          window.alert(t('duplicate tags are unable.'));
           setTagInput('');
           return;
         }
@@ -236,19 +248,21 @@ const EditUser = (props) => {
   const editUser = (e) => {
     //닉네임 변경 시 조건
     if (userInfo.userName !== userName) {
-      if (userNameCheck !== '사용 가능한 닉네임입니다.') {
-        window.alert('변경할 닉네임을 확인해 주세요.');
+      if (userNameCheck !== t('this nickname is available.')) {
+        window.alert(t('please confirm the nickname you want to change.'));
       }
     }
 
     //비밀번호 변경 시 조건
     if (pwd) {
-      if (pwdCheck !== '올바른 비밀번호 형식입니다.') {
-        window.alert('변경하려는 비밀번호를 확인해 주세요');
+      if (pwdCheck !== t('this is the correct password format.')) {
+        window.alert(t('please confirm the password you want to change.'));
         return;
       } else if (pwd !== confirmPwd) {
         window.alert(
-          '변경하려는 비밀번호와 비밀번호 확인이 일치하지 않습니다.',
+          t(
+            'the password you are trying to change does not match the password verification.',
+          ),
         );
         return;
       }
@@ -256,15 +270,13 @@ const EditUser = (props) => {
     //비밀번호 확인에 입력값 있을 경우
     if (confirmPwd) {
       if (!pwd) {
-        window.alert('변경하려는 비밀번호를 입력해 주세요.');
+        window.alert(t('please enter the password you want to change.'));
         return;
-      } else if (pwdCheck !== '올바른 비밀번호 형식입니다.') {
-        window.alert('변경하려는 비밀번호를 확인해 주세요');
+      } else if (pwdCheck !== t('this is the correct password format.')) {
+        window.alert(t('please confirm the password you want to change.'));
         return;
       } else if (pwd !== confirmPwd) {
-        window.alert(
-          '변경하려는 비밀번호와 비밀번호 확인이 일치하지 않습니다.',
-        );
+        window.alert(t('please enter the password you want to change.'));
         return;
       }
     }
@@ -272,7 +284,7 @@ const EditUser = (props) => {
     //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
       if (contents.length > 0) {
-        window.alert('자기 소개를 공백으로 채울 수 없습니다.');
+        window.alert(t('self-introduction can not be filled with spaces.'));
         setContents('');
         return;
       }
@@ -280,7 +292,7 @@ const EditUser = (props) => {
 
     if (comment.split('').filter((word) => word !== ' ').length === 0) {
       if (comment.length > 0) {
-        window.alert('한 줄 소개를 공백으로 채울 수 없습니다.');
+        window.alert(t('comment can not be filled with spaces.'));
         setComment('');
         return;
       }
@@ -295,7 +307,7 @@ const EditUser = (props) => {
         startTime === '' ||
         endTime === ''
       ) {
-        window.alert('선생님은 모든 정보를 작성해주세요');
+        window.alert(t('tutor must fill out all the information.'));
         return;
       }
     }
@@ -360,15 +372,15 @@ const EditUser = (props) => {
           </UserImg>
           <ProfileAddButton htmlFor="file">+</ProfileAddButton>
           {/* 프로필이미지삭제: url제거하고 기본이미지 띄우기 */}
-          <button>이미지 제거</button>
+          <button>{t('remove image')}</button>
         </ImageBox>
         <UserInfoBox>
-          <p>기본 정보</p>
+          <p>{t('basic information')}</p>
           {/* 닉네임 */}
           <InputBox>
-            <InputLabel>닉네임</InputLabel>
+            <InputLabel>{t('nickname')}</InputLabel>
             <Inputs
-              placeholder={'변경할 닉네임을 입력해 주세요.'}
+              placeholder={t('please enter a nickname to change.')}
               type="text"
               name="userName"
               _onChange={handleUserName}
@@ -381,9 +393,9 @@ const EditUser = (props) => {
           </InputBox>
           {/* 비밀번호 */}
           <InputBox>
-            <InputLabel>새 비밀번호</InputLabel>
+            <InputLabel>{t('new password')}</InputLabel>
             <Inputs
-              placeholder={'변경할 비밀번호를 입력해 주세요.'}
+              placeholder={t('please enter a password to change.')}
               type="text"
               name="pwd"
               _onChange={handlePwd}
@@ -392,9 +404,11 @@ const EditUser = (props) => {
           </InputBox>
           {/* 비밀번호 확인 */}
           <InputBox>
-            <InputLabel>비밀번호 확인</InputLabel>
+            <InputLabel>{t('confirm password')}</InputLabel>
             <Inputs
-              placeholder={'변경할 비밀번호를 다시 한 번 입력해 주세요.'}
+              placeholder={t(
+                'please enter the password you want to change again.',
+              )}
               type="text"
               name="pwdCheck"
               _onChange={handleConfirmPwd}
@@ -406,7 +420,7 @@ const EditUser = (props) => {
         </UserInfoBox>
       </GroupBox1>
       <GroupBox>
-        <p>추가 정보</p>
+        <p>{t('additional information')}</p>
         {/* 언어선택 */}
         <LanguageBox>
           <SelectLanguage
@@ -426,14 +440,14 @@ const EditUser = (props) => {
           }}
         >
           <LabelWrap>
-            <InputLabel>자기 소개</InputLabel>
+            <InputLabel>{t('self-introduction')}</InputLabel>
             <InputLabel>{contents.length}/200</InputLabel>
           </LabelWrap>
           <Inputs
             multiLine
-            placeholder={
-              '하고 있는 일, 취미, 성격 등 자유롭게 자신을 소개해 주세요.'
-            }
+            placeholder={t(
+              'please feel free to introduce yourself to what you are doing, hobbies, personality, etc.',
+            )}
             name="contents"
             value={userInfo.contents}
             _onChange={handleContents}
@@ -443,11 +457,11 @@ const EditUser = (props) => {
         {/* 한 줄 소개 */}
         <InputBox>
           <LabelWrap>
-            <InputLabel>한 줄 소개</InputLabel>
+            <InputLabel>{t('comment')}</InputLabel>
             <InputLabel>{comment.length}/40</InputLabel>
           </LabelWrap>
           <Inputs
-            placeholder={'간략한 인사말을 작성해 주세요.'}
+            placeholder={t('please write a comment.')}
             name="comment"
             value={userInfo.comment}
             _onChange={handleComment}
@@ -461,14 +475,14 @@ const EditUser = (props) => {
             justifyContent: 'flex-start',
           }}
         >
-          <InputLabel>태그</InputLabel>
+          <InputLabel>{t('tag')}</InputLabel>
           {/* 태그입력 */}
           <TagInput
             disabled={tagLimit}
             placeholder={
               tagLimit
-                ? '10개까지 등록할 수 있어요'
-                : '단어 입력 후 스페이스로 태그 등록'
+                ? t('you can register up to 10')
+                : t('enter a word and register a tag with space key')
             }
             name="tag"
             onChange={handleTag}
@@ -489,7 +503,7 @@ const EditUser = (props) => {
               ))
             ) : (
               <>
-                <span>예시 :</span>
+                <span>{t('example')} :</span>
                 {exampleTag.map((example, index) => (
                   <div key={example + index}>
                     <p>{example}</p>
@@ -502,7 +516,7 @@ const EditUser = (props) => {
       </GroupBox>
       <GroupBox>
         {/* isTutor 선택 */}
-        <p>사용자 설정 변경</p>
+        <p>{t('change user setting')}</p>
         <InputBox
           styles={{
             background: 'rgba(0,0,0,0.05)',
@@ -515,7 +529,7 @@ const EditUser = (props) => {
             color: '#999',
           }}
         >
-          프랜글스에서 한국어를
+          {t('in friengls i want to')}
           <InputLabel
             styles={{
               width: '140px',
@@ -535,7 +549,7 @@ const EditUser = (props) => {
               }}
               checked={userInfo.isTutor === 0 ? true : false}
             />
-            배울래요!
+            {t('learn!')}
           </InputLabel>
           &nbsp;&nbsp;/&nbsp;&nbsp;
           <InputLabel
@@ -557,7 +571,7 @@ const EditUser = (props) => {
               }}
               checked={userInfo.isTutor === 1 ? true : false}
             />
-            가르칠래요!
+            {t('teach!')}
           </InputLabel>
         </InputBox>
         {/* 선생님인 경우 수업시간 선택 */}
@@ -573,28 +587,29 @@ const EditUser = (props) => {
                 cursor: 'default',
               }}
             >
-              수업 가능한 시간 :&nbsp;&nbsp;
+              {t('available time for tutoring')} :&nbsp;&nbsp;
               {/* 기존에 수업시간이 있다면 보여주기 */}
               <Select name="startTime" onChange={handleStartTime}>
                 <option value="">
                   {userInfo.startTime
                     ? startNum +
                       1 +
-                      '회차: ' +
+                      `{t('session')}: ` +
                       startNum +
                       ':00 - ' +
                       (startNum + 1) +
                       ':00'
-                    : '=====첫 수업====='}
+                    : `====={t('first tutoring')}=====`}
                 </option>
                 {startTimeArray.map((time, index) => (
                   //+ 키 유저아이디 같은걸로 바꿔주기
                   <option value={time} key={index}>
-                    {time + 1}회차: {time}:00 - {time + 1}:00
+                    {time + 1}
+                    {t('session')}: {time}:00 - {time + 1}:00
                   </option>
                 ))}
               </Select>
-              부터&nbsp;&nbsp;&nbsp;
+              {t('from')}&nbsp;&nbsp;&nbsp;
               {startTime === '' ? (
                 <></>
               ) : (
@@ -604,27 +619,34 @@ const EditUser = (props) => {
                       {userInfo.endTime
                         ? endNum +
                           1 +
-                          '회차: ' +
+                          `{t('session')}: ` +
                           endNum +
                           ':00 - ' +
                           (endNum + 1) +
                           ':00'
-                        : '=====마지막 수업====='}
+                        : `====={t('last tutoring')}=====`}
                     </option>
                     {endTimeArray.map((time, index) => (
                       <option value={time} key={startTime + index}>
-                        {time + 1}회차: {time}:00 - {time + 1}:00
+                        {time + 1}
+                        {t('session')}: {time}:00 - {time + 1}:00
                       </option>
                     ))}
                   </Select>
-                  까지
+                  {t('to')}
                 </>
               )}
             </InputBox>
             <InfoBox>
-              <span>※ 수업은 한 회차에 30분 씩 진행됩니다.</span>
-              <span>※ 수업은 2회차 단위로 구성할 수 있습니다.</span>
-              <span>※ 최소 2회차, 최대 12회차까지 수업할 수 있습니다.</span>
+              <span>
+                ※ {t('the tutoring lesson lasts 30 minutes each time.')}
+              </span>
+              <span>
+                ※ {t('tutoring lessons can be organized in two sessions.')}
+              </span>
+              <span>
+                ※ {t('you can take at least 2 sessions and up to 12 sessions.')}
+              </span>
             </InfoBox>
           </TimeSelectContainer>
         )}
@@ -634,7 +656,7 @@ const EditUser = (props) => {
           _onClick={editUser}
           styles={{ width: '380px', height: '60px' }}
         >
-          수정내용 저장하기
+          {t('save modifications')}
         </Buttons>
         {/* 회원탈퇴버튼 */}
       </GroupBox>

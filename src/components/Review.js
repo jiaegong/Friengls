@@ -125,7 +125,7 @@ const Wrap = styled.div`
   align-items: center;
   padding: 30px;
   border-radius: 20px;
-  box-shadow: 0px 2px 12px 0px #00000040;
+  box-shadow: 0px 2px 8px 0px #00000030;
   margin: 0 auto 20px;
   width: 80%;
   width: 100%;

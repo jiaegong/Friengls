@@ -6,12 +6,13 @@ import { actionCreators as reviewActions } from '../redux/modules/review';
 import { Text, Input, Button } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
 import { AiFillStar } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
 
-const ReviewModal = ({ onClose }) => {
+const ReviewModal = ({ onClose, tutorName }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const token = getCookie('token');
-  const tutorName = 'yoonha3331'; // 튜터 이름 나중에 props로 받아오기
   const [rate, setRate] = React.useState('');
   const [text, setText] = React.useState('');
   const onChange = (e) => {
@@ -60,8 +61,8 @@ const ReviewModal = ({ onClose }) => {
               <button className="add-review" onClick={addReview}>
                 등록하기
               </button>
-              <p className="skip-review" onClick={() => onClose()}>
-                건너뛰기
+              <p className="back" onClick={() => onClose()}>
+                돌아가기
               </p>
             </Buttons>
           </ReviewWrap>
@@ -133,7 +134,7 @@ const Buttons = styled.div`
     width: 340px;
   }
 
-  .skip-review {
+  .back {
     cursor: pointer;
     text-decoration: underline;
     color: #808080;

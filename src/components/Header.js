@@ -82,13 +82,31 @@ const Header = () => {
           </li>
           {langOpen && (
             <SelectLang>
-              <p className="en" onClick={changeLanguageEn}>
+              <p
+                className="en"
+                onClick={() => {
+                  changeLanguageEn();
+                  setLangOpen(!langOpen);
+                }}
+              >
                 English
               </p>
-              <p className="ko" onClick={changeLanguageKo}>
+              <p
+                className="ko"
+                onClick={() => {
+                  changeLanguageKo();
+                  setLangOpen(!langOpen);
+                }}
+              >
                 한국어
               </p>
-              <p className="ja" onClick={changeLanguageJa}>
+              <p
+                className="ja"
+                onClick={() => {
+                  changeLanguageJa();
+                  setLangOpen(!langOpen);
+                }}
+              >
                 日本語
               </p>
             </SelectLang>
