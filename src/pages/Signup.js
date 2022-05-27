@@ -70,7 +70,11 @@ const Signup = ({ userInfo }) => {
           },
         })
           .then((response) => {
-            setEmailCheck('작성하신 이메일로 인증번호를 발송했습니다.');
+            setEmailCheck(
+              t(
+                'the authentication number has been sent to the email you wrote.',
+              ),
+            );
             console.log(response.data);
             setAuthNumber(response.data.toString());
             console.log(authNumber);
@@ -97,8 +101,8 @@ const Signup = ({ userInfo }) => {
     console.log(inputNumber);
 
     authNumber === inputNumber
-      ? setConfirmEmail('이메일 인증이 완료되었습니다.')
-      : setConfirmEmail('인증번호를 다시 확인해 주세요.');
+      ? setConfirmEmail(t('email authentication completed'))
+      : setConfirmEmail(t('please check the authentication number again.'));
   };
 
   //userName 상태값

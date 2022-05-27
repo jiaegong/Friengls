@@ -36,6 +36,7 @@ const VideoChat = (props) => {
 
   const myVideo = useRef();
   const userVideo = useRef();
+  const connectionRef = useRef();
   const peers = {};
   const roomId = props.match.params.roomName;
   const userName = useSelector((state) => state.user.info); // props로 넘겨주는 게 더 좋을 거 같음
@@ -51,7 +52,7 @@ const VideoChat = (props) => {
 
     if (navigator.mediaDevices) {
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: false }) // 배포 전 true로
+        .getUserMedia({ video: true, audio: true }) // 배포 전 true로
         .then((stream) => {
           myVideo.current.srcObject = stream;
 
@@ -68,30 +69,36 @@ const VideoChat = (props) => {
 
           // 새로 들어 온 유저에게 call 요청
           socket.on('user-connected', (userId) => {
-            console.log(3, userId, stream, userVideo.current);
-            if (userVideo.current) {
-              const call = peer.call(userId, stream); // call 요청
-              if (call) {
-                console.log(call);
-                call.on('stream', (userVideoStream) => {
+            console.log(3);
+            const call = peer.call(userId, stream); // call 요청
+            if (call) {
+              call.on('stream', (userVideoStream) => {
+                if (userVideo.current) {
                   console.log(4);
                   userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
-                });
-                call.on('close', () => {
-                  userVideo.current.remove(); // 상대방 나가면 비디오 remove
-                });
-                peers[userId] = call;
-              }
+                }
+              });
+              call.on('close', () => {
+                userVideo.current.remove(); // 상대방 나가면 비디오 remove
+              });
+              peers[userId] = call;
+              connectionRef.current = peer;
             }
           });
 
           // 상대방이 보낸 요청에 응답
           peer.on('call', (call) => {
             console.log(5);
-            call.answer(stream); // 내 stream 보내주기
-            call.on('stream', (userVideoStream) => {
-              userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
-            });
+            if (call) {
+              call.answer(stream); // 내 stream 보내주기
+              call.on('stream', (userVideoStream) => {
+                if (userVideo.current) {
+                  console.log(6);
+                  userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
+                }
+              });
+            }
+            connectionRef.current = peer;
           });
         })
         .catch((err) => console.log(err));
@@ -113,6 +120,7 @@ const VideoChat = (props) => {
   const leaveCall = () => {
     myVideo.current.remove();
     userVideo.current.remove();
+    connectionRef.current.destroy();
   };
 
   // 오디오 온오프
@@ -143,9 +151,9 @@ const VideoChat = (props) => {
     <Container>
       <LeftWrap>
         <video className="user-video" ref={userVideo} playsInline autoPlay />
-        <ChatWrap>
+        {/* <ChatWrap>
           <Chat socket={socket} roomId={roomId} userId={userId} />
-        </ChatWrap>
+        </ChatWrap> */}
         <OptionWrap>
           <GoPlus className="plus" size={25} onClick={optionHandler} />
         </OptionWrap>
