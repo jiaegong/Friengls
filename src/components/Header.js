@@ -35,7 +35,9 @@ const Header = () => {
   };
 
   useEffect(() => {
-    dispatch(notiActions.getBookingNotiDB());
+    if (token) {
+      dispatch(notiActions.getBookingNotiDB());
+    }
   }, [notiOpen]);
 
   //마이페이지url에 사용할 유저정보 가져오기
@@ -56,7 +58,7 @@ const Header = () => {
         <div
           className="logoWrap"
           onClick={() => {
-            history.replace('/');
+            history.push('/');
           }}
         >
           <img className="logo" src={MainLogo} alt=""></img>
