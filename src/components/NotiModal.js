@@ -81,6 +81,11 @@ const Background = styled.div`
   bottom: 0;
   z-index: 1000;
   background-color: none; */
+  width: auto;
+
+  height: auto;
+
+  background-color: red;
 
   /* 알림창 */
   .notifications {

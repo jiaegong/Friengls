@@ -32,22 +32,17 @@ const Header = () => {
 
   const handleNotiModal = () => {
     setNotiOpen(!notiOpen);
-    if (token) {
-      dispatch(notiActions.getBookingNotiDB());
-    }
   };
 
   useEffect(() => {
     dispatch(notiActions.getBookingNotiDB());
-  }, []);
+  }, [notiOpen]);
 
   //마이페이지url에 사용할 유저정보 가져오기
   const userInfo = useSelector((state) => state.user.info);
 
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
-
-  console.log(notiCheck);
 
   //로그아웃
   const logout = () => {

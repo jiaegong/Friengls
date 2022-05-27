@@ -59,7 +59,14 @@ const Main = () => {
           <TutorTitleWrap>
             <div>
               <span>{t('the most liked tutors in friengls')}</span>
-              <span className="tutorMoreBtn">{t('see more')} ></span>
+              <span
+                className="tutorMoreBtn"
+                onClick={() => {
+                  history.push('/search');
+                }}
+              >
+                {t('see more')} >
+              </span>
             </div>
             <p>{t('popular tutor list')}</p>
           </TutorTitleWrap>
