@@ -26,9 +26,7 @@ const Signup = ({ userInfo }) => {
     userInfo?.userEmail ? userInfo.userEmail : '',
   );
   // userEmail 형식 라벨로 표시
-  const [emailCheck, setEmailCheck] = useState(
-    t('email format: ex) example@example.com'),
-  );
+  const [emailCheck, setEmailCheck] = useState('\u00A0');
   // userEmail 유효성 검사
   const handleEmail = (e) => {
     const email = e.target.value;
@@ -110,11 +108,7 @@ const Signup = ({ userInfo }) => {
     userInfo?.userName ? userInfo.userName : '',
   );
   //userName 형식 라벨로 표시
-  const [userNameCheck, setUserNameCheck] = useState(
-    t(
-      'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
-    ),
-  );
+  const [userNameCheck, setUserNameCheck] = useState('\u00A0');
   //userName 유효성 검사
   const handleUserName = (e) => {
     const userName = e.target.value;
@@ -147,11 +141,11 @@ const Signup = ({ userInfo }) => {
         console.log('userNameCheckDB성공', response.data);
         if (response.data.msg === '이미 있는 닉네임입니다.') {
           setUserNameCheck(
-            '이미 사용중인 닉네임입니다. 다른 닉네임을 입력해주세요.',
+            t('this nickname is already in use. try another nickname.'),
           );
           return;
         }
-        setUserNameCheck('사용 가능한 닉네임입니다.');
+        setUserNameCheck(t('this nickname is available.'));
       })
       .catch((error) => {
         console.log('닉네임체크에러', error);
@@ -161,11 +155,7 @@ const Signup = ({ userInfo }) => {
   //pwd 상태값
   const [pwd, setPwd] = useState('');
   //pwd 형식 라벨로 표시
-  const [pwdCheck, setPwdCheck] = useState(
-    t(
-      'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
-    ),
-  );
+  const [pwdCheck, setPwdCheck] = useState('\u00A0');
   //pwd 유효성 검사
   const handlePwd = (e) => {
     const pwd = e.target.value;
@@ -195,9 +185,7 @@ const Signup = ({ userInfo }) => {
 
   //confirmPwd 유효성 검사, input값 가져오기
   const [confirmPwd, setConfirmPwd] = useState('');
-  const [confirmPwdCheck, setConfirmPwdCheck] = useState(
-    t('please fill in the password one more time.'),
-  );
+  const [confirmPwdCheck, setConfirmPwdCheck] = useState('\u00A0');
 
   const handleConfirmPwd = (e) => {
     const confirmPwd = e.target.value;
@@ -248,7 +236,7 @@ const Signup = ({ userInfo }) => {
 
   //DetailInfo페이지로 넘어가는 버튼 활성화
   const isDisabled = !(
-    (userInfo ? true : confirmEmail === '이메일 인증이 완료되었습니다.') &&
+    (userInfo ? true : confirmEmail === t('email authentication completed')) &&
     userNameCheck === t('this nickname is available.') &&
     pwdForm(pwd) &&
     pwd === confirmPwd &&
@@ -256,6 +244,11 @@ const Signup = ({ userInfo }) => {
   )
     ? true
     : false;
+
+  console.log(confirmEmail);
+  console.log(t('email authentication completed'));
+  console.log(userNameCheck);
+  console.log(t('this nickname is available.'));
 
   return (
     <Container>
