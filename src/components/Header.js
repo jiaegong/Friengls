@@ -13,7 +13,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as notiActions } from '../redux/modules/booking';
 
 //컴포넌트
-import { getCookie } from '../shared/Cookie';
+import { getCookie, deleteCookie } from '../shared/Cookie';
 import { MainLogo } from '../image/index';
 import NotiModal from './NotiModal';
 
@@ -46,6 +46,7 @@ const Header = () => {
 
   //로그아웃
   const logout = () => {
+    deleteCookie('token');
     dispatch(userActions.logout());
   };
 

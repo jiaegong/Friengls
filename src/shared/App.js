@@ -23,6 +23,7 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
+import FeedBack from '../components/FeedBack';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ function App() {
         onClick={() => setFeedbackOn(!feedbackOn)}
       />
       {feedbackOn && <Feedback>피드백을 남겨주세요!</Feedback>}
+      <FeedBack />
     </ConnectedRouter>
   );
 }

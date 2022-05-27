@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Inputs = (props) => {
+const NewInput = (props) => {
   const {
-    defaultStyles,
-    styles,
     type,
     name,
     id,
@@ -17,25 +15,26 @@ const Inputs = (props) => {
     maxLength,
     multiLine,
     checked,
+    styles,
+    defaultStyles,
   } = props;
 
   if (multiLine) {
     return (
-      <TextareaStyled
-        style={{ ...styles }}
+      <Textarea
         type={type}
         placeholder={placeholder}
         onChange={_onChange}
         defaultValue={value}
         disabled={disabled}
         maxLength={maxLength}
+        style={{ ...styles }}
         {...defaultStyles}
       />
     );
   }
   return (
-    <InputStyled
-      style={{ ...styles }}
+    <Input
       type={type}
       name={name}
       id={id}
@@ -46,59 +45,47 @@ const Inputs = (props) => {
       defaultValue={value}
       disabled={disabled}
       maxLength={maxLength}
-      {...defaultStyles}
       checked={checked}
+      style={{ ...styles }}
+      {...defaultStyles}
     />
   );
 };
 
-Inputs.defaultProps = {
-  multiLine: false,
-  type: 'text',
-  _onChange: () => {},
-  disabled: false,
-  placeholder: '',
-  defaultStyles: {
-    fontSize: '14px',
-    fontWeight: '400',
-  },
-};
+NewInput.defaultProps = {};
 
-const InputStyled = styled.input`
+const Textarea = styled.textarea`
   width: 100%;
-  height: 54px;
-  padding: 0 5px;
-  border: 1px solid #8a8a8a;
-  border-radius: 8px;
+  height: 100%;
+  padding-top: 5px;
+  border: none;
   font-size: 14px;
   font-weight: 400;
+  resize: none;
   ::-webkit-input-placeholder {
-    font-size: 12px;
-    color: b5b5b5;
-  }
-  &:focus {
-    outline: none;
-  }
-`;
-
-const TextareaStyled = styled.textarea`
-  width: 100%;
-  height: 160px;
-  padding: 0 5px;
-
-  font-size: 14px;
-  border: none;
-  font-size: ${(props) => props.fontSize};
-  font-weight: ${(props) => props.fontWeight};
-  ::-webkit-input-placeholder {
-    /* padding: 10px 0; */
     font-size: 14px;
     color: b5b5b5;
   }
   &:focus {
     outline: none;
   }
-  resize: none;
 `;
 
-export default Inputs;
+const Input = styled.input`
+  width: 100%;
+  height: 25px;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  ::-webkit-input-placeholder {
+    font-size: 14px;
+    color: b5b5b5;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+export default NewInput;

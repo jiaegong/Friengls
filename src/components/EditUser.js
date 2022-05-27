@@ -3,24 +3,22 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as profileActions } from '../redux/modules/profile';
 import SelectLanguage from '../components/SelectLanguage';
-import { ProfileMedium } from '../image';
-import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
+import { Profile, CloseIcon } from '../image';
+import { Buttons, NewInputLabel, NewInput } from '../elements/index';
 import { pwdForm, userNameForm } from '../shared/common';
+import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
 
 const EditUser = (props) => {
   const { t } = useTranslation();
   const { onClose, userInfo, accessInfo } = props;
-  console.log(userInfo);
-  console.log(userInfo.isTutor.toString());
 
   const dispatch = useDispatch();
   //  사진 미리보기
   const imageRef = useRef();
   const [previewProfile, setPreviewProfile] = useState(
-    userInfo.userProfile ? userInfo.userProfile : ProfileMedium,
+    userInfo.userProfile ? userInfo.userProfile : Profile,
   );
   const selectFile = () => {
     const previewFile = imageRef.current.files[0];
@@ -30,9 +28,23 @@ const EditUser = (props) => {
       setPreviewProfile(reader.result);
     };
   };
+  //프로필사진 삭제
+  const deleteProfile = () => {
+    if (previewProfile === Profile) {
+      return;
+    }
+
+    const deleteInfo = {
+      userEmail: userInfo.userEmail,
+      isTutor: userInfo.isTutor.toString(),
+    };
+    dispatch(userActions.deleteProfileDB(deleteInfo));
+    setPreviewProfile(Profile);
+  };
+
   // userName 유효성 검사, input값 가져오기
   const [userName, setUserName] = useState(userInfo.userName);
-  const [userNameCheck, setUserNameCheck] = useState('');
+  const [userNameCheck, setUserNameCheck] = useState('\u00A0');
   const handleUserName = (e) => {
     const userName = e.target.value;
     setUserName(userName);
@@ -49,11 +61,7 @@ const EditUser = (props) => {
 
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
-  const [pwdCheck, setPwdCheck] = useState(
-    t(
-      'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
-    ),
-  );
+  const [pwdCheck, setPwdCheck] = useState('\u00A0');
 
   const handlePwd = (e) => {
     const pwd = e.target.value;
@@ -83,9 +91,7 @@ const EditUser = (props) => {
 
   //confirmPwd 유효성 검사, input값 가져오기
   const [confirmPwd, setConfirmPwd] = useState('');
-  const [confirmPwdCheck, setConfirmPwdCheck] = useState(
-    t('please fill in the password one more time.'),
-  );
+  const [confirmPwdCheck, setConfirmPwdCheck] = useState('\u00A0');
 
   const handleConfirmPwd = (e) => {
     const confirmPwd = e.target.value;
@@ -298,7 +304,7 @@ const EditUser = (props) => {
       }
     }
     //선생님일 경우 모든 정보를 입력하도록 조건
-    if (isTutor === '1') {
+    if (userInfo.isTutor === 1) {
       if (
         language1 === '' ||
         comment.split('').filter((word) => word !== ' ').length === 0 ||
@@ -327,7 +333,7 @@ const EditUser = (props) => {
         console.log(value);
       }
 
-      dispatch(profileActions.uploadProfileDB(formData));
+      dispatch(userActions.uploadProfileDB(formData));
     }
     //추가정보 디스패치
     const userForm = {
@@ -350,378 +356,406 @@ const EditUser = (props) => {
     dispatch(userActions.editUserDB(userForm));
   };
 
+  const closeModal = () => {
+    // 프로필사진만 바꾸고 나가는 경우
+    if (userInfo.userProfile !== previewProfile) {
+      window.location.reload();
+    }
+    onClose();
+  };
+
   return (
-    <Content>
-      <CloseBtnBox>
-        <CloseBtn onClick={onClose}>X</CloseBtn>
-      </CloseBtnBox>
-      <GroupBox1>
-        <ImageBox>
-          {/* 프로필이미지선택 */}
-          <UserImg>
-            <label htmlFor="file">
-              <img src={previewProfile} alt="userProfileImage" />
-              <input
-                type="file"
-                ref={imageRef}
-                onChange={selectFile}
-                accept="image/*"
-                id="file"
-              />
-            </label>
-          </UserImg>
-          <ProfileAddButton htmlFor="file">+</ProfileAddButton>
-          {/* 프로필이미지삭제: url제거하고 기본이미지 띄우기 */}
-          <button>{t('remove image')}</button>
-        </ImageBox>
-        <UserInfoBox>
-          <p>{t('basic information')}</p>
-          {/* 닉네임 */}
-          <InputBox>
-            <InputLabel>{t('nickname')}</InputLabel>
-            <Inputs
+    <ContentWrap>
+      <Content>
+        <CloseBtn onClick={closeModal}>
+          <img src={CloseIcon} alt="close" />
+        </CloseBtn>
+        <GroupBox1>
+          <ImageBox>
+            {/* 프로필이미지선택 */}
+            <UserImg>
+              <label htmlFor="file">
+                <img src={previewProfile} alt="userProfile" />
+                <input
+                  type="file"
+                  ref={imageRef}
+                  onChange={selectFile}
+                  accept="image/*"
+                  id="file"
+                />
+              </label>
+            </UserImg>
+            <ProfileAddButton htmlFor="file">+</ProfileAddButton>
+            {/* 프로필이미지삭제: url제거하고 기본이미지 띄우기 */}
+            <button onClick={deleteProfile}>{t('remove image')}</button>
+          </ImageBox>
+          <UserInfoBox>
+            <p>{t('basic information')}</p>
+            {/* 닉네임 */}
+            <InfoInput
+              label={t('nickname')}
               placeholder={t('please enter a nickname to change.')}
-              type="text"
-              name="userName"
+              validationLabel={userNameCheck}
               _onChange={handleUserName}
               _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
               value={userName}
+              styles={{
+                height: '45px',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
+              }}
             />
-            <InputLabel styles={{ color: '#8A8A8A' }}>
-              {userNameCheck}
-            </InputLabel>
-          </InputBox>
-          {/* 비밀번호 */}
-          <InputBox>
-            <InputLabel>{t('new password')}</InputLabel>
-            <Inputs
+            {/* 비밀번호 */}
+            <InfoInput
+              type="password"
+              label={t('new password')}
               placeholder={t('please enter a password to change.')}
-              type="text"
-              name="pwd"
+              validationLabel={pwdCheck}
               _onChange={handlePwd}
+              styles={{
+                height: '45px',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
+              }}
             />
-            <InputLabel styles={{ color: '#8A8A8A' }}>{pwdCheck}</InputLabel>
-          </InputBox>
-          {/* 비밀번호 확인 */}
-          <InputBox>
-            <InputLabel>{t('confirm password')}</InputLabel>
-            <Inputs
+            {/* 비밀번호 확인 */}
+            <InfoInput
+              type="password"
+              label={t('confirm password')}
               placeholder={t(
                 'please enter the password you want to change again.',
               )}
-              type="text"
-              name="pwdCheck"
+              validationLabel={confirmPwdCheck}
               _onChange={handleConfirmPwd}
+              styles={{
+                height: '45px',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
+              }}
             />
-            <InputLabel styles={{ color: '#8a8a8a' }}>
-              {confirmPwdCheck}
-            </InputLabel>
-          </InputBox>
-        </UserInfoBox>
-      </GroupBox1>
-      <GroupBox>
-        <p>{t('additional information')}</p>
-        {/* 언어선택 */}
-        <LanguageBox>
-          <SelectLanguage
-            language1={language1}
-            language2={language2}
-            language3={language3}
-            handleLanguage1={handleLanguage1}
-            handleLanguage2={handleLanguage2}
-            handleLanguage3={handleLanguage3}
-          />
-        </LanguageBox>
-        {/* 자기 소개 */}
-        <InputBox
-          styles={{
-            height: '190px',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <LabelWrap>
-            <InputLabel>{t('self-introduction')}</InputLabel>
-            <InputLabel>{contents.length}/200</InputLabel>
-          </LabelWrap>
-          <Inputs
-            multiLine
+          </UserInfoBox>
+        </GroupBox1>
+        <GroupBox>
+          <p>{t('additional information')}</p>
+          {/* 언어선택 */}
+          <LanguageBox>
+            <SelectLanguage
+              language1={language1}
+              language2={language2}
+              language3={language3}
+              handleLanguage1={handleLanguage1}
+              handleLanguage2={handleLanguage2}
+              handleLanguage3={handleLanguage3}
+            />
+          </LanguageBox>
+          {/* 자기 소개 */}
+          <InfoInput
+            label={t('self-introduction')}
+            label2={contents.length + `/500`}
             placeholder={t(
               'please feel free to introduce yourself to what you are doing, hobbies, personality, etc.',
             )}
-            name="contents"
             value={userInfo.contents}
             _onChange={handleContents}
-            maxLength={200}
+            maxLength={500}
+            multiLine
+            styles={{
+              height: '160px',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}
           />
-        </InputBox>
-        {/* 한 줄 소개 */}
-        <InputBox>
-          <LabelWrap>
-            <InputLabel>{t('comment')}</InputLabel>
-            <InputLabel>{comment.length}/40</InputLabel>
-          </LabelWrap>
-          <Inputs
+          {/* 한 줄 소개 */}
+          <InfoInput
+            label={t('comment')}
+            label2={comment.length + `/40`}
             placeholder={t('please write a comment.')}
-            name="comment"
             value={userInfo.comment}
             _onChange={handleComment}
             maxLength={40}
+            styles={{
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+            }}
           />
-        </InputBox>
-        {/* 태그 */}
-        <InputBox
-          styles={{
-            height: '210px',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <InputLabel>{t('tag')}</InputLabel>
-          {/* 태그입력 */}
-          <TagInput
-            disabled={tagLimit}
-            placeholder={
-              tagLimit
-                ? t('you can register up to 10')
-                : t('enter a word and register a tag with space key')
-            }
-            name="tag"
-            onChange={handleTag}
-            onKeyUp={inputTag}
-            value={tagInput}
-            maxLength={8}
-          />
-          {/* 태그출력 */}
-          <TagBox>
-            {tagList.length > 0 ? (
-              tagList.map((tag, index) => (
-                <div key={tag + index}>
-                  <p>{tag}</p>
-                  <button id={index} onClick={deleteTag}>
-                    {/* <img /> */}X
-                  </button>
-                </div>
-              ))
-            ) : (
-              <>
-                <span>{t('example')} :</span>
-                {exampleTag.map((example, index) => (
-                  <div key={example + index}>
-                    <p>{example}</p>
+          {/* 태그 */}
+          <InfoInput
+            onlyBox
+            styles={{
+              height: '200px',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+            }}
+          >
+            <NewInputLabel>{t('tag')}</NewInputLabel>
+            {/* 태그입력 */}
+            <TagInput
+              disabled={tagLimit}
+              placeholder={
+                tagLimit
+                  ? t('you can register up to 10')
+                  : t('enter a word and register a tag with space key')
+              }
+              name="tag"
+              onChange={handleTag}
+              onKeyUp={inputTag}
+              value={tagInput}
+              maxLength={8}
+            />
+            {/* 태그출력 */}
+            <TagBox>
+              {tagList.length > 0 ? (
+                tagList.map((tag, index) => (
+                  <div key={tag + index}>
+                    <p>{tag}</p>
+                    <button id={index} onClick={deleteTag}>
+                      {/* <img /> */}X
+                    </button>
                   </div>
-                ))}
-              </>
-            )}
-          </TagBox>
-        </InputBox>
-      </GroupBox>
-      <GroupBox>
-        {/* isTutor 선택 */}
-        <p>{t('change user setting')}</p>
-        <InputBox
-          styles={{
-            background: 'rgba(0,0,0,0.05)',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            fontSize: '26px',
-            cursor: 'default',
-            color: '#999',
-          }}
-        >
-          {t('in friengls i want to')}
-          <InputLabel
-            styles={{
-              width: '140px',
-              marginLeft: '10px',
-              alignItems: 'center',
-              fontSize: '26px',
-              color: '#999',
-            }}
-          >
-            <Inputs
-              type="radio"
-              name="isTutor"
-              value="0"
-              styles={{
-                width: '20px',
-                margin: '5px 5px 0 0',
-              }}
-              checked={userInfo.isTutor === 0 ? true : false}
-            />
-            {t('learn!')}
-          </InputLabel>
-          &nbsp;&nbsp;/&nbsp;&nbsp;
-          <InputLabel
-            styles={{
-              width: '180px',
-              marginLeft: '10px',
-              alignItems: 'center',
-              fontSize: '26px',
-              color: '#999',
-            }}
-          >
-            <Inputs
-              type="radio"
-              name="isTutor"
-              value="1"
-              styles={{
-                width: '20px',
-                margin: '5px 5px 0 0',
-              }}
-              checked={userInfo.isTutor === 1 ? true : false}
-            />
-            {t('teach!')}
-          </InputLabel>
-        </InputBox>
-        {/* 선생님인 경우 수업시간 선택 */}
-        {userInfo.isTutor === 1 && (
-          <TimeSelectContainer>
-            <InputBox
-              styles={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                fontSize: '26px',
-                cursor: 'default',
-              }}
-            >
-              {t('available time for tutoring')} :&nbsp;&nbsp;
-              {/* 기존에 수업시간이 있다면 보여주기 */}
-              <Select name="startTime" onChange={handleStartTime}>
-                <option value="">
-                  {userInfo.startTime
-                    ? startNum +
-                      1 +
-                      `{t('session')}: ` +
-                      startNum +
-                      ':00 - ' +
-                      (startNum + 1) +
-                      ':00'
-                    : `====={t('first tutoring')}=====`}
-                </option>
-                {startTimeArray.map((time, index) => (
-                  //+ 키 유저아이디 같은걸로 바꿔주기
-                  <option value={time} key={index}>
-                    {time + 1}
-                    {t('session')}: {time}:00 - {time + 1}:00
-                  </option>
-                ))}
-              </Select>
-              {t('from')}&nbsp;&nbsp;&nbsp;
-              {startTime === '' ? (
-                <></>
+                ))
               ) : (
                 <>
-                  <Select name="endTime" onChange={handleEndTime}>
-                    <option value="">
-                      {userInfo.endTime
-                        ? endNum +
-                          1 +
-                          `{t('session')}: ` +
-                          endNum +
-                          ':00 - ' +
-                          (endNum + 1) +
-                          ':00'
-                        : `====={t('last tutoring')}=====`}
-                    </option>
-                    {endTimeArray.map((time, index) => (
-                      <option value={time} key={startTime + index}>
-                        {time + 1}
-                        {t('session')}: {time}:00 - {time + 1}:00
-                      </option>
-                    ))}
-                  </Select>
-                  {t('to')}
+                  <span>{t('example')} :</span>
+                  {exampleTag.map((example, index) => (
+                    <div key={example + index}>
+                      <p>{example}</p>
+                    </div>
+                  ))}
                 </>
               )}
-            </InputBox>
-            <InfoBox>
-              <span>
-                ※ {t('the tutoring lesson lasts 30 minutes each time.')}
-              </span>
-              <span>
-                ※ {t('tutoring lessons can be organized in two sessions.')}
-              </span>
-              <span>
-                ※ {t('you can take at least 2 sessions and up to 12 sessions.')}
-              </span>
-            </InfoBox>
-          </TimeSelectContainer>
-        )}
-      </GroupBox>
-      <GroupBox>
-        <Buttons
-          _onClick={editUser}
-          styles={{ width: '380px', height: '60px' }}
-        >
-          {t('save modifications')}
-        </Buttons>
-        {/* 회원탈퇴버튼 */}
-      </GroupBox>
-    </Content>
+            </TagBox>
+          </InfoInput>
+        </GroupBox>
+        {/* 수업시간 변경 */}
+        <GroupBox>
+          <TimeBox>
+            <p>{t('change user setting')}</p>
+            <InfoInput
+              onlyBox
+              styles={{
+                justifyContent: 'flex-start',
+                background: 'rgba(0,0,0,0.05)',
+                cursor: 'default',
+                color: '#999',
+              }}
+            >
+              <NewInputLabel>{t('in friengls i want to')}</NewInputLabel>
+              <NewInput
+                type="radio"
+                name="isTutor"
+                value="0"
+                _onChange={handleIstutor}
+                checked={userInfo.isTutor === 0 ? true : false}
+                styles={{
+                  margin: '0 0 0 10px',
+                  width: '15px',
+                  cursor: 'default',
+                }}
+              />
+              <NewInputLabel
+                htmlFor="isTutor0"
+                styles={{
+                  padding: '0 10px 0 10px',
+                  alignItems: 'center',
+                }}
+              >
+                {t('learn!')}
+              </NewInputLabel>
+              /
+              <NewInput
+                type="radio"
+                name="isTutor"
+                value="1"
+                _onChange={handleIstutor}
+                checked={userInfo.isTutor === 1 ? true : false}
+                styles={{
+                  margin: '0 0 0 10px',
+                  width: '15px',
+                  cursor: 'default',
+                }}
+              />
+              <NewInputLabel
+                styles={{
+                  padding: '0 0 0 10px',
+                  alignItems: 'center',
+                }}
+              >
+                {t('teach!')}
+              </NewInputLabel>
+            </InfoInput>
+            {/* 선생님인 경우 수업시간 선택 */}
+            {userInfo.isTutor === 1 && (
+              <React.Fragment>
+                <InfoInput
+                  onlyBox
+                  styles={{ justifyContent: 'flex-start', cursor: 'default' }}
+                >
+                  <TimeSelectBox>
+                    {t('available time for tutoring')} :
+                    <Select name="startTime" onChange={handleStartTime}>
+                      <option value="">
+                        {userInfo.startTime
+                          ? startNum +
+                            1 +
+                            `{t('session')}: ` +
+                            startNum +
+                            ':00 - ' +
+                            (startNum + 1) +
+                            ':00'
+                          : `====={t('first tutoring')}=====`}
+                      </option>
+                      {startTimeArray.map((time, index) => (
+                        //+ 키 유저아이디 같은걸로 바꿔주기
+                        <option value={time} key={index + time}>
+                          {time + 1}
+                          {t('session')}: {time}:00 - {time + 1}:00
+                        </option>
+                      ))}
+                    </Select>
+                    {t('from')}
+                    {startTime === '' ? (
+                      <></>
+                    ) : (
+                      <>
+                        <Select name="endTime" onChange={handleEndTime}>
+                          <option value="">
+                            {' '}
+                            {userInfo.endTime
+                              ? endNum +
+                                1 +
+                                `{t('session')}: ` +
+                                endNum +
+                                ':00 - ' +
+                                (endNum + 1) +
+                                ':00'
+                              : `====={t('last tutoring')}=====`}
+                          </option>
+                          {endTimeArray.map((time, index) => (
+                            <option value={time} key={startTime + index}>
+                              {time + 1}
+                              {t('session')}: {time}:00 - {time + 1}:00
+                            </option>
+                          ))}
+                        </Select>
+                        {t('to')}
+                      </>
+                    )}
+                  </TimeSelectBox>
+                </InfoInput>
+                <InfoBox>
+                  <span>
+                    ※ {t('the tutoring lesson lasts 30 minutes each time.')}
+                  </span>
+                  <span>
+                    ※ {t('tutoring lessons can be organized in two sessions.')}
+                  </span>
+                  <span>
+                    ※{' '}
+                    {t(
+                      'you can take at least 2 sessions and up to 12 sessions.',
+                    )}
+                  </span>
+                </InfoBox>
+              </React.Fragment>
+            )}
+          </TimeBox>
+        </GroupBox>
+        <GroupBox>
+          <Buttons
+            _onClick={editUser}
+            styles={{ width: '380px', height: '60px' }}
+          >
+            {t('save modifications')}
+          </Buttons>
+          {/* 회원탈퇴버튼 */}
+        </GroupBox>
+      </Content>
+    </ContentWrap>
   );
 };
 
 export default EditUser;
 
-const Content = styled.div`
-  //   height: 954px;
-  width: 1240px;
-  // margin-top: 120px;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-
+const ContentWrap = styled.div`
+  width: 800px;
+  height: 700px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   position: relative;
-  overflow: scroll;
-`;
-// 닫기 버튼
-const CloseBtnBox = styled.label`
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
+  //스크롤바 관련
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    margin: 20px;
+    background-color: #fff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d3d3d3;
+  }
 `;
 
-const CloseBtn = styled.button`
-  background: none;
-  border: none;
-  font-size: 30px;
+const Content = styled.div`
+  width: 90%;
+  height: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // background: red;
+`;
+
+// 닫기 버튼
+const CloseBtn = styled.div`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
   cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const GroupBox1 = styled.div`
-  margin: 150px 40px 20px;
+  width: 100%;
+  margin: 800px auto 20px;
   display: flex;
 `;
 // 프로필사진 관련
 const ImageBox = styled.div`
   width: 320px;
+  padding-top: 20px;
+  position: relative;
   button {
     margin-top: 25px;
     border: none;
     border-bottom: 1px solid #153587;
     background: none;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 600;
     color: #153587;
     cursor: pointer;
-    position: relative;
   }
 `;
 
 const UserImg = styled.div`
-  width: 240px;
-  height: 240px;
+  width: 180px;
+  height: 180px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
@@ -730,7 +764,6 @@ const UserImg = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     cursor: pointer;
   }
 
@@ -744,8 +777,8 @@ const UserImg = styled.div`
 `;
 
 const ProfileAddButton = styled.label`
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   padding-bottom: 10px;
   border-radius: 50px;
   background: #153587;
@@ -754,64 +787,52 @@ const ProfileAddButton = styled.label`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 330px;
-  left: 250px;
-  font-size: 50px;
+  top: 155px;
+  left: 152px;
+  font-size: 40px;
   font-weight: 600;
   color: #fff;
 `;
 
 // 기본 정보
 const UserInfoBox = styled.div`
-  width: 880px;
+  width: 100%;
   margin-left: 20px;
   p {
-    height: 80px;
+    height: 50px;
     text-align: start;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 600;
   }
 `;
 
 const GroupBox = styled.div`
-  // width: 1160px;
-  margin: 0 40px;
+  width: 100%;
+  // margin: 0 auto;
   padding: 20px 0;
   border-top: 1px solid #c4c4c4;
 
   p {
-    height: 80px;
+    height: 50px;
     text-align: start;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 600;
   }
 `;
 //언어선택 컴포넌트 마진
 const LanguageBox = styled.div`
-  margin-bottom: 20px;
-`;
-//자기소개/한줄소개 라벨, 글자수제한 정렬
-const LabelWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-
-  p {
-    font-size: 20px;
-    color: #404040;
-  }
+  margin-bottom: 10px;
 `;
 
-// 태그 관련
 const TagInput = styled.input`
   width: 100%;
-  height: 35px;
-  margin-bottom: 20px;
+  height: 30px;
+  margin-bottom: 5px;
   border: none;
-  font-size: 26px;
+  font-size: 14px;
   font-weight: 400;
   ::-webkit-input-placeholder {
-    font-size: 20px;
+    font-size: 14px;
     color: b5b5b5;
   }
   &:focus {
@@ -821,68 +842,70 @@ const TagInput = styled.input`
 
 const TagBox = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
+  align-content: flex-start;
   flex-wrap: wrap;
-
-  //태그 한 개의 속성
   div {
-    height: 50px;
-    max-width: 180px;
-    margin: 0 15px 10px 0;
+    height: 30px;
+    margin: 0 5px 10px 0;
     padding: 10px 10px 12px;
     display: flex;
     align-items: center;
     border-radius: 25px;
     border: 2px solid #959595;
+  }
+
+  p {
+    height: 18px;
+    margin-right: 5px;
+    font-size: 14px;
     cursor: default;
   }
 
-  //태그 한 개의 텍스트
-  p {
-    margin-right: 10px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    cursor: default;
-  }
-  //태그삭제 버튼
   button {
     background: transparent;
     border: none;
-    margin-top: 5px;
-    font-size: 25px;
+    margin-top: 2px;
+    font-size: 16px;
     color: #8a8a8a;
     cursor: pointer;
   }
 
   span {
-    padding: 10px 10px 0 0;
-    font-size: 20px;
+    padding: 5px 10px 30px 0;
+    font-size: 14px;
     color: #8a8a8a;
   }
 `;
 
-//수업시간 선택 관련
-const Select = styled.select`
-  margin-right: 20px;
-  height: 50px;
-  border: 1px solid #8a8a8a;
-  border-radius: 8px;
-  font-size: 26px;
+const TimeBox = styled.div`
+  width: 100%;
+  p {
+    font-size: 20px;
+    font-weight: 700;
+  }
 `;
 
-const TimeSelectContainer = styled.div`
-  // margin: 10px;
+const TimeSelectBox = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+`;
+
+const Select = styled.select`
+  width: 140px;
+  height: 30px;
+  margin: 0 10px;
+  border: 1px solid #8a8a8a;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
 `;
 
 const InfoBox = styled.div`
-  margin: 10px;
+  margin: 20px;
   display: flex;
   flex-direction: column;
-`;
-
-//버튼 관련
-const ButtonBox = styled.div`
-  width: 100%;
-  margin-top: 60px;
+  font-size: 12px;
 `;

@@ -23,10 +23,10 @@ Buttons.defaultProps = {
   children: null,
   defaultStyles: {
     width: '100%',
-    height: '80px',
+    height: '54px',
     margin: false,
     padding: false,
-    fontSize: '24px',
+    fontSize: '16px',
     bold: 600,
     color: '#fff',
     backgroundColor: '#153587',

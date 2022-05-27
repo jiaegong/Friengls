@@ -1,7 +1,8 @@
 import { Rowing } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
-import { InputBox, InputLabel } from '../elements/index';
+import { NewInputLabel } from '../elements/index';
+import InfoInput from './InfoInput';
 
 const SelectLanguage = (props) => {
   const {
@@ -37,12 +38,13 @@ const SelectLanguage = (props) => {
   );
 
   return (
-    <InputBox styles={{ height: '70px' }}>
+    <InfoInput
+      onlyBox
+      styles={{ flexDirection: 'column', alignItems: 'flex-start' }}
+    >
       <LabelBox>
-        <InputLabel styles={{ fontSize: '14px', marginBottom: '4px' }}>
-          활용 가능 언어 선택
-        </InputLabel>
-        <InputLabel styles={{ fontSize: '14px' }}>최대 3개</InputLabel>
+        <NewInputLabel>활용 가능 언어 선택</NewInputLabel>
+        <NewInputLabel>최대 3개</NewInputLabel>
       </LabelBox>
       <SelectContainer>
         {/* 맵으로 돌리기 */}
@@ -76,7 +78,7 @@ const SelectLanguage = (props) => {
           ))}
         </Select>
       </SelectContainer>
-    </InputBox>
+    </InfoInput>
   );
 };
 
@@ -94,9 +96,10 @@ const SelectContainer = styled.div`
 `;
 
 const Select = styled.select`
-  margin-right: 20px;
-  width: 160px;
-  height: 30px;
+  margin: 0 20px 5px 0;
+  width: 130px;
+  height: 20px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
+  font-size: 14px;
 `;

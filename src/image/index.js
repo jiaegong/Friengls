@@ -1,7 +1,21 @@
-import ProfileMedium from './profileMedium.png';
 import MainLogo from './MainLogo.png';
 import BannerImg from './BannerImg.png';
 import Logo from './Logo.svg';
+import Profile from './Profile.svg';
+import OpenToggle from './OpenToggle.svg';
+import CloseToggle from './CloseToggle.svg';
+import CloseIcon from './CloseIcon.svg';
+import FeedBackIcon from './FeedBackIcon.svg';
 import footerLogo from './footerLogo.png';
 
-export { ProfileMedium, MainLogo, BannerImg, Logo, footerLogo };
+export {
+  MainLogo,
+  BannerImg,
+  Logo,
+  Profile,
+  OpenToggle,
+  CloseToggle,
+  CloseIcon,
+  FeedBackIcon,
+  footerLogo,
+};
