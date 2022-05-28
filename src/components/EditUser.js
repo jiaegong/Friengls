@@ -355,11 +355,15 @@ const EditUser = (props) => {
 
     dispatch(userActions.editUserDB(userForm));
   };
-
+  console.log(userInfo.userProfile);
+  console.log(previewProfile);
+  console.log(Profile);
   const closeModal = () => {
     // 프로필사진만 바꾸고 나가는 경우
     if (userInfo.userProfile !== previewProfile) {
-      window.location.reload();
+      if (previewProfile !== Profile) {
+        window.location.reload();
+      }
     }
     onClose();
   };
