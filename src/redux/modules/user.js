@@ -179,6 +179,7 @@ const editUserDB = (userInfo) => {
     })
       .then((response) => {
         console.log('editUserDB성공', response);
+        new Swal('프로필이 성공적으로 수정되었습니다.');
         const editUserInfo = userInfo;
         console.log('editUserDB 후 로그인정보', userInfo);
         dispatch(editUser(editUserInfo));

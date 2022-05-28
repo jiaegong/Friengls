@@ -242,11 +242,6 @@ const Signup = ({ userInfo }) => {
     ? true
     : false;
 
-  console.log(confirmEmail);
-  console.log(t('email authentication completed'));
-  console.log(userNameCheck);
-  console.log(t('this nickname is available.'));
-
   return (
     <Container>
       {/* 로고 */}
