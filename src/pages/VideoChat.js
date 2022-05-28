@@ -52,7 +52,7 @@ const VideoChat = (props) => {
 
     if (navigator.mediaDevices) {
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: false }) // 배포 전 true로
+        .getUserMedia({ video: true, audio: true }) // 배포 전 true로
         .then((stream) => {
           myVideo.current.srcObject = stream;
 
