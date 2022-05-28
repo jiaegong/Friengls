@@ -152,6 +152,7 @@ const UserImgWrap = styled.div`
   height: 180px;
   border-radius: 50%;
   overflow: hidden;
+  background: #80808024;
   img {
     width: 100%;
     height: 100%;

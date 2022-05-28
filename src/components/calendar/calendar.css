@@ -7,6 +7,11 @@
   position: relative;
 }
 
+.saveBtn > button {
+  background-color: #213f8d;
+  color: #fff;
+}
+
 .resetBtn {
   /* background-color: rgb(207, 0, 0); */
   background-color: #d11010;
@@ -32,7 +37,6 @@
 }
 
 .calendarTextWrap {
-  /* background-color: aqua; */
   max-width: 1280px;
   width: 80%;
   display: flex;
@@ -60,7 +64,7 @@
 }
 
 .blueColor {
-  background-color: #213f8d;
+  background-color: #08a9ff;
   display: inline-block;
   width: 10px;
   height: 10px;
@@ -73,6 +77,5 @@
 }
 
 .btnWrap {
-  /* background-color: blue; */
   height: 50px;
 }

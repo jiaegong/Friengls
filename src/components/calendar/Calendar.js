@@ -21,7 +21,7 @@ const CalendarTemplate = ({
   tutorName,
   availability,
   setAvailability,
-  primaryColor = '#153587',
+  primaryColor = '#08a9ff',
   secondaryColor = '#ff0000',
   fontFamily = 'Noto Sans',
   fontSize = 12,
