@@ -42,7 +42,7 @@ const Header = () => {
   const handleNotiModal = () => {
     setNotiOpen(!notiOpen);
   };
-
+  //언어선택시 로컬스토리지에 저장
   useEffect(() => {
     if (localStorage.getItem('language')) {
       i18n.changeLanguage(localStorage.getItem('language'));
@@ -248,6 +248,7 @@ const Wrap = styled.div`
     height: 100%;
     padding: 20px 0 0;
     margin: auto;
+    // background: red;
 
     display: flex;
     justify-content: space-between;
@@ -271,20 +272,15 @@ const Wrap = styled.div`
       height: 33px;
       padding-top: 30px;
       display: flex;
-      // justify-content: flex-end;
-      // justify-content: space-around;
       align-items: center;
       position: relative;
 
       // background: #c5c5c5;
 
       li {
-        width: 140px;
+        width: 150px;
         height: 35px;
-        display: flex;
-        justify-content: center;
-        vertical-align: middle;
-        align-items: center;
+        text-align: center;
         position: relative;
         font-size: 16px;
         font-weight: bolder;
