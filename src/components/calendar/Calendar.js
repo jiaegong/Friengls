@@ -880,26 +880,25 @@ const CalendarTemplate = ({
             </Grid>
           </Grid>
 
-          <Grid item>
+          <div className="calendarTextWrap">
+            <div className="calendarTextInner">
+              <span className="calendarInfo">
+                <span className="redColor"></span> 예약이 있는 날입니다.
+              </span>
+              <span className="calendarInfo">
+                <span className="blueColor"></span> 선택한 날입니다.
+              </span>
+            </div>
+
+            <p className="calendarText">* 한번에 1시간씩만 예약이 가능합니다</p>
+          </div>
+          <Grid item className="btnWrap">
             <Grid
               container
               direction="row"
               alignItems="center"
               justifyContent="center"
             >
-              {/* <Grid item>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={handleSetMultiple}
-                  className={classes.button}
-                >
-                  {settingMultiple
-                    ? 'Done'
-                    : 'Add Selected Times to Multiple Days'}
-                </Button>
-              </Grid> */}
-
               <Grid item>
                 <div className="saveBtn">
                   <Button
