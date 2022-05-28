@@ -8,6 +8,7 @@ import MyPageModal from './MyPageModal';
 import { Profile, OpenToggle, CloseToggle } from '../image/index';
 import { Buttons } from '../elements/index';
 import { useTranslation } from 'react-i18next';
+import { getCookie } from '../shared/Cookie';
 
 const DetailUser = (props) => {
   const { t } = useTranslation();
@@ -49,6 +50,8 @@ const DetailUser = (props) => {
   if (!userInfo) {
     return null;
   }
+
+  // console.log(getCookie('token'));
 
   return (
     <Container>

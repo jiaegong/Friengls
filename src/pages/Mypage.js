@@ -8,6 +8,7 @@ import DetailUser from '../components/DetailUser';
 import BookingItem from '../components/BookingItem';
 import LikeItem from '../components/LikeItem';
 import { useTranslation } from 'react-i18next';
+import { getCookie } from '../shared/Cookie';
 
 const Mypage = (props) => {
   const { t } = useTranslation();
@@ -36,8 +37,6 @@ const Mypage = (props) => {
   }, [userName]);
 
   // 현재 시간 구하는 방법
-  var today = new Date();
-  // console.log(today);
 
   useEffect(() => {
     dispatch(likeActions.getLikeDB());
