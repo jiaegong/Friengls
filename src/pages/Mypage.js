@@ -8,6 +8,7 @@ import DetailUser from '../components/DetailUser';
 import BookingItem from '../components/BookingItem';
 import LikeItem from '../components/LikeItem';
 import { useTranslation } from 'react-i18next';
+import { getCookie } from '../shared/Cookie';
 
 const Mypage = (props) => {
   const { t } = useTranslation();
@@ -36,14 +37,14 @@ const Mypage = (props) => {
   }, [userName]);
 
   // 현재 시간 구하는 방법
-  var today = new Date();
-  // console.log(today);
 
   useEffect(() => {
     dispatch(likeActions.getLikeDB());
   }, []);
 
   const likeList = useSelector((state) => state.like.myList);
+
+  console.log({ bookingList });
 
   return (
     <Wrap>
@@ -56,6 +57,9 @@ const Mypage = (props) => {
             {t('booking list')} <span>/ {t('tutoring schedule')}</span>
           </p>
           <ul className="bookingList">
+            {bookingList.length === 0 && (
+              <li className="noBookingText"> 예약이 없습니다. </li>
+            )}
             {bookingList?.map((item, idx) => {
               return (
                 <BookingItem
@@ -146,6 +150,13 @@ const Wrap = styled.div`
           border-radius: 15px;
           display: none;
           /*스크롤바 트랙 색상 */
+        }
+        .noBookingText {
+          text-align: center;
+          padding-top: 20px;
+          font-weight: 700;
+          font-size: 18px;
+          letter-spacing: 1px;
         }
 
         /* 예약 카드 */

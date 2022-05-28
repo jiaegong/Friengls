@@ -21,7 +21,7 @@ const CalendarTemplate = ({
   tutorName,
   availability,
   setAvailability,
-  primaryColor = '#153587',
+  primaryColor = '#08a9ff',
   secondaryColor = '#ff0000',
   fontFamily = 'Noto Sans',
   fontSize = 12,
@@ -593,18 +593,23 @@ const CalendarTemplate = ({
             onePick1.push({
               start: availability[i].start
                 .toString()
-                .replace(' (한국 표준시)', ''),
-              end: availability[i].end.toString().replace(' (한국 표준시)', ''),
+                .replace(' (대한한국 표준시)', ''),
+              end: availability[i].end
+                .toString()
+                .replace(' (대한한국 표준시)', ''),
             });
           }
         }
 
         for (let i = 0; i < data.length; i++) {
           onePick2.push({
-            start: data[i].start.toString().replace(' (한국 표준시)', ''),
-            end: data[i].end.toString().replace(' (한국 표준시)', ''),
+            start: data[i].start.toString().replace(' (대한한국 표준시)', ''),
+            end: data[i].end.toString().replace(' (대한한국 표준시)', ''),
           });
         }
+
+        console.log({ onePick1 });
+        console.log({ onePick2 });
 
         const Astart = [];
         for (let i = 0; i < onePick2.length; i++) {

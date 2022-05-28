@@ -12,7 +12,7 @@ const ReviewModal = ({ onClose, tutorName }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const token = getCookie('token');
+  // const token = getCookie('token');
   const [rate, setRate] = React.useState('');
   const [text, setText] = React.useState('');
   const onChange = (e) => {
@@ -20,7 +20,7 @@ const ReviewModal = ({ onClose, tutorName }) => {
   };
 
   const addReview = () => {
-    dispatch(reviewActions.addReviewDB(token, tutorName, rate, text));
+    dispatch(reviewActions.addReviewDB(tutorName, rate, text));
     setRate('');
     setText('');
   };
