@@ -26,13 +26,28 @@ const Header = () => {
   // 다국어 처리
   const { t } = useTranslation();
   const { i18n } = useTranslation();
-  const changeLanguageEn = () => i18n.changeLanguage('en');
-  const changeLanguageKo = () => i18n.changeLanguage('ko');
-  const changeLanguageJa = () => i18n.changeLanguage('ja');
+  const changeLanguageEn = () => {
+    i18n.changeLanguage('en');
+    localStorage.setItem('language', 'en');
+  };
+  const changeLanguageKo = () => {
+    i18n.changeLanguage('ko');
+    localStorage.setItem('language', 'ko');
+  };
+  const changeLanguageJa = () => {
+    i18n.changeLanguage('ja');
+    localStorage.setItem('language', 'ja');
+  };
 
   const handleNotiModal = () => {
     setNotiOpen(!notiOpen);
   };
+  //언어선택시 로컬스토리지에 저장
+  useEffect(() => {
+    if (localStorage.getItem('language')) {
+      i18n.changeLanguage(localStorage.getItem('language'));
+    }
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -45,12 +60,8 @@ const Header = () => {
   const userInfo = useSelector((state) => state.user.info);
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
-
+  //로그인,로그아웃을 확인
   const [loginCheck, setLoginCheck] = useState(false);
-
-  useEffect(() => {
-    setLoginCheck(isLogin);
-  }, [isLogin]);
 
   //로그아웃
   const logout = () => {
@@ -123,7 +134,7 @@ const Header = () => {
           >
             {t('find a tutor')}
           </li>
-          {loginCheck ? (
+          {isLogin && userInfo ? (
             <>
               <li
                 onClick={() => {
@@ -237,6 +248,7 @@ const Wrap = styled.div`
     height: 100%;
     padding: 20px 0 0;
     margin: auto;
+    // background: red;
 
     display: flex;
     justify-content: space-between;
@@ -260,20 +272,15 @@ const Wrap = styled.div`
       height: 33px;
       padding-top: 30px;
       display: flex;
-      justify-content: flex-end;
-      justify-content: space-around;
       align-items: center;
       position: relative;
 
-      /* background: #c5c5c5; */
+      // background: #c5c5c5;
 
       li {
-        width: 140px;
+        width: 150px;
         height: 35px;
-        display: flex;
-        justify-content: center;
-        vertical-align: middle;
-        align-items: center;
+        text-align: center;
         position: relative;
         font-size: 16px;
         font-weight: bolder;

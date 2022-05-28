@@ -24,7 +24,8 @@ const FeedBack = ({ _onClick }) => {
               styles={{
                 width: '200px',
                 height: '40px',
-                background: '#018ab2',
+                // background: '#018ABE',
+                background: '#7f83ea',
                 position: 'fixed',
                 bottom: '143px',
                 right: '50px',
@@ -33,7 +34,6 @@ const FeedBack = ({ _onClick }) => {
               소중한 의견을 남겨주세요!
             </Buttons>
           </A>
-          {/* <Div>헬로</Div> */}
         </Div>
       )}
     </React.Fragment>
@@ -55,7 +55,7 @@ const Div = styled.div`
     bottom: 130px;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 15px solid #018ab2;
+    border-top: 15px solid #7f83ea;
   }
 `;
 

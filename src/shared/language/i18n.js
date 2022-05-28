@@ -21,7 +21,10 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources: resource,
-    lng: 'en', // 초기 설정 언어
+    // 초기 설정 언어
+    lng: localStorage.getItem('language')
+      ? localStorage.getItem('language')
+      : 'en',
     fallbackLng: 'en',
     ns: ['translation'],
     defaultNS: 'translation',
