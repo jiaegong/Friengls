@@ -44,6 +44,8 @@ const Mypage = (props) => {
 
   const likeList = useSelector((state) => state.like.myList);
 
+  console.log({ bookingList });
+
   return (
     <Wrap>
       <div className="innerWrap">
@@ -55,6 +57,9 @@ const Mypage = (props) => {
             {t('booking list')} <span>/ {t('tutoring schedule')}</span>
           </p>
           <ul className="bookingList">
+            {bookingList.length === 0 && (
+              <li className="noBookingText"> 예약이 없습니다. </li>
+            )}
             {bookingList?.map((item, idx) => {
               return (
                 <BookingItem
@@ -145,6 +150,13 @@ const Wrap = styled.div`
           border-radius: 15px;
           display: none;
           /*스크롤바 트랙 색상 */
+        }
+        .noBookingText {
+          text-align: center;
+          padding-top: 20px;
+          font-weight: 700;
+          font-size: 18px;
+          letter-spacing: 1px;
         }
 
         /* 예약 카드 */
