@@ -91,7 +91,7 @@ const Background = styled.div`
   .notifications {
     /* display: none; */
     position: absolute;
-    max-width: 450px;
+    max-width: 600px;
     min-width: 420px;
     width: 100%;
     min-height: 140px;
