@@ -19,8 +19,6 @@ const Search = (props) => {
   const tutorList = useSelector((state) => state.tutor.list);
   const [tagList, setTagList] = React.useState(null);
 
-  console.log(tag.length);
-
   useEffect(() => {
     if (urlCheck === '/search' || tutorList.length === 0)
       dispatch(tutorActions.getTutorListDB());
@@ -37,7 +35,7 @@ const Search = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [tutorList]);
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();

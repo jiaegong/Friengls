@@ -191,7 +191,6 @@ const getBookingNotiDB = () => {
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
-        console.log('noti data : ', doc.data);
         dispatch(getNoti(doc.data));
       })
       .catch((err) => {
