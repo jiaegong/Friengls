@@ -4,10 +4,11 @@ import axios from 'axios';
 import Portal from '../shared/Portal';
 import EditUser from './EditUser';
 import { Profile, CloseIcon } from '../image/index';
-import { Buttons, InputBox, InputLabel, Inputs } from '../elements/index';
+import { Buttons } from '../elements/index';
 import { getCookie } from '../shared/Cookie';
 import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 const MyPageModal = (props) => {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ const MyPageModal = (props) => {
   const [editUser, setEditUser] = useState(false);
   const handleEditUser = async () => {
     if (pwd.split('').filter((word) => word !== ' ').length === 0) {
-      window.alert('비밀번호를 입력해 주세요.');
+      new Swal(t('please fill in a password.'));
       return;
     }
     try {
@@ -39,11 +40,17 @@ const MyPageModal = (props) => {
 
       result === 'success'
         ? setEditUser(true)
-        : window.alert(t('the password is incorrect.'));
+        : new Swal(t('the password is incorrect.'));
     } catch (err) {
       console.log(err);
     }
   };
+  const returnHandleEditUser = (e) => {
+    if (e.keyCode === 13) {
+      handleEditUser();
+    }
+  };
+
   // 모달 켜질 때 페이지 스크롤 막기
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -94,6 +101,7 @@ const MyPageModal = (props) => {
                   label={t('password')}
                   type="password"
                   _onChange={handlePwd}
+                  _onKeyUp={returnHandleEditUser}
                   placeholder={t('please enter your password')}
                   styles={{
                     flexDirection: 'column',

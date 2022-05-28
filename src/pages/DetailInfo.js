@@ -9,6 +9,7 @@ import SelectLanguage from '../components/SelectLanguage';
 import { Buttons, NewInputLabel } from '../elements';
 import InfoInput from '../components/InfoInput';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 // to do: 자기소개, 한 줄 소개, 태그 글자수제한
 //to do: 태그 영어 대소문자 중복 거르기
@@ -79,7 +80,7 @@ const DetailInfo = (props) => {
     if (e.keyCode === 32) {
       //공백일 경우 거르기
       if (tagInput.split('').filter((word) => word !== ' ').length === 0) {
-        window.alert(t('please enter tags.'));
+        new Swal(t('please enter tags.'));
         setTagInput('');
         return;
       }
@@ -87,7 +88,7 @@ const DetailInfo = (props) => {
 
       if (tagList.indexOf(tagInput) !== -1) {
         if (tagInput.length === tagList[tagList.indexOf(tagInput)].length) {
-          window.alert(t('duplicate tags are unable.'));
+          new Swal(t('duplicate tags are unable.'));
           setTagInput('');
           return;
         }
@@ -113,7 +114,7 @@ const DetailInfo = (props) => {
     //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
       if (contents.length > 0) {
-        window.alert(t('self-introduction can not be filled with spaces.'));
+        new Swal(t('self-introduction can not be filled with spaces.'));
         setContents('');
         return;
       }
@@ -121,7 +122,7 @@ const DetailInfo = (props) => {
 
     if (comment.split('').filter((word) => word !== ' ').length === 0) {
       if (comment.length > 0) {
-        window.alert(t('comment can not be filled with spaces.'));
+        new Swal(t('comment can not be filled with spaces.'));
         setComment('');
         return;
       }
@@ -134,7 +135,7 @@ const DetailInfo = (props) => {
         contents.split('').filter((word) => word !== ' ').length === 0 ||
         tagList.length === 0
       ) {
-        window.alert(t('tutor must fill out all the information.'));
+        new Swal(t('tutor must fill out all the information.'));
         return;
       }
     }
@@ -164,7 +165,7 @@ const DetailInfo = (props) => {
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
-    window.alert(t('refreshing will return to the first screen.'));
+    new Swal(t('refreshing will return to the first screen.'));
     history.replace('/signup');
   }
 
@@ -354,7 +355,6 @@ const ImgInput = styled.input`
 const ProfileAddButton = styled.label`
   width: 45px;
   height: 45px;
-  padding-bottom: 10px;
   border-radius: 50px;
   background: #153587;
   cursor: pointer;
@@ -364,8 +364,8 @@ const ProfileAddButton = styled.label`
   position: absolute;
   top: 311px;
   left: 295px;
-  font-size: 40px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 400;
   color: #fff;
 `;
 

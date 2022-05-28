@@ -1,16 +1,18 @@
+import React from 'react';
 import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 
-const MySwal = withReactContent(Swal);
-
-MySwal.fire({
-  title: <p>Hello World</p>,
-  didOpen: () => {
-    // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-    MySwal.showLoading();
-  },
-}).then(() => {
-  return MySwal.fire(<p>Shorthand works too</p>);
-});
+const MySwal = () => {
+  Swal.fire({
+    title: '헬로',
+    text: '바이',
+    icon: 'warning',
+    confirmButtonColor: '#3085d6',
+    confirmButtonText: '후아유',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // history.push('/login');
+    }
+  });
+};
 
 export default MySwal;

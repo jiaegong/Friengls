@@ -18,6 +18,7 @@ import Portal from '../shared/Portal';
 import ReviewModal from '../components/ReviewModal';
 import { history } from '../redux/configureStore';
 import { useLocation } from 'react-router';
+import Swal from 'sweetalert2';
 
 const VideoChat = (props) => {
   const location = useLocation();
@@ -52,7 +53,7 @@ const VideoChat = (props) => {
 
     if (navigator.mediaDevices) {
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true }) // 배포 전 true로
+        .getUserMedia({ video: true, audio: false }) // 배포 전 true로
         .then((stream) => {
           myVideo.current.srcObject = stream;
 
@@ -71,12 +72,11 @@ const VideoChat = (props) => {
           socket.on('user-connected', (userId) => {
             console.log(3);
             const call = peer.call(userId, stream); // call 요청
-            if (call) {
+            console.log(call);
+            if (call.peerConnection) {
               call.on('stream', (userVideoStream) => {
-                if (userVideo.current) {
-                  console.log(4);
-                  userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
-                }
+                console.log(4);
+                userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
               });
               call.on('close', () => {
                 userVideo.current.remove(); // 상대방 나가면 비디오 remove
@@ -92,10 +92,8 @@ const VideoChat = (props) => {
             if (call) {
               call.answer(stream); // 내 stream 보내주기
               call.on('stream', (userVideoStream) => {
-                if (userVideo.current) {
-                  console.log(6);
-                  userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
-                }
+                console.log(6);
+                userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
               });
             }
             connectionRef.current = peer;
@@ -103,7 +101,7 @@ const VideoChat = (props) => {
         })
         .catch((err) => console.log(err));
     } else {
-      window.alert('비디오와 오디오 환경을 확인해 주세요!');
+      new Swal('비디오와 오디오 환경을 확인해 주세요!');
       history.goBack();
     }
 

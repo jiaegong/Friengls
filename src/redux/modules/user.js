@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import { setCookie, getCookie, deleteCookie } from '../../shared/Cookie';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 //액션
 const SET_USER = 'SET_USER'; //유저정보 불러오기
@@ -73,7 +74,7 @@ const signupDB = (formData, loginInfo) => {
         dispatch(loginDB(loginInfo));
       })
       .catch((error) => {
-        window.alert('회원가입에 실패하셨습니다.');
+        new Swal('회원가입에 실패하셨습니다.');
         console.log(error);
       });
   };
@@ -92,7 +93,7 @@ const uploadProfileDB = (formData) => {
         console.log('uploadProfileDB성공', response.data);
       })
       .catch((error) => {
-        window.alert('프로필 저장에 실패하셨습니다.');
+        new Swal('프로필 저장에 실패하셨습니다.');
         console.log(error);
       });
   };
@@ -110,7 +111,7 @@ const deleteProfileDB = (userInfo) => {
         console.log('uploadProfileDB성공', response.data);
       })
       .catch((error) => {
-        window.alert('이미지 삭제에 실패하셨습니다.');
+        new Swal('이미지 삭제에 실패하셨습니다.');
         console.log(error);
       });
     dispatch(deleteProfile);
@@ -129,12 +130,12 @@ const loginDB = (loginForm) => {
       .then((response) => {
         console.log('loginDB성공', response.data);
         if (response.data.msg === '비밀번호가 틀렸습니다.') {
-          window.alert('비밀번호를 확인해 주세요.');
+          new Swal('비밀번호를 확인해 주세요.');
           return;
         }
 
         if (response.data.msg === '존재하지 않는 아이디입니다.') {
-          window.alert('존재하지 않는 아이디 입니다.');
+          new Swal('존재하지 않는 아이디 입니다.');
           return;
         }
         setCookie('token', response.data.token);
@@ -142,7 +143,7 @@ const loginDB = (loginForm) => {
         window.location.reload();
       })
       .catch((error) => {
-        window.alert('로그인에 실패하셨습니다.');
+        new Swal('로그인에 실패하셨습니다.');
         console.log(error);
       });
   };
@@ -185,7 +186,7 @@ const editUserDB = (userInfo) => {
         window.location.reload();
       })
       .catch((error) => {
-        window.alert('정보 저장에 실패하셨습니다.');
+        new Swal('정보 저장에 실패하셨습니다.');
         console.log(error);
       });
   };
@@ -212,9 +213,11 @@ const getUserDetailDB = (userApi) => {
 
 const logout = () => {
   return function (dispatch, getState, { history }) {
-    dispatch(unsetUser());
+    deleteCookie('token');
+    new Swal('성공적으로 로그아웃 되었습니다.');
     history.replace('/');
-    window.location.reload();
+    dispatch(unsetUser());
+    // window.location.reload();
   };
 };
 

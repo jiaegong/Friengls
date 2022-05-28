@@ -1,3 +1,5 @@
+import { history } from '../redux/configureStore';
+
 //쿠키에서 밸류를 받아오는 함수
 const getCookie = (name) => {
   let value = '; ' + document.cookie;
@@ -24,7 +26,6 @@ const setCookie = (name, value, exp = 5) => {
 
 const deleteCookie = (name) => {
   let date = new Date('2020-01-01').toUTCString();
-
   document.cookie = name + '=; expires=' + date;
 };
 

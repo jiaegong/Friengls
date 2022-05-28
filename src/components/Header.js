@@ -41,14 +41,19 @@ const Header = () => {
   }, [notiOpen]);
 
   //마이페이지url에 사용할 유저정보 가져오기
+  const isLogin = useSelector((state) => state.user.isLogin);
   const userInfo = useSelector((state) => state.user.info);
-
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
 
+  const [loginCheck, setLoginCheck] = useState(false);
+
+  useEffect(() => {
+    setLoginCheck(isLogin);
+  }, [isLogin]);
+
   //로그아웃
   const logout = () => {
-    deleteCookie('token');
     dispatch(userActions.logout());
   };
 
@@ -118,7 +123,7 @@ const Header = () => {
           >
             {t('find a tutor')}
           </li>
-          {token ? (
+          {loginCheck ? (
             <>
               <li
                 onClick={() => {

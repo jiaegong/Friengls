@@ -98,7 +98,7 @@ const SelectContainer = styled.div`
 const Select = styled.select`
   margin: 0 20px 5px 0;
   width: 130px;
-  height: 20px;
+  height: 24px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
   font-size: 14px;
