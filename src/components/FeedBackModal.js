@@ -16,10 +16,7 @@ const FeedBack = ({ _onClick }) => {
       </FeedBackBox>
       {feedbackOn && (
         <Div>
-          <A
-            href="https://docs.google.com/forms/d/e/1FAIpQLSeBNcNFvkoVRhmoGUk1j2sriuLtfbKZYjsxVhptwuiCRu0jTQ/viewform?usp=sf_link"
-            target="_blank"
-          >
+          <A href="https://forms.gle/Q2cRMo4xN4ZvUgpu9" target="_blank">
             <Buttons
               styles={{
                 width: '200px',
