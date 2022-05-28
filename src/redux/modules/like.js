@@ -56,7 +56,6 @@ const unlikeDB = (tutorName) => {
 };
 
 const isLikeDB = (tutorName) => {
-  console.log(tutorName);
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',

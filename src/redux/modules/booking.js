@@ -165,9 +165,6 @@ const setBookingDB = (data, tutorName) => {
 // 예약리스트 불러오기
 const getBookingDB = ({ userName, isTutor }) => {
   return function (dispatch, getState, { history }) {
-    // if (!userName) return;
-    console.log({ userName, isTutor });
-
     axios({
       method: 'get',
       // url: `https://hjg521.link/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
@@ -188,14 +185,12 @@ const getBookingDB = ({ userName, isTutor }) => {
 // 알림 예약 불러오기
 const getBookingNotiDB = () => {
   return function (dispatch, getState, { history }) {
-    console.log('work!!');
     axios({
       method: 'get',
       url: `https://hjg521.link/getNoti`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
-        console.log('noti data : ', doc.data);
         dispatch(getNoti(doc.data));
       })
       .catch((err) => {
@@ -235,7 +230,6 @@ const delBookingNotiDB = (timeId) => {
     })
       .then((doc) => {
         Swal.fire({
-          // position: 'top-end',
           icon: 'success',
           text: `예약을 취소하셨습니다~!`,
           showConfirmButton: true,

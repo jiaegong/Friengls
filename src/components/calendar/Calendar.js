@@ -7,8 +7,6 @@ import {
   makeStyles,
   Card,
   Button,
-  CircularProgress,
-  // Popover,
   ThemeProvider,
 } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
@@ -30,7 +28,6 @@ const CalendarTemplate = ({
   primaryFontColor = '#131313',
 
   // 예약 가능 시간 범위 설정
-
   // 8시간
   startTime = '8:00',
   endTime = '20:00',
@@ -41,9 +38,7 @@ const CalendarTemplate = ({
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  // const Swal = require('sweetalert2');
   const isLogin = useSelector((state) => state.user.isLogin);
-  // console.log(isLogin);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -83,13 +78,6 @@ const CalendarTemplate = ({
       minWidth: 200,
       fontFamily: theme.typography.fontFamily,
     },
-    // test: {
-    //   marginTop: 50,
-    // },
-    // popover: {
-    //   pointerEvents: "none",
-    //   fontFamily: theme.typography.fontFamily,
-    // },
     paper: {
       padding: theme.spacing(1),
     },
@@ -336,10 +324,6 @@ const CalendarTemplate = ({
     );
   }
 
-  // const StyledBtn = styled.button`
-
-  // `
-
   function getDaysArray() {
     return [
       ['', '', '', '', '', '', ''],
@@ -377,7 +361,6 @@ const CalendarTemplate = ({
         i++;
       }
     }
-    // console.log({ output });
     return output;
   };
 
@@ -480,7 +463,6 @@ const CalendarTemplate = ({
   }
 
   function makeQuickAvailability(availability) {
-    // console.log({ availability });
     const output = {};
     for (let range of availability) {
       if (new Date(range.start) > new Date()) {
@@ -488,8 +470,6 @@ const CalendarTemplate = ({
         let time = `${moment(range.start).format('H:mm')} - ${moment(
           range.end,
         ).format('H:mm')}`;
-
-        // console.log({ day, time });
 
         if (output[day]) {
           output[day].push(time);
@@ -504,31 +484,22 @@ const CalendarTemplate = ({
   return function Calendar() {
     const classes = useStyles();
     const today = moment();
-    // console.log('moment : ', today);
 
     // timeList 불러와서 저장되있는 곳 유무를 불러오는거.
     const [availabilityState, setAvailabilityState] = useState(
       convertAvailabilityFromDatabase(availability),
     );
-    // console.log({ availabilityState });
 
     // 선택한 시간 값 받아 오는 stats
     const [quickAvailability, setQuickAvailability] = useState(
       makeQuickAvailability(availability),
     );
-    // console.log({ quickAvailability });
 
     const [activeDay, setActiveDay] = useState(null);
     const [year, setYear] = useState(Number(today.format('YYYY')));
 
-    // console.log({ activeDay });
-    // console.log({ year });
-
     // "월 number" 데이터 받는곳
     const [monthNumber, setMonthNumber] = useState(Number(today.format('M')));
-    // const [settingMultiple, setSettingMultiple] = useState(false);
-
-    // console.log({ monthNumber });
 
     const months = useMonths(year);
 
@@ -539,8 +510,6 @@ const CalendarTemplate = ({
     const [saving, setSaving] = useState(false);
     let week = 0;
     let dayOfMonth = 1;
-    // console.log({ times });
-    // console.log({ saving });
 
     while (week < 6 && dayOfMonth <= lastDay) {
       days[week][dayOfWeek] = dayOfMonth;
@@ -581,19 +550,9 @@ const CalendarTemplate = ({
 
     // 클릭한 일의 data를 가져오는 함수.
     const createDayHandler = (day) => () => {
-      // if (settingMultiple) {
-      // addTimesToDay(day);
-      // } else {
-      // console.log('선택한 날 : ', day);
       examineAvailabilityForDay(day);
       // }
     };
-
-    // 선택한 시간 여러 날짜에 한번에 저장하는 기능
-    // const handleSetMultiple = () => {
-    //   setActiveDay(null);
-    //   setSettingMultiple(!settingMultiple);
-    // };
 
     // 저장 버튼
     const handleSaveAvailability = () => {
@@ -747,13 +706,11 @@ const CalendarTemplate = ({
 
                     {/* 이게 week !!!!! */}
                     {days.map((week, i) => {
-                      // console.log({ week });
                       return (
                         <Grid key={i} item>
                           <Grid container direction="row">
                             {/* 여기가 day!!!!! */}
                             {week.map((day, i) => {
-                              // console.log({ day });
                               return (
                                 <Grid key={year + month + i} item>
                                   <IconButton
@@ -880,26 +837,25 @@ const CalendarTemplate = ({
             </Grid>
           </Grid>
 
-          <Grid item>
+          <div className="calendarTextWrap">
+            <div className="calendarTextInner">
+              <span className="calendarInfo">
+                <span className="redColor"></span> 예약이 있는 날입니다.
+              </span>
+              <span className="calendarInfo">
+                <span className="blueColor"></span> 선택한 날입니다.
+              </span>
+            </div>
+
+            <p className="calendarText">* 한번에 1시간씩만 예약이 가능합니다</p>
+          </div>
+          <Grid item className="btnWrap">
             <Grid
               container
               direction="row"
               alignItems="center"
               justifyContent="center"
             >
-              {/* <Grid item>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={handleSetMultiple}
-                  className={classes.button}
-                >
-                  {settingMultiple
-                    ? 'Done'
-                    : 'Add Selected Times to Multiple Days'}
-                </Button>
-              </Grid> */}
-
               <Grid item>
                 <div className="saveBtn">
                   <Button
@@ -929,12 +885,6 @@ const CalendarTemplate = ({
     // 선택한 시간을 한 날에 추가하는 기능
     function addTimeToDay(newTimes) {
       const newAvail = availabilityState;
-      // console.log({ newAvail });
-
-      // console.log("시간대 한번에 다 불러오는 아이:", newAvail);
-
-      // console.log('2 : ', newAvail[year].hasOwnProperty(month));
-      // console.log("선택한 날의 값", activeDay);
       if (newAvail.hasOwnProperty(year)) {
         if (newAvail[year].hasOwnProperty(month)) {
           newAvail[year][month][activeDay] = newTimes;
@@ -968,37 +918,6 @@ const CalendarTemplate = ({
       }
       setActiveDay(day);
     }
-
-    // 여러 시간을 다른날에 한번에 추가 하는 기능
-    // function addTimesToDay(day) {
-    //   const newAvail = { ...availabilityState };
-    //   if (newAvail[year]) {
-    //     if (newAvail[year][month]) {
-    //       if (newAvail[year][month][day]) {
-    //         newAvail[year][month][day] = combineTimeArrays(
-    //           newAvail[year][month][day],
-    //           times
-    //         );
-    //       } else {
-    //         newAvail[year][month][day] = times;
-    //       }
-    //     } else {
-    //       newAvail[year][month] = {
-    //         [day]: times,
-    //       };
-    //     }
-    //   } else {
-    //     newAvail[year] = {
-    //       [month]: {
-    //         [day]: times,
-    //       },
-    //     };
-    //   }
-    //   setAvailabilityState(newAvail);
-    //   setQuickAvailability(
-    //     makeQuickAvailability(convertAvailabilityForDatabase(newAvail))
-    //   );
-    // }
   };
 };
 

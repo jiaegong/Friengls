@@ -52,6 +52,7 @@ function App() {
       <Route path="/detail/:userName/:isTutor" exact component={Detail} />
       <Route path="/videochat/:roomName" exact component={VideoChat} />
       <Route path="/search" exact component={Search} />
+      <Route path="/search/:tag" exact component={Search} />
       <Footer />
       <FeedBackModal />
     </ConnectedRouter>
