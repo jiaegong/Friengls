@@ -26,13 +26,28 @@ const Header = () => {
   // 다국어 처리
   const { t } = useTranslation();
   const { i18n } = useTranslation();
-  const changeLanguageEn = () => i18n.changeLanguage('en');
-  const changeLanguageKo = () => i18n.changeLanguage('ko');
-  const changeLanguageJa = () => i18n.changeLanguage('ja');
+  const changeLanguageEn = () => {
+    i18n.changeLanguage('en');
+    localStorage.setItem('language', 'en');
+  };
+  const changeLanguageKo = () => {
+    i18n.changeLanguage('ko');
+    localStorage.setItem('language', 'ko');
+  };
+  const changeLanguageJa = () => {
+    i18n.changeLanguage('ja');
+    localStorage.setItem('language', 'ja');
+  };
 
   const handleNotiModal = () => {
     setNotiOpen(!notiOpen);
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('language')) {
+      i18n.changeLanguage(localStorage.getItem('language'));
+    }
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -41,14 +56,15 @@ const Header = () => {
   }, [notiOpen]);
 
   //마이페이지url에 사용할 유저정보 가져오기
+  const isLogin = useSelector((state) => state.user.isLogin);
   const userInfo = useSelector((state) => state.user.info);
-
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
+  //로그인,로그아웃을 확인
+  const [loginCheck, setLoginCheck] = useState(false);
 
   //로그아웃
   const logout = () => {
-    deleteCookie('token');
     dispatch(userActions.logout());
   };
 
@@ -118,7 +134,7 @@ const Header = () => {
           >
             {t('find a tutor')}
           </li>
-          {token ? (
+          {isLogin && userInfo ? (
             <>
               <li
                 onClick={() => {
@@ -255,32 +271,24 @@ const Wrap = styled.div`
       height: 33px;
       padding-top: 30px;
       display: flex;
-      justify-content: flex-end;
-      justify-content: space-around;
+      // justify-content: flex-end;
+      // justify-content: space-around;
       align-items: center;
       position: relative;
 
-      /* background: #c5c5c5; */
+      // background: #c5c5c5;
 
       li {
-        width: 5rem;
-        width: 110px;
+        width: 140px;
         height: 35px;
         display: flex;
         justify-content: center;
         vertical-align: middle;
         align-items: center;
-        cursor: pointer;
-
         position: relative;
-
         font-size: 16px;
         font-weight: bolder;
         letter-spacing: 1px;
-
-        margin-left: 3.125rem;
-        /* background: #8e8e8e; */
-
         cursor: pointer;
 
         /* 알림 갯수 */
@@ -302,7 +310,6 @@ const Wrap = styled.div`
           justify-content: center;
 
           border-radius: 50%;
-
           padding: 5px;
         }
       }

@@ -124,9 +124,7 @@ const DetailUser = (props) => {
         {/* 자기소개, 한줄소개 없을 경우 띄우기 */}
         {userInfo.comment === '' &&
           userInfo.contents === '' &&
-          userInfo.tag === '' && (
-            <NoInfoBox>작성된 유저정보가 없습니다.</NoInfoBox>
-          )}
+          userInfo.tag === '' && <NoInfoBox>작성된 내용이 없습니다.</NoInfoBox>}
       </UserInfoBox>
     </Container>
   );
@@ -143,10 +141,6 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   border-bottom: 1px solid #c4c4c4;
-  // 물어볼 것
-  // border: 1px solid #c4c4c4;
-  // border-radius: 4px;
-  // box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.15);
 `;
 
 const ImageBox = styled.div`
@@ -206,8 +200,7 @@ const ContentsBox = styled.div`
 `;
 
 const Tags = styled.div`
-  width: 1085px;
-  width: 100%; //1
+  // width: 100%; //1
   width: 85%; //2
 
   span {
@@ -229,13 +222,13 @@ const Like = styled.div`
   right: 30px;
   top: 0;
 `;
-
+// 자기소개 토글
 const ContentsButton = styled.button`
 display: flex;  
   position: absolute;
   right: 30px;
-  top: 66px;
   top: 50px;
+  cursor: pointer;
   font-size: 16px;
   background: transparent;
   border: none;
@@ -247,7 +240,7 @@ display: flex;
     height: 100%
   }
 `;
-
+// 유저정보가 없을 때
 const NoInfoBox = styled.div`
   text-align: center;
   font-size: 20px;

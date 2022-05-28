@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 
 // 패키지
@@ -23,7 +23,7 @@ import Search from '../pages/Search';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
-import FeedBack from '../components/FeedBack';
+import FeedBackModal from '../components/FeedBackModal';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +34,10 @@ function App() {
     }
   }, []);
 
-  const [feedbackOn, setFeedbackOn] = useState(false);
+  // 콘솔 창 배포환경에서 안보이기
+  if (process.env.NODE_ENV === 'production') {
+    console.log = () => {};
+  }
 
   return (
     <ConnectedRouter history={history}>
@@ -49,31 +52,11 @@ function App() {
       <Route path="/detail/:userName/:isTutor" exact component={Detail} />
       <Route path="/videochat/:roomName" exact component={VideoChat} />
       <Route path="/search" exact component={Search} />
+      <Route path="/search/:tag" exact component={Search} />
       <Footer />
-      <BsPatchPlus
-        className="feedback"
-        size={60}
-        onClick={() => setFeedbackOn(!feedbackOn)}
-      />
-      {feedbackOn && <Feedback>피드백을 남겨주세요!</Feedback>}
-      <FeedBack />
+      <FeedBackModal />
     </ConnectedRouter>
   );
 }
 
 export default App;
-
-const Feedback = styled.div`
-  position: fixed;
-  bottom: 100px;
-  right: 30px;
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 12px 0px #00000040;
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-`;

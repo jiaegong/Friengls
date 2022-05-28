@@ -10,7 +10,7 @@ const Review = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const userName = useSelector((state) => state.user.info.userName);
+  const userName = useSelector((state) => state.user.info?.userName);
   const tuteeName = props.Tutee_userName;
   const reviewId = props.reviewId;
   const tutorImg = props.Tutor_userProfile;

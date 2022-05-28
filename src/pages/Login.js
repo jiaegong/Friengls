@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { emailForm, pwdForm } from '../shared/common';
+import { emailForm, pwdForm } from '../utils/validation';
 import { Logo } from '../image/';
 import { Buttons } from '../elements';
 import InfoInput from '../components/InfoInput';
 import { useTranslation } from 'react-i18next';
-// import MySwal from '../components/MySwal';
+import { returnClick } from '../utils/returnClick';
+import Swal from 'sweetalert2';
 
 const Login = (props) => {
   const { t } = useTranslation();
@@ -28,11 +29,11 @@ const Login = (props) => {
   const login = () => {
     //유효성검사
     if (!emailForm(userEmail)) {
-      window.alert('이메일: abc@abc.abc형식의 이메일');
+      new Swal('이메일: abc@abc.abc형식의 이메일');
       return;
     }
     if (!pwdForm(pwd)) {
-      window.alert('비밀번호: 8-20자 사이의 영어대소문자, 숫자, 특수문자');
+      new Swal('비밀번호: 8-20자 사이의 영어대소문자, 숫자, 특수문자');
       return;
     }
     const loginForm = { userEmail: userEmail, pwd: pwd };
@@ -40,7 +41,7 @@ const Login = (props) => {
     dispatch(userActions.loginDB(loginForm));
   };
 
-  // 소셜로그인 테스트
+  // 소셜로그인
   const kakaoLogin = () => {
     const kakaoApi = `https://hjg521.link/auth/kakao`;
     window.location.assign(kakaoApi);
@@ -53,9 +54,14 @@ const Login = (props) => {
 
   console.log(pwd);
 
+  const returnLogin = (e) => {
+    if (e.keyCode === 13) {
+      login();
+    }
+  };
+
   return (
     <Container>
-      {/* <MySwal /> */}
       {/* 로고 */}
       <LogoBox>
         <img src={Logo} alt="logo" style={{ width: '100%' }} />
@@ -66,14 +72,15 @@ const Login = (props) => {
         type="text"
         name="userEmail"
         _onChange={handleUserEmail}
-        placeholder={t('please fill in email address')}
+        placeholder={t('please enter your email address')}
       />
       {/* 비밀번호 인풋 */}
       <InfoInput
-        placeholder={t('please fill in password')}
+        placeholder={t('please enter your password')}
         type="password"
         name="pwd"
         _onChange={handlePwd}
+        _onKeyUp={returnLogin}
       />
       {/* 로그인 버튼 */}
       <Buttons

@@ -7,20 +7,21 @@ import { BiSearchAlt2 } from 'react-icons/bi';
 import axios from 'axios';
 import { actionCreators as tutorActions } from '../redux/modules/tutor';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Search = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const urlCheck = props.location.pathname;
+  const tag = useParams();
   const formRef = React.createRef();
   const inputRef = React.createRef();
   const tutorList = useSelector((state) => state.tutor.list);
   const [tagList, setTagList] = React.useState(null);
 
-  // console.log(tutorList);
-
   useEffect(() => {
-    dispatch(tutorActions.getTutorListDB());
+    if (urlCheck === '/search' || tutorList.length === 0)
+      dispatch(tutorActions.getTutorListDB());
 
     axios({
       method: 'get',

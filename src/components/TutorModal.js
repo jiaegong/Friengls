@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import { Image, Text } from '../elements/index';
 import { history } from '../redux/configureStore';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 const TutorModal = (props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const tutor = props.tutor;
   const tags = tutor.tag.split(' ,');
   const onClose = props.onClose;
@@ -47,7 +50,15 @@ const TutorModal = (props) => {
             </Text>
             <TagWrap>
               {tags?.map((tag, idx) => (
-                <Tag key={idx}>{tag}</Tag>
+                <Tag
+                  key={idx}
+                  onClick={() => {
+                    history.push(`/search/${tag}`);
+                    dispatch(tutorActions.getSearchTutorsDB(tag));
+                  }}
+                >
+                  {tag}
+                </Tag>
               ))}
             </TagWrap>
           </InfoBox>
@@ -152,6 +163,7 @@ const Tag = styled.div`
   font-size: 14px;
   border: 1px solid #959595;
   box-shadow: 0px 2px 6px 0px #00000040;
+  cursor: pointer;
 `;
 
 const ProfileLink = styled.div`

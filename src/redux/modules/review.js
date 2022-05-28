@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const SET_REVIEW = 'SET_REVIEW';
 const ADD_REVIEW = 'ADD_COMMENT';
@@ -50,10 +51,10 @@ const addReviewDB = (token, tutorName, rate, text) => {
     })
       .then((res) => {
         dispatch(addReview(res.data.tutorName, res.data.review));
-        window.alert('리뷰가 작성되었습니다!');
+        new Swal('리뷰가 작성되었습니다!');
       })
       .catch((err) => {
-        window.alert('리뷰 작성에 실패했습니다!');
+        new Swal('리뷰 작성에 실패했습니다!');
       });
   };
 };
