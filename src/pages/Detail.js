@@ -42,7 +42,7 @@ const Detail = (props) => {
       url: `https://hjg521.link/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
     })
       .then((doc) => {
-        let data = doc.data.datas1;
+        // let data = doc.data.datas1;
         // console.log('DB 예약 리스트 : ', { data });
         setAvailability(doc.data.datas1);
       })
