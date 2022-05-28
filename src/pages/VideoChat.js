@@ -42,8 +42,8 @@ const VideoChat = (props) => {
   const roomId = props.match.params.roomName;
   const userName = useSelector((state) => state.user.info); // props로 넘겨주는 게 더 좋을 거 같음
   const userId = userName.userName;
-  const [videoOn, setVideoOn] = useState(false);
-  const [audioOn, setAudioOn] = useState(false);
+  const [videoOn, setVideoOn] = useState(true);
+  const [audioOn, setAudioOn] = useState(true);
 
   const socket = io('https://hjg521.link', { transports: ['websocket'] });
 

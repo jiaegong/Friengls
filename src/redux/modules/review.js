@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { getCookie } from '../../shared/Cookie';
 
 const SET_REVIEW = 'SET_REVIEW';
 const ADD_REVIEW = 'ADD_COMMENT';
@@ -34,26 +35,29 @@ const initialState = {
     },
   ],
 };
-const addReviewDB = (token, tutorName, rate, text) => {
-  console.log(token, tutorName, rate, text);
+const addReviewDB = (tutorName, rate, text) => {
+  console.log(tutorName, rate, text);
+  console.log(getCookie('token'));
   return function (dispatch) {
     axios({
       method: 'post',
       url: 'https://hjg521.link/addReview',
       data: {
-        tutor_userName: tutorName,
+        userName: tutorName,
         rate,
         text,
       },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { token: `${getCookie('token')}` },
     })
       .then((res) => {
-        dispatch(addReview(res.data.tutorName, res.data.review));
+        // 에러뜬다
+        // dispatch(addReview(res.data.tutorName, res.data.review));
+        console.log('리뷰작성성공!', res);
+
         new Swal('리뷰가 작성되었습니다!');
       })
       .catch((err) => {
+        console.log('리뷰작성에러', err);
         new Swal('리뷰 작성에 실패했습니다!');
       });
   };
