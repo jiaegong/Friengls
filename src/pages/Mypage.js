@@ -44,7 +44,7 @@ const Mypage = (props) => {
 
   const likeList = useSelector((state) => state.like.myList);
 
-  console.log({ bookingList });
+  console.log(bookingList);
 
   return (
     <Wrap>
@@ -65,7 +65,7 @@ const Mypage = (props) => {
                 <BookingItem
                   item={item}
                   userInfo={userInfo}
-                  // key={`mypage_${idx}`}
+                  key={`mypage_${idx}`}
                 />
               );
             })}

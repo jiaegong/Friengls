@@ -129,7 +129,7 @@ const loginDB = (loginForm) => {
     })
       .then((response) => {
         console.log('loginDB성공', response.data);
-        if (response.data.msg === '비밀번호가 틀렸습니다.') {
+        if (response.data.msg === '비밀번호가 틀렸습니다') {
           new Swal('비밀번호를 확인해 주세요.');
           return;
         }
@@ -144,7 +144,7 @@ const loginDB = (loginForm) => {
       })
       .catch((error) => {
         new Swal('로그인에 실패하셨습니다.');
-        console.log(error);
+        console.log('loginDB실패', error);
       });
   };
 };

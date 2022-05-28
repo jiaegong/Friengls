@@ -115,7 +115,7 @@ const Signup = ({ userInfo }) => {
     } else {
       setUserNameCheck(
         t(
-          'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
+          'english, numbers, special characters (- _ . ) 4-20) or less, korean letters 2-8 characters, numbers, special characters (- _ . )',
         ),
       );
     }
