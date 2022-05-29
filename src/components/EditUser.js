@@ -394,49 +394,53 @@ const EditUser = (props) => {
             <button onClick={deleteProfile}>{t('remove image')}</button>
           </ImageBox>
           <UserInfoBox>
-            <p>{t('basic information')}</p>
-            {/* 닉네임 */}
-            <InfoInput
-              label={t('nickname')}
-              placeholder={t('please enter a nickname to change.')}
-              validationLabel={userNameCheck}
-              _onChange={handleUserName}
-              _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
-              value={userName}
-              styles={{
-                height: '45px',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-              }}
-            />
-            {/* 비밀번호 */}
-            <InfoInput
-              type="password"
-              label={t('new password')}
-              placeholder={t('please enter a password to change.')}
-              validationLabel={pwdCheck}
-              _onChange={handlePwd}
-              styles={{
-                height: '45px',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-              }}
-            />
-            {/* 비밀번호 확인 */}
-            <InfoInput
-              type="password"
-              label={t('confirm password')}
-              placeholder={t(
-                'please enter the password you want to change again.',
-              )}
-              validationLabel={confirmPwdCheck}
-              _onChange={handleConfirmPwd}
-              styles={{
-                height: '45px',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-              }}
-            />
+            <form>
+              <p>{t('basic information')}</p>
+              {/* 닉네임 */}
+              <InfoInput
+                label={t('nickname')}
+                placeholder={t('please enter a nickname to change.')}
+                validationLabel={userNameCheck}
+                _onChange={handleUserName}
+                _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
+                value={userName}
+                styles={{
+                  height: '45px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                }}
+              />
+              {/* 비밀번호 */}
+              <InfoInput
+                type="password"
+                label={t('new password')}
+                placeholder={t('please enter a password to change.')}
+                autoComplete="off"
+                validationLabel={pwdCheck}
+                _onChange={handlePwd}
+                styles={{
+                  height: '45px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                }}
+              />
+              {/* 비밀번호 확인 */}
+              <InfoInput
+                type="password"
+                label={t('confirm password')}
+                placeholder={t(
+                  'please enter the password you want to change again.',
+                )}
+                autoComplete="off"
+                validationLabel={confirmPwdCheck}
+                _onChange={handleConfirmPwd}
+                styles={{
+                  height: '45px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                }}
+              />
+            </form>
           </UserInfoBox>
         </GroupBox1>
         <GroupBox>
@@ -670,6 +674,7 @@ const EditUser = (props) => {
         </GroupBox>
         <GroupBox>
           <Buttons
+            type="button"
             _onClick={editUser}
             styles={{ width: '380px', height: '60px' }}
           >
@@ -809,6 +814,9 @@ const UserInfoBox = styled.div`
     text-align: start;
     font-size: 20px;
     font-weight: 600;
+  }
+  form {
+    width: 100%;
   }
 `;
 

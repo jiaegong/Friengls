@@ -85,35 +85,42 @@ const MyPageModal = (props) => {
                   />
                 </UserImg>
               </Grid>
-              <Grid>
-                {/* 닉네임 */}
-                <InfoInput
-                  label={t('email')}
-                  value={userInfo.userEmail}
-                  disabled
-                  styles={{
-                    flexDirection: 'column',
-                    justifyContent: 'space-evenly',
-                  }}
-                />
-                {/* 비밀번호 */}
-                <InfoInput
-                  label={t('password')}
-                  type="password"
-                  _onChange={handlePwd}
-                  _onKeyUp={returnHandleEditUser}
-                  placeholder={t('please enter your password')}
-                  styles={{
-                    flexDirection: 'column',
-                    justifyContent: 'space-evenly',
-                  }}
-                />
-              </Grid>
-              <Grid>
-                <Buttons _onClick={handleEditUser} styles={{ height: '54px' }}>
-                  {t('edit profile')}
-                </Buttons>
-              </Grid>
+              <form>
+                <Grid>
+                  {/* 닉네임 */}
+                  <InfoInput
+                    label={t('email')}
+                    value={userInfo.userEmail}
+                    disabled
+                    styles={{
+                      flexDirection: 'column',
+                      justifyContent: 'space-evenly',
+                    }}
+                  />
+                  {/* 비밀번호 */}
+                  <InfoInput
+                    label={t('password')}
+                    type="password"
+                    autoComplete="off"
+                    _onChange={handlePwd}
+                    _onKeyUp={returnHandleEditUser}
+                    placeholder={t('please enter your password')}
+                    styles={{
+                      flexDirection: 'column',
+                      justifyContent: 'space-evenly',
+                    }}
+                  />
+                </Grid>
+                <Grid>
+                  <Buttons
+                    type="button"
+                    _onClick={handleEditUser}
+                    styles={{ height: '54px' }}
+                  >
+                    {t('edit profile')}
+                  </Buttons>
+                </Grid>
+              </form>
             </Content>
           </ContentWrap>
         )}
@@ -154,6 +161,9 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  form {
+    width: 100%;
+  }
 `;
 
 const CloseBtn = styled.div`
