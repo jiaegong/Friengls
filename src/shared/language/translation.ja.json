@@ -112,6 +112,7 @@
   "please enter the authentication number.": "認証番号を入力してください。",
   "email authentication completed": "メール認証が完了しました。",
   "please check the authentication number again.": "認証番号をもう一度確認してください。",
+  "You can request it again after 5 minutes.": "5分後に再度リクエストできます。",
   "save": "保存",
   "edit": "修正",
   "delete": "削除",

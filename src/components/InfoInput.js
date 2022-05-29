@@ -1,4 +1,3 @@
-import { CenterFocusStrong } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
 import { NewInput, NewInputLabel } from '../elements/index';
@@ -17,6 +16,7 @@ const InfoInput = (props) => {
     maxLength,
     multiLine,
     checked,
+    autoComplete,
     styles,
     defaultStyles,
     label,
@@ -56,6 +56,7 @@ const InfoInput = (props) => {
           disabled={disabled}
           maxLength={maxLength}
           checked={checked}
+          autoComplete={autoComplete}
           multiLine={multiLine}
         />
       </InputBox>

@@ -27,6 +27,7 @@ const Login = (props) => {
 
   //입력된 값을 data로 보내기 위한 함수
   const login = () => {
+    // e.preventDefault();
     //유효성검사
     if (!emailForm(userEmail)) {
       new Swal('이메일: abc@abc.abc형식의 이메일');
@@ -67,38 +68,44 @@ const Login = (props) => {
         <img src={Logo} alt="logo" style={{ width: '100%' }} />
       </LogoBox>
       <LogoText>Sign in</LogoText>
-      {/* 이메일 인풋 */}
-      <InfoInput
-        type="text"
-        name="userEmail"
-        _onChange={handleUserEmail}
-        placeholder={t('please enter your email address')}
-      />
-      {/* 비밀번호 인풋 */}
-      <InfoInput
-        placeholder={t('please enter your password')}
-        type="password"
-        name="pwd"
-        _onChange={handlePwd}
-        _onKeyUp={returnLogin}
-      />
-      {/* 로그인 버튼 */}
-      <Buttons
-        styles={{
-          margin: '50px auto 60px',
-        }}
-        _onClick={login}
-      >
-        {t('login')}
-      </Buttons>
+      <form>
+        {/* 이메일 인풋 */}
+        <InfoInput
+          type="text"
+          name="userEmail"
+          _onChange={handleUserEmail}
+          placeholder={t('please enter your email address')}
+        />
+        {/* 비밀번호 인풋 */}
+        <InfoInput
+          placeholder={t('please enter your password')}
+          type="password"
+          autoComplete="off"
+          name="pwd"
+          _onChange={handlePwd}
+          _onKeyUp={returnLogin}
+        />
+        {/* 로그인 버튼 */}
+        <Buttons
+          type="button"
+          styles={{
+            margin: '50px auto 60px',
+          }}
+          _onClick={login}
+        >
+          {t('login')}
+        </Buttons>
+      </form>
       {/* 소셜로그인 버튼*/}
       <Buttons
+        type="button"
         _onClick={kakaoLogin}
         styles={{ background: '#ffe900', color: '#3c1e1e' }}
       >
         {t('login with kakao')}
       </Buttons>
       <Buttons
+        type="button"
         _onClick={googleLogin}
         styles={{
           margin: '10px auto 50px',
@@ -131,6 +138,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  form {
+    width: 100%;
+  }
 `;
 
 const LogoBox = styled.div`

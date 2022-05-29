@@ -15,7 +15,6 @@ import Swal from 'sweetalert2';
 // to do: 소셜로그인에 사용할 이메일이 이미 가입된 이메일일 경우
 const Signup = ({ userInfo }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   //소셜로그인의 경우 닉네임체크 바로 할 수 있도록
   useEffect(() => {
     if (userInfo?.userName) {
@@ -36,14 +35,43 @@ const Signup = ({ userInfo }) => {
       setEmailCheck(t('this is the correct email format.'));
     } else {
       setEmailCheck(t('email format: ex) example@example.com'));
+      if (authLoading) {
+        setAuthLoading(false);
+      }
     }
   };
   //인증번호
   const [authNumber, setAuthNumber] = useState();
+  // 인증요청 누른 후 번호인증버튼 누르기 전 까지 true (버튼 다중클릭 방지)
+  const [authCount, setAuthCount] = useState(0);
+  const [authLoading, setAuthLoading] = useState(false);
+
+  if (authLoading) {
+    console.log(authCount);
+    setTimeout(() => {
+      setAuthLoading(false);
+    }, 300000);
+  }
+
+  const delayMessage = () => {
+    new Swal(t('You can request it again after 5 minutes.'));
+    return;
+  };
 
   //중복체크 + 인증번호 요청
   const checkDuplicatedEmail = (e) => {
-    //서버에서 요청 후 인증
+    if (
+      emailCheck === '\u00A0' ||
+      emailCheck === t('email format: ex) example@example.com')
+    ) {
+      new Swal(t('email format: ex) example@example.com'));
+      return;
+    }
+    //6회 이상 클릭할 경우 5분 후 다시 발송할 수 있다.
+    setAuthCount(authCount + 1);
+    if (authCount >= 4) {
+      setAuthLoading(true);
+    }
     axios({
       method: 'post',
       url: 'https://hjg521.link/signUp/emailCheck',
@@ -86,18 +114,19 @@ const Signup = ({ userInfo }) => {
         console.log('이메일체크 에러', error);
       });
   };
-  //이메일 인증 확인
+  //이메일 인증 확인 번호 상태값
   const [inputNumber, setInputNumber] = useState('');
   const handleInputNumber = (e) => {
     setInputNumber(e.target.value);
   };
-
+  //이메일 인증 번호 검증
   const [confirmEmail, setConfirmEmail] = useState('\u00A0');
-
   const checkEmail = (e) => {
-    authNumber === inputNumber
-      ? setConfirmEmail(t('email authentication completed'))
-      : setConfirmEmail(t('please check the authentication number again.'));
+    if (authNumber === inputNumber) {
+      setConfirmEmail(t('email authentication completed'));
+      return;
+    }
+    setConfirmEmail(t('please check the authentication number again.'));
   };
 
   //userName 상태값
@@ -115,7 +144,7 @@ const Signup = ({ userInfo }) => {
     } else {
       setUserNameCheck(
         t(
-          'english, numbers, special characters (- _ . ) 4-20) or less, korean letters 2-8 characters, numbers, special characters (- _ . )',
+          'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
         ),
       );
     }
@@ -158,24 +187,20 @@ const Signup = ({ userInfo }) => {
     const pwd = e.target.value;
     setPwd(pwd);
     if (pwdForm(pwd)) {
-      if (pwd.includes(userName) || pwd.includes(userEmail.split('@')[0])) {
-        setPwdCheck(
-          t('you can not include nickname or email in your password.'),
-        );
-      } else {
-        setPwdCheck(t('this is the correct password format.'));
-      }
+      setPwdCheck(t('this is the correct password format.'));
     } else {
-      if (pwd.includes(userName) || pwd.includes(userEmail.split('@')[0])) {
-        setPwdCheck(
-          t('you can not include nickname or email in your password.'),
-        );
+      setPwdCheck(
+        t(
+          'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
+        ),
+      );
+    }
+    //비밀번호 확인 먼저 입력했을 경우
+    if (confirmPwd.length !== 0) {
+      if (pwd === confirmPwd) {
+        setConfirmPwdCheck(t('it matches the password.'));
       } else {
-        setPwdCheck(
-          t(
-            'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
-          ),
-        );
+        setConfirmPwdCheck(t('the password does not match'));
       }
     }
   };
@@ -249,90 +274,99 @@ const Signup = ({ userInfo }) => {
         <img src={Logo} alt="logo" />
       </LogoBox>
       <LogoText>Sign up</LogoText>
-      {/* 이메일 인풋 : 소셜로그인은 이메일/닉네임 가져오기*/}
-      {userInfo ? (
+      <form>
+        {/* 이메일 인풋 : 소셜로그인은 이메일/닉네임 가져오기*/}
+        {userInfo ? (
+          <InfoInput
+            type="text"
+            value={userInfo.userEmail}
+            disabled
+            styles={{ marginBottom: '35px' }}
+          />
+        ) : (
+          <React.Fragment>
+            <EmailBox>
+              <InfoInput
+                placeholder={t('please fill in an email address.')}
+                type="text"
+                _onChange={handleEmail}
+                validationLabel={emailCheck}
+                styles={{ borderRadius: '8px 0 0 8px' }}
+              />
+              <ConfirmButton
+                type="button"
+                onClick={authLoading ? delayMessage : checkDuplicatedEmail}
+                // 한 번 인증번호 보내고 인증버튼 누를 때까지 버튼 비활성화
+                authLoading={authLoading}
+              >
+                번호요청
+              </ConfirmButton>
+            </EmailBox>
+            {/* 이메일 확인 인풋 */}
+            <EmailBox>
+              <InfoInput
+                placeholder={t('please enter the authentication number.')}
+                type="text"
+                _onBlur={handleInputNumber}
+                validationLabel={confirmEmail}
+                styles={{ borderRadius: '8px 0 0 8px' }}
+              />
+              <ConfirmButton type="button" onClick={checkEmail}>
+                번호인증
+              </ConfirmButton>
+            </EmailBox>
+          </React.Fragment>
+        )}
+        {/* 유저네임 인풋 */}
         <InfoInput
+          placeholder={t('please fill in a nickname.')}
           type="text"
-          value={userInfo.userEmail}
-          disabled
-          styles={{ marginBottom: '35px' }}
+          value={userInfo?.userName}
+          _onChange={handleUserName}
+          _onBlur={checkDuplicatedUserName}
+          validationLabel={userNameCheck}
         />
-      ) : (
-        <React.Fragment>
-          <EmailBox>
-            <InfoInput
-              placeholder={t('please fill in an email address.')}
-              type="text"
-              _onChange={handleEmail}
-              validationLabel={emailCheck}
-              styles={{ borderRadius: '8px 0 0 8px' }}
-            />
-            <ConfirmButton onClick={checkDuplicatedEmail}>
-              번호요청
-            </ConfirmButton>
-          </EmailBox>
-          {/* 이메일 확인 인풋 */}
-          <EmailBox>
-            <InfoInput
-              placeholder={t('please enter the authentication number.')}
-              type="text"
-              _onBlur={handleInputNumber}
-              validationLabel={confirmEmail}
-              styles={{ borderRadius: '8px 0 0 8px' }}
-            />
-            <ConfirmButton htmlFor="authNum" onClick={checkEmail}>
-              번호인증
-            </ConfirmButton>
-          </EmailBox>
-        </React.Fragment>
-      )}
-      {/* 유저네임 인풋 */}
-      <InfoInput
-        placeholder={t('please fill in a nickname.')}
-        type="text"
-        value={userInfo?.userName}
-        _onChange={handleUserName}
-        _onBlur={checkDuplicatedUserName}
-        validationLabel={userNameCheck}
-      />
-      {/* 비밀번호 인풋 */}
-      <InfoInput
-        placeholder={t('please fill in a password.')}
-        type="password"
-        _onChange={handlePwd}
-        validationLabel={pwdCheck}
-      />
-      {/* 비밀번호 확인 인풋 */}
-      <InfoInput
-        placeholder={t('please fill in the password again.')}
-        type="password"
-        _onChange={handleConfirmPwd}
-        validationLabel={confirmPwdCheck}
-      />
-      {/* 선생님/학생 선택 */}
-      {/* isTutor */}
-      <SelectIsTutor
-        startTime={startTime}
-        _onClick={handleIstutor}
-        isTutor={isTutor}
-        handleStartTime={handleStartTime}
-        handleEndTime={handleEndTime}
-      />
-      {/* 상세정보 페이지로 넘어가기 */}
-      {isDisabled ? (
-        <NextButton
-          isDisabled
-          type="button"
-          value={t('next')}
-          onClick={() =>
-            new Swal(t('there are items do not meet the conditions.'))
-          }
+        {/* 비밀번호 인풋 */}
+        <InfoInput
+          placeholder={t('please fill in a password.')}
+          type="password"
+          autoComplete="off"
+          _onChange={handlePwd}
+          validationLabel={pwdCheck}
         />
-      ) : (
-        <Link to={{ pathname: '/signup/detail', signupForm }}>
-          <NextButton type="button" value={t('next')} disabled={isDisabled} />
-        </Link>
-      )}
+        {/* 비밀번호 확인 인풋 */}
+        <InfoInput
+          placeholder={t('please fill in the password again.')}
+          type="password"
+          autoComplete="off"
+          _onChange={handleConfirmPwd}
+          validationLabel={confirmPwdCheck}
+        />
+        {/* 선생님/학생 선택 */}
+        {/* isTutor */}
+        <SelectIsTutor
+          startTime={startTime}
+          _onClick={handleIstutor}
+          isTutor={isTutor}
+          handleStartTime={handleStartTime}
+          handleEndTime={handleEndTime}
+        />
+        {/* 상세정보 페이지로 넘어가기 */}
+        {isDisabled ? (
+          <NextButton
+            isDisabled
+            type="button"
+            value={t('next')}
+            onClick={() =>
+              new Swal(t('there are items do not meet the conditions.'))
+            }
+          />
+        ) : (
+          <Link to={{ pathname: '/signup/detail', signupForm }}>
+            <NextButton type="button" value={t('next')} disabled={isDisabled} />
+          </Link>
+        )}
+      </form>
     </Container>
   );
 };
@@ -344,6 +378,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  form {
+    width: 100%;
+  }
 `;
 
 const LogoBox = styled.div`
@@ -374,19 +411,17 @@ const EmailBox = styled.div`
 const ConfirmButton = styled.button`
   width: 102px;
   height: 54px;
-  // background: #7f83ea;
-  background: ${(props) => (props.userInfo ? 'rgba(0,0,0,0.3)' : '#7f83ea')};
+  background: ${(props) => (props.authLoading ? 'rgba(0,0,0,0.3)' : '#7f83ea')};
   border: none;
   border-radius: 0 8px 8px 0;
   font-size: 14px;
   color: #fff;
-  cursor: pointer;
+  cursor: ${(props) => (props.authLoading ? 'default' : 'pointer')};
 `;
 
 const NextButton = styled.input`
   width: 500px;
   height: 54px;
-  // margin-top: 40px;
   background: ${(props) => (props.isDisabled ? '#999999' : '#171b78')};
   border: none;
   border-radius: 4px;
