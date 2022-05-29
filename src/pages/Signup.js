@@ -35,15 +35,13 @@ const Signup = ({ userInfo }) => {
       setEmailCheck(t('this is the correct email format.'));
     } else {
       setEmailCheck(t('email format: ex) example@example.com'));
-      if (authLoading) {
-        setAuthLoading(false);
-      }
     }
   };
   //인증번호
   const [authNumber, setAuthNumber] = useState();
   // 인증요청 누른 후 번호인증버튼 누르기 전 까지 true (버튼 다중클릭 방지)
   const [authCount, setAuthCount] = useState(0);
+  //이름바꾸기 preventAuth
   const [authLoading, setAuthLoading] = useState(false);
 
   if (authLoading) {
