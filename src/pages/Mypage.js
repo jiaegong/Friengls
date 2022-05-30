@@ -18,6 +18,7 @@ const Mypage = (props) => {
   //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.detailInfo);
   // console.log(userApi);
+  console.log(userInfo);
 
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = userApi.isTutor;
@@ -42,6 +43,7 @@ const Mypage = (props) => {
   }, []);
 
   const likeList = useSelector((state) => state.like.myList);
+  console.log(likeList);
 
   return (
     <Wrap>
@@ -70,7 +72,7 @@ const Mypage = (props) => {
         </div>
         <LikeWrap>
           <p className="like-title">좋아요 리스트</p>
-          {likeList?.map((l, idx) => {
+          {likeList.map((l, idx) => {
             return <LikeItem key={idx} {...l} userInfo={userInfo} />;
           })}
         </LikeWrap>

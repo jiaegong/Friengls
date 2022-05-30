@@ -88,7 +88,7 @@ const MyPageModal = (props) => {
               </Grid>
               <form>
                 <Grid>
-                  {/* 닉네임 */}
+                  {/* 이메일 */}
                   <InfoInput
                     label={t('email')}
                     value={userInfo.userEmail}
@@ -96,6 +96,8 @@ const MyPageModal = (props) => {
                     styles={{
                       flexDirection: 'column',
                       justifyContent: 'space-evenly',
+                      background: 'rgba(0,0,0,0.05)',
+                      color: '#999',
                     }}
                   />
                   {/* 비밀번호 */}
@@ -157,7 +159,7 @@ const ContentWrap = styled.div`
 
 const Content = styled.div`
   width: 340px;
-  height: 100%;
+  height: 655px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

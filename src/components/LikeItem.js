@@ -5,7 +5,6 @@ import { Profile } from '../image/index';
 
 const LikeItem = (props) => {
   const isTutor = props.userInfo.isTutor;
-  console.log(props.userProfile);
   if (isTutor === 0) {
     return (
       <Wrap>
@@ -25,25 +24,22 @@ const LikeItem = (props) => {
         </div>
       </Wrap>
     );
-  } else if (isTutor === 1) {
-    return (
-      <Wrap>
-        <UserWrap userProfile={props.userProfile ? true : false}>
-          <img
-            className="profile"
-            src={props.userProfile ? props.userProfile : Profile}
-            alt="프로필 사진"
-          />
-          <div>{props.userName}</div>
-        </UserWrap>
-        <ProfileWrap
-          onClick={() => history.push(`/detail/${props.userName}/0`)}
-        >
-          프로필 보러가기
-        </ProfileWrap>
-      </Wrap>
-    );
   }
+  return (
+    <Wrap>
+      <UserWrap userProfile={props.userProfile ? true : false}>
+        <img
+          className="profile"
+          src={props.userProfile ? props.userProfile : Profile}
+          alt="프로필 사진"
+        />
+        <div>{props.userName}</div>
+      </UserWrap>
+      <ProfileWrap onClick={() => history.push(`/detail/${props.userName}/0`)}>
+        프로필 보러가기
+      </ProfileWrap>
+    </Wrap>
+  );
 };
 
 export default LikeItem;

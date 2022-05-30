@@ -390,6 +390,24 @@ const EditUser = (props) => {
           <UserInfoBox>
             <form>
               <p>{t('basic information')}</p>
+              <InfoInput
+                label={t('email')}
+                // placeholder={t('please enter a nickname to change.')}
+                // validationLabel={userNameCheck}
+                // _onChange={handleUserName}
+                // _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
+                value={userInfo.userEmail}
+                disabled
+                styles={{
+                  height: '45px',
+                  marginBottom: '5px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                  background: 'rgba(0,0,0,0.05)',
+                  cursor: 'default',
+                  color: '#999',
+                }}
+              />
               {/* 닉네임 */}
               <InfoInput
                 label={t('nickname')}
@@ -401,6 +419,7 @@ const EditUser = (props) => {
                 disabled
                 styles={{
                   height: '45px',
+                  marginBottom: '5px',
                   flexDirection: 'column',
                   justifyContent: 'space-evenly',
                   background: 'rgba(0,0,0,0.05)',
@@ -743,7 +762,7 @@ const CloseBtn = styled.div`
 
 const GroupBox1 = styled.div`
   width: 100%;
-  margin: 800px auto 20px;
+  margin: 600px auto 20px;
   display: flex;
 `;
 // 프로필사진 관련
