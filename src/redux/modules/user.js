@@ -162,6 +162,14 @@ const loginCheckDB = () => {
       })
       .catch((error) => {
         console.log('로그인체크 실패', error);
+        if (getCookie('token') === 'undefined') {
+          deleteCookie('token');
+        }
+        new Swal(
+          '알 수 없는 문제로 로그인에 실패했습니다. 다시 로그인 해주세요.',
+        );
+        history.push('/login');
+
         //메인으로 돌아가기
       });
   };

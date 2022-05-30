@@ -37,6 +37,7 @@ const MyPageModal = (props) => {
         },
       });
       const result = response.data.msg;
+      console.log(result);
 
       result === 'success'
         ? setEditUser(true)

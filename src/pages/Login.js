@@ -53,8 +53,6 @@ const Login = (props) => {
     window.location.assign(googleApi);
   };
 
-  console.log(pwd);
-
   const returnLogin = (e) => {
     if (e.keyCode === 13) {
       login();

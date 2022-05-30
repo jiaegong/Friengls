@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Logo } from '../image/';
@@ -86,7 +85,9 @@ const Signup = ({ userInfo }) => {
           return;
         }
         //이메일 중복 확인 후 인증번호 보내기 요청
-
+        setEmailCheck(
+          t('We are sending the authentication number. Please wait a moment'),
+        );
         axios({
           method: 'post',
           url: 'https://hjg521.link/mail',

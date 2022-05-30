@@ -168,9 +168,6 @@ const DetailInfo = (props) => {
     new Swal(t('refreshing will return to the first screen.'));
     history.replace('/signup');
   }
-
-  console.log(comment);
-
   return (
     <Container>
       {/* 로고 */}

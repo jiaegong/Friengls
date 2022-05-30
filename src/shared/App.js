@@ -25,6 +25,7 @@ import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
 import FeedBackModal from '../components/FeedBackModal';
 import Tutorial from '../pages/Tutorial';
+import Swal from 'sweetalert2';
 
 function App() {
   const dispatch = useDispatch();
