@@ -12,7 +12,10 @@ const LikeItem = (props) => {
           <img className="profile" src={props.userProfile} alt="프로필 사진" />
           <div>{props.userName}</div>
         </UserWrap>
-        <div onClick={() => history.push(`/detail/${props.userName}/1`)}>
+        <div
+          style={{ cursor: 'pointer' }}
+          onClick={() => history.push(`/detail/${props.userName}/1`)}
+        >
           프로필 보러가기
         </div>
       </Wrap>
@@ -68,4 +71,5 @@ const ProfileWrap = styled.p`
   text-decoration: underline;
   color: #808080;
   font-size: 14px;
+  cursor: pointer;
 `;

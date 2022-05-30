@@ -35,6 +35,8 @@ const CalendarTemplate = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
+  const saveDataCount = availability.length + 1;
+  console.log(saveDataCount);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -413,8 +415,6 @@ const CalendarTemplate = ({
 
   //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
-    console.log({ availability });
-
     const output = [];
     for (let year in availability) {
       for (let month in availability[year]) {
@@ -425,6 +425,24 @@ const CalendarTemplate = ({
       }
     }
     console.log({ output });
+    console.log(output.length);
+    console.log({ saveDataCount });
+
+    if (saveDataCount < output.length) {
+      // alert('선택하실수 있는 갯수를 초과 하셨습니다.');
+      Swal.fire({
+        // text: '선택하실수 있는 갯수를 초과 하셨습니다.',
+        text: t('You have exceeded the number that can be selected'),
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: t('confirm'),
+        // confirmButtonText: '확인',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
+    }
     return output;
   };
 
@@ -598,6 +616,7 @@ const CalendarTemplate = ({
     const handleSaveAvailability = () => {
       // outPut 값이 return 되어서 data에 반환됨. convertAvailabilityForDatabase === output
       const data = convertAvailabilityForDatabase(availabilityState);
+      console.log(data);
 
       setSaving(true);
       let onePick1 = [];
