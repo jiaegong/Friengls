@@ -79,7 +79,7 @@ const MyPageModal = (props) => {
                 <p>{t('identification')}</p>
               </Grid>
               <Grid>
-                <UserImg>
+                <UserImg userProfile={userInfo.userProfile ? true : false}>
                   <img
                     src={userInfo.userProfile ? userInfo.userProfile : Profile}
                     alt="userProfile"
@@ -198,6 +198,6 @@ const UserImg = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
   }
 `;

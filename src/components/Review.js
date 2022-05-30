@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image, Text, Input } from '../elements/index';
+import { Profile } from '../image/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 import styled from 'styled-components';
@@ -13,8 +14,8 @@ const Review = (props) => {
   const userName = useSelector((state) => state.user.info?.userName);
   const tuteeName = props.Tutee_userName;
   const reviewId = props.reviewId;
-  const tutorImg = props.Tutor_userProfile;
-  const tuteeImg = props.Tutee_userProfile;
+  const tutorImg = props.Tutor_userProfile ? props.Tutor_userProfile : Profile;
+  const tuteeImg = props.Tutee_userProfile ? props.Tutee_userProfile : Profile;
 
   const [edit, setEdit] = useState(false);
   const [rate, setRate] = useState(props.rate);
@@ -34,7 +35,10 @@ const Review = (props) => {
 
   return (
     <Wrap>
-      <ImageWrap>
+      <ImageWrap
+        tutorProfile={props.Tutor_userProfile ? true : false}
+        tuteeProfile={props.Tutee_userProfile ? true : false}
+      >
         <img className="reviewImg" src={tutorImg} alt="튜터 프로필"></img>
         <img className="userProfileImg" src={tuteeImg} alt="튜티 프로필"></img>
       </ImageWrap>
@@ -148,7 +152,7 @@ const ImageWrap = styled.div`
     max-width: 101px;
     width: 100%;
     height: 101px;
-    object-fit: cover;
+    object-fit: ${(props) => (props.tutorProfile ? 'cover' : 'contain')};
     border-radius: 50%;
     position: absolute;
     overflow: hidden;
@@ -159,7 +163,7 @@ const ImageWrap = styled.div`
     max-width: 71px;
     width: 100%;
     height: 71px;
-    object-fit: cover;
+    object-fit: ${(props) => (props.tuteeProfile ? 'cover' : 'contain')};
     position: absolute;
     bottom: 0;
     right: 0;

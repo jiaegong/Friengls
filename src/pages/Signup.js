@@ -421,6 +421,7 @@ const ConfirmButton = styled.button`
 const NextButton = styled.input`
   width: 500px;
   height: 54px;
+  margin-top: 10px;
   background: ${(props) => (props.isDisabled ? '#999999' : '#171b78')};
   border: none;
   border-radius: 4px;

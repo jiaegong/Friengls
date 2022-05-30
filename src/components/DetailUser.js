@@ -15,7 +15,6 @@ const DetailUser = (props) => {
   const { userInfo } = props;
   const dispatch = useDispatch();
 
-  const urlCheck = props.props.match.url;
   const tutorName = props.props.match.params.userName;
   const isLike = useSelector((state) => state.like.isLike);
 
@@ -46,17 +45,14 @@ const DetailUser = (props) => {
   };
 
   //유저인포없을 때
-  //to do: 스피너
   if (!userInfo) {
     return null;
   }
 
-  // console.log(getCookie('token'));
-
   return (
     <Container>
       <ImageBox>
-        <UserImgWrap>
+        <UserImgWrap userProfile={userInfo.userProfile ? true : false}>
           <img
             src={userInfo.userProfile ? userInfo.userProfile : Profile}
             alt="userProfile"
@@ -159,7 +155,7 @@ const UserImgWrap = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
   }
 `;
 

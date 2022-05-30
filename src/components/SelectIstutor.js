@@ -99,9 +99,9 @@ const SelectIsTutor = ({
               </Select>
               {t('from')}
               {startTime === '' ? (
-                <></>
+                <React.Fragment></React.Fragment>
               ) : (
-                <>
+                <React.Fragment>
                   <Select name="endTime" onChange={handleEndTime}>
                     <option value="">====={t('last tutoring')}=====</option>
                     {endTimeArray.map((time, index) => (
@@ -112,7 +112,7 @@ const SelectIsTutor = ({
                     ))}
                   </Select>
                   {t('to')}
-                </>
+                </React.Fragment>
               )}
               {notification && (
                 <InfoBox>

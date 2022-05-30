@@ -371,7 +371,7 @@ const EditUser = (props) => {
         <GroupBox1>
           <ImageBox>
             {/* 프로필이미지선택 */}
-            <UserImg>
+            <UserImg userProfile={previewProfile === Profile ? false : true}>
               <label htmlFor="file">
                 <img src={previewProfile} alt="userProfile" />
                 <input
@@ -774,7 +774,7 @@ const UserImg = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
     cursor: pointer;
   }
 

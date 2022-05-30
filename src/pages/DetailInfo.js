@@ -179,7 +179,10 @@ const DetailInfo = (props) => {
       {/* <form> */}
       <label htmlFor="file">
         <ImageBox>
-          <Image src={previewProfile} />
+          <Image
+            src={previewProfile}
+            userProfile={previewProfile === Profile ? false : true}
+          />
           <ImgInput
             type="file"
             ref={imageRef}
@@ -338,7 +341,7 @@ const ImageBox = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
   cursor: pointer;
 `;
 

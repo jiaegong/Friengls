@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
+import { Profile } from '../image/index';
 
 const LikeItem = (props) => {
   const isTutor = props.userInfo.isTutor;
@@ -9,7 +10,11 @@ const LikeItem = (props) => {
     return (
       <Wrap>
         <UserWrap>
-          <img className="profile" src={props.userProfile} alt="프로필 사진" />
+          <img
+            className="profile"
+            src={props.userProfile ? props.userProfile : Profile}
+            alt="프로필 사진"
+          />
           <div>{props.userName}</div>
         </UserWrap>
         <div
@@ -23,7 +28,7 @@ const LikeItem = (props) => {
   } else if (isTutor === 1) {
     return (
       <Wrap>
-        <UserWrap>
+        <UserWrap userProfile={props.userProfile ? true : false}>
           <img className="profile" src={props.userProfile} alt="프로필 사진" />
           <div>{props.userName}</div>
         </UserWrap>
@@ -61,7 +66,7 @@ const UserWrap = styled.div`
   .profile {
     width: 70px;
     height: 70px;
-    object-fit: cover;
+    object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
     border-radius: 50%;
   }
 `;
