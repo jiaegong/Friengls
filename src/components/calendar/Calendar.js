@@ -31,10 +31,6 @@ const CalendarTemplate = ({
   // 8시간
   startTime = '8:00',
   endTime = '20:00',
-
-  // 24시간
-  // startTime = "0:00",
-  // endTime = "24:00",
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -337,6 +333,7 @@ const CalendarTemplate = ({
                 '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
               border: 'none',
               variant: 'contained',
+              cursor: 'pointer',
             }}
             onClick={handleClick}
           >
@@ -361,6 +358,7 @@ const CalendarTemplate = ({
               textTransform: 'uppercase',
               border: ' 1px solid rgba(0, 0, 0, 0.23)',
               variant: 'contained',
+              cursor: 'pointer',
             }}
             onClick={handleClick}
           >
@@ -913,14 +911,14 @@ const CalendarTemplate = ({
                   >
                     {t('book a lesson')}
                   </Button>
-                  <span
+                  {/* <span
                     className="resetBtn"
                     onClick={() => {
                       window.location.reload();
                     }}
                   >
                     ♻️ {t('refresh')}
-                  </span>
+                  </span> */}
                 </div>
               </Grid>
             </Grid>

@@ -207,6 +207,7 @@ const SelectLang = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+  z-index: 1;
 
   .en {
     cursor: pointer;
