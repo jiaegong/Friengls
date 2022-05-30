@@ -1,8 +1,6 @@
 # 일대일 화상 한국어 플랫폼, Friengls
-***
 
 ## 팀원 소개
-***
 
 | 이름 | 역할 | 담당 |
 | ------ | -- | -- |
@@ -14,7 +12,5 @@
 | 배정민 | BE | 리뷰 CRUD, 소셜로그인, 번역기 API |
 
 ## 기술 스택
-***
 ### FE
-***
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) 
