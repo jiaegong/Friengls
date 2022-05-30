@@ -98,6 +98,8 @@ const Wrap = styled.div`
       margin: 70px auto;
       min-height: 100px;
       padding: 10px;
+      border-top: 1px solid #c4c4c4;
+
       /* 
 
 
@@ -282,8 +284,10 @@ const Wrap = styled.div`
 
 const LikeWrap = styled.div`
   max-width: 1280px;
-  width: 80%;
+  width: 90%;
+  padding: 10px;
   margin: auto;
+  border-top: 1px solid #c4c4c4;
 
   .like-title {
     font-size: 38px;

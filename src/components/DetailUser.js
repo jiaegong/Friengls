@@ -9,6 +9,7 @@ import { Profile, OpenToggle, CloseToggle } from '../image/index';
 import { Buttons } from '../elements/index';
 import { useTranslation } from 'react-i18next';
 import { getCookie } from '../shared/Cookie';
+import Swal from 'sweetalert2';
 
 const DetailUser = (props) => {
   const { t } = useTranslation();
@@ -17,17 +18,36 @@ const DetailUser = (props) => {
 
   const tutorName = props.props.match.params.userName;
   const isLike = useSelector((state) => state.like.isLike);
-
+  //현재 페이지에 접속한 유저
+  const currentUser = useSelector((state) => state.user.info);
   // 좋아요 상태 확인, 좋아요 누르기
   useEffect(() => {
     dispatch(likeActions.isLikeDB(tutorName));
   }, []);
 
   const like = () => {
+    if (currentUser.isTutor === 1) {
+      new Swal('튜터는 좋아요를 선택할 수 없어요.');
+      return;
+    }
+    if (currentUser.userName === userInfo.userName) {
+      new Swal('자신의 프로필에 좋아요를 선택할 수 없어요.');
+      return;
+    }
+
     dispatch(likeActions.likeDB(tutorName));
   };
 
   const unlike = () => {
+    if (currentUser.isTutor === 1) {
+      new Swal('튜터는 좋아요를 선택할 수 없어요.');
+      return;
+    }
+    if (currentUser.userName === userInfo.userName) {
+      new Swal('자신의 프로필에 좋아요를 선택할 수 없어요.');
+      return;
+    }
+
     dispatch(likeActions.unlikeDB(tutorName));
   };
 
@@ -51,6 +71,7 @@ const DetailUser = (props) => {
 
   return (
     <Container>
+      {/* 프로필이미지 */}
       <ImageBox>
         <UserImgWrap userProfile={userInfo.userProfile ? true : false}>
           <img
@@ -58,8 +79,8 @@ const DetailUser = (props) => {
             alt="userProfile"
           />
         </UserImgWrap>
-        {decodeURI(window.location.pathname) ===
-          `/mypage/${userInfo.userName}/${userInfo.isTutor}` && (
+        {/* 마이페이지일 경우 프로필수정버튼 보이기 */}
+        {currentUser.userName === userInfo.userName && (
           <Buttons
             _onClick={handleModal}
             styles={{
@@ -73,6 +94,7 @@ const DetailUser = (props) => {
             {t('edit my profile')}
           </Buttons>
         )}
+        {/* 수정버튼 누르면 모달 열리기 */}
         {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
       </ImageBox>
       <UserInfoBox>
@@ -89,7 +111,10 @@ const DetailUser = (props) => {
             <span key={tag + index}>{tag}</span>
           ))}
         </Tags>
-        <Like>
+        <Like
+          isTutor={currentUser.isTutor === 0}
+          isDetailPage={currentUser.userName !== userInfo.userName}
+        >
           {isLike ? (
             <AiFillHeart onClick={unlike} />
           ) : (
@@ -132,14 +157,13 @@ const DetailUser = (props) => {
 export default DetailUser;
 
 const Container = styled.div`
-  width: 88%;
+  width: 90%;
   /* max-width: 1280px; */
   /* min-height: 520px; */
   margin: 70px auto;
-  padding-bottom: 50px;
+  padding: 10px;
   display: flex;
   justify-content: space-around;
-  border-bottom: 1px solid #c4c4c4;
 `;
 
 const ImageBox = styled.div`
@@ -222,6 +246,8 @@ const Like = styled.div`
   position: absolute;
   right: 30px;
   top: 0;
+  cursor: ${(props) =>
+    props.isTutor && props.isDetailPage ? 'pointer' : 'default'};
 `;
 // 자기소개 토글
 const ContentsButton = styled.button`
