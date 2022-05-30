@@ -153,102 +153,127 @@ const CalendarTemplate = ({
       {
         time: '0:00',
         available: false,
+        save: false,
       },
       {
         time: '1:00',
         available: false,
+        save: false,
       },
       {
         time: '2:00',
         available: false,
+        save: false,
       },
       {
         time: '3:00',
         available: false,
+        save: false,
       },
       {
         time: '4:00',
         available: false,
+        save: false,
       },
       {
         time: '5:00',
         available: false,
+        save: false,
       },
       {
         time: '6:00',
         available: false,
+        save: false,
       },
       {
         time: '7:00',
         available: false,
+        save: false,
       },
       {
         time: '8:00',
         available: false,
+        save: false,
       },
       {
         time: '9:00',
         available: false,
+        save: false,
       },
       {
         time: '10:00',
         available: false,
+        save: false,
       },
       {
         time: '11:00',
         available: false,
+        save: false,
       },
       {
         time: '12:00',
         available: false,
+        save: false,
       },
       {
         time: '13:00',
         available: false,
+        save: false,
       },
       {
         time: '14:00',
         available: false,
+        save: false,
       },
       {
         time: '15:00',
         available: false,
+        save: false,
       },
       {
         time: '16:00',
         available: false,
+        save: false,
       },
       {
         time: '17:00',
         available: false,
+        save: false,
       },
       {
         time: '18:00',
         available: false,
+        save: false,
       },
       {
         time: '19:00',
         available: false,
+        save: false,
       },
       {
         time: '20:00',
         available: false,
+        save: false,
       },
       {
         time: '21:00',
         available: false,
+        save: false,
       },
       {
         time: '22:00',
         available: false,
+        save: false,
       },
       {
         time: '23:00',
         available: false,
+        save: false,
       },
       {
         time: '0:00',
         available: false,
+        save: false,
       },
     ];
     let include = false;
@@ -265,11 +290,36 @@ const CalendarTemplate = ({
   };
 
   //  시간 버튼 컴포넌트
-  function TimeButton({ className, start, end, available, handleClick }) {
+  function TimeButton({ className, start, end, available, handleClick, save }) {
     return (
       <>
-        {available ? (
+        {save ? (
           <button
+            style={{
+              color: '#fff',
+              background: '#aaaaaa',
+              margin: '10px',
+              minWidth: '200px',
+              padding: '5px 15px',
+              boxSizing: 'border-box',
+              transition:
+                'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+              borderRadius: '4px',
+              fontWeight: '500',
+              lineHeight: '1.75',
+              textTransform: 'uppercase',
+              boxShadow:
+                '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
+              border: 'none',
+            }}
+            onClick={handleClick}
+            disabled={save ? 'disabled' : ''}
+          >
+            예약이 있습니다.
+          </button>
+        ) : available ? (
+          <button
+            className={className}
             style={{
               color: '#fff',
               background: '#153587',
@@ -286,40 +336,37 @@ const CalendarTemplate = ({
               boxShadow:
                 '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
               border: 'none',
+              variant: 'contained',
             }}
             onClick={handleClick}
-            disabled={available ? 'disabled' : ''}
           >
             {start} - {end}
           </button>
         ) : (
-          // <Button
-          //   onClick={handleClick}
-          //   color={'primary'}
-          //   className={className}
-          //   variant={'contained'}
-          //   disabled={available ? 'disabled' : 'none'}
-          // >
-          //   {start} - {end}
-          // </Button>
-          <Button
-            onClick={handleClick}
-            color={'default'}
+          <button
             className={className}
-            variant={'outlined'}
+            style={{
+              color: '#000000',
+              background: '#ffffff',
+              margin: '10px',
+              minWidth: '200px',
+              height: '33.44px',
+              padding: '5px 15px',
+              boxSizing: 'border-box',
+              transition:
+                'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+              borderRadius: '4px',
+              fontWeight: '500',
+              lineHeight: '1.75',
+              textTransform: 'uppercase',
+              border: ' 1px solid rgba(0, 0, 0, 0.23)',
+              variant: 'contained',
+            }}
+            onClick={handleClick}
           >
             {start} - {end}
-          </Button>
+          </button>
         )}
-        {/* <Button
-          onClick={handleClick}
-          color={available ? 'primary' : 'default'}
-          className={className}
-          variant={available ? 'contained' : 'outlined'}
-          // disabled
-        >
-          {start} - {end}
-        </Button> */}
       </>
     );
   }
@@ -335,6 +382,7 @@ const CalendarTemplate = ({
     ];
   }
 
+  // DB에 있는 값 불러와서 값이 있는지 체크 하는곳.
   const convertAvailabilityFromDatabase = (availability) => {
     // console.log({ availability });
     const output = {};
@@ -358,6 +406,7 @@ const CalendarTemplate = ({
         output[year][month][day][i].time !== endTime
       ) {
         output[year][month][day][i].available = true;
+        output[year][month][day][i].save = true;
         i++;
       }
     }
@@ -392,10 +441,6 @@ const CalendarTemplate = ({
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
     console.log({ activeDay, output, month, day, year });
-
-    // else if () {
-
-    // }
 
     let activeRangeStart = null;
     let activeRangeEnd = null;
@@ -538,9 +583,7 @@ const CalendarTemplate = ({
     //  시간버튼이 몇 번째인지.
     const createTimeHandler = (i) => () => {
       const newTimes = [...times];
-      console.log({ newTimes });
       newTimes[i].available = !newTimes[i].available;
-      console.log(newTimes[i].available);
       if (activeDay) {
         console.log({ activeDay });
         addTimeToDay(newTimes);
@@ -551,7 +594,6 @@ const CalendarTemplate = ({
     // 클릭한 일의 data를 가져오는 함수.
     const createDayHandler = (day) => () => {
       examineAvailabilityForDay(day);
-      // }
     };
 
     // 저장 버튼
@@ -593,18 +635,16 @@ const CalendarTemplate = ({
             onePick1.push({
               start: availability[i].start
                 .toString()
-                .replace(' (대한한국 표준시)', ''),
-              end: availability[i].end
-                .toString()
-                .replace(' (대한한국 표준시)', ''),
+                .replace(' (한국 표준시)', ''),
+              end: availability[i].end.toString().replace(' (한국 표준시)', ''),
             });
           }
         }
 
         for (let i = 0; i < data.length; i++) {
           onePick2.push({
-            start: data[i].start.toString().replace(' (대한한국 표준시)', ''),
-            end: data[i].end.toString().replace(' (대한한국 표준시)', ''),
+            start: data[i].start.toString().replace(' (한국 표준시)', ''),
+            end: data[i].end.toString().replace(' (한국 표준시)', ''),
           });
         }
 
@@ -804,6 +844,7 @@ const CalendarTemplate = ({
                               end={times[i + 1].time}
                               handleClick={createTimeHandler(i)}
                               available={time.available}
+                              save={time.save}
                             />
                           ),
                       )}
@@ -832,6 +873,7 @@ const CalendarTemplate = ({
                               end={times[i + 1].time}
                               handleClick={createTimeHandler(i)}
                               available={time.available}
+                              save={time.save}
                             />
                           ),
                       )}
