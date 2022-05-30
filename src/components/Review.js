@@ -148,6 +148,7 @@ const ImageWrap = styled.div`
     max-width: 101px;
     width: 100%;
     height: 101px;
+    object-fit: cover;
     border-radius: 50%;
     position: absolute;
     overflow: hidden;
@@ -158,6 +159,7 @@ const ImageWrap = styled.div`
     max-width: 71px;
     width: 100%;
     height: 71px;
+    object-fit: cover;
     position: absolute;
     bottom: 0;
     right: 0;

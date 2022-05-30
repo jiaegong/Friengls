@@ -58,6 +58,7 @@ const UserWrap = styled.div`
   .profile {
     width: 70px;
     height: 70px;
+    object-fit: cover;
     border-radius: 50%;
   }
 `;

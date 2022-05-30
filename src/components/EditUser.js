@@ -44,21 +44,21 @@ const EditUser = (props) => {
   };
 
   // userName 유효성 검사, input값 가져오기
-  const [userName, setUserName] = useState(userInfo.userName);
-  const [userNameCheck, setUserNameCheck] = useState('\u00A0');
-  const handleUserName = (e) => {
-    const userName = e.target.value;
-    setUserName(userName);
-    if (userNameForm(userName)) {
-      setUserNameCheck(t('this is the correct nickname format.'));
-    } else {
-      setUserNameCheck(
-        t(
-          'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
-        ),
-      );
-    }
-  };
+  // const [userName, setUserName] = useState(userInfo.userName);
+  // const [userNameCheck, setUserNameCheck] = useState('\u00A0');
+  // const handleUserName = (e) => {
+  //   const userName = e.target.value;
+  //   setUserName(userName);
+  //   if (userNameForm(userName)) {
+  //     setUserNameCheck(t('this is the correct nickname format.'));
+  //   } else {
+  //     setUserNameCheck(
+  //       t(
+  //         'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
+  //       ),
+  //     );
+  //   }
+  // };
 
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
@@ -68,24 +68,20 @@ const EditUser = (props) => {
     const pwd = e.target.value;
     setPwd(pwd);
     if (pwdForm(pwd)) {
-      if (pwd.includes(userName)) {
-        setPwdCheck(
-          t('you can not include nickname or email in your password.'),
-        );
-      } else {
-        setPwdCheck(t('this is the correct password format.'));
-      }
+      setPwdCheck(t('this is the correct password format.'));
     } else {
-      if (pwd.includes(userName)) {
-        setPwdCheck(
-          t('you can not include nickname or email in your password.'),
-        );
+      setPwdCheck(
+        t(
+          'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
+        ),
+      );
+    }
+    //비밀번호 확인 먼저 입력했을 경우
+    if (confirmPwd.length !== 0) {
+      if (pwd === confirmPwd) {
+        setConfirmPwdCheck(t('it matches the password.'));
       } else {
-        setPwdCheck(
-          t(
-            'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
-          ),
-        );
+        setConfirmPwdCheck(t('the password does not match'));
       }
     }
   };
@@ -107,37 +103,37 @@ const EditUser = (props) => {
   };
 
   //닉네임 중복체크
-  const checkDuplicatedUserName = () => {
-    //아이디 형식 맞지 않을 때 리턴
-    if (!userNameForm(userName)) {
-      return;
-    }
-    //아이디 변경 안한 경우 리턴
-    if (userInfo.userName === userName) {
-      return;
-    }
+  // const checkDuplicatedUserName = () => {
+  //   //아이디 형식 맞지 않을 때 리턴
+  //   if (!userNameForm(userName)) {
+  //     return;
+  //   }
+  //   //아이디 변경 안한 경우 리턴
+  //   if (userInfo.userName === userName) {
+  //     return;
+  //   }
 
-    axios({
-      method: 'post',
-      url: 'https://hjg521.link/signUp/nameCheck',
-      data: {
-        userName: userName,
-      },
-    })
-      .then((response) => {
-        console.log('userNameCheckDB성공', response.data);
-        if (response.data.msg === '이미 있는 닉네임입니다.') {
-          setUserNameCheck(
-            t('this nickname is already in use. try another nickname.'),
-          );
-          return;
-        }
-        setUserNameCheck(t('this nickname is available.'));
-      })
-      .catch((error) => {
-        console.log('닉네임체크에러', error);
-      });
-  };
+  //   axios({
+  //     method: 'post',
+  //     url: 'https://hjg521.link/signUp/nameCheck',
+  //     data: {
+  //       userName: userName,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       console.log('userNameCheckDB성공', response.data);
+  //       if (response.data.msg === '이미 있는 닉네임입니다.') {
+  //         setUserNameCheck(
+  //           t('this nickname is already in use. try another nickname.'),
+  //         );
+  //         return;
+  //       }
+  //       setUserNameCheck(t('this nickname is available.'));
+  //     })
+  //     .catch((error) => {
+  //       console.log('닉네임체크에러', error);
+  //     });
+  // };
 
   //사용언어1 input값
   const [language1, setLanguage1] = useState(userInfo.language1);
@@ -253,11 +249,11 @@ const EditUser = (props) => {
   //유저정보 변경하기
   const editUser = (e) => {
     //닉네임 변경 시 조건
-    if (userInfo.userName !== userName) {
-      if (userNameCheck !== t('this nickname is available.')) {
-        new Swal(t('please confirm the nickname you want to change.'));
-      }
-    }
+    // if (userInfo.userName !== userName) {
+    //   if (userNameCheck !== t('this nickname is available.')) {
+    //     new Swal(t('please confirm the nickname you want to change.'));
+    //   }
+    // }
 
     //비밀번호 변경 시 조건
     if (pwd) {
@@ -339,7 +335,7 @@ const EditUser = (props) => {
     const userForm = {
       //유저정보 추가하기
       userEmail: userInfo.userEmail,
-      userName: userName ? userName : userInfo.userName,
+      userName: userInfo.userName,
       pwd: pwd ? pwd : accessInfo,
       language1: language1,
       language2: language2,
@@ -397,15 +393,19 @@ const EditUser = (props) => {
               {/* 닉네임 */}
               <InfoInput
                 label={t('nickname')}
-                placeholder={t('please enter a nickname to change.')}
-                validationLabel={userNameCheck}
-                _onChange={handleUserName}
-                _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
-                value={userName}
+                // placeholder={t('please enter a nickname to change.')}
+                // validationLabel={userNameCheck}
+                // _onChange={handleUserName}
+                // _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
+                value={userInfo.userName}
+                disabled
                 styles={{
                   height: '45px',
                   flexDirection: 'column',
                   justifyContent: 'space-evenly',
+                  background: 'rgba(0,0,0,0.05)',
+                  cursor: 'default',
+                  color: '#999',
                 }}
               />
               {/* 비밀번호 */}
@@ -603,7 +603,7 @@ const EditUser = (props) => {
                     {/* 시작시간 선택 셀렉트*/}
                     <Select name="startTime" onChange={handleStartTime}>
                       <option value="">
-                        {!userInfo.startTime
+                        {userInfo.startTime
                           ? startNum +
                             1 +
                             t('session') +
@@ -629,7 +629,7 @@ const EditUser = (props) => {
                       <>
                         <Select name="endTime" onChange={handleEndTime}>
                           <option value="">
-                            {!userInfo.endTime
+                            {userInfo.endTime
                               ? endNum +
                                 1 +
                                 t('session') +
@@ -774,6 +774,7 @@ const UserImg = styled.div`
   img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     cursor: pointer;
   }
 
