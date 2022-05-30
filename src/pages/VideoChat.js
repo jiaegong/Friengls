@@ -45,7 +45,7 @@ const VideoChat = (props) => {
   const [videoOn, setVideoOn] = useState(true);
   const [audioOn, setAudioOn] = useState(true);
 
-  const socket = io('https://hjg521.link', { transports: ['websocket'] });
+  const socket = io('https://jg-jg.shop', { transports: ['websocket'] });
 
   useEffect(() => {
     const peer = new Peer();

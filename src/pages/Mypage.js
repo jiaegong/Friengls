@@ -44,8 +44,6 @@ const Mypage = (props) => {
 
   const likeList = useSelector((state) => state.like.myList);
 
-  console.log(bookingList);
-
   return (
     <Wrap>
       <div className="innerWrap">
