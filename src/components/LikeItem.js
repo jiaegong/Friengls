@@ -5,7 +5,7 @@ import { Profile } from '../image/index';
 
 const LikeItem = (props) => {
   const isTutor = props.userInfo.isTutor;
-
+  console.log(props.userProfile);
   if (isTutor === 0) {
     return (
       <Wrap>
@@ -29,7 +29,11 @@ const LikeItem = (props) => {
     return (
       <Wrap>
         <UserWrap userProfile={props.userProfile ? true : false}>
-          <img className="profile" src={props.userProfile} alt="프로필 사진" />
+          <img
+            className="profile"
+            src={props.userProfile ? props.userProfile : Profile}
+            alt="프로필 사진"
+          />
           <div>{props.userName}</div>
         </UserWrap>
         <ProfileWrap
