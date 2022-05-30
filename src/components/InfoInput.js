@@ -17,6 +17,8 @@ const InfoInput = (props) => {
     multiLine,
     checked,
     autoComplete,
+    _onMouseOver,
+    _onMouseOut,
     styles,
     defaultStyles,
     label,
@@ -28,7 +30,12 @@ const InfoInput = (props) => {
 
   if (onlyBox) {
     return (
-      <InputBox style={{ ...styles }} {...defaultStyles}>
+      <InputBox
+        style={{ ...styles }}
+        {...defaultStyles}
+        onMouseOver={_onMouseOver}
+        onMouseOut={_onMouseOut}
+      >
         {children}
       </InputBox>
     );

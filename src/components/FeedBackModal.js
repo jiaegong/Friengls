@@ -1,38 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FeedBackIcon } from '../image/index';
-import { Buttons } from '../elements';
 
-const FeedBack = ({ _onClick }) => {
-  const [feedbackOn, setFeedbackOn] = useState(false);
-  const handleFeedback = () => {
-    setFeedbackOn(!feedbackOn);
+const FeedBack = (props) => {
+  const [feedback, setFeedback] = useState(false);
+  const handleFeedbackOn = () => {
+    setFeedback(true);
+  };
+
+  const handleFeedbackOff = () => {
+    setFeedback(false);
   };
 
   return (
     <React.Fragment>
-      <FeedBackBox onClick={handleFeedback}>
-        <img src={FeedBackIcon} />
+      <FeedBackBox
+        onMouseOver={handleFeedbackOn}
+        onMouseOut={handleFeedbackOff}
+      >
+        <a href="https://forms.gle/Q2cRMo4xN4ZvUgpu9" target="_blank">
+          <img src={FeedBackIcon} />
+        </a>
       </FeedBackBox>
-      {feedbackOn && (
-        <Div>
-          <A href="https://forms.gle/Q2cRMo4xN4ZvUgpu9" target="_blank">
-            <Buttons
-              styles={{
-                width: '200px',
-                height: '40px',
-                // background: '#018ABE',
-                background: '#7f83ea',
-                position: 'fixed',
-                bottom: '143px',
-                right: '50px',
-              }}
-            >
-              소중한 의견을 남겨주세요!
-            </Buttons>
-          </A>
-        </Div>
-      )}
+      {feedback && <Div>소중한 의견을 남겨주세요!</Div>}
     </React.Fragment>
   );
 };
@@ -45,6 +35,23 @@ const FeedBackBox = styled.div`
 `;
 
 const Div = styled.div`
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #018abe;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  bottom: 143px;
+  right: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+
   &:after {
     content: '';
     position: fixed;
@@ -52,14 +59,8 @@ const Div = styled.div`
     bottom: 130px;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 15px solid #7f83ea;
+    border-top: 15px solid #018abe;
   }
-`;
-
-const A = styled.a`
-  font-size: 14px;
-  color: #fff;
-  text-decoration: none;
 `;
 
 export default FeedBack;

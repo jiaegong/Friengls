@@ -1,5 +1,4 @@
-import { red } from '@material-ui/core/colors';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NewInputLabel, NewInput } from '../elements/index';
 import InfoInput from './InfoInput';
@@ -25,6 +24,15 @@ const SelectIsTutor = ({
       ? endTimeArray.push(Number(startTime) + (2 * i - 1))
       : endTimeArray.push(Number(startTime) + (2 * i - 1) - 24);
   }
+
+  const [notification, setNotification] = useState(false);
+  const notificationOn = () => {
+    setNotification(true);
+  };
+
+  const notificationOff = () => {
+    setNotification(false);
+  };
 
   return (
     <TimeBox>
@@ -71,7 +79,12 @@ const SelectIsTutor = ({
       {/* 선생님인 경우 수업시간 선택 */}
       {isTutor === '1' && (
         <React.Fragment>
-          <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
+          <InfoInput
+            onlyBox
+            styles={{ justifyContent: 'flex-start' }}
+            _onMouseOver={notificationOn}
+            _onMouseOut={notificationOff}
+          >
             <TimeSelectBox>
               {t('available time for tutoring')} :
               <Select name="startTime" onChange={handleStartTime}>
@@ -101,40 +114,30 @@ const SelectIsTutor = ({
                   {t('to')}
                 </>
               )}
+              {notification && (
+                <InfoBox>
+                  <span>
+                    ※ {t('the tutoring lesson lasts 30 minutes each time.')}
+                  </span>
+                  <span>
+                    ※ {t('tutoring lessons can be organized in two sessions.')}
+                  </span>
+                  <span>
+                    ※{' '}
+                    {t(
+                      'you can take at least 2 sessions and up to 12 sessions.',
+                    )}
+                  </span>
+                  <span>※ {t('you can change tutoring time on my page.')}</span>
+                </InfoBox>
+              )}
             </TimeSelectBox>
           </InfoInput>
-          <InfoBox>
-            <span>
-              ※ {t('"the tutoring lesson lasts 30 minutes each time.')}
-            </span>
-            <span>
-              ※ {t('tutoring lessons can be organized in two sessions.')}
-            </span>
-            <span>
-              ※ {t('you can take at least 2 sessions and up to 12 sessions.')}
-            </span>
-            <span>※ {t('you can change tutoring time on my page.')}</span>
-          </InfoBox>
         </React.Fragment>
       )}
     </TimeBox>
   );
 };
-
-const IsTutorTooltip = styled.div`
-  width: 420px;
-  height: 50px;
-  padding: 10px 0;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  position: absolute;
-  top: -50px;
-  right: -300px;
-  font-size: 20px;
-  font-weight: 400;
-  text-align: center;
-`;
 
 const TimeBox = styled.div`
   width: 100%;
@@ -154,6 +157,7 @@ const TimeSelectBox = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
+  position: relative;
 `;
 
 const Select = styled.select`
@@ -168,10 +172,19 @@ const Select = styled.select`
 `;
 
 const InfoBox = styled.div`
+  width: 420px;
   margin: 20px;
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 20px;
+  left: 450px;
   font-size: 12px;
+  text-align: center;
 `;
 
 export default SelectIsTutor;
