@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
 import { actionCreators as userActions } from '../redux/modules/user';
 import SelectLanguage from '../components/SelectLanguage';
 import { Profile, CloseIcon } from '../image';
 import { Buttons, NewInputLabel, NewInput } from '../elements/index';
-import { pwdForm, userNameForm } from '../utils/validation';
+import { pwdForm } from '../utils/validation';
 import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
@@ -42,23 +41,6 @@ const EditUser = (props) => {
     dispatch(userActions.deleteProfileDB(deleteInfo));
     setPreviewProfile(Profile);
   };
-
-  // userName 유효성 검사, input값 가져오기
-  // const [userName, setUserName] = useState(userInfo.userName);
-  // const [userNameCheck, setUserNameCheck] = useState('\u00A0');
-  // const handleUserName = (e) => {
-  //   const userName = e.target.value;
-  //   setUserName(userName);
-  //   if (userNameForm(userName)) {
-  //     setUserNameCheck(t('this is the correct nickname format.'));
-  //   } else {
-  //     setUserNameCheck(
-  //       t(
-  //         'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
-  //       ),
-  //     );
-  //   }
-  // };
 
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
@@ -101,39 +83,6 @@ const EditUser = (props) => {
       setConfirmPwdCheck(t('the password does not match'));
     }
   };
-
-  //닉네임 중복체크
-  // const checkDuplicatedUserName = () => {
-  //   //아이디 형식 맞지 않을 때 리턴
-  //   if (!userNameForm(userName)) {
-  //     return;
-  //   }
-  //   //아이디 변경 안한 경우 리턴
-  //   if (userInfo.userName === userName) {
-  //     return;
-  //   }
-
-  //   axios({
-  //     method: 'post',
-  //     url: 'https://hjg521.link/signUp/nameCheck',
-  //     data: {
-  //       userName: userName,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       console.log('userNameCheckDB성공', response.data);
-  //       if (response.data.msg === '이미 있는 닉네임입니다.') {
-  //         setUserNameCheck(
-  //           t('this nickname is already in use. try another nickname.'),
-  //         );
-  //         return;
-  //       }
-  //       setUserNameCheck(t('this nickname is available.'));
-  //     })
-  //     .catch((error) => {
-  //       console.log('닉네임체크에러', error);
-  //     });
-  // };
 
   //사용언어1 input값
   const [language1, setLanguage1] = useState(userInfo.language1);
@@ -248,13 +197,6 @@ const EditUser = (props) => {
 
   //유저정보 변경하기
   const editUser = (e) => {
-    //닉네임 변경 시 조건
-    // if (userInfo.userName !== userName) {
-    //   if (userNameCheck !== t('this nickname is available.')) {
-    //     new Swal(t('please confirm the nickname you want to change.'));
-    //   }
-    // }
-
     //비밀번호 변경 시 조건
     if (pwd) {
       if (pwdCheck !== t('this is the correct password format.')) {
@@ -363,7 +305,7 @@ const EditUser = (props) => {
   };
 
   return (
-    <ContentWrap>
+    <ContentWrap onClick={(e) => e.stopPropagation()}>
       <Content>
         <CloseBtn onClick={closeModal}>
           <img src={CloseIcon} alt="close" />
@@ -392,10 +334,6 @@ const EditUser = (props) => {
               <p>{t('basic information')}</p>
               <InfoInput
                 label={t('email')}
-                // placeholder={t('please enter a nickname to change.')}
-                // validationLabel={userNameCheck}
-                // _onChange={handleUserName}
-                // _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
                 value={userInfo.userEmail}
                 disabled
                 styles={{
@@ -411,10 +349,6 @@ const EditUser = (props) => {
               {/* 닉네임 */}
               <InfoInput
                 label={t('nickname')}
-                // placeholder={t('please enter a nickname to change.')}
-                // validationLabel={userNameCheck}
-                // _onChange={handleUserName}
-                // _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
                 value={userInfo.userName}
                 disabled
                 styles={{
@@ -611,7 +545,7 @@ const EditUser = (props) => {
               </NewInputLabel>
             </InfoInput>
             {/* 선생님인 경우 수업시간 선택 */}
-            {userInfo.isTutor === 1 && (
+            {userInfo.isTutor === 1 ? (
               <React.Fragment>
                 <InfoInput
                   onlyBox
@@ -686,6 +620,8 @@ const EditUser = (props) => {
                   </span>
                 </InfoBox>
               </React.Fragment>
+            ) : (
+              <InfoInput onlyBox styles={{ border: 'none' }}></InfoInput>
             )}
           </TimeBox>
         </GroupBox>
@@ -709,6 +645,7 @@ export default EditUser;
 const ContentWrap = styled.div`
   width: 800px;
   height: 700px;
+  padding-top: 700px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -738,12 +675,12 @@ const ContentWrap = styled.div`
 
 const Content = styled.div`
   width: 90%;
-  height: 500px;
+  height: 100%;
+  background: red;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // background: red;
 `;
 
 // 닫기 버튼
@@ -762,7 +699,7 @@ const CloseBtn = styled.div`
 
 const GroupBox1 = styled.div`
   width: 100%;
-  margin: 600px auto 20px;
+  margin: 0 auto 20px;
   display: flex;
 `;
 // 프로필사진 관련

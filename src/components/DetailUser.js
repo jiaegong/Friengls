@@ -53,8 +53,6 @@ const DetailUser = (props) => {
 
   // 자기소개 열기, 닫기
   const [contents, setContents] = useState('');
-  console.log(userInfo);
-  console.log(userInfo.tag);
   // 태그목록 배열로 변환
   const tagList = userInfo.tag ? userInfo.tag.split(',') : null;
 

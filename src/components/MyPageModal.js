@@ -62,7 +62,7 @@ const MyPageModal = (props) => {
 
   return (
     <Portal>
-      <Background>
+      <Background onClick={onClose}>
         {editUser ? (
           <EditUser
             onClose={onClose}
@@ -70,7 +70,7 @@ const MyPageModal = (props) => {
             accessInfo={accessInfo}
           />
         ) : (
-          <ContentWrap>
+          <ContentWrap onClick={(e) => e.stopPropagation()}>
             <Content>
               <CloseBtn onClick={onClose}>
                 <img src={CloseIcon} alt="close" />
@@ -150,7 +150,6 @@ const Background = styled.div`
 const ContentWrap = styled.div`
   width: 800px;
   height: 700px;
-  // min-height: 800px;
   position: relative;
   background: #fff;
   border-radius: 20px;
@@ -159,7 +158,7 @@ const ContentWrap = styled.div`
 
 const Content = styled.div`
   width: 340px;
-  height: 655px;
+  height: 625px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
