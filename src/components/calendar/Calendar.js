@@ -36,7 +36,7 @@ const CalendarTemplate = ({
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const saveDataCount = availability.length + 1;
-  console.log(saveDataCount);
+  // console.log(saveDataCount);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -424,9 +424,9 @@ const CalendarTemplate = ({
         }
       }
     }
-    console.log({ output });
-    console.log(output.length);
-    console.log({ saveDataCount });
+    // console.log({ output });
+    // console.log(output.length);
+    // console.log({ saveDataCount });
 
     if (saveDataCount < output.length) {
       // alert('선택하실수 있는 갯수를 초과 하셨습니다.');
@@ -456,7 +456,7 @@ const CalendarTemplate = ({
 
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
-    console.log({ activeDay, output, month, day, year });
+    // console.log({ activeDay, output, month, day, year });
 
     let activeRangeStart = null;
     let activeRangeEnd = null;
@@ -601,7 +601,7 @@ const CalendarTemplate = ({
       const newTimes = [...times];
       newTimes[i].available = !newTimes[i].available;
       if (activeDay) {
-        console.log({ activeDay });
+        // console.log({ activeDay });
         addTimeToDay(newTimes);
       }
       setTimes(newTimes);
@@ -616,7 +616,7 @@ const CalendarTemplate = ({
     const handleSaveAvailability = () => {
       // outPut 값이 return 되어서 data에 반환됨. convertAvailabilityForDatabase === output
       const data = convertAvailabilityForDatabase(availabilityState);
-      console.log(data);
+      // console.log(data);
 
       setSaving(true);
       let onePick1 = [];
@@ -665,8 +665,8 @@ const CalendarTemplate = ({
           });
         }
 
-        console.log({ onePick1 });
-        console.log({ onePick2 });
+        // console.log({ onePick1 });
+        // console.log({ onePick2 });
 
         const Astart = [];
         for (let i = 0; i < onePick2.length; i++) {
@@ -684,7 +684,7 @@ const CalendarTemplate = ({
         // console.log('현재 저장 비교 availability : ', onePick2);
 
         const ABstart = Astart.filter((time, index) => !Bstart.includes(time));
-        console.log('ABstart : ', { ABstart });
+        // console.log('ABstart : ', { ABstart });
 
         const goDB = onePick2.filter(
           (time, index) => time.start === ABstart[0],

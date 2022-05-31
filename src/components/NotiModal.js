@@ -8,8 +8,6 @@ const NotiModal = (props) => {
   const dispactch = useDispatch();
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
-  console.log({ notiList });
-  console.log({ notiCheck });
   const { ModalAction, userInfo } = props;
 
   React.useEffect(() => {
