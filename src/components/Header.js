@@ -80,14 +80,14 @@ const Header = () => {
           <img className="logo" src={MainLogo} alt=""></img>
         </div>
 
+        {notiOpen && (
+          <NotiModal
+            ModalAction={handleNotiModal}
+            userInfo={userInfo}
+            // key={'notiModal'}
+          />
+        )}
         <ul className="navBarWrap">
-          {notiOpen && (
-            <NotiModal
-              ModalAction={handleNotiModal}
-              userInfo={userInfo}
-              // key={'notiModal'}
-            />
-          )}
           <li
             onClick={() => {
               setLangOpen(!langOpen);
@@ -249,7 +249,7 @@ const Wrap = styled.div`
     height: 100%;
     padding: 20px 0 0;
     margin: auto;
-    // background: red;
+    position: relative;
 
     display: flex;
     justify-content: space-between;
