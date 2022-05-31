@@ -208,7 +208,7 @@ const Wrap = styled.div`
     height: 100%;
     padding: 20px 0 0;
     margin: auto;
-    // background: red;
+    position: relative;
 
     display: flex;
     justify-content: space-between;

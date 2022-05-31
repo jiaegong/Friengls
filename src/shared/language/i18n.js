@@ -24,7 +24,7 @@ i18n
     // 초기 설정 언어
     lng: localStorage.getItem('language')
       ? localStorage.getItem('language')
-      : 'en',
+      : 'ko',
     fallbackLng: 'en',
     ns: ['translation'],
     defaultNS: 'translation',
