@@ -1,40 +1,5 @@
 /* font */
-@font-face {
-  font-family: 'Jalnan';
-  src: url('../fonts/Jalnan.ttf') format('truetype'),
-    url('../fonts/Jalnan.eot?iefix') format('embedded-opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'NotoSansKR';
-  src: url('../fonts/NotoSansKR-Light.otf') format('truetype'),
-    url('../fonts/NotoSansKR-Light.eot?iefix') format('embedded-opentype');
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'NotoSansKR';
-  src: url('../fonts/NotoSansKR-Regular.otf') format('truetype'),
-    url('../fonts/NotoSansKR-Regular.eot?iefix') format('embedded-opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'NotoSansKR';
-  src: url('../fonts/NotoSansKR-Medium.otf') format('truetype'),
-    url('../fonts/NotoSansKR-Medium.eot?iefix') format('embedded-opentype');
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'NotoSansKR';
-  src: url('../fonts/NotoSansKR-Bold.otf') format('truetype'),
-    url('../fonts/NotoSansKR-Bold.eot?iefix') format('embedded-opentype');
-  font-weight: 700;
-  font-style: normal;
-}
-/* font */
+@import url('https://fonts.googleapis.com/css2? family= Noto+Sans+KR:wght@400;500;700 & display=swap');
 
 * {
   /* 기본적으로 모든 속성은 NotoSansKR로 지정해놨습니다. */
