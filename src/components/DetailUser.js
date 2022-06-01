@@ -50,9 +50,9 @@ const DetailUser = (props) => {
 
     dispatch(likeActions.unlikeDB(tutorName));
   };
-
   // 자기소개 열기, 닫기
-  const [contents, setContents] = useState('');
+  const [contents, setContents] = useState(true);
+
   // 태그목록 배열로 변환
   const tagList = userInfo.tag ? userInfo.tag.split(',') : null;
 
@@ -70,61 +70,61 @@ const DetailUser = (props) => {
 
   return (
     <Container>
-      {/* 프로필이미지 */}
-      <ImageBox>
-        <UserImgWrap userProfile={userInfo.userProfile ? true : false}>
-          <img
-            src={userInfo.userProfile ? userInfo.userProfile : Profile}
-            alt="userProfile"
-          />
-        </UserImgWrap>
-        {/* 마이페이지일 경우 프로필수정버튼 보이기 */}
-        {currentUser.userName === userInfo.userName && (
-          <Buttons
-            _onClick={handleModal}
-            styles={{
-              // margin: '20px 10px 0',
-              margin: '20px 20px 0',
-              width: '140px',
-              height: '44px',
-              fontSize: '16px',
-            }}
-          >
-            {t('edit my profile')}
-          </Buttons>
-        )}
-        {/* 수정버튼 누르면 모달 열리기 */}
-        {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
-      </ImageBox>
-      <UserInfoBox>
-        <UserTitle>
-          <p>{userInfo.userName}</p>
-          {userInfo.language1 ? <span>{userInfo.language1}</span> : ''}
-          {userInfo.language2 ? <span>/ {userInfo.language2}</span> : ''}
-          {userInfo.language3 ? <span>/ {userInfo.language3}</span> : ''}
-        </UserTitle>
-        <Comment>{userInfo.comment}</Comment>
-        <ContentsBox>{contents}</ContentsBox>
-        <Tags>
-          {tagList?.map((tag, index) => (
-            <span key={tag + index}>{tag}</span>
-          ))}
-        </Tags>
-        <Like
-          isTutor={currentUser.isTutor === 0}
-          isDetailPage={currentUser.userName !== userInfo.userName}
-        >
-          {isLike ? (
-            <AiFillHeart onClick={unlike} />
-          ) : (
-            <AiOutlineHeart onClick={like} />
+      <InfoContainer>
+        {/* 프로필이미지 */}
+        <ImageBox>
+          <UserImgWrap userProfile={userInfo.userProfile ? true : false}>
+            <img
+              src={userInfo.userProfile ? userInfo.userProfile : Profile}
+              alt="userProfile"
+            />
+          </UserImgWrap>
+          {/* 마이페이지일 경우 프로필수정버튼 보이기 */}
+          {currentUser.userName === userInfo.userName && (
+            <Buttons
+              _onClick={handleModal}
+              styles={{
+                // margin: '20px 10px 0',
+                margin: '20px 20px 0',
+                width: '140px',
+                height: '44px',
+                fontSize: '16px',
+              }}
+            >
+              {t('edit my profile')}
+            </Buttons>
           )}
-        </Like>
-        {userInfo.contents &&
-          (contents ? (
+          {/* 수정버튼 누르면 모달 열리기 */}
+          {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
+        </ImageBox>
+        <UserInfoBox>
+          <UserTitle>
+            <p>{userInfo.userName}</p>
+            {userInfo.language1 ? <span>{userInfo.language1}</span> : ''}
+            {userInfo.language2 ? <span>/ {userInfo.language2}</span> : ''}
+            {userInfo.language3 ? <span>/ {userInfo.language3}</span> : ''}
+          </UserTitle>
+          <Comment>{userInfo.comment}</Comment>
+
+          <Tags>
+            {tagList?.map((tag, index) => (
+              <span key={tag + index}>{tag}</span>
+            ))}
+          </Tags>
+          <Like
+            isTutor={currentUser.isTutor === 0}
+            isDetailPage={currentUser.userName !== userInfo.userName}
+          >
+            {isLike ? (
+              <AiFillHeart size="25px" onClick={unlike} />
+            ) : (
+              <AiOutlineHeart size="25px" onClick={like} />
+            )}
+          </Like>
+          {userInfo.contents && contents ? (
             <ContentsButton
               onClick={() => {
-                setContents('');
+                setContents(false);
               }}
             >
               <div>
@@ -135,7 +135,7 @@ const DetailUser = (props) => {
           ) : (
             <ContentsButton
               onClick={() => {
-                setContents(userInfo.contents);
+                setContents(true);
               }}
             >
               <div>
@@ -143,12 +143,20 @@ const DetailUser = (props) => {
               </div>
               {t('open self-introduction')}
             </ContentsButton>
-          ))}
-        {/* 자기소개, 한줄소개 없을 경우 띄우기 */}
-        {userInfo.comment === '' &&
-          userInfo.contents === '' &&
-          userInfo.tag === '' && <NoInfoBox>작성된 내용이 없습니다.</NoInfoBox>}
-      </UserInfoBox>
+          )}
+          {/* 자기소개, 한줄소개 없을 경우 띄우기 */}
+          {userInfo.comment === '' &&
+            userInfo.contents === '' &&
+            userInfo.tag === '' && (
+              <NoInfoBox>작성된 내용이 없습니다.</NoInfoBox>
+            )}
+        </UserInfoBox>
+      </InfoContainer>
+      {contents && (
+        <ContentsWrap>
+          <div>{userInfo.contents}</div>
+        </ContentsWrap>
+      )}
     </Container>
   );
 };
@@ -162,7 +170,12 @@ const Container = styled.div`
   margin: 70px auto;
   padding: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
 `;
 
 const ImageBox = styled.div`
@@ -185,10 +198,13 @@ const UserImgWrap = styled.div`
 const UserInfoBox = styled.div`
   width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;
 
 const UserTitle = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   p {
     display: inline-block;
     font-size: 22px;
@@ -205,32 +221,18 @@ const UserTitle = styled.div`
 
 const Comment = styled.p`
   width: 80%;
-  min-height: 80px;
+  margin-bottom: 40px;
   font-size: 16px;
   font-weight: 500;
-  letter-spacing: 1px;
-`;
-
-const ContentsBox = styled.div`
-  width: 100%;
-  // min-height: 100px;
-  margin-bottom: 30px;
-  padding: 0px 10px;
-  border-left: 4px solid #000000;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 40px;
   letter-spacing: 1px;
 `;
 
 const Tags = styled.div`
-  // width: 100%; //1
-  width: 85%; //2
+  width: 85%;
 
   span {
     display: inline-block;
     font-size: 14px;
-    /* padding: 12px 22px; */
     padding: 8px 12px;
     margin-bottom: 10px;
     margin-right: 6px;
@@ -243,17 +245,32 @@ const Tags = styled.div`
 
 const Like = styled.div`
   position: absolute;
-  right: 30px;
-  top: 0;
+  right: 20px;
+  top: 5px;
   cursor: ${(props) =>
     props.isTutor && props.isDetailPage ? 'pointer' : 'default'};
 `;
+
+const ContentsWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  div {
+    width: 880px;
+    padding: 0 12px;
+    border-left: 4px solid #000000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 40px;
+    letter-spacing: 1px;
+  }
+`;
 // 자기소개 토글
 const ContentsButton = styled.button`
-display: flex;  
+  display: flex;  
   position: absolute;
-  right: 30px;
-  top: 50px;
+  right: 20px;
+  bottom: 30px;
   cursor: pointer;
   font-size: 16px;
   background: transparent;
