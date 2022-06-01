@@ -46,7 +46,6 @@ const VideoChat = (props) => {
   const userId = userName.userName;
   const [videoOn, setVideoOn] = useState(true);
   const [audioOn, setAudioOn] = useState(true);
-  const [screenOn, setScreenOn] = useState(false);
 
   const socket = io('https://jg-jg.shop', { transports: ['websocket'] });
 
@@ -161,7 +160,6 @@ const VideoChat = (props) => {
         audio: { echoCancellation: true, noiseSuppression: true },
       })
       .then((stream) => {
-        setScreenOn(!screenOn);
         myVideo.current.srcObject = stream;
         const videoTrack = stream.getVideoTracks()[0];
         console.log(stream);
@@ -170,7 +168,6 @@ const VideoChat = (props) => {
           .find((sender) => sender.track.kind === videoTrack.kind)
           .replaceTrack(videoTrack);
         videoTrack.onended = function () {
-          setScreenOn(!screenOn);
           const screenTrack = userStream.current.getVideoTracks()[0];
           connectionRef.current
             .getSenders()
