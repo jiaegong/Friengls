@@ -256,7 +256,7 @@ const ContentsWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   div {
-    width: 880px;
+    width: 910px;
     padding: 0 12px;
     border-left: 4px solid #000000;
     font-size: 16px;
