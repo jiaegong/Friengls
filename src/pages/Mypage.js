@@ -17,30 +17,21 @@ const Mypage = (props) => {
 
   //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.detailInfo);
-  // console.log(userApi);
 
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = userApi.isTutor;
   const userName = userApi.userName;
-  // console.log(isTutor);
 
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
 
   useEffect(() => {
     dispatch(userActions.getUserDetailDB(userApi));
-  }, []);
-
-  useEffect(() => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
-  }, [userName]);
-
-  // 현재 시간 구하는 방법
-
-  useEffect(() => {
     dispatch(likeActions.getLikeDB());
   }, []);
 
+  // 현재 시간 구하는 방법
   const likeList = useSelector((state) => state.like.myList);
 
   return (
