@@ -42,7 +42,7 @@
   "back": "Back",
   "email format: ex) example@example.com": "Email format: ex) example@example.com",
   "this is the correct email format.": "This is the correct email format.",
-  "english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )": "English, numbers, special characters (- _ . ) 6-20) or less, Korean letters 3-8 characters, numbers, special characters (- _ . )",
+  "Korean, english, numbers, special characters (- _ . ) / member of letters : 4-16 (Korean : 2-8)": "Korean, english, numbers, special characters (- _ . ) / member of letters : 4-16 (Korean : 2-8)",
   "this is the correct nickname format.": "This is the correct nickname format.",
   "password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)": "Password format: English uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)",
   "you can not include nickname or email in your password.": "You can not include nickname or email in your password.",

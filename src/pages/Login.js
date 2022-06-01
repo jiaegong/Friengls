@@ -8,7 +8,6 @@ import { Logo } from '../image/';
 import { Buttons } from '../elements';
 import InfoInput from '../components/InfoInput';
 import { useTranslation } from 'react-i18next';
-import { returnClick } from '../utils/returnClick';
 import Swal from 'sweetalert2';
 
 const Login = (props) => {

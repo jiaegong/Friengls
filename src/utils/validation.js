@@ -8,13 +8,30 @@ export const pwdForm = (pwd) => {
   let reg = /^(?=.*[A-Za-z])(?=.*[0-9])[a-zA-Z0-9!-_]{8,20}$/;
   return reg.test(pwd);
 };
-//닉네임: 영문, 숫자, 특수문자(- _ .) 4-20이하 or 한글 2-8자, 숫자, 특수문자(- _ .)
+//유저네임체크(한글,영어,숫자,특수문자(-_.)를 포함한 4-16자)
 export const userNameForm = (userName) => {
-  let reg = /^[a-zA-Z0-9-_.]{6,20}|[ㄱ-힣0-9-_.]{2,8}$/;
-  return reg.test(userName);
+  let reg = /^[가-힣a-zA-Z0-9-_.]+$/;
+  if (reg.test(userName)) {
+    let inputLength = 0;
+    for (let i = 0; i < userName.length; i++) {
+      if (escape(userName.charAt(i)).length === 6) {
+        inputLength += 1;
+      }
+      inputLength += 1;
+    }
+    if (4 <= inputLength && inputLength <= 16) {
+      return true;
+    }
+  }
 };
-//태그: 한글, 영문, 숫자만 입력가능(개선필요)
-export const checkSpelling = (spelling) => {
-  let reg = /^[a-zA-Z0-9]{0,16}|[ㄱ-힣0-9]{0,8}$/;
-  return reg.test(spelling);
+//글자수체크: limit까지 입력 가능
+export const inputLength = (word) => {
+  let inputCount = 0;
+  for (let i = 0; i < word.length; i++) {
+    if (escape(word.charAt(i)).length === 6) {
+      inputCount += 1;
+    }
+    inputCount += 1;
+  }
+  return inputCount;
 };

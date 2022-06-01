@@ -42,7 +42,7 @@
   "back": "戻る",
   "email format: ex) example@example.com": "メール形式: 例) example@example.com",
   "this is the correct email format.": "正しいメール形式です。",
-  "english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )": "英文、数字、特殊文字(-_.)6-20以下 or ハングル3-8文字、数字、特殊文字(-_.)",
+  "Korean, english, numbers, special characters (- _ . ) / member of letters : 4-16 (Korean : 2-8)": "英文、数字、特殊文字(-_.)4-16以下 or ハングル2-8文字、数字、特殊文字(-_.)",
   "this is the correct nickname format.": "正しいニックネーム形式です。",
   "password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)": "パスワード形式:英語大文字·数字を必ず含む8-20文字間（特殊文字可）",
   "you can not include nickname or email in your password.": "パスワードにはニックネームまたEメールを含むことはできません。",
