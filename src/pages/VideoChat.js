@@ -38,6 +38,7 @@ const VideoChat = (props) => {
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
+  const senders = useRef();
   const peers = {};
   const roomId = props.match.params.roomName;
   const userName = useSelector((state) => state.user.info); // props로 넘겨주는 게 더 좋을 거 같음
@@ -45,7 +46,7 @@ const VideoChat = (props) => {
   const [videoOn, setVideoOn] = useState(true);
   const [audioOn, setAudioOn] = useState(true);
 
-  const socket = io('https://hjg521.link', { transports: ['websocket'] });
+  const socket = io('https://jg-jg.shop', { transports: ['websocket'] });
 
   useEffect(() => {
     const peer = new Peer();
@@ -145,6 +146,23 @@ const VideoChat = (props) => {
     }
   };
 
+  // 화면 공유
+  function shareScreen() {
+    navigator.mediaDevices.getDisplayMedia({ video: true }).then((stream) => {
+      const screenTrack = stream.getVideoTracks()[0];
+      connectionRef.current.peerConnection
+        .getSenders()
+        .find((sender) => sender.track.kind === screenTrack.kind)
+        .replaceTrack(screenTrack);
+      screenTrack.onended = function () {
+        connectionRef.current.peerConnection
+          .getSenders()
+          .find((sender) => sender.track.kind === screenTrack.kind)
+          .replaceTrack(myVideo.current.getTracks()[1]);
+      };
+    });
+  }
+
   return (
     <Container>
       <LeftWrap>
@@ -200,6 +218,7 @@ const VideoChat = (props) => {
           ) : (
             <BsCameraVideoOffFill size={25} onClick={videoHandler} />
           )}
+          <button onClick={shareScreen}>버튼</button>
         </Controllers>
       </RightWrap>
     </Container>
