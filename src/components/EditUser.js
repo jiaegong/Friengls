@@ -8,26 +8,47 @@ import { Buttons, NewInputLabel, NewInput } from '../elements/index';
 import { pwdForm, inputLength } from '../utils/validation';
 import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
+import imageCompression from 'browser-image-compression';
+
 import Swal from 'sweetalert2';
 
 const EditUser = (props) => {
   const { t } = useTranslation();
   const { onClose, userInfo, accessInfo } = props;
-
   const dispatch = useDispatch();
+
+  // 입력받은 img 타켓 설정
+  const [profileImage, setProfileImage] = useState(null);
+
   //  사진 미리보기
   const imageRef = useRef();
   const [previewProfile, setPreviewProfile] = useState(
     userInfo.userProfile ? userInfo.userProfile : Profile,
   );
+
   const selectFile = () => {
-    const previewFile = imageRef.current.files[0];
+    const inputImgFile = imageRef.current.files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(previewFile);
+    reader.readAsDataURL(inputImgFile);
     reader.onloadend = () => {
       setPreviewProfile(reader.result);
     };
+    // console.log('입력 받은 이미지 : ', inputImgFile);
+
+    // 이미지 resize 옵션 설정 (최대 width을 200px로 지정)
+    const options = {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 600,
+    };
+
+    // 이미지 압축 후 반환
+    const compressedFile = imageCompression(inputImgFile, options);
+    compressedFile.then((result) => {
+      setProfileImage(result);
+      // console.log('이미지 압축한거 result : ', result);
+    });
   };
+
   //프로필사진 삭제
   const deleteProfile = () => {
     if (previewProfile === Profile) {
@@ -276,7 +297,6 @@ const EditUser = (props) => {
       }
     }
     e.preventDefault();
-    const profileImage = imageRef.current.files[0];
 
     if (profileImage) {
       const formData = new FormData();
