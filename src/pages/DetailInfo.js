@@ -207,6 +207,8 @@ const DetailInfo = (props) => {
     //로그인에 필요한 유저정보
     const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
     dispatch(userActions.signupDB(formData, loginInfo));
+    //저장했던 이메일 인증 요청 버튼 count 데이터 지우기
+    localStorage.removeItem('authCount');
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
