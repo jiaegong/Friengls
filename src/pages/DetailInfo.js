@@ -166,7 +166,7 @@ const DetailInfo = (props) => {
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
     new Swal(t('refreshing will return to the first screen.'));
-    history.replace('/signup');
+    history.replace('/login');
   }
   return (
     <Container>

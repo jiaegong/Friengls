@@ -59,7 +59,11 @@ const SelectLanguage = (props) => {
         </Select>
 
         {/* 사용언어2 */}
-        <Select name="language2" onChange={handleLanguage2}>
+        <Select
+          name="language2"
+          onChange={handleLanguage2}
+          disabled={!language1}
+        >
           <option value="">{language2 ? language2 : '선택'}</option>
           {language2List.map((language, index) => (
             <option value={language} key={language + index}>
@@ -69,7 +73,11 @@ const SelectLanguage = (props) => {
         </Select>
 
         {/* 사용언어3 */}
-        <Select name="language3" onChange={handleLanguage3}>
+        <Select
+          name="language3"
+          onChange={handleLanguage3}
+          disabled={!(language1 && language2)}
+        >
           <option value="">{language3 ? language3 : '선택'}</option>
           {language3List.map((language, index) => (
             <option value={language} key={language + index}>
