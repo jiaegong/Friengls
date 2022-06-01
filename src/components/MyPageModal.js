@@ -100,6 +100,7 @@ const MyPageModal = (props) => {
                       color: '#999',
                     }}
                   />
+                  <></>
                   {/* 비밀번호 */}
                   <InfoInput
                     label={t('password')}
