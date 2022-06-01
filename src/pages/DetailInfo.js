@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -9,7 +9,9 @@ import SelectLanguage from '../components/SelectLanguage';
 import { Buttons, NewInputLabel } from '../elements';
 import InfoInput from '../components/InfoInput';
 import { useTranslation } from 'react-i18next';
+import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
+import { result } from 'lodash';
 
 // to do: 자기소개, 한 줄 소개, 태그 글자수제한
 //to do: 태그 영어 대소문자 중복 거르기
@@ -25,15 +27,36 @@ const DetailInfo = (props) => {
   //singup페이지에서 가져온 데이터
   const userInfo = location.signupForm;
 
+  // 입력받은 img 타켓 설정
+  const [profileImage, setProfileImage] = useState(null);
+
   // 이미지 미리보기
   const [previewProfile, setPreviewProfile] = useState(Profile);
   const selectFile = (e) => {
-    const previewFile = imageRef.current.files[0];
+    const inputImgFile = imageRef.current.files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(previewFile);
+    reader.readAsDataURL(inputImgFile);
     reader.onloadend = () => {
       setPreviewProfile(reader.result);
     };
+
+    let name = inputImgFile.name;
+    console.log('입력 받은 이미지 : ', inputImgFile);
+    console.log('이미지 이름 : ', name);
+
+    // 이미지 resize 옵션 설정 (최대 width을 200px로 지정)
+    const options = {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 600,
+    };
+
+    // 이미지 압축 후 반환
+    const compressedFile = imageCompression(inputImgFile, options);
+    compressedFile.then((result) => {
+      setProfileImage(result);
+      console.log('이미지 압축한거 result : ', result);
+    });
+    console.log('이미지 압축한거 : ', compressedFile);
   };
 
   //사용언어1 input값
@@ -110,7 +133,7 @@ const DetailInfo = (props) => {
     setTagList(tagList.filter((tag, index) => index !== Number(e.target.id)));
   };
   //유저정보 디스패치
-  const addUser = (e) => {
+  const addUser = async (e) => {
     //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
       if (contents.length > 0) {
@@ -140,7 +163,7 @@ const DetailInfo = (props) => {
       }
     }
     e.preventDefault();
-    const profileImage = imageRef.current.files[0];
+
     //폼데이터에 유저정보 담기
     const formData = new FormData();
     formData.append('userProfile', profileImage);
@@ -159,6 +182,12 @@ const DetailInfo = (props) => {
       formData.append('startTime', userInfo.startTime);
       formData.append('endTime', userInfo.endTime);
     }
+
+    // formData 확인
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+
     //로그인에 필요한 유저정보
     const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
     dispatch(userActions.signupDB(formData, loginInfo));
@@ -166,7 +195,7 @@ const DetailInfo = (props) => {
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
     new Swal(t('refreshing will return to the first screen.'));
-    history.replace('/signup');
+    // history.replace('/signup');
   }
   return (
     <Container>
@@ -382,7 +411,7 @@ const TagInput = styled.input`
     font-size: 14px;
     color: b5b5b5;
   }
-  &: focus {
+  &:focus {
     outline: none;
   }
 `;
