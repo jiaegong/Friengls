@@ -37,6 +37,7 @@ const Signup = ({ userInfo }) => {
     }
   };
   //인증번호
+  // const localAuthCount = Number(localStorage.getItem('authCount'));
   const [authNumber, setAuthNumber] = useState(0);
   useEffect(() => {
     setAuthCount(Number(localStorage.getItem('authCount')));
