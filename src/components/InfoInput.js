@@ -1,4 +1,3 @@
-import { CenterFocusStrong } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
 import { NewInput, NewInputLabel } from '../elements/index';
@@ -17,6 +16,9 @@ const InfoInput = (props) => {
     maxLength,
     multiLine,
     checked,
+    autoComplete,
+    _onMouseOver,
+    _onMouseOut,
     styles,
     defaultStyles,
     label,
@@ -28,7 +30,12 @@ const InfoInput = (props) => {
 
   if (onlyBox) {
     return (
-      <InputBox style={{ ...styles }} {...defaultStyles}>
+      <InputBox
+        style={{ ...styles }}
+        {...defaultStyles}
+        onMouseOver={_onMouseOver}
+        onMouseOut={_onMouseOut}
+      >
         {children}
       </InputBox>
     );
@@ -56,12 +63,13 @@ const InfoInput = (props) => {
           disabled={disabled}
           maxLength={maxLength}
           checked={checked}
+          autoComplete={autoComplete}
           multiLine={multiLine}
         />
       </InputBox>
       {validationLabel && (
         <NewInputLabel
-          styles={{ padding: '0 10px 10px 10px', alignItems: 'flex-start' }}
+          styles={{ padding: '0 10px 15px 10px', alignItems: 'flex-start' }}
         >
           {validationLabel}
         </NewInputLabel>
@@ -84,7 +92,7 @@ const InputBox = styled.div`
   width: 100%;
   height: ${(props) => props.height};
   padding: 0 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border: 1px solid #8a8a8a;
   border-radius: 8px;
   display: flex;

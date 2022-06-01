@@ -24,6 +24,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
 import FeedBackModal from '../components/FeedBackModal';
+import Tutorial from '../pages/Tutorial';
+import Swal from 'sweetalert2';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,12 +44,13 @@ function App() {
   return (
     <ConnectedRouter history={history}>
       <Header />
+      <Route path="/" exact component={Main} />
+      <Route path="/tutorial" exact component={Tutorial} />
       <Route path="/login" exact component={Login} />
       <Route path="/signup" exact component={Signup} />
       <Route path="/kakaoUser" component={SocialLogin} />
       <Route path="/googleUser" component={SocialLogin} />
       <Route path="/signup/detail" component={DetailInfo} />
-      <Route path="/" exact component={Main} />
       <Route path="/mypage/:userName/:isTutor" exact component={Mypage} />
       <Route path="/detail/:userName/:isTutor" exact component={Detail} />
       <Route path="/videochat/:roomName" exact component={VideoChat} />

@@ -129,7 +129,7 @@ const loginDB = (loginForm) => {
     })
       .then((response) => {
         console.log('loginDB성공', response.data);
-        if (response.data.msg === '비밀번호가 틀렸습니다.') {
+        if (response.data.msg === '비밀번호가 틀렸습니다') {
           new Swal('비밀번호를 확인해 주세요.');
           return;
         }
@@ -144,7 +144,7 @@ const loginDB = (loginForm) => {
       })
       .catch((error) => {
         new Swal('로그인에 실패하셨습니다.');
-        console.log(error);
+        console.log('loginDB실패', error);
       });
   };
 };
@@ -162,6 +162,14 @@ const loginCheckDB = () => {
       })
       .catch((error) => {
         console.log('로그인체크 실패', error);
+        if (getCookie('token') === 'undefined') {
+          deleteCookie('token');
+        }
+        new Swal(
+          '알 수 없는 문제로 로그인에 실패했습니다. 다시 로그인 해주세요.',
+        );
+        history.push('/login');
+
         //메인으로 돌아가기
       });
   };
@@ -179,6 +187,7 @@ const editUserDB = (userInfo) => {
     })
       .then((response) => {
         console.log('editUserDB성공', response);
+        new Swal('프로필이 성공적으로 수정되었습니다.');
         const editUserInfo = userInfo;
         console.log('editUserDB 후 로그인정보', userInfo);
         dispatch(editUser(editUserInfo));

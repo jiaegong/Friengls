@@ -37,6 +37,7 @@ const MyPageModal = (props) => {
         },
       });
       const result = response.data.msg;
+      console.log(result);
 
       result === 'success'
         ? setEditUser(true)
@@ -61,7 +62,7 @@ const MyPageModal = (props) => {
 
   return (
     <Portal>
-      <Background>
+      <Background onClick={onClose}>
         {editUser ? (
           <EditUser
             onClose={onClose}
@@ -69,7 +70,7 @@ const MyPageModal = (props) => {
             accessInfo={accessInfo}
           />
         ) : (
-          <ContentWrap>
+          <ContentWrap onClick={(e) => e.stopPropagation()}>
             <Content>
               <CloseBtn onClick={onClose}>
                 <img src={CloseIcon} alt="close" />
@@ -78,42 +79,52 @@ const MyPageModal = (props) => {
                 <p>{t('identification')}</p>
               </Grid>
               <Grid>
-                <UserImg>
+                <UserImg userProfile={userInfo.userProfile ? true : false}>
                   <img
                     src={userInfo.userProfile ? userInfo.userProfile : Profile}
                     alt="userProfile"
                   />
                 </UserImg>
               </Grid>
-              <Grid>
-                {/* 닉네임 */}
-                <InfoInput
-                  label={t('email')}
-                  value={userInfo.userEmail}
-                  disabled
-                  styles={{
-                    flexDirection: 'column',
-                    justifyContent: 'space-evenly',
-                  }}
-                />
-                {/* 비밀번호 */}
-                <InfoInput
-                  label={t('password')}
-                  type="password"
-                  _onChange={handlePwd}
-                  _onKeyUp={returnHandleEditUser}
-                  placeholder={t('please enter your password')}
-                  styles={{
-                    flexDirection: 'column',
-                    justifyContent: 'space-evenly',
-                  }}
-                />
-              </Grid>
-              <Grid>
-                <Buttons _onClick={handleEditUser} styles={{ height: '54px' }}>
-                  {t('edit profile')}
-                </Buttons>
-              </Grid>
+              <form>
+                <Grid>
+                  {/* 이메일 */}
+                  <InfoInput
+                    label={t('email')}
+                    value={userInfo.userEmail}
+                    disabled
+                    styles={{
+                      flexDirection: 'column',
+                      justifyContent: 'space-evenly',
+                      background: 'rgba(0,0,0,0.05)',
+                      color: '#999',
+                    }}
+                  />
+                  <></>
+                  {/* 비밀번호 */}
+                  <InfoInput
+                    label={t('password')}
+                    type="password"
+                    autoComplete="off"
+                    _onChange={handlePwd}
+                    _onKeyUp={returnHandleEditUser}
+                    placeholder={t('please enter your password')}
+                    styles={{
+                      flexDirection: 'column',
+                      justifyContent: 'space-evenly',
+                    }}
+                  />
+                </Grid>
+                <Grid>
+                  <Buttons
+                    type="button"
+                    _onClick={handleEditUser}
+                    styles={{ height: '54px' }}
+                  >
+                    {t('edit profile')}
+                  </Buttons>
+                </Grid>
+              </form>
             </Content>
           </ContentWrap>
         )}
@@ -140,7 +151,6 @@ const Background = styled.div`
 const ContentWrap = styled.div`
   width: 800px;
   height: 700px;
-  // min-height: 800px;
   position: relative;
   background: #fff;
   border-radius: 20px;
@@ -149,11 +159,14 @@ const ContentWrap = styled.div`
 
 const Content = styled.div`
   width: 340px;
-  height: 100%;
+  height: 625px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  form {
+    width: 100%;
+  }
 `;
 
 const CloseBtn = styled.div`
@@ -187,5 +200,6 @@ const UserImg = styled.div`
   img {
     width: 100%;
     height: 100%;
+    object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
   }
 `;

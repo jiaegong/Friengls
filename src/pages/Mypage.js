@@ -17,32 +17,21 @@ const Mypage = (props) => {
 
   //마이페이지 유저정보
   const userInfo = useSelector((state) => state.user.detailInfo);
-  // console.log(userApi);
 
   // 마이페이지 예약정보 불러오기 위한 값들
   const isTutor = userApi.isTutor;
   const userName = userApi.userName;
-  // console.log(isTutor);
 
   //  불러온 예약 정보
   const bookingList = useSelector((state) => state.booking.list);
 
   useEffect(() => {
     dispatch(userActions.getUserDetailDB(userApi));
-  }, []);
-
-  useEffect(() => {
     dispatch(bookingAction.getBookingDB({ isTutor, userName }));
-  }, [userName]);
-
-  // 현재 시간 구하는 방법
-  var today = new Date();
-  // console.log(today);
-
-  useEffect(() => {
     dispatch(likeActions.getLikeDB());
   }, []);
 
+  // 현재 시간 구하는 방법
   const likeList = useSelector((state) => state.like.myList);
 
   return (
@@ -56,12 +45,15 @@ const Mypage = (props) => {
             {t('booking list')} <span>/ {t('tutoring schedule')}</span>
           </p>
           <ul className="bookingList">
+            {bookingList.length === 0 && (
+              <li className="noBookingText"> 예약이 없습니다. </li>
+            )}
             {bookingList?.map((item, idx) => {
               return (
                 <BookingItem
                   item={item}
                   userInfo={userInfo}
-                  // key={`mypage_${idx}`}
+                  key={`mypage_${idx}`}
                 />
               );
             })}
@@ -69,7 +61,7 @@ const Mypage = (props) => {
         </div>
         <LikeWrap>
           <p className="like-title">좋아요 리스트</p>
-          {likeList?.map((l, idx) => {
+          {likeList.map((l, idx) => {
             return <LikeItem key={idx} {...l} userInfo={userInfo} />;
           })}
         </LikeWrap>
@@ -97,6 +89,8 @@ const Wrap = styled.div`
       margin: 70px auto;
       min-height: 100px;
       padding: 10px;
+      border-top: 1px solid #c4c4c4;
+
       /* 
 
 
@@ -146,6 +140,13 @@ const Wrap = styled.div`
           border-radius: 15px;
           display: none;
           /*스크롤바 트랙 색상 */
+        }
+        .noBookingText {
+          text-align: center;
+          padding-top: 20px;
+          font-weight: 700;
+          font-size: 18px;
+          letter-spacing: 1px;
         }
 
         /* 예약 카드 */
@@ -274,8 +275,10 @@ const Wrap = styled.div`
 
 const LikeWrap = styled.div`
   max-width: 1280px;
-  width: 80%;
+  width: 90%;
+  padding: 10px;
   margin: auto;
+  border-top: 1px solid #c4c4c4;
 
   .like-title {
     font-size: 38px;

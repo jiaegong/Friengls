@@ -1,34 +1,54 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
 import { actionCreators as userActions } from '../redux/modules/user';
 import SelectLanguage from '../components/SelectLanguage';
 import { Profile, CloseIcon } from '../image';
 import { Buttons, NewInputLabel, NewInput } from '../elements/index';
-import { pwdForm, userNameForm } from '../utils/validation';
+import { pwdForm } from '../utils/validation';
 import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
+import imageCompression from 'browser-image-compression';
+
 import Swal from 'sweetalert2';
 
 const EditUser = (props) => {
   const { t } = useTranslation();
   const { onClose, userInfo, accessInfo } = props;
-
   const dispatch = useDispatch();
+
+  // 입력받은 img 타켓 설정
+  const [profileImage, setProfileImage] = useState(null);
+
   //  사진 미리보기
   const imageRef = useRef();
   const [previewProfile, setPreviewProfile] = useState(
     userInfo.userProfile ? userInfo.userProfile : Profile,
   );
+
   const selectFile = () => {
-    const previewFile = imageRef.current.files[0];
+    const inputImgFile = imageRef.current.files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(previewFile);
+    reader.readAsDataURL(inputImgFile);
     reader.onloadend = () => {
       setPreviewProfile(reader.result);
     };
+    // console.log('입력 받은 이미지 : ', inputImgFile);
+
+    // 이미지 resize 옵션 설정 (최대 width을 200px로 지정)
+    const options = {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 600,
+    };
+
+    // 이미지 압축 후 반환
+    const compressedFile = imageCompression(inputImgFile, options);
+    compressedFile.then((result) => {
+      setProfileImage(result);
+      // console.log('이미지 압축한거 result : ', result);
+    });
   };
+
   //프로필사진 삭제
   const deleteProfile = () => {
     if (previewProfile === Profile) {
@@ -43,23 +63,6 @@ const EditUser = (props) => {
     setPreviewProfile(Profile);
   };
 
-  // userName 유효성 검사, input값 가져오기
-  const [userName, setUserName] = useState(userInfo.userName);
-  const [userNameCheck, setUserNameCheck] = useState('\u00A0');
-  const handleUserName = (e) => {
-    const userName = e.target.value;
-    setUserName(userName);
-    if (userNameForm(userName)) {
-      setUserNameCheck(t('this is the correct nickname format.'));
-    } else {
-      setUserNameCheck(
-        t(
-          'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
-        ),
-      );
-    }
-  };
-
   //pwd 유효성 검사, input값 가져오기
   const [pwd, setPwd] = useState('');
   const [pwdCheck, setPwdCheck] = useState('\u00A0');
@@ -68,24 +71,20 @@ const EditUser = (props) => {
     const pwd = e.target.value;
     setPwd(pwd);
     if (pwdForm(pwd)) {
-      if (pwd.includes(userName)) {
-        setPwdCheck(
-          t('you can not include nickname or email in your password.'),
-        );
-      } else {
-        setPwdCheck(t('this is the correct password format.'));
-      }
+      setPwdCheck(t('this is the correct password format.'));
     } else {
-      if (pwd.includes(userName)) {
-        setPwdCheck(
-          t('you can not include nickname or email in your password.'),
-        );
+      setPwdCheck(
+        t(
+          'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
+        ),
+      );
+    }
+    //비밀번호 확인 먼저 입력했을 경우
+    if (confirmPwd.length !== 0) {
+      if (pwd === confirmPwd) {
+        setConfirmPwdCheck(t('it matches the password.'));
       } else {
-        setPwdCheck(
-          t(
-            'password format: english uppercase and lowercase letters, 8-20 characters including must-have numbers (special characters)',
-          ),
-        );
+        setConfirmPwdCheck(t('the password does not match'));
       }
     }
   };
@@ -104,39 +103,6 @@ const EditUser = (props) => {
     } else {
       setConfirmPwdCheck(t('the password does not match'));
     }
-  };
-
-  //닉네임 중복체크
-  const checkDuplicatedUserName = () => {
-    //아이디 형식 맞지 않을 때 리턴
-    if (!userNameForm(userName)) {
-      return;
-    }
-    //아이디 변경 안한 경우 리턴
-    if (userInfo.userName === userName) {
-      return;
-    }
-
-    axios({
-      method: 'post',
-      url: 'https://hjg521.link/signUp/nameCheck',
-      data: {
-        userName: userName,
-      },
-    })
-      .then((response) => {
-        console.log('userNameCheckDB성공', response.data);
-        if (response.data.msg === '이미 있는 닉네임입니다.') {
-          setUserNameCheck(
-            t('this nickname is already in use. try another nickname.'),
-          );
-          return;
-        }
-        setUserNameCheck(t('this nickname is available.'));
-      })
-      .catch((error) => {
-        console.log('닉네임체크에러', error);
-      });
   };
 
   //사용언어1 input값
@@ -252,13 +218,6 @@ const EditUser = (props) => {
 
   //유저정보 변경하기
   const editUser = (e) => {
-    //닉네임 변경 시 조건
-    if (userInfo.userName !== userName) {
-      if (userNameCheck !== t('this nickname is available.')) {
-        new Swal(t('please confirm the nickname you want to change.'));
-      }
-    }
-
     //비밀번호 변경 시 조건
     if (pwd) {
       if (pwdCheck !== t('this is the correct password format.')) {
@@ -318,7 +277,6 @@ const EditUser = (props) => {
       }
     }
     e.preventDefault();
-    const profileImage = imageRef.current.files[0];
 
     if (profileImage) {
       const formData = new FormData();
@@ -339,7 +297,7 @@ const EditUser = (props) => {
     const userForm = {
       //유저정보 추가하기
       userEmail: userInfo.userEmail,
-      userName: userName ? userName : userInfo.userName,
+      userName: userInfo.userName,
       pwd: pwd ? pwd : accessInfo,
       language1: language1,
       language2: language2,
@@ -355,9 +313,7 @@ const EditUser = (props) => {
 
     dispatch(userActions.editUserDB(userForm));
   };
-  console.log(userInfo.userProfile);
-  console.log(previewProfile);
-  console.log(Profile);
+
   const closeModal = () => {
     // 프로필사진만 바꾸고 나가는 경우
     if (userInfo.userProfile !== previewProfile) {
@@ -369,7 +325,7 @@ const EditUser = (props) => {
   };
 
   return (
-    <ContentWrap>
+    <ContentWrap onClick={(e) => e.stopPropagation()}>
       <Content>
         <CloseBtn onClick={closeModal}>
           <img src={CloseIcon} alt="close" />
@@ -377,7 +333,7 @@ const EditUser = (props) => {
         <GroupBox1>
           <ImageBox>
             {/* 프로필이미지선택 */}
-            <UserImg>
+            <UserImg userProfile={previewProfile === Profile ? false : true}>
               <label htmlFor="file">
                 <img src={previewProfile} alt="userProfile" />
                 <input
@@ -394,49 +350,68 @@ const EditUser = (props) => {
             <button onClick={deleteProfile}>{t('remove image')}</button>
           </ImageBox>
           <UserInfoBox>
-            <p>{t('basic information')}</p>
-            {/* 닉네임 */}
-            <InfoInput
-              label={t('nickname')}
-              placeholder={t('please enter a nickname to change.')}
-              validationLabel={userNameCheck}
-              _onChange={handleUserName}
-              _onBlur={checkDuplicatedUserName} // 자동 닉네임 체크
-              value={userName}
-              styles={{
-                height: '45px',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-              }}
-            />
-            {/* 비밀번호 */}
-            <InfoInput
-              type="password"
-              label={t('new password')}
-              placeholder={t('please enter a password to change.')}
-              validationLabel={pwdCheck}
-              _onChange={handlePwd}
-              styles={{
-                height: '45px',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-              }}
-            />
-            {/* 비밀번호 확인 */}
-            <InfoInput
-              type="password"
-              label={t('confirm password')}
-              placeholder={t(
-                'please enter the password you want to change again.',
-              )}
-              validationLabel={confirmPwdCheck}
-              _onChange={handleConfirmPwd}
-              styles={{
-                height: '45px',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-              }}
-            />
+            <form>
+              <p>{t('basic information')}</p>
+              <InfoInput
+                label={t('email')}
+                value={userInfo.userEmail}
+                disabled
+                styles={{
+                  height: '45px',
+                  marginBottom: '5px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                  background: 'rgba(0,0,0,0.05)',
+                  cursor: 'default',
+                  color: '#999',
+                }}
+              />
+              {/* 닉네임 */}
+              <InfoInput
+                label={t('nickname')}
+                value={userInfo.userName}
+                disabled
+                styles={{
+                  height: '45px',
+                  marginBottom: '5px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                  background: 'rgba(0,0,0,0.05)',
+                  cursor: 'default',
+                  color: '#999',
+                }}
+              />
+              {/* 비밀번호 */}
+              <InfoInput
+                type="password"
+                label={t('new password')}
+                placeholder={t('please enter a password to change.')}
+                autoComplete="off"
+                validationLabel={pwdCheck}
+                _onChange={handlePwd}
+                styles={{
+                  height: '45px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                }}
+              />
+              {/* 비밀번호 확인 */}
+              <InfoInput
+                type="password"
+                label={t('confirm password')}
+                placeholder={t(
+                  'please enter the password you want to change again.',
+                )}
+                autoComplete="off"
+                validationLabel={confirmPwdCheck}
+                _onChange={handleConfirmPwd}
+                styles={{
+                  height: '45px',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                }}
+              />
+            </form>
           </UserInfoBox>
         </GroupBox1>
         <GroupBox>
@@ -590,7 +565,7 @@ const EditUser = (props) => {
               </NewInputLabel>
             </InfoInput>
             {/* 선생님인 경우 수업시간 선택 */}
-            {userInfo.isTutor === 1 && (
+            {userInfo.isTutor === 1 ? (
               <React.Fragment>
                 <InfoInput
                   onlyBox
@@ -601,7 +576,7 @@ const EditUser = (props) => {
                     {/* 시작시간 선택 셀렉트*/}
                     <Select name="startTime" onChange={handleStartTime}>
                       <option value="">
-                        {!userInfo.startTime
+                        {userInfo.startTime
                           ? startNum +
                             1 +
                             t('session') +
@@ -627,7 +602,7 @@ const EditUser = (props) => {
                       <>
                         <Select name="endTime" onChange={handleEndTime}>
                           <option value="">
-                            {!userInfo.endTime
+                            {userInfo.endTime
                               ? endNum +
                                 1 +
                                 t('session') +
@@ -665,11 +640,14 @@ const EditUser = (props) => {
                   </span>
                 </InfoBox>
               </React.Fragment>
+            ) : (
+              <InfoInput onlyBox styles={{ border: 'none' }}></InfoInput>
             )}
           </TimeBox>
         </GroupBox>
         <GroupBox>
           <Buttons
+            type="button"
             _onClick={editUser}
             styles={{ width: '380px', height: '60px' }}
           >
@@ -687,6 +665,7 @@ export default EditUser;
 const ContentWrap = styled.div`
   width: 800px;
   height: 700px;
+  padding-top: 700px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -716,12 +695,12 @@ const ContentWrap = styled.div`
 
 const Content = styled.div`
   width: 90%;
-  height: 500px;
+  height: 100%;
+  background: red;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // background: red;
 `;
 
 // 닫기 버튼
@@ -740,7 +719,7 @@ const CloseBtn = styled.div`
 
 const GroupBox1 = styled.div`
   width: 100%;
-  margin: 800px auto 20px;
+  margin: 0 auto 20px;
   display: flex;
 `;
 // 프로필사진 관련
@@ -771,6 +750,7 @@ const UserImg = styled.div`
   img {
     width: 100%;
     height: 100%;
+    object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
     cursor: pointer;
   }
 
@@ -809,6 +789,9 @@ const UserInfoBox = styled.div`
     text-align: start;
     font-size: 20px;
     font-weight: 600;
+  }
+  form {
+    width: 100%;
   }
 `;
 

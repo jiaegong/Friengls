@@ -21,7 +21,7 @@ const CalendarTemplate = ({
   tutorName,
   availability,
   setAvailability,
-  primaryColor = '#153587',
+  primaryColor = '#08a9ff',
   secondaryColor = '#ff0000',
   fontFamily = 'Noto Sans',
   fontSize = 12,
@@ -31,14 +31,12 @@ const CalendarTemplate = ({
   // 8시간
   startTime = '8:00',
   endTime = '20:00',
-
-  // 24시간
-  // startTime = "0:00",
-  // endTime = "24:00",
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
+  const saveDataCount = availability.length + 1;
+  // console.log(saveDataCount);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -153,102 +151,127 @@ const CalendarTemplate = ({
       {
         time: '0:00',
         available: false,
+        save: false,
       },
       {
         time: '1:00',
         available: false,
+        save: false,
       },
       {
         time: '2:00',
         available: false,
+        save: false,
       },
       {
         time: '3:00',
         available: false,
+        save: false,
       },
       {
         time: '4:00',
         available: false,
+        save: false,
       },
       {
         time: '5:00',
         available: false,
+        save: false,
       },
       {
         time: '6:00',
         available: false,
+        save: false,
       },
       {
         time: '7:00',
         available: false,
+        save: false,
       },
       {
         time: '8:00',
         available: false,
+        save: false,
       },
       {
         time: '9:00',
         available: false,
+        save: false,
       },
       {
         time: '10:00',
         available: false,
+        save: false,
       },
       {
         time: '11:00',
         available: false,
+        save: false,
       },
       {
         time: '12:00',
         available: false,
+        save: false,
       },
       {
         time: '13:00',
         available: false,
+        save: false,
       },
       {
         time: '14:00',
         available: false,
+        save: false,
       },
       {
         time: '15:00',
         available: false,
+        save: false,
       },
       {
         time: '16:00',
         available: false,
+        save: false,
       },
       {
         time: '17:00',
         available: false,
+        save: false,
       },
       {
         time: '18:00',
         available: false,
+        save: false,
       },
       {
         time: '19:00',
         available: false,
+        save: false,
       },
       {
         time: '20:00',
         available: false,
+        save: false,
       },
       {
         time: '21:00',
         available: false,
+        save: false,
       },
       {
         time: '22:00',
         available: false,
+        save: false,
       },
       {
         time: '23:00',
         available: false,
+        save: false,
       },
       {
         time: '0:00',
         available: false,
+        save: false,
       },
     ];
     let include = false;
@@ -265,11 +288,36 @@ const CalendarTemplate = ({
   };
 
   //  시간 버튼 컴포넌트
-  function TimeButton({ className, start, end, available, handleClick }) {
+  function TimeButton({ className, start, end, available, handleClick, save }) {
     return (
       <>
-        {available ? (
+        {save ? (
           <button
+            style={{
+              color: '#fff',
+              background: '#aaaaaa',
+              margin: '10px',
+              minWidth: '200px',
+              padding: '5px 15px',
+              boxSizing: 'border-box',
+              transition:
+                'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+              borderRadius: '4px',
+              fontWeight: '500',
+              lineHeight: '1.75',
+              textTransform: 'uppercase',
+              boxShadow:
+                '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
+              border: 'none',
+            }}
+            onClick={handleClick}
+            disabled={save ? 'disabled' : ''}
+          >
+            예약이 있습니다.
+          </button>
+        ) : available ? (
+          <button
+            className={className}
             style={{
               color: '#fff',
               background: '#153587',
@@ -286,40 +334,39 @@ const CalendarTemplate = ({
               boxShadow:
                 '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
               border: 'none',
+              variant: 'contained',
+              cursor: 'pointer',
             }}
             onClick={handleClick}
-            disabled={available ? 'disabled' : ''}
           >
             {start} - {end}
           </button>
         ) : (
-          // <Button
-          //   onClick={handleClick}
-          //   color={'primary'}
-          //   className={className}
-          //   variant={'contained'}
-          //   disabled={available ? 'disabled' : 'none'}
-          // >
-          //   {start} - {end}
-          // </Button>
-          <Button
-            onClick={handleClick}
-            color={'default'}
+          <button
             className={className}
-            variant={'outlined'}
+            style={{
+              color: '#000000',
+              background: '#ffffff',
+              margin: '10px',
+              minWidth: '200px',
+              height: '33.44px',
+              padding: '5px 15px',
+              boxSizing: 'border-box',
+              transition:
+                'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+              borderRadius: '4px',
+              fontWeight: '500',
+              lineHeight: '1.75',
+              textTransform: 'uppercase',
+              border: ' 1px solid rgba(0, 0, 0, 0.23)',
+              variant: 'contained',
+              cursor: 'pointer',
+            }}
+            onClick={handleClick}
           >
             {start} - {end}
-          </Button>
+          </button>
         )}
-        {/* <Button
-          onClick={handleClick}
-          color={available ? 'primary' : 'default'}
-          className={className}
-          variant={available ? 'contained' : 'outlined'}
-          // disabled
-        >
-          {start} - {end}
-        </Button> */}
       </>
     );
   }
@@ -335,6 +382,7 @@ const CalendarTemplate = ({
     ];
   }
 
+  // DB에 있는 값 불러와서 값이 있는지 체크 하는곳.
   const convertAvailabilityFromDatabase = (availability) => {
     // console.log({ availability });
     const output = {};
@@ -358,6 +406,7 @@ const CalendarTemplate = ({
         output[year][month][day][i].time !== endTime
       ) {
         output[year][month][day][i].available = true;
+        output[year][month][day][i].save = true;
         i++;
       }
     }
@@ -366,8 +415,6 @@ const CalendarTemplate = ({
 
   //!!!!!!!!!!!!
   const convertAvailabilityForDatabase = (availability) => {
-    console.log({ availability });
-
     const output = [];
     for (let year in availability) {
       for (let month in availability[year]) {
@@ -377,7 +424,25 @@ const CalendarTemplate = ({
         }
       }
     }
-    console.log({ output });
+    // console.log({ output });
+    // console.log(output.length);
+    // console.log({ saveDataCount });
+
+    if (saveDataCount < output.length) {
+      // alert('선택하실수 있는 갯수를 초과 하셨습니다.');
+      Swal.fire({
+        // text: '선택하실수 있는 갯수를 초과 하셨습니다.',
+        text: t('You have exceeded the number that can be selected'),
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: t('confirm'),
+        // confirmButtonText: '확인',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
+    }
     return output;
   };
 
@@ -391,11 +456,7 @@ const CalendarTemplate = ({
 
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
-    console.log({ activeDay, output, month, day, year });
-
-    // else if () {
-
-    // }
+    // console.log({ activeDay, output, month, day, year });
 
     let activeRangeStart = null;
     let activeRangeEnd = null;
@@ -538,11 +599,9 @@ const CalendarTemplate = ({
     //  시간버튼이 몇 번째인지.
     const createTimeHandler = (i) => () => {
       const newTimes = [...times];
-      console.log({ newTimes });
       newTimes[i].available = !newTimes[i].available;
-      console.log(newTimes[i].available);
       if (activeDay) {
-        console.log({ activeDay });
+        // console.log({ activeDay });
         addTimeToDay(newTimes);
       }
       setTimes(newTimes);
@@ -551,13 +610,13 @@ const CalendarTemplate = ({
     // 클릭한 일의 data를 가져오는 함수.
     const createDayHandler = (day) => () => {
       examineAvailabilityForDay(day);
-      // }
     };
 
     // 저장 버튼
     const handleSaveAvailability = () => {
       // outPut 값이 return 되어서 data에 반환됨. convertAvailabilityForDatabase === output
       const data = convertAvailabilityForDatabase(availabilityState);
+      // console.log(data);
 
       setSaving(true);
       let onePick1 = [];
@@ -606,6 +665,9 @@ const CalendarTemplate = ({
           });
         }
 
+        // console.log({ onePick1 });
+        // console.log({ onePick2 });
+
         const Astart = [];
         for (let i = 0; i < onePick2.length; i++) {
           Astart.push(onePick2[i].start);
@@ -622,7 +684,7 @@ const CalendarTemplate = ({
         // console.log('현재 저장 비교 availability : ', onePick2);
 
         const ABstart = Astart.filter((time, index) => !Bstart.includes(time));
-        console.log('ABstart : ', { ABstart });
+        // console.log('ABstart : ', { ABstart });
 
         const goDB = onePick2.filter(
           (time, index) => time.start === ABstart[0],
@@ -799,6 +861,7 @@ const CalendarTemplate = ({
                               end={times[i + 1].time}
                               handleClick={createTimeHandler(i)}
                               available={time.available}
+                              save={time.save}
                             />
                           ),
                       )}
@@ -827,6 +890,7 @@ const CalendarTemplate = ({
                               end={times[i + 1].time}
                               handleClick={createTimeHandler(i)}
                               available={time.available}
+                              save={time.save}
                             />
                           ),
                       )}
@@ -866,14 +930,14 @@ const CalendarTemplate = ({
                   >
                     {t('book a lesson')}
                   </Button>
-                  <span
+                  {/* <span
                     className="resetBtn"
                     onClick={() => {
                       window.location.reload();
                     }}
                   >
                     ♻️ {t('refresh')}
-                  </span>
+                  </span> */}
                 </div>
               </Grid>
             </Grid>

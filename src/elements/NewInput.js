@@ -13,8 +13,9 @@ const NewInput = (props) => {
     value,
     disabled,
     maxLength,
-    multiLine,
     checked,
+    autoComplete,
+    multiLine,
     styles,
     defaultStyles,
   } = props;
@@ -46,6 +47,7 @@ const NewInput = (props) => {
       disabled={disabled}
       maxLength={maxLength}
       checked={checked}
+      autoComplete={autoComplete}
       style={{ ...styles }}
       {...defaultStyles}
     />

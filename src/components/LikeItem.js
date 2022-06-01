@@ -1,37 +1,45 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
+import { Profile } from '../image/index';
 
 const LikeItem = (props) => {
   const isTutor = props.userInfo.isTutor;
-
   if (isTutor === 0) {
     return (
       <Wrap>
         <UserWrap>
-          <img className="profile" src={props.userProfile} alt="프로필 사진" />
+          <img
+            className="profile"
+            src={props.userProfile ? props.userProfile : Profile}
+            alt="프로필 사진"
+          />
           <div>{props.userName}</div>
         </UserWrap>
-        <div onClick={() => history.push(`/detail/${props.userName}/1`)}>
+        <div
+          style={{ cursor: 'pointer' }}
+          onClick={() => history.push(`/detail/${props.userName}/1`)}
+        >
           프로필 보러가기
         </div>
       </Wrap>
     );
-  } else if (isTutor === 1) {
-    return (
-      <Wrap>
-        <UserWrap>
-          <img className="profile" src={props.userProfile} alt="프로필 사진" />
-          <div>{props.userName}</div>
-        </UserWrap>
-        <ProfileWrap
-          onClick={() => history.push(`/detail/${props.userName}/0`)}
-        >
-          프로필 보러가기
-        </ProfileWrap>
-      </Wrap>
-    );
   }
+  return (
+    <Wrap>
+      <UserWrap userProfile={props.userProfile ? true : false}>
+        <img
+          className="profile"
+          src={props.userProfile ? props.userProfile : Profile}
+          alt="프로필 사진"
+        />
+        <div>{props.userName}</div>
+      </UserWrap>
+      <ProfileWrap onClick={() => history.push(`/detail/${props.userName}/0`)}>
+        프로필 보러가기
+      </ProfileWrap>
+    </Wrap>
+  );
 };
 
 export default LikeItem;
@@ -58,6 +66,7 @@ const UserWrap = styled.div`
   .profile {
     width: 70px;
     height: 70px;
+    object-fit: ${(props) => (props.userProfile ? 'cover' : 'contain')};
     border-radius: 50%;
   }
 `;
@@ -67,4 +76,5 @@ const ProfileWrap = styled.p`
   text-decoration: underline;
   color: #808080;
   font-size: 14px;
+  cursor: pointer;
 `;

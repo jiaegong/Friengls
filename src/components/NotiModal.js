@@ -8,8 +8,6 @@ const NotiModal = (props) => {
   const dispactch = useDispatch();
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
-  console.log({ notiList });
-  console.log({ notiCheck });
   const { ModalAction, userInfo } = props;
 
   React.useEffect(() => {
@@ -74,34 +72,23 @@ const NotiModal = (props) => {
 export default NotiModal;
 
 const Background = styled.div`
-  /* position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 1000;
-  background-color: none; */
-  width: auto;
-
-  height: auto;
-
-  background-color: red;
+  background-color: none;
 
   /* 알림창 */
   .notifications {
     /* display: none; */
     position: absolute;
-    max-width: 450px;
+    max-width: 600px;
     min-width: 420px;
     width: 100%;
     min-height: 140px;
-
-    right: -270px;
-    top: 42px;
-    /* right: 15%;
-    top: 144px; */
-    right: 0px;
-    top: 52px;
+    top: 100px;
 
     padding: 10px;
     border: 1px solid #eaeaea;

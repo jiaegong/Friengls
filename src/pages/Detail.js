@@ -19,7 +19,6 @@ const Detail = (props) => {
 
   //디테일페이지에서 불러올 유저 api
   const userApi = props.match.params;
-  // console.log(userApi);
 
   //디테일페이지에 사용할 유저 정보
   const detailInfo = useSelector((state) => state.user.detailInfo);
@@ -42,8 +41,7 @@ const Detail = (props) => {
       url: `https://hjg521.link/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
     })
       .then((doc) => {
-        // let data = doc.data.datas1;
-        // console.log('DB 예약 리스트 : ', { data });
+        // DB에서 예약 정보 불러와 캘린더에 적용시킴
         setAvailability(doc.data.datas1);
       })
       .catch((err) => {
@@ -106,23 +104,24 @@ const Wrap = styled.div`
 
   .innerWrap {
     max-width: 1280px;
-    width: 90%;
+    width: 80%;
     margin: auto;
 
     /* 예약 캘린더 */
     .bookingWrap {
       width: 90%;
       height: auto;
-      margin: 100px auto;
+      margin: 70px auto;
       min-height: 300px;
-      padding: 0 10px;
+      padding: 10px;
+      border-top: 1px solid #c4c4c4;
 
       .booking {
         width: 100%;
-        font-size: 30px;
+        font-size: 38px;
         font-weight: bold;
         margin-bottom: 50px;
-        padding-left: 8%;
+        // padding-left: 8%;
 
         span {
           color: #aaa;
@@ -136,6 +135,8 @@ const Wrap = styled.div`
 
 const ReviewTitleWrap = styled.div`
   margin-bottom: 70px;
+  padding: 10px;
+  border-top: 1px solid #c4c4c4;
 
   div {
     display: flex;
@@ -143,7 +144,7 @@ const ReviewTitleWrap = styled.div`
     align-items: center;
 
     span {
-      font-size: 16px;
+      font-size: 22px;
       font-weight: 600;
       margin-bottom: 6px;
     }
@@ -154,13 +155,13 @@ const ReviewTitleWrap = styled.div`
   }
 
   p {
-    font-size: 30px;
+    font-size: 38px;
     font-weight: bold;
   }
 `;
 
 const ReviewList = styled.div`
-  width: 76%;
+  width: 90%;
   min-height: 300px;
   margin: 0 auto 180px;
 `;

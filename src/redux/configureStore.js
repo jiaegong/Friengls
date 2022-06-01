@@ -8,7 +8,6 @@ import Booking from './modules/booking';
 import Tutor from './modules/tutor';
 import Review from './modules/review';
 import Like from './modules/like';
-import Profile from './modules/profile';
 import Modal from './modules/modal';
 
 export const history = createBrowserHistory();
@@ -19,7 +18,6 @@ const rootReducer = combineReducers({
   tutor: Tutor,
   review: Review,
   like: Like,
-  profile: Profile,
   modal: Modal,
   router: connectRouter(history),
 });
@@ -28,10 +26,10 @@ const middlewares = [thunk.withExtraArgument({ history: history })];
 
 const env = process.env.NODE_ENV;
 
-if (env === 'development') {
-  const { logger } = require('redux-logger');
-  middlewares.push(logger);
-}
+// if (env === 'development') {
+//   const { logger } = require('redux-logger');
+//   middlewares.push(logger);
+// }
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

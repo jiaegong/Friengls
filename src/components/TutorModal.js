@@ -11,7 +11,7 @@ const TutorModal = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const tutor = props.tutor;
-  const tags = tutor.tag.split(' ,');
+  const tags = tutor.tag.split(',');
   const onClose = props.onClose;
 
   return (

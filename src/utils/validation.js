@@ -8,9 +8,9 @@ export const pwdForm = (pwd) => {
   let reg = /^(?=.*[A-Za-z])(?=.*[0-9])[a-zA-Z0-9!-_]{8,20}$/;
   return reg.test(pwd);
 };
-//닉네임: 영문, 숫자, 특수문자(- _ .) 6-20이하 or 한글 3-8자, 숫자, 특수문자(- _ .)
+//닉네임: 영문, 숫자, 특수문자(- _ .) 4-20이하 or 한글 2-8자, 숫자, 특수문자(- _ .)
 export const userNameForm = (userName) => {
-  let reg = /^[a-zA-Z0-9-_.]{6,20}|[ㄱ-힣0-9-_.]{3,8}$/;
+  let reg = /^[a-zA-Z0-9-_.]{6,20}|[ㄱ-힣0-9-_.]{2,8}$/;
   return reg.test(userName);
 };
 //태그: 한글, 영문, 숫자만 입력가능(개선필요)

@@ -6,6 +6,7 @@ import { CgProfile } from 'react-icons/cg';
 import Portal from '../shared/Portal';
 import TutorModal from './TutorModal';
 import modalBtnImg from '../image/modalBtn.png';
+import { Profile } from '../image/index';
 
 const TutorCard = ({ tutor, urlCheck }) => {
   const [modal, setModal] = useState(false);
@@ -23,9 +24,9 @@ const TutorCard = ({ tutor, urlCheck }) => {
       <div className="userImgWrap">
         <img
           className="user_img"
-          src={tutor.userProfile}
+          src={tutor.userProfile ? tutor.userProfile : Profile}
           // src={'https://via.placeholder.com/300x200'}
-          alt="#"
+          alt="tutor Img"
         />
       </div>
       <div className="user_info">
@@ -68,7 +69,7 @@ const Card = styled.div`
     height: 300px;
 
     overflow: hidden;
-    background-color: #aaa;
+    background-color: #c8c8c8a6;
 
     .user_img {
       width: 100%;

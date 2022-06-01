@@ -7,6 +7,7 @@ import CloseToggle from './CloseToggle.svg';
 import CloseIcon from './CloseIcon.svg';
 import FeedBackIcon from './FeedBackIcon.svg';
 import footerLogo from './footerLogo.png';
+import Language from './Language.png';
 
 export {
   MainLogo,
@@ -18,4 +19,5 @@ export {
   CloseIcon,
   FeedBackIcon,
   footerLogo,
+  Language,
 };
