@@ -40,10 +40,6 @@ const DetailInfo = (props) => {
       setPreviewProfile(reader.result);
     };
 
-    let name = inputImgFile.name;
-    console.log('입력 받은 이미지 : ', inputImgFile);
-    console.log('이미지 이름 : ', name);
-
     // 이미지 resize 옵션 설정 (최대 width을 200px로 지정)
     const options = {
       maxSizeMB: 2,
