@@ -47,7 +47,7 @@ const VideoChat = (props) => {
   const userStream = useRef();
   const peers = {};
   const roomId = props.match.params.roomName;
-  const userName = useSelector((state) => state.user.info); // props로 넘겨주는 게 더 좋을 거 같음
+  const userName = useSelector((state) => state.user.info);
   const userId = userName.userName;
   const [videoOn, setVideoOn] = useState(true);
   const [audioOn, setAudioOn] = useState(true);
