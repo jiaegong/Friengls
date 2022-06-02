@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { actionCreators as likeActions } from '../redux/modules/like';
 import MyPageModal from './MyPageModal';
-import { Profile, OpenToggle, CloseToggle } from '../image/index';
-import { Buttons } from '../elements/index';
+import { Profile, OpenToggle, CloseToggle } from '../asset/image/index';
+import { Button } from '../elements/index';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 
@@ -79,7 +79,7 @@ const DetailUser = (props) => {
           </UserImgWrap>
           {/* 마이페이지일 경우 프로필수정버튼 보이기 */}
           {currentUser.userName === userInfo.userName && (
-            <Buttons
+            <Button
               _onClick={handleModal}
               styles={{
                 // margin: '20px 10px 0',
@@ -90,7 +90,7 @@ const DetailUser = (props) => {
               }}
             >
               {t('edit my profile')}
-            </Buttons>
+            </Button>
           )}
           {/* 수정버튼 누르면 모달 열리기 */}
           {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Buttons = (props) => {
+const Button = (props) => {
   const { type, _onClick, text, defaultStyles, styles, children, href } = props;
 
   return (
@@ -17,7 +17,7 @@ const Buttons = (props) => {
   );
 };
 
-Buttons.defaultProps = {
+Button.defaultProps = {
   _onClick: () => {},
   text: false,
   children: null,
@@ -48,4 +48,4 @@ const BlueBtn = styled.button`
   color: ${(props) => props.color};
 `;
 
-export default Buttons;
+export default Button;

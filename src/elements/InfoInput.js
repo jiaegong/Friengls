@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NewInput, NewInputLabel } from '../elements/index';
+import { Input, InputLabel } from '../elements/index';
 
 const InfoInput = (props) => {
   const {
@@ -46,11 +46,11 @@ const InfoInput = (props) => {
       <InputBox style={{ ...styles }} {...defaultStyles}>
         {label && (
           <LabelWrap>
-            {label && <NewInputLabel>{label}</NewInputLabel>}
-            {label2 && <NewInputLabel>{label2}</NewInputLabel>}
+            {label && <InputLabel>{label}</InputLabel>}
+            {label2 && <InputLabel>{label2}</InputLabel>}
           </LabelWrap>
         )}
-        <NewInput
+        <Input
           type={type}
           name={name}
           id={id}
@@ -68,11 +68,11 @@ const InfoInput = (props) => {
         />
       </InputBox>
       {validationLabel && (
-        <NewInputLabel
+        <InputLabel
           styles={{ padding: '0 10px 15px 10px', alignItems: 'flex-start' }}
         >
           {validationLabel}
-        </NewInputLabel>
+        </InputLabel>
       )}
     </InputBoxWrap>
   );

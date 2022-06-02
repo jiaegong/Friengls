@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FeedBackIcon } from '../image/index';
+import { FeedBackIcon } from '../asset/image/index';
 
 const FeedBack = (props) => {
   const [feedback, setFeedback] = useState(false);

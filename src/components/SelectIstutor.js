@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { NewInputLabel, NewInput } from '../elements/index';
-import InfoInput from './InfoInput';
+import { InputLabel, Input, InfoInput } from '../elements/index';
 import { useTranslation } from 'react-i18next';
 
 const SelectIsTutor = ({
@@ -37,12 +36,12 @@ const SelectIsTutor = ({
   return (
     <TimeBox>
       <p>{t('friengls user setting')}</p>
-      <NewInputLabel styles={{ padding: '0 0 5px 5px' }}>
+      <InputLabel styles={{ padding: '0 0 5px 5px' }}>
         {t('you can not change it when you select tutor / tutee')}
-      </NewInputLabel>
+      </InputLabel>
       <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
-        <NewInputLabel> {t('in friengls i want to')}</NewInputLabel>
-        <NewInput
+        <InputLabel> {t('in friengls i want to')}</InputLabel>
+        <Input
           type="radio"
           name="isTutor"
           value="0"
@@ -50,7 +49,7 @@ const SelectIsTutor = ({
           styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
           _onChange={_onClick}
         />
-        <NewInputLabel
+        <InputLabel
           htmlFor="isTutor0"
           styles={{
             padding: '0 10px 0 10px',
@@ -58,23 +57,23 @@ const SelectIsTutor = ({
           }}
         >
           {t('learn!')}
-        </NewInputLabel>
+        </InputLabel>
         /
-        <NewInput
+        <Input
           type="radio"
           name="isTutor"
           value="1"
           _onChange={_onClick}
           styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
         />
-        <NewInputLabel
+        <InputLabel
           styles={{
             padding: '0 0 0 10px',
             alignItems: 'center',
           }}
         >
           {t('teach!')}
-        </NewInputLabel>
+        </InputLabel>
       </InfoInput>
       {/* 선생님인 경우 수업시간 선택 */}
       {isTutor === '1' && (

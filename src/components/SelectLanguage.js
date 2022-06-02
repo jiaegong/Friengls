@@ -1,8 +1,6 @@
-import { Rowing } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
-import { NewInputLabel } from '../elements/index';
-import InfoInput from './InfoInput';
+import { InputLabel, InfoInput } from '../elements/index';
 
 const SelectLanguage = (props) => {
   const {
@@ -43,8 +41,8 @@ const SelectLanguage = (props) => {
       styles={{ flexDirection: 'column', alignItems: 'flex-start' }}
     >
       <LabelBox>
-        <NewInputLabel>활용 가능 언어 선택</NewInputLabel>
-        <NewInputLabel>최대 3개</NewInputLabel>
+        <InputLabel>활용 가능 언어 선택</InputLabel>
+        <InputLabel>최대 3개</InputLabel>
       </LabelBox>
       <SelectContainer>
         {/* 맵으로 돌리기 */}

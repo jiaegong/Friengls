@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Image, Text, Input } from '../elements/index';
-import { Profile } from '../image/index';
+import { Text, Input } from '../elements/index';
+import { Profile } from '../asset/image/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as reviewActions } from '../redux/modules/review';
 import styled from 'styled-components';
@@ -78,7 +78,12 @@ const Review = (props) => {
         </RateWrap>
 
         {edit ? (
-          <Input multiLine value={text} _onChange={onChange} />
+          <Input
+            multiLine
+            value={text}
+            _onChange={onChange}
+            styles={{ width: '300px', padding: '10px' }}
+          />
         ) : (
           <Text>{props.text}</Text>
         )}
