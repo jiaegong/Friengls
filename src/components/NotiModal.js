@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as notiActions } from '../redux/modules/booking';
 import NotiItem from '../components/NotiItem';
+import { useTranslation } from 'react-i18next';
 
 const NotiModal = (props) => {
+  const { t } = useTranslation();
   const dispactch = useDispatch();
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
@@ -34,7 +36,7 @@ const NotiModal = (props) => {
           <div className="notificationsInnerWrap">
             <ul>
               {notiCheck === 0 && (
-                <div className="notiNot"> 알림이 없습니다.</div>
+                <div className="notiNot">{t('no alarm')}</div>
               )}
 
               {notiList?.map((notiItem, idx) => {

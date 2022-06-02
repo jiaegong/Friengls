@@ -46,7 +46,7 @@ const Mypage = (props) => {
           </p>
           <ul className="bookingList">
             {bookingList.length === 0 && (
-              <li className="noBookingText"> 예약이 없습니다. </li>
+              <li className="noBookingText">{t('no reservation')}</li>
             )}
             {bookingList?.map((item, idx) => {
               return (
@@ -60,7 +60,7 @@ const Mypage = (props) => {
           </ul>
         </div>
         <LikeWrap>
-          <p className="like-title">좋아요 리스트</p>
+          <p className="like-title">{t('like list')}}</p>
           {likeList.map((l, idx) => {
             return <LikeItem key={idx} {...l} userInfo={userInfo} />;
           })}

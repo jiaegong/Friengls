@@ -25,11 +25,11 @@ const DetailUser = (props) => {
 
   const like = () => {
     if (currentUser.isTutor === 1) {
-      new Swal('튜터는 좋아요를 선택할 수 없어요.');
+      new Swal(t("tutor can't do like"));
       return;
     }
     if (currentUser.userName === userInfo.userName) {
-      new Swal('자신의 프로필에 좋아요를 선택할 수 없어요.');
+      new Swal(t("you can't do like on your own profile"));
       return;
     }
 
@@ -37,15 +37,6 @@ const DetailUser = (props) => {
   };
 
   const unlike = () => {
-    if (currentUser.isTutor === 1) {
-      new Swal('튜터는 좋아요를 선택할 수 없어요.');
-      return;
-    }
-    if (currentUser.userName === userInfo.userName) {
-      new Swal('자신의 프로필에 좋아요를 선택할 수 없어요.');
-      return;
-    }
-
     dispatch(likeActions.unlikeDB(tutorName));
   };
   // 자기소개 열기, 닫기
@@ -145,9 +136,7 @@ const DetailUser = (props) => {
           {/* 자기소개, 한줄소개 없을 경우 띄우기 */}
           {userInfo.comment === '' &&
             userInfo.contents === '' &&
-            userInfo.tag === '' && (
-              <NoInfoBox>작성된 내용이 없습니다.</NoInfoBox>
-            )}
+            userInfo.tag === '' && <NoInfoBox>{t('empty')}</NoInfoBox>}
         </UserInfoBox>
       </InfoContainer>
       {contents && (

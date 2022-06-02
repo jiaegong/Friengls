@@ -20,8 +20,10 @@ import ReviewModal from '../components/ReviewModal';
 import { history } from '../redux/configureStore';
 import { useLocation } from 'react-router';
 import Swal from 'sweetalert2';
+import { useTranslation } from 'react-i18next';
 
 const VideoChat = (props) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const tutorName = location.state;
 
@@ -106,7 +108,7 @@ const VideoChat = (props) => {
         })
         .catch((err) => console.log(err));
     } else {
-      new Swal('비디오와 오디오 환경을 확인해 주세요!');
+      new Swal(t('please check your video and audio environment!'));
       history.goBack();
     }
 

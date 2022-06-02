@@ -5,8 +5,10 @@ import styled from 'styled-components';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as notiActions } from '../redux/modules/booking';
 import { history } from '../redux/configureStore';
+import { useTranslation } from 'react-i18next';
 
 const BookingItem = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { item, userInfo } = props;
@@ -63,7 +65,7 @@ const BookingItem = (props) => {
                 });
               }}
             >
-              수업 시작
+              {t('start')}
             </button>
             <button
               className="delBtn"
@@ -71,7 +73,7 @@ const BookingItem = (props) => {
                 dispatch(bookingAction.delBookingNotiDB(timeId));
               }}
             >
-              예약 취소
+              {t('cancel')}
             </button>
           </li>
         )}
@@ -95,7 +97,7 @@ const BookingItem = (props) => {
                 TuteeDel === 1 && dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
-              취소됨
+              {t('canceled')}
             </button>
           </li>
         )}
@@ -130,7 +132,7 @@ const BookingItem = (props) => {
                 );
               }}
             >
-              수업 시작
+              {t('start')}
             </button>
             <button
               className="delBtn"
@@ -138,7 +140,7 @@ const BookingItem = (props) => {
                 dispatch(bookingAction.delBookingNotiDB(timeId));
               }}
             >
-              예약 취소
+              {t('cancel')}
             </button>
           </li>
         )}
@@ -162,7 +164,7 @@ const BookingItem = (props) => {
                 TutorDel === 1 && dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
-              취소됨
+              {t('canceled')}
             </button>
           </li>
         )}

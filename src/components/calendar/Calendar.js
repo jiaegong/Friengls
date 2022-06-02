@@ -313,7 +313,7 @@ const CalendarTemplate = ({
             onClick={handleClick}
             disabled={save ? 'disabled' : ''}
           >
-            예약이 있습니다.
+            {t('already booked')}
           </button>
         ) : available ? (
           <button
@@ -904,14 +904,16 @@ const CalendarTemplate = ({
           <div className="calendarTextWrap">
             <div className="calendarTextInner">
               <span className="calendarInfo">
-                <span className="redColor"></span> 예약이 있는 날입니다.
+                <span className="redColor"></span> {t('booked date')}
               </span>
               <span className="calendarInfo">
-                <span className="blueColor"></span> 선택한 날입니다.
+                <span className="blueColor"></span> {t('selected date')}
               </span>
             </div>
 
-            <p className="calendarText">* 한번에 1시간씩만 예약이 가능합니다</p>
+            <p className="calendarText">
+              * {t('booking is only available for one hour at a time')}
+            </p>
           </div>
           <Grid item className="btnWrap">
             <Grid

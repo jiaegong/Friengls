@@ -3,8 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { NewInputLabel } from '../elements/index';
 import InfoInput from './InfoInput';
+import { useTranslation } from 'react-i18next';
 
 const SelectLanguage = (props) => {
+  const { t } = useTranslation();
   const {
     language1,
     language2,
@@ -43,14 +45,14 @@ const SelectLanguage = (props) => {
       styles={{ flexDirection: 'column', alignItems: 'flex-start' }}
     >
       <LabelBox>
-        <NewInputLabel>활용 가능 언어 선택</NewInputLabel>
-        <NewInputLabel>최대 3개</NewInputLabel>
+        <NewInputLabel>{t('select available language')}</NewInputLabel>
+        <NewInputLabel>{t('maximum 3')}</NewInputLabel>
       </LabelBox>
       <SelectContainer>
         {/* 맵으로 돌리기 */}
         {/* 사용언어1 */}
         <Select name="language1" onChange={handleLanguage1}>
-          <option value="">{language1 ? language1 : '선택'}</option>
+          <option value="">{language1 ? language1 : t('select')}</option>
           {languageList.map((language, index) => (
             <option value={language} key={language + index}>
               {language}
@@ -64,7 +66,7 @@ const SelectLanguage = (props) => {
           onChange={handleLanguage2}
           disabled={!language1}
         >
-          <option value="">{language2 ? language2 : '선택'}</option>
+          <option value="">{language2 ? language2 : t('select')}</option>
           {language2List.map((language, index) => (
             <option value={language} key={language + index}>
               {language}
@@ -78,7 +80,7 @@ const SelectLanguage = (props) => {
           onChange={handleLanguage3}
           disabled={!(language1 && language2)}
         >
-          <option value="">{language3 ? language3 : '선택'}</option>
+          <option value="">{language3 ? language3 : t('select')}</option>
           {language3List.map((language, index) => (
             <option value={language} key={language + index}>
               {language}

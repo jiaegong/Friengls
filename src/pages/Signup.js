@@ -306,7 +306,7 @@ const Signup = ({ userInfo }) => {
                 // 한 번 인증번호 보내고 인증버튼 누를 때까지 버튼 비활성화
                 authLoading={authLoading}
               >
-                번호요청
+                {t('request number')}
               </ConfirmButton>
             </EmailBox>
             {/* 이메일 확인 인풋 */}
@@ -319,7 +319,7 @@ const Signup = ({ userInfo }) => {
                 styles={{ borderRadius: '8px 0 0 8px' }}
               />
               <ConfirmButton type="button" onClick={checkEmail}>
-                번호인증
+                {t('authentication')}
               </ConfirmButton>
             </EmailBox>
           </React.Fragment>

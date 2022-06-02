@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const Translator = () => {
+  const { t } = useTranslation();
   const [text, setText] = useState('');
   const [source, setSource] = useState('en');
   const [target, setTarget] = useState('ko');
@@ -78,7 +80,7 @@ const Translator = () => {
         className="translate-button"
         onClick={translate(source, target, text)}
       >
-        번역하기
+        {t('translate')}
       </button>
       <select name="target" onChange={targetValue} defaultValue={target}>
         {language.map((lang) => (

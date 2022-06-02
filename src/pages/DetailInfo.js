@@ -82,7 +82,7 @@ const DetailInfo = (props) => {
       setContents(e.target.value);
       setContentsLength(inputLength(e.target.value));
     } else {
-      new Swal(t('자기 소개는 400자까지 작성할 수 있습니다.'));
+      new Swal(t('self-introduction can be up to 400 characters.'));
     }
   };
 
@@ -94,7 +94,7 @@ const DetailInfo = (props) => {
       setComment(e.target.value);
       setCommentLength(inputLength(e.target.value));
     } else {
-      new Swal(t('한 줄 소개는 70자까지 작성할 수 있습니다.'));
+      new Swal(t('comment can be up to 70 characters.'));
     }
   };
 
@@ -136,7 +136,7 @@ const DetailInfo = (props) => {
         setTagInput('');
         return;
       } else {
-        new Swal(t('8글자 이하로 작성해 주세요.'));
+        new Swal(t('please write in 8 characters or less.'));
         return;
       }
     }

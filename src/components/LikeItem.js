@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { Profile } from '../image/index';
+import { useTranslation } from 'react-i18next';
 
 const LikeItem = (props) => {
+  const { t } = useTranslation();
   const isTutor = props.userInfo.isTutor;
   if (isTutor === 0) {
     return (
@@ -20,7 +22,7 @@ const LikeItem = (props) => {
           style={{ cursor: 'pointer' }}
           onClick={() => history.push(`/detail/${props.userName}/1`)}
         >
-          프로필 보러가기
+          {t('see the profile')}
         </div>
       </Wrap>
     );
@@ -36,7 +38,7 @@ const LikeItem = (props) => {
         <div>{props.userName}</div>
       </UserWrap>
       <ProfileWrap onClick={() => history.push(`/detail/${props.userName}/0`)}>
-        프로필 보러가기
+        {t('see the profile')}
       </ProfileWrap>
     </Wrap>
   );

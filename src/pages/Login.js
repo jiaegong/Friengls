@@ -29,11 +29,15 @@ const Login = (props) => {
     // e.preventDefault();
     //유효성검사
     if (!emailForm(userEmail)) {
-      new Swal('이메일: abc@abc.abc형식의 이메일');
+      new Swal(t('email: abc@abc.com'));
       return;
     }
     if (!pwdForm(pwd)) {
-      new Swal('비밀번호: 8-20자 사이의 영어대소문자, 숫자, 특수문자');
+      new Swal(
+        t(
+          'password: english upper case, number, special character between 8 and 20 characters',
+        ),
+      );
       return;
     }
     const loginForm = { userEmail: userEmail, pwd: pwd };

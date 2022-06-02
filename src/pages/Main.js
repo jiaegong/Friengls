@@ -56,7 +56,7 @@ const Main = () => {
               });
             }}
           >
-            튜토리얼 가기 ▶︎
+            {t('see a tutorial')} ▶︎
           </button>
         </Banner>
       </DivBanner>
