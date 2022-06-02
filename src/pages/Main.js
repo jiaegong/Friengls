@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 
@@ -10,7 +10,6 @@ import { actionCreators as reviewActions } from '../redux/modules/review';
 import { actionCreators as tutorActions } from '../redux/modules/tutor';
 
 // 컴포넌트
-import { Text } from '../elements/index';
 import Review from '../components/Review';
 import TutorCard from '../components/TutorCard';
 import DivBanner from '../elements/DivBanner';
@@ -29,6 +28,7 @@ const Main = () => {
 
   if (!reviewList) return null;
 
+  // 튜터 리스트 갯수 제한
   let tutorList = [];
 
   if (tutorListDB.length > 11) {
@@ -130,9 +130,7 @@ const Banner = styled.div`
   .bannerTitle > span {
     font-size: 40px;
     font-weight: bolder;
-    /* font-family: 'Jalnan'; */
     line-height: 34px;
-    /* margin-bottom: 10px; */
     margin-bottom: 18px;
     letter-spacing: 1px;
     color: #fff;
@@ -141,7 +139,6 @@ const Banner = styled.div`
     display: flex;
     flex-direction: column;
     margin: 10px 0 28px;
-    /* background-color: red; */
   }
   .bannerText > span {
     font-size: 16px;
@@ -158,7 +155,6 @@ const Banner = styled.div`
     font-weight: 900;
     cursor: pointer;
     background: #fff;
-
     border: 2px solid #000;
     border-radius: 40px;
     box-shadow: 2px 6px 16px 0px #0000004b;
@@ -205,15 +201,11 @@ const TutorTitleWrap = styled.div`
 `;
 
 const CardList = styled.div`
-  /* width: 100%; */
   width: 95%;
   margin: auto;
   display: grid;
   place-items: center;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
-  /* grid-gap: 2rem; */
-  /* row-gap: 2rem; */
   row-gap: 4rem;
   column-gap: 0rem;
 `;

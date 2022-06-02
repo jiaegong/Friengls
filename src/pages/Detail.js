@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { history } from '../redux/configureStore';
-import { actionCreators as userActions } from '../redux/modules/user';
-import { actionCreators as bookingAction } from '../redux/modules/booking';
-import { actionCreators as reviewActions } from '../redux/modules/review';
 import { useTranslation } from 'react-i18next';
+
+// 모듈
+import { actionCreators as userActions } from '../redux/modules/user';
+import { actionCreators as reviewActions } from '../redux/modules/review';
 
 // 컴포넌트
 import CalendarTemplate from '../components/calendar/Calendar';
 import DetailUser from '../components/DetailUser';
-import axios from 'axios';
 import Review from '../components/Review';
 
 const Detail = (props) => {
@@ -36,9 +36,7 @@ const Detail = (props) => {
     // 예약 리스트 불러오기
     axios({
       method: 'get',
-      // url: `https://hjg521.link/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
-      // url: `http://13.124.206.190/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
-      url: `https://hjg521.link/getBooking/?userName=${tutorName}&isTutor=1`, // 학생 또는 선생님
+      url: `https://hjg521.link/getBooking/?userName=${tutorName}&isTutor=1`,
     })
       .then((doc) => {
         // DB에서 예약 정보 불러와 캘린더에 적용시킴
@@ -59,7 +57,6 @@ const Detail = (props) => {
 
   // 리뷰 불러오기, 수정, 삭제 부분
   const reviewList = useSelector((state) => state.review.list);
-  // console.log(reviewList);
 
   return (
     <Wrap>
@@ -86,9 +83,6 @@ const Detail = (props) => {
             <p className="title">{t('best reviews')}</p>
           </ReviewTitleWrap>
           {reviewList?.map((r, idx) => {
-            // if (reviewList[idx].Tutor_username !== tutorName) {
-            //   return null;
-            // }
             return <Review key={idx} {...r} />;
           })}
         </ReviewList>
@@ -100,7 +94,6 @@ const Detail = (props) => {
 const Wrap = styled.div`
   width: 100%;
   min-height: 904px;
-  // background-color: #ddd;
 
   .innerWrap {
     max-width: 1280px;
@@ -121,7 +114,6 @@ const Wrap = styled.div`
         font-size: 38px;
         font-weight: bold;
         margin-bottom: 50px;
-        // padding-left: 8%;
 
         span {
           color: #aaa;

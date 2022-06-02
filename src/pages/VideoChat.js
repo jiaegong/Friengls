@@ -2,6 +2,17 @@ import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import Peer from 'peerjs';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
+import { history } from '../redux/configureStore';
+import { useLocation } from 'react-router';
+
+// 컴포넌트
+import Translator from '../components/Translator';
+import ReviewModal from '../components/ReviewModal';
+import Portal from '../shared/Portal';
+
+// 아이콘
 import {
   BsMicFill,
   BsFillCameraVideoFill,
@@ -12,14 +23,6 @@ import {
 import { GoPlus, GoX } from 'react-icons/go';
 import { MdOutlineRateReview } from 'react-icons/md';
 import { CgScreen } from 'react-icons/cg';
-import { useSelector } from 'react-redux';
-import Translator from '../components/Translator';
-import Chat from '../components/Chat';
-import Portal from '../shared/Portal';
-import ReviewModal from '../components/ReviewModal';
-import { history } from '../redux/configureStore';
-import { useLocation } from 'react-router';
-import Swal from 'sweetalert2';
 
 const VideoChat = (props) => {
   const location = useLocation();
@@ -51,7 +54,6 @@ const VideoChat = (props) => {
 
   useEffect(() => {
     const peer = new Peer();
-    // const socket = io('https://hjg521.link', { transports: ['websocket'] });
     if (navigator.mediaDevices) {
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: true }) // 배포 전 true로

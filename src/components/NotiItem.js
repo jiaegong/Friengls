@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
+// 모듈
 import { actionCreators as notiActions } from '../redux/modules/booking';
 
 const NotiItem = (props) => {
   const dispatch = useDispatch();
   const { userInfo, notiItem } = props;
 
-  // console.log({ notiItem });
-
   //  조건에 필요한 정보
   const timeId = notiItem.timeId;
-  // console.log({ timeId });
 
   const TutorNoti = notiItem.TutorNoti;
   const TuteeNoti = notiItem.TuteeNoti;
@@ -22,15 +21,9 @@ const NotiItem = (props) => {
   const tutorName = notiItem.Tutor_userName;
   const tuteeName = notiItem.Tutee_userName;
   let startTime = notiItem.start;
-  let endTime = notiItem.end;
 
-  // console.log({ tutorName, tuteeName });
-
-  // if (!notiItem) return; // 이 부분 불확실...
   let [week, month, day, year, sTime] = startTime.split(' ');
   let start = sTime.substr(0, 5);
-  let end = endTime.substr(-17, 5);
-  // console.log({ start, end });
 
   let Month = (month) => {
     console.log(month);

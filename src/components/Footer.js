@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+
+//아이콘
 import { FcGoogle } from 'react-icons/fc';
 import { BsInstagram, BsGithub } from 'react-icons/bs';
 import { footerLogo } from '../asset/image/index';

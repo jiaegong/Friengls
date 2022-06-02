@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
-import { CgProfile } from 'react-icons/cg';
+
+// 컴포넌트
 import Portal from '../shared/Portal';
 import TutorModal from './TutorModal';
+
+// 아이콘
 import { Profile, ModalBtnImg } from '../asset/image/index';
 
 const TutorCard = ({ tutor, urlCheck }) => {

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { InputLabel, Input, InfoInput } from '../elements/index';
 import { useTranslation } from 'react-i18next';
+
+// 엘리먼트
+import { InputLabel, Input, InfoInput } from '../elements/index';
 
 const SelectIsTutor = ({
   startTime,

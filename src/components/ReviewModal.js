@@ -1,12 +1,15 @@
 import React from 'react';
-import Portal from '../shared/Portal';
 import styled from 'styled-components';
+import Portal from '../shared/Portal';
 import { useDispatch } from 'react-redux';
-import { actionCreators as reviewActions } from '../redux/modules/review';
-import { Text, Input, Button } from '../elements/index';
-import { getCookie } from '../shared/Cookie';
-import { AiFillStar } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
+
+// 모듈
+import { actionCreators as reviewActions } from '../redux/modules/review';
+
+// 아이콘
+import { Text } from '../elements/index';
+import { AiFillStar } from 'react-icons/ai';
 
 const ReviewModal = ({ onClose, tutorName }) => {
   const { t } = useTranslation();

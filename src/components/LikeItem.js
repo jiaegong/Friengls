@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
+
+// 이미지
 import { Profile } from '../asset/image/index';
 
 const LikeItem = (props) => {

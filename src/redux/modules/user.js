@@ -60,8 +60,6 @@ const initialState = {
 
 const signupDB = (formData, loginInfo) => {
   return function (dispatch, getState, { history }) {
-    console.log('signupDB시작', formData, loginInfo);
-
     axios({
       method: 'post',
       url: 'https://hjg521.link/signUp',
@@ -69,8 +67,6 @@ const signupDB = (formData, loginInfo) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then((response) => {
-        // console.log('signupDB성공', response);
-
         dispatch(loginDB(loginInfo));
       })
       .catch((error) => {
@@ -82,16 +78,13 @@ const signupDB = (formData, loginInfo) => {
 
 const uploadProfileDB = (formData) => {
   return function (dispatch, getState, { history }) {
-    console.log('uploadProfileDB시작', formData);
     axios({
       method: 'post',
       url: 'https://hjg521.link/editUser/profile',
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
-      .then((response) => {
-        console.log('uploadProfileDB성공', response.data);
-      })
+      .then((response) => {})
       .catch((error) => {
         new Swal('프로필 저장에 실패하셨습니다.');
         console.log(error);
@@ -101,15 +94,12 @@ const uploadProfileDB = (formData) => {
 
 const deleteProfileDB = (userInfo) => {
   return function (dispatch, getState, { history }) {
-    console.log('deleteProfileDB시작', userInfo);
     axios({
       method: 'patch',
       url: 'https://hjg521.link/deleteProfile',
       data: userInfo,
     })
-      .then((response) => {
-        console.log('uploadProfileDB성공', response.data);
-      })
+      .then((response) => {})
       .catch((error) => {
         new Swal('이미지 삭제에 실패하셨습니다.');
         console.log(error);
@@ -120,15 +110,12 @@ const deleteProfileDB = (userInfo) => {
 
 const loginDB = (loginForm) => {
   return function (dispatch, getState, { history }) {
-    // console.log('login시작', loginForm);
-
     axios({
       method: 'post',
       url: 'https://hjg521.link/login',
       data: loginForm,
     })
       .then((response) => {
-        console.log('loginDB성공', response.data);
         if (response.data.msg === '비밀번호가 틀렸습니다') {
           new Swal('비밀번호를 확인해 주세요.');
           return;
@@ -151,7 +138,6 @@ const loginDB = (loginForm) => {
 
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
-    // console.log('loginCheckDB시작');
     axios({
       method: 'get',
       url: 'https://hjg521.link/login/getUser',
@@ -161,7 +147,6 @@ const loginCheckDB = () => {
         dispatch(setUser(response.data));
       })
       .catch((error) => {
-        console.log('로그인체크 실패', error);
         if (getCookie('token') === 'undefined') {
           deleteCookie('token');
         }
@@ -169,16 +154,12 @@ const loginCheckDB = () => {
           '알 수 없는 문제로 로그인에 실패했습니다. 다시 로그인 해주세요.',
         );
         history.push('/login');
-
-        //메인으로 돌아가기
       });
   };
 };
 
 const editUserDB = (userInfo) => {
   return function (dispatch, getState, { history }) {
-    console.log('editUserDB시작', userInfo);
-
     axios({
       method: 'patch',
       url: 'https://hjg521.link/editUser',
@@ -186,10 +167,8 @@ const editUserDB = (userInfo) => {
       data: userInfo,
     })
       .then((response) => {
-        console.log('editUserDB성공', response);
         new Swal('프로필이 성공적으로 수정되었습니다.');
         const editUserInfo = userInfo;
-        console.log('editUserDB 후 로그인정보', userInfo);
         dispatch(editUser(editUserInfo));
         history.replace(`/mypage/${userInfo.userName}/${userInfo.isTutor}`);
         window.location.reload();
@@ -203,15 +182,12 @@ const editUserDB = (userInfo) => {
 
 const getUserDetailDB = (userApi) => {
   return function (dispatch, getState, { history }) {
-    // console.log('getUserDetailDB시작', userApi);
-
     axios({
       method: 'get',
       url: `https://hjg521.link/getUserDetail/?userName=${userApi.userName}&isTutor=${userApi.isTutor}`,
       headers: { token: `${getCookie('token')}` },
     })
       .then((response) => {
-        // console.log('getUserDetailDB성공', response.data.data[0]);
         dispatch(setUserDetail(response.data.data[0]));
       })
       .catch((error) => {
@@ -226,33 +202,27 @@ const logout = () => {
     new Swal('성공적으로 로그아웃 되었습니다.');
     history.replace('/');
     dispatch(unsetUser());
-    // window.location.reload();
   };
 };
 
-//리듀서
 export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        // console.log('setuser리듀서시작', action.payload.userInfo);
         draft.info = action.payload.userInfo;
         draft.isLogin = true;
       }),
     [EDIT_USER]: (state, action) =>
       produce(state, (draft) => {
-        // console.log('editUser리듀서시작', action.payload.userInfo);
-        draft.detailInfo = action.payload.userInfo; // 이거맞나? 확인
+        draft.detailInfo = action.payload.userInfo;
         draft.isLogin = true;
       }),
     [SET_USER_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        // console.log('setUserDetail리듀서시작', action.payload.userInfo);
         draft.detailInfo = action.payload.userInfo;
       }),
     [UNSET_USER]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.info = null;
         draft.isLogin = false;
         draft.detailInfo = null;
@@ -265,7 +235,6 @@ export default handleActions(
   initialState,
 );
 
-//익스포트
 const actionCreators = {
   signupDB,
   uploadProfileDB,

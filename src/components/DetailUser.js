@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { actionCreators as likeActions } from '../redux/modules/like';
-import MyPageModal from './MyPageModal';
-import { Profile, OpenToggle, CloseToggle } from '../asset/image/index';
-import { Button } from '../elements/index';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import Swal from 'sweetalert2';
+
+// 컴포넌트
+import MyPageModal from './MyPageModal';
+
+// 모듈
+import { actionCreators as likeActions } from '../redux/modules/like';
+
+// 아이콘
+import { Button } from '../elements/index';
+import { Profile, OpenToggle, CloseToggle } from '../asset/image/index';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 const DetailUser = (props) => {
   const { t } = useTranslation();
@@ -265,7 +271,7 @@ const ContentsWrap = styled.div`
 `;
 // 자기소개 토글
 const ContentsButton = styled.button`
-  display: flex;  
+  display: flex;
   position: absolute;
   right: 20px;
   bottom: 30px;
@@ -277,8 +283,8 @@ const ContentsButton = styled.button`
     width: 30px;
   }
   img {
-    width: 100%
-    height: 100%
+    width: 100%;
+    height: 100%;
   }
 `;
 // 유저정보가 없을 때

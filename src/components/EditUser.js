@@ -1,15 +1,20 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { actionCreators as userActions } from '../redux/modules/user';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import imageCompression from 'browser-image-compression';
+import Swal from 'sweetalert2';
+
+// 컴포넌트
 import SelectLanguage from '../components/SelectLanguage';
+
+//모듈
+import { actionCreators as userActions } from '../redux/modules/user';
+
+//아이콘
 import { Profile, CloseIcon } from '../asset/image/index';
 import { Button, InputLabel, Input, InfoInput } from '../elements/index';
 import { pwdForm, inputLength } from '../utils/validation';
-import { useTranslation } from 'react-i18next';
-import imageCompression from 'browser-image-compression';
-
-import Swal from 'sweetalert2';
 
 const EditUser = (props) => {
   const { t } = useTranslation();

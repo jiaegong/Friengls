@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Logo } from '../asset/image/';
-import { InfoInput } from '../elements/index';
-import { emailForm, pwdForm, userNameForm } from '../utils/validation';
-import SelectIsTutor from '../components/SelectIstutor';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
-// to do: 유효성 검사에 따라 박스 색 변화
-// to do: 유효성 검사 조건 일치하는지 확인
+
+// 모듈
+import { emailForm, pwdForm, userNameForm } from '../utils/validation';
+
+// 컴포넌트
+import SelectIsTutor from '../components/SelectIstutor';
+
+// 아이콘
+import { Logo } from '../asset/image/';
+import { InfoInput } from '../elements/index';
+
 const Signup = ({ userInfo }) => {
   const { t } = useTranslation();
   //소셜로그인의 경우 닉네임체크 바로 할 수 있도록
@@ -35,7 +40,6 @@ const Signup = ({ userInfo }) => {
     }
   };
   //인증번호
-  // const localAuthCount = Number(localStorage.getItem('authCount'));
   const [authNumber, setAuthNumber] = useState(0);
   useEffect(() => {
     setAuthCount(Number(localStorage.getItem('authCount')));
@@ -82,7 +86,6 @@ const Signup = ({ userInfo }) => {
       },
     })
       .then((response) => {
-        console.log('emailCheckDB성공', response.data.msg);
         if (response.data.msg === '이미 있는 이메일 주소입니다.') {
           setEmailCheck(
             t('this email is already subscribed. try another email.'),
@@ -106,7 +109,6 @@ const Signup = ({ userInfo }) => {
                 'the authentication number has been sent to the email you wrote.',
               ),
             );
-            console.log(response.data);
             setAuthNumber(response.data.toString());
             //서버에서 보내주는 번호와 인풋 값 일치하면 인증완료
           })
@@ -159,7 +161,6 @@ const Signup = ({ userInfo }) => {
     if (!userNameForm(userName)) {
       return;
     }
-    console.log('중복확인할 닉네임', userName);
 
     axios({
       method: 'post',
@@ -169,7 +170,6 @@ const Signup = ({ userInfo }) => {
       },
     })
       .then((response) => {
-        console.log('userNameCheckDB성공', response.data);
         if (response.data.msg === '이미 있는 닉네임입니다.') {
           setUserNameCheck(
             t('this nickname is already in use. try another nickname.'),
