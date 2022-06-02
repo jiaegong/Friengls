@@ -314,14 +314,14 @@ const DetailInfo = (props) => {
               </div>
             ))
           ) : (
-            <>
+            <React.Fragment>
               <span>{t('example')} :</span>
               {exampleTag.map((example, index) => (
                 <div key={example + index}>
                   <p>{example}</p>
                 </div>
               ))}
-            </>
+            </React.Fragment>
           )}
         </TagBox>
       </InfoInput>

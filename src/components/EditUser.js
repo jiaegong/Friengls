@@ -514,14 +514,14 @@ const EditUser = (props) => {
                   </div>
                 ))
               ) : (
-                <>
+                <React.Fragment>
                   <span>{t('example')} :</span>
                   {exampleTag.map((example, index) => (
                     <div key={example + index}>
                       <p>{example}</p>
                     </div>
                   ))}
-                </>
+                </React.Fragment>
               )}
             </TagBox>
           </InfoInput>
@@ -619,7 +619,7 @@ const EditUser = (props) => {
                     {startTime === '' ? (
                       <></>
                     ) : (
-                      <>
+                      <React.Fragment>
                         <Select name="endTime" onChange={handleEndTime}>
                           <option value="">
                             {userInfo.endTime
@@ -641,7 +641,7 @@ const EditUser = (props) => {
                           ))}
                         </Select>
                         {t('to')}
-                      </>
+                      </React.Fragment>
                     )}
                   </TimeSelectBox>
                 </InfoInput>
