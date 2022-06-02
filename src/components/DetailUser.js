@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { history } from '../redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { actionCreators as likeActions } from '../redux/modules/like';
@@ -8,7 +7,6 @@ import MyPageModal from './MyPageModal';
 import { Profile, OpenToggle, CloseToggle } from '../image/index';
 import { Buttons } from '../elements/index';
 import { useTranslation } from 'react-i18next';
-import { getCookie } from '../shared/Cookie';
 import Swal from 'sweetalert2';
 
 const DetailUser = (props) => {

@@ -5,7 +5,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import SelectLanguage from '../components/SelectLanguage';
 import { Profile, CloseIcon } from '../image';
 import { Buttons, NewInputLabel, NewInput } from '../elements/index';
-import { pwdForm } from '../utils/validation';
+import { pwdForm, inputLength } from '../utils/validation';
 import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
 import imageCompression from 'browser-image-compression';
@@ -122,17 +122,32 @@ const EditUser = (props) => {
   const handleLanguage3 = (e) => {
     setLanguage3(e.target.value);
   };
-  // 자기소개 한줄소개 setState onBlur로 바꾸기
-  //자기소개 input값
+  //자기소개 input값, 글자 수 체크
   const [contents, setContents] = useState(userInfo.contents);
+  const [contentsLength, setContentsLength] = useState(
+    inputLength(userInfo.contents),
+  );
   const handleContents = (e) => {
-    setContents(e.target.value);
+    if (inputLength(e.target.value) < 401) {
+      setContents(e.target.value);
+      setContentsLength(inputLength(e.target.value));
+    } else {
+      new Swal(t('자기 소개는 400자까지 작성할 수 있습니다.'));
+    }
   };
 
-  //한줄소개 input값
+  //한줄소개 input값, 글자 수 체크
   const [comment, setComment] = useState(userInfo.comment);
+  const [commentLength, setCommentLength] = useState(
+    inputLength(userInfo.comment),
+  );
   const handleComment = (e) => {
-    setComment(e.target.value);
+    if (inputLength(e.target.value) < 71) {
+      setComment(e.target.value);
+      setCommentLength(inputLength(e.target.value));
+    } else {
+      new Swal(t('한 줄 소개는 70자까지 작성할 수 있습니다.'));
+    }
   };
 
   //태그 input값
@@ -165,13 +180,21 @@ const EditUser = (props) => {
           return;
         }
       }
-      //태그리스트에 담기
-      setTagList([...tagList, tagInput]);
-      //태그 갯수 제한
-      if (tagList.length > 8) {
-        setTagLimit(true);
+      //글자 수 제한
+      if (inputLength(tagInput) < 18) {
+        //태그리스트에 담기
+        setTagList([...tagList, tagInput]);
+
+        //태그 갯수 제한
+        if (tagList.length > 8) {
+          setTagLimit(true);
+        }
+        setTagInput('');
+        return;
+      } else {
+        new Swal(t('8글자 이하로 작성해 주세요.'));
+        return;
       }
-      setTagInput('');
     }
   };
   //태그삭제
@@ -212,9 +235,6 @@ const EditUser = (props) => {
   //기존 수업시간을 시간선택옵션 초기값에 표시하기 위한 함수
   const startNum = userInfo.startTime ? Number(userInfo.startTime) : '';
   const endNum = userInfo.endTime ? Number(userInfo.endTime) : '';
-
-  //변경내용이 있을 경우 버튼 활성화
-  const [disabled, setDisabled] = useState(true);
 
   //유저정보 변경하기
   const editUser = (e) => {
@@ -430,13 +450,13 @@ const EditUser = (props) => {
           {/* 자기 소개 */}
           <InfoInput
             label={t('self-introduction')}
-            label2={contents.length + `/500`}
+            label2={contentsLength + `/400`}
             placeholder={t(
               'please feel free to introduce yourself to what you are doing, hobbies, personality, etc.',
             )}
             value={userInfo.contents}
             _onChange={handleContents}
-            maxLength={500}
+            maxLength="400"
             multiLine
             styles={{
               height: '160px',
@@ -447,11 +467,11 @@ const EditUser = (props) => {
           {/* 한 줄 소개 */}
           <InfoInput
             label={t('comment')}
-            label2={comment.length + `/40`}
+            label2={commentLength + `/70`}
             placeholder={t('please write a comment.')}
             value={userInfo.comment}
             _onChange={handleComment}
-            maxLength={40}
+            maxLength="70"
             styles={{
               flexDirection: 'column',
               justifyContent: 'flex-start',
@@ -477,10 +497,10 @@ const EditUser = (props) => {
                   : t('enter a word and register a tag with space key')
               }
               name="tag"
+              maxLength="16"
               onChange={handleTag}
               onKeyUp={inputTag}
               value={tagInput}
-              maxLength={8}
             />
             {/* 태그출력 */}
             <TagBox>
@@ -494,14 +514,14 @@ const EditUser = (props) => {
                   </div>
                 ))
               ) : (
-                <>
+                <React.Fragment>
                   <span>{t('example')} :</span>
                   {exampleTag.map((example, index) => (
                     <div key={example + index}>
                       <p>{example}</p>
                     </div>
                   ))}
-                </>
+                </React.Fragment>
               )}
             </TagBox>
           </InfoInput>
@@ -599,7 +619,7 @@ const EditUser = (props) => {
                     {startTime === '' ? (
                       <></>
                     ) : (
-                      <>
+                      <React.Fragment>
                         <Select name="endTime" onChange={handleEndTime}>
                           <option value="">
                             {userInfo.endTime
@@ -621,7 +641,7 @@ const EditUser = (props) => {
                           ))}
                         </Select>
                         {t('to')}
-                      </>
+                      </React.Fragment>
                     )}
                   </TimeSelectBox>
                 </InfoInput>

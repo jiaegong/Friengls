@@ -37,7 +37,11 @@ const Signup = ({ userInfo }) => {
     }
   };
   //인증번호
-  const [authNumber, setAuthNumber] = useState();
+  // const localAuthCount = Number(localStorage.getItem('authCount'));
+  const [authNumber, setAuthNumber] = useState(0);
+  useEffect(() => {
+    setAuthCount(Number(localStorage.getItem('authCount')));
+  }, []);
   // 인증요청 누른 후 번호인증버튼 누르기 전 까지 true (버튼 다중클릭 방지)
   const [authCount, setAuthCount] = useState(0);
   //이름바꾸기 preventAuth
@@ -47,6 +51,7 @@ const Signup = ({ userInfo }) => {
     console.log(authCount);
     setTimeout(() => {
       setAuthLoading(false);
+      window.location.reload();
     }, 300000);
   }
 
@@ -66,9 +71,11 @@ const Signup = ({ userInfo }) => {
     }
     //6회 이상 클릭할 경우 5분 후 다시 발송할 수 있다.
     setAuthCount(authCount + 1);
+    localStorage.setItem('authCount', authCount + 1);
     if (authCount >= 4) {
       setAuthLoading(true);
     }
+
     axios({
       method: 'post',
       url: 'https://hjg521.link/signUp/emailCheck',
@@ -132,6 +139,7 @@ const Signup = ({ userInfo }) => {
   const [userName, setUserName] = useState(
     userInfo?.userName ? userInfo.userName : '',
   );
+
   //userName 형식 라벨로 표시
   const [userNameCheck, setUserNameCheck] = useState('\u00A0');
   //userName 유효성 검사
@@ -143,7 +151,7 @@ const Signup = ({ userInfo }) => {
     } else {
       setUserNameCheck(
         t(
-          'english, numbers, special characters (- _ . ) 6-20) or less, korean letters 3-8 characters, numbers, special characters (- _ . )',
+          'Korean, english, numbers, special characters (- _ . ) / member of letters : 4-16 (Korean : 2-8)',
         ),
       );
     }

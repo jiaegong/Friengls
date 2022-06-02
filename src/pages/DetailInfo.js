@@ -11,7 +11,8 @@ import InfoInput from '../components/InfoInput';
 import { useTranslation } from 'react-i18next';
 import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
-import { result } from 'lodash';
+import { inputLength } from '../utils/validation';
+import { red } from '@material-ui/core/colors';
 
 // to do: 자기소개, 한 줄 소개, 태그 글자수제한
 //to do: 태그 영어 대소문자 중복 거르기
@@ -73,16 +74,28 @@ const DetailInfo = (props) => {
     setLanguage3(e.target.value);
   };
 
-  //자기소개 input값
+  //자기소개 input값, 글자 수 체크
   const [contents, setContents] = useState('');
+  const [contentsLength, setContentsLength] = useState(0);
   const handleContents = (e) => {
-    setContents(e.target.value);
+    if (inputLength(e.target.value) < 401) {
+      setContents(e.target.value);
+      setContentsLength(inputLength(e.target.value));
+    } else {
+      new Swal(t('자기 소개는 400자까지 작성할 수 있습니다.'));
+    }
   };
 
-  //한줄소개 input값
+  //한줄소개 input값, 글자 수 체크
   const [comment, setComment] = useState('');
+  const [commentLength, setCommentLength] = useState(0);
   const handleComment = (e) => {
-    setComment(e.target.value);
+    if (inputLength(e.target.value) < 71) {
+      setComment(e.target.value);
+      setCommentLength(inputLength(e.target.value));
+    } else {
+      new Swal(t('한 줄 소개는 70자까지 작성할 수 있습니다.'));
+    }
   };
 
   //태그 input값
@@ -112,13 +125,20 @@ const DetailInfo = (props) => {
           return;
         }
       }
-      //태그리스트에 담기
-      setTagList([...tagList, tagInput]);
-      //태그 갯수 제한
-      if (tagList.length > 8) {
-        setTagLimit(true);
+      //글자 수 제한
+      if (inputLength(tagInput) < 18) {
+        //태그리스트에 담기
+        setTagList([...tagList, tagInput]);
+        //태그 갯수 제한
+        if (tagList.length > 8) {
+          setTagLimit(true);
+        }
+        setTagInput('');
+        return;
+      } else {
+        new Swal(t('8글자 이하로 작성해 주세요.'));
+        return;
       }
-      setTagInput('');
     }
   };
   //태그삭제
@@ -187,6 +207,8 @@ const DetailInfo = (props) => {
     //로그인에 필요한 유저정보
     const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
     dispatch(userActions.signupDB(formData, loginInfo));
+    //저장했던 이메일 인증 요청 버튼 count 데이터 지우기
+    localStorage.removeItem('authCount');
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
@@ -230,12 +252,12 @@ const DetailInfo = (props) => {
       {/* 자기소개 */}
       <InfoInput
         label={t('self-introduction')}
-        label2={contents.length + `/500`}
+        label2={contentsLength + `/400`}
         placeholder={t(
           'please feel free to introduce yourself to what you are doing, hobbies, personality, etc.',
         )}
         _onChange={handleContents}
-        maxLength={500}
+        maxLength="400"
         multiLine
         styles={{
           height: '160px',
@@ -246,10 +268,10 @@ const DetailInfo = (props) => {
       {/* 한 줄 소개 */}
       <InfoInput
         label={t('comment')}
-        label2={comment.length + `/40`}
+        label2={commentLength + `/70`}
         placeholder={t('please write a comment.')}
         _onChange={handleComment}
-        maxLength={40}
+        maxLength="70"
         styles={{
           flexDirection: 'column',
           justifyContent: 'flex-start',
@@ -275,10 +297,10 @@ const DetailInfo = (props) => {
               : t('enter a word and register a tag with space key')
           }
           name="tag"
+          maxLength="16"
           onChange={handleTag}
           onKeyUp={inputTag}
           value={tagInput}
-          maxLength={8}
         />
         {/* 태그출력 */}
         <TagBox>
@@ -292,14 +314,14 @@ const DetailInfo = (props) => {
               </div>
             ))
           ) : (
-            <>
+            <React.Fragment>
               <span>{t('example')} :</span>
               {exampleTag.map((example, index) => (
                 <div key={example + index}>
                   <p>{example}</p>
                 </div>
               ))}
-            </>
+            </React.Fragment>
           )}
         </TagBox>
       </InfoInput>

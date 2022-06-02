@@ -15,7 +15,7 @@ import { actionCreators as notiActions } from '../redux/modules/booking';
 
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
-import { MainLogo, Language } from '../image/index';
+import { MainLogo } from '../image/index';
 import NotiModal from './NotiModal';
 
 const Header = () => {
