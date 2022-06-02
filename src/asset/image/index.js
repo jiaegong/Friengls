@@ -8,6 +8,7 @@ import CloseIcon from './CloseIcon.svg';
 import FeedBackIcon from './FeedBackIcon.svg';
 import footerLogo from './footerLogo.png';
 import Language from './Language.png';
+import ModalBtnImg from './ModalBtn.png';
 
 export {
   MainLogo,
@@ -20,4 +21,5 @@ export {
   FeedBackIcon,
   footerLogo,
   Language,
+  ModalBtnImg,
 };

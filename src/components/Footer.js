@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';
 import { BsInstagram, BsGithub } from 'react-icons/bs';
-import { footerLogo } from '../image/index';
+import { footerLogo } from '../asset/image/index';
 
 const Footer = () => {
   return (

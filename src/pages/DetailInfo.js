@@ -1,18 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { Logo, Profile } from '../image/index';
+import { Logo, Profile } from '../asset/image/index';
 import SelectLanguage from '../components/SelectLanguage';
-import { Buttons, NewInputLabel } from '../elements';
-import InfoInput from '../components/InfoInput';
+import { Button, InputLabel, InfoInput } from '../elements';
 import { useTranslation } from 'react-i18next';
 import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
 import { inputLength } from '../utils/validation';
-import { red } from '@material-ui/core/colors';
 
 // to do: 자기소개, 한 줄 소개, 태그 글자수제한
 //to do: 태그 영어 대소문자 중복 거르기
@@ -287,7 +285,7 @@ const DetailInfo = (props) => {
           alignItems: 'flex-start',
         }}
       >
-        <NewInputLabel>{t('tag')}</NewInputLabel>
+        <InputLabel>{t('tag')}</InputLabel>
         {/* 태그입력 */}
         <TagInput
           disabled={tagLimit}
@@ -327,20 +325,20 @@ const DetailInfo = (props) => {
       </InfoInput>
       {/* 버튼 */}
       <ButtonBox>
-        <Buttons
+        <Button
           type="submit"
           _onClick={addUser}
           styles={{ width: '125px', background: '#ababab' }}
         >
           {t('skip')}
-        </Buttons>
-        <Buttons
+        </Button>
+        <Button
           type="submit"
           _onClick={addUser}
           styles={{ width: '365px', marginLeft: '10px' }}
         >
           {t('signup')}
-        </Buttons>
+        </Button>
       </ButtonBox>
       {/* </form> */}
     </Container>

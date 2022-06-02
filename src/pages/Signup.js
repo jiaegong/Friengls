@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Logo } from '../image/';
-import InfoInput from '../components/InfoInput';
+import { Logo } from '../asset/image/';
+import { InfoInput } from '../elements/index';
 import { emailForm, pwdForm, userNameForm } from '../utils/validation';
 import SelectIsTutor from '../components/SelectIstutor';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 // to do: 유효성 검사에 따라 박스 색 변화
 // to do: 유효성 검사 조건 일치하는지 확인
-// to do: 닉네임 유효성 검사 개선(글자수)
-// to do: 소셜로그인에 사용할 이메일이 이미 가입된 이메일일 경우
 const Signup = ({ userInfo }) => {
   const { t } = useTranslation();
   //소셜로그인의 경우 닉네임체크 바로 할 수 있도록
