@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { Profile } from '../image/index';

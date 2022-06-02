@@ -3,70 +3,91 @@ import styled from 'styled-components';
 
 const Input = (props) => {
   const {
-    styles,
-    className,
     type,
+    name,
+    id,
     placeholder,
     _onChange,
+    _onKeyUp,
+    _onBlur,
     value,
+    disabled,
+    maxLength,
+    checked,
+    autoComplete,
     multiLine,
+    styles,
     defaultStyles,
   } = props;
 
   if (multiLine) {
-    <TextareaStyled
-      style={{ ...styles }}
-      className={className}
-      placeholder={placeholder}
-      onChange={_onChange}
-      value={value}
-      {...defaultStyles}
-    />;
+    return (
+      <Textarea
+        type={type}
+        placeholder={placeholder}
+        onChange={_onChange}
+        defaultValue={value}
+        disabled={disabled}
+        maxLength={maxLength}
+        style={{ ...styles }}
+        {...defaultStyles}
+      />
+    );
   }
   return (
-    <InputStyled
-      style={{ ...styles }}
-      className={className}
+    <InputNormal
       type={type}
+      name={name}
+      id={id}
       placeholder={placeholder}
       onChange={_onChange}
-      // value={value}
+      onKeyUp={_onKeyUp}
+      onBlur={_onBlur}
+      defaultValue={value}
+      disabled={disabled}
+      maxLength={maxLength}
+      checked={checked}
+      autoComplete={autoComplete}
+      style={{ ...styles }}
       {...defaultStyles}
     />
   );
 };
 
-Input.defaultProps = {
-  multiLine: false,
-  type: 'text',
-  placeholder: '',
-  value: '',
-  _onChange: () => {},
-  defaultStyles: {
-    fontSize: '14px',
-    fontWeight: '400',
-    color: '#000',
-    width: '300px',
-    padding: '10px',
-  },
-};
+Input.defaultProps = {};
 
-const InputStyled = styled.input`
-  font-size: ${(props) => props.fontSize};
-  font-weight: ${(props) => props.fontWeight};
-  color: ${(props) => props.color};
-  width: ${(props) => props.width};
-  padding: ${(props) => props.padding};
-  box-sizing: border-box;
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 100%;
+  padding-top: 5px;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  resize: none;
+  ::-webkit-input-placeholder {
+    font-size: 14px;
+    color: b5b5b5;
+  }
+  &:focus {
+    outline: none;
+  }
 `;
 
-const TextareaStyled = styled.textarea`
-  font-size: ${(props) => props.fontSize};
-  font-weight: ${(props) => props.fontWeight};
-  color: ${(props) => props.color};
-  width: ${(props) => props.width};
-  padding: ${(props) => props.padding};
-  box-sizing: border-box;
+const InputNormal = styled.input`
+  width: 100%;
+  height: 25px;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  ::-webkit-input-placeholder {
+    font-size: 14px;
+    color: b5b5b5;
+  }
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default Input;

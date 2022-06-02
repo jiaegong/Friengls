@@ -1,19 +1,25 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import DivBanner from '../elements/DivBanner';
-import TutorCard from '../components/TutorCard';
-import { BiSearchAlt2 } from 'react-icons/bi';
 import axios from 'axios';
-import { actionCreators as tutorActions } from '../redux/modules/tutor';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+
+// 모듈
+import { actionCreators as tutorActions } from '../redux/modules/tutor';
+
+// 컴포넌트
+import TutorCard from '../components/TutorCard';
+
+// 엘리먼트
+import DivBanner from '../elements/DivBanner';
+
+// 아이콘
+import { BiSearchAlt2 } from 'react-icons/bi';
 
 const Search = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const urlCheck = props.location.pathname;
-  const tag = useParams();
   const formRef = React.createRef();
   const inputRef = React.createRef();
   const tutorList = useSelector((state) => state.tutor.list);
@@ -26,10 +32,8 @@ const Search = (props) => {
     axios({
       method: 'get',
       url: `https://hjg521.link/getTag`,
-      // url: `http://13.124.206.190/getTag`, // 태그 불러오는 url
     })
       .then((doc) => {
-        // console.log(doc.data);
         setTagList(doc.data);
       })
       .catch((err) => {
@@ -37,6 +41,7 @@ const Search = (props) => {
       });
   }, []);
 
+  // 검색 Submit 부분
   const onSubmit = (e) => {
     e.preventDefault();
     const keyWord = inputRef.current.value;
@@ -106,8 +111,6 @@ const Wrap = styled.div`
   width: 100%;
   min-height: 905px;
 
-  /* background: #aaa; */
-
   .bannerWrap {
     padding-top: 50px;
   }
@@ -121,8 +124,6 @@ const Wrap = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    /* background: #aaa; */
 
     .searchWrap {
       max-width: 858px;
@@ -160,14 +161,11 @@ const Wrap = styled.div`
     .keyWordWrap {
       width: 100%;
       height: 140px;
-      /* background-color: gray; */
 
       .keyWord {
         display: inline-block;
         background-color: #fff;
-        /* padding: 12px 18px; */
         padding: 10px 14px;
-        /* margin: 0 16px 18px 0; */
         margin: 0 10px 14px 0;
         border: 2px solid #959595;
         border-radius: 40px;
@@ -190,7 +188,6 @@ const InnerWrap = styled.div`
   margin: 120px auto 180px;
 
   ul {
-    /* width: 100%; */
     width: 95%;
     margin: auto;
     display: grid;

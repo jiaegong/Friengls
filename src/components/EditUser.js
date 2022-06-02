@@ -1,16 +1,20 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { actionCreators as userActions } from '../redux/modules/user';
-import SelectLanguage from '../components/SelectLanguage';
-import { Profile, CloseIcon } from '../image';
-import { Buttons, NewInputLabel, NewInput } from '../elements/index';
-import { pwdForm, inputLength } from '../utils/validation';
-import InfoInput from './InfoInput';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import imageCompression from 'browser-image-compression';
-
 import Swal from 'sweetalert2';
+
+// 컴포넌트
+import SelectLanguage from '../components/SelectLanguage';
+
+//모듈
+import { actionCreators as userActions } from '../redux/modules/user';
+
+//아이콘
+import { Profile, CloseIcon } from '../asset/image/index';
+import { Button, InputLabel, Input, InfoInput } from '../elements/index';
+import { pwdForm, inputLength } from '../utils/validation';
 
 const EditUser = (props) => {
   const { t } = useTranslation();
@@ -487,7 +491,7 @@ const EditUser = (props) => {
               alignItems: 'flex-start',
             }}
           >
-            <NewInputLabel>{t('tag')}</NewInputLabel>
+            <InputLabel>{t('tag')}</InputLabel>
             {/* 태그입력 */}
             <TagInput
               disabled={tagLimit}
@@ -539,8 +543,8 @@ const EditUser = (props) => {
                 color: '#999',
               }}
             >
-              <NewInputLabel>{t('in friengls i want to')}</NewInputLabel>
-              <NewInput
+              <InputLabel>{t('in friengls i want to')}</InputLabel>
+              <Input
                 type="radio"
                 name="isTutor"
                 value="0"
@@ -552,7 +556,7 @@ const EditUser = (props) => {
                   cursor: 'default',
                 }}
               />
-              <NewInputLabel
+              <InputLabel
                 htmlFor="isTutor0"
                 styles={{
                   padding: '0 10px 0 10px',
@@ -560,9 +564,9 @@ const EditUser = (props) => {
                 }}
               >
                 {t('learn!')}
-              </NewInputLabel>
+              </InputLabel>
               /
-              <NewInput
+              <Input
                 type="radio"
                 name="isTutor"
                 value="1"
@@ -575,14 +579,14 @@ const EditUser = (props) => {
                   cursor: 'default',
                 }}
               />
-              <NewInputLabel
+              <InputLabel
                 styles={{
                   padding: '0 0 0 10px',
                   alignItems: 'center',
                 }}
               >
                 {t('teach!')}
-              </NewInputLabel>
+              </InputLabel>
             </InfoInput>
             {/* 선생님인 경우 수업시간 선택 */}
             {userInfo.isTutor === 1 ? (
@@ -666,14 +670,13 @@ const EditUser = (props) => {
           </TimeBox>
         </GroupBox>
         <GroupBox>
-          <Buttons
+          <Button
             type="button"
             _onClick={editUser}
             styles={{ width: '380px', height: '60px' }}
           >
             {t('save modifications')}
-          </Buttons>
-          {/* 회원탈퇴버튼 */}
+          </Button>
         </GroupBox>
       </Content>
     </ContentWrap>

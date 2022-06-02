@@ -1,12 +1,10 @@
 //소셜로그인 리다이렉트 화면
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
 import Signup from './Signup';
 import { setCookie } from '../shared/Cookie';
 
 const SocialLogin = (props) => {
-  const dispatch = useDispatch();
   //서버로부터 받은 소셜로그인 관련 유저정보를 파라미터값에서 추출
   const userEmail = new URL(window.location.href).searchParams.get('userEmail');
   const userName = new URL(window.location.href).searchParams.get('userName');

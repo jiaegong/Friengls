@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import Portal from '../shared/Portal';
 import EditUser from './EditUser';
-import { Profile, CloseIcon } from '../image/index';
-import { Buttons } from '../elements/index';
-import { getCookie } from '../shared/Cookie';
-import InfoInput from './InfoInput';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
+
+// 컴포넌트
+import Portal from '../shared/Portal';
+import { getCookie } from '../shared/Cookie';
+
+// 아이콘
+import { Profile, CloseIcon } from '../asset/image/index';
+import { Button, InfoInput } from '../elements/index';
 
 const MyPageModal = (props) => {
   const { t } = useTranslation();
@@ -116,13 +119,13 @@ const MyPageModal = (props) => {
                   />
                 </Grid>
                 <Grid>
-                  <Buttons
+                  <Button
                     type="button"
                     _onClick={handleEditUser}
                     styles={{ height: '54px' }}
                   >
                     {t('edit profile')}
-                  </Buttons>
+                  </Button>
                 </Grid>
               </form>
             </Content>

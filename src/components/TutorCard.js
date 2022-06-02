@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
-import { CgProfile } from 'react-icons/cg';
+
+// 컴포넌트
 import Portal from '../shared/Portal';
 import TutorModal from './TutorModal';
-import modalBtnImg from '../image/modalBtn.png';
-import { Profile } from '../image/index';
+
+// 아이콘
+import { Profile, ModalBtnImg } from '../asset/image/index';
 
 const TutorCard = ({ tutor, urlCheck }) => {
   const [modal, setModal] = useState(false);
@@ -130,7 +131,7 @@ const ModalBtn = styled.div`
     height: 32px;
     font-size: 30px;
     cursor: pointer;
-    background: url('${modalBtnImg}');
+    background: url('${ModalBtnImg}');
     background-size: cover;
     background-position: center;
 

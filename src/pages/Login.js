@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { useDispatch } from 'react-redux';
-import { actionCreators as userActions } from '../redux/modules/user';
-import { emailForm, pwdForm } from '../utils/validation';
-import { Logo } from '../image/';
-import { Buttons } from '../elements';
-import InfoInput from '../components/InfoInput';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
+// 모듈
+import { actionCreators as userActions } from '../redux/modules/user';
+import { emailForm, pwdForm } from '../utils/validation';
+
+// 엘리먼트
+import { Button, InfoInput } from '../elements';
+
+//아이콘
+import { Logo } from '../asset/image/';
 
 const Login = (props) => {
   const { t } = useTranslation();
@@ -26,7 +30,6 @@ const Login = (props) => {
 
   //입력된 값을 data로 보내기 위한 함수
   const login = () => {
-    // e.preventDefault();
     //유효성검사
     if (!emailForm(userEmail)) {
       new Swal(t('email: abc@abc.com'));
@@ -87,7 +90,7 @@ const Login = (props) => {
           _onKeyUp={returnLogin}
         />
         {/* 로그인 버튼 */}
-        <Buttons
+        <Button
           type="button"
           styles={{
             margin: '50px auto 60px',
@@ -95,17 +98,17 @@ const Login = (props) => {
           _onClick={login}
         >
           {t('login')}
-        </Buttons>
+        </Button>
       </form>
       {/* 소셜로그인 버튼*/}
-      <Buttons
+      <Button
         type="button"
         _onClick={kakaoLogin}
         styles={{ background: '#ffe900', color: '#3c1e1e' }}
       >
         {t('login with kakao')}
-      </Buttons>
-      <Buttons
+      </Button>
+      <Button
         type="button"
         _onClick={googleLogin}
         styles={{
@@ -115,10 +118,10 @@ const Login = (props) => {
         }}
       >
         {t('login with google')}
-      </Buttons>
+      </Button>
       {/* 회원가입 버튼 */}
       <LoginText>{t('do not have an account yet?')}</LoginText>
-      <Buttons
+      <Button
         _onClick={() => history.push('/signup')}
         styles={{
           background: '#fff',
@@ -127,7 +130,7 @@ const Login = (props) => {
         }}
       >
         {t('signup')}
-      </Buttons>
+      </Button>
     </Container>
   );
 };

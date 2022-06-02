@@ -2,6 +2,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import Peer from 'peerjs';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
+import { history } from '../redux/configureStore';
+import { useLocation } from 'react-router';
+import { useTranslation } from 'react-i18next';
+
+// 컴포넌트
+import Translator from '../components/Translator';
+import ReviewModal from '../components/ReviewModal';
+import Portal from '../shared/Portal';
+
+// 아이콘
 import {
   BsMicFill,
   BsFillCameraVideoFill,
@@ -12,15 +24,6 @@ import {
 import { GoPlus, GoX } from 'react-icons/go';
 import { MdOutlineRateReview } from 'react-icons/md';
 import { CgScreen } from 'react-icons/cg';
-import { useSelector } from 'react-redux';
-import Translator from '../components/Translator';
-import Chat from '../components/Chat';
-import Portal from '../shared/Portal';
-import ReviewModal from '../components/ReviewModal';
-import { history } from '../redux/configureStore';
-import { useLocation } from 'react-router';
-import Swal from 'sweetalert2';
-import { useTranslation } from 'react-i18next';
 
 const VideoChat = (props) => {
   const { t } = useTranslation();
@@ -53,7 +56,6 @@ const VideoChat = (props) => {
 
   useEffect(() => {
     const peer = new Peer();
-    // const socket = io('https://hjg521.link', { transports: ['websocket'] });
     if (navigator.mediaDevices) {
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: true }) // 배포 전 true로
@@ -65,22 +67,16 @@ const VideoChat = (props) => {
           if (peer?.id == null) {
             peer.on('open', (id) => {
               socket.emit('join-room', roomId, id);
-              console.log(1);
             });
           } else {
             socket.emit('join-room', roomId, peer.id);
-            console.log(2);
           }
 
           // 새로 들어 온 유저에게 call 요청
           socket.on('user-connected', (userId) => {
-            console.log(3);
             const call = peer.call(userId, stream); // call 요청
             if (call.peerConnection) {
               call.on('stream', (userVideoStream) => {
-                console.log(4);
-                console.log(userVideo.current.srcObject);
-                console.log(userVideoStream);
                 userVideo.current.srcObject = userVideoStream; // 상대방이 answer로 보낸 stream 받아오기
               });
               call.on('close', () => {
@@ -93,13 +89,9 @@ const VideoChat = (props) => {
 
           // 상대방이 보낸 요청에 응답
           peer.on('call', (call) => {
-            console.log(5);
             if (call) {
               call.answer(userStream.current); // 내 stream 보내주기
               call.on('stream', (userVideoStream) => {
-                console.log(6);
-                console.log(userVideo.current.srcObject);
-                console.log(userVideoStream);
                 userVideo.current.srcObject = userVideoStream; // 상대방 stream 받아오기
               });
             }
@@ -135,11 +127,7 @@ const VideoChat = (props) => {
     myVideo.current.srcObject
       .getAudioTracks()
       .forEach((track) => (track.enabled = !track.enabled));
-    if (audioOn) {
-      setAudioOn(false);
-    } else {
-      setAudioOn(true);
-    }
+    setAudioOn(!audioOn);
   };
 
   // 비디오 온오프
@@ -147,11 +135,7 @@ const VideoChat = (props) => {
     myVideo.current.srcObject
       .getVideoTracks()
       .forEach((track) => (track.enabled = !track.enabled));
-    if (videoOn) {
-      setVideoOn(false);
-    } else {
-      setVideoOn(true);
-    }
+    setVideoOn(!videoOn);
   };
 
   // 화면 공유

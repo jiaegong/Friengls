@@ -36,7 +36,6 @@ const CalendarTemplate = ({
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const saveDataCount = availability.length + 1;
-  // console.log(saveDataCount);
 
   // 스타일 지정 해주는거
   const theme = createTheme({
@@ -384,7 +383,6 @@ const CalendarTemplate = ({
 
   // DB에 있는 값 불러와서 값이 있는지 체크 하는곳.
   const convertAvailabilityFromDatabase = (availability) => {
-    // console.log({ availability });
     const output = {};
     for (let range of availability) {
       let start = moment(range.start);
@@ -424,9 +422,6 @@ const CalendarTemplate = ({
         }
       }
     }
-    // console.log({ output });
-    // console.log(output.length);
-    // console.log({ saveDataCount });
 
     if (saveDataCount < output.length) {
       // alert('선택하실수 있는 갯수를 초과 하셨습니다.');
@@ -446,18 +441,8 @@ const CalendarTemplate = ({
     return output;
   };
 
-  //  여러날에 중복을로 시간 저장 할떄 사용하는 기능중 하나
-  // const combineTimeArrays = (a, b) => {
-  //   for (let i = 0; i < a.length; i++) {
-  //     a[i].available = a[i].available || b[i].available;
-  //   }
-  //   return a;
-  // };
-
   // 저장할 값 지정해주는 곳!!!!
   function addActiveDayToOutput(activeDay, output, month, day, year) {
-    // console.log({ activeDay, output, month, day, year });
-
     let activeRangeStart = null;
     let activeRangeEnd = null;
 
@@ -489,8 +474,6 @@ const CalendarTemplate = ({
         // 버튼이 비활성화 상태이며, 시작 범위가 있을때
 
         activeRangeEnd = time.time;
-        // console.log('시작 범위 : ', { activeRangeStart });
-        // console.log('끝나는 범위  : ', { activeRangeEnd });
 
         output.push({
           start: new Date(`${month} ${day} ${year} ${activeRangeStart}`),
@@ -601,7 +584,6 @@ const CalendarTemplate = ({
       const newTimes = [...times];
       newTimes[i].available = !newTimes[i].available;
       if (activeDay) {
-        // console.log({ activeDay });
         addTimeToDay(newTimes);
       }
       setTimes(newTimes);
@@ -616,7 +598,6 @@ const CalendarTemplate = ({
     const handleSaveAvailability = () => {
       // outPut 값이 return 되어서 data에 반환됨. convertAvailabilityForDatabase === output
       const data = convertAvailabilityForDatabase(availabilityState);
-      // console.log(data);
 
       setSaving(true);
       let onePick1 = [];
@@ -665,9 +646,6 @@ const CalendarTemplate = ({
           });
         }
 
-        // console.log({ onePick1 });
-        // console.log({ onePick2 });
-
         const Astart = [];
         for (let i = 0; i < onePick2.length; i++) {
           Astart.push(onePick2[i].start);
@@ -677,14 +655,7 @@ const CalendarTemplate = ({
           Bstart.push(onePick1[i].start);
         }
 
-        // console.log('현재 저장되어 있는 값 : ', { availability });
-        // console.log('저장 하려고 하는 값 : ', { data });
-
-        // console.log('저장 하려고 비교 data : ', onePick1);
-        // console.log('현재 저장 비교 availability : ', onePick2);
-
         const ABstart = Astart.filter((time, index) => !Bstart.includes(time));
-        // console.log('ABstart : ', { ABstart });
 
         const goDB = onePick2.filter(
           (time, index) => time.start === ABstart[0],
@@ -703,32 +674,6 @@ const CalendarTemplate = ({
       setActiveDay(null);
       setTimes(getDefaultTimes());
     };
-
-    // 호버 액션 관리
-    // const [anchorEl, setAnchorEl] = useState(null);
-    // console.log({ anchorEl });
-    // const [popoverContent, setPopoverContent] = useState(null);
-    // console.log({ popoverContent });
-    // // 호버시 예약 시간 나타 나는 액션
-    // const handleOpenPopover = date => {
-    //   console.log(date);
-    //   return e => {
-    //     console.log({ e });
-    //     if (quickAvailability[date]) {
-    //       setPopoverContent(
-    //         quickAvailability[date].map((time, idx) => (
-    //           <p key={time + idx}>{time}</p>
-    //         ))
-    //       );
-    //       setAnchorEl(e.target);
-    //     }
-    //   };
-    // };
-    // // 마우스 아웃시에 다시 원상태로 돌리는 액션
-    // const handleClosePopover = () => {
-    //   setAnchorEl(null);
-    //   setPopoverContent(null);
-    // };
 
     return (
       <ThemeProvider theme={theme}>
@@ -850,10 +795,7 @@ const CalendarTemplate = ({
                       {/* 왼쪽 부분 */}
                       {times.map(
                         (time, i) =>
-                          // 원본...
                           i < times.length - 7 && (
-                            // // 0:00 ~ 11:00
-                            // i < times.length - 13 && (
                             <TimeButton
                               key={time.time}
                               className={classes.button}
@@ -877,12 +819,8 @@ const CalendarTemplate = ({
                       {/* 오른쪽 부분 */}
                       {times.map(
                         (time, i) =>
-                          // 원본...
                           i < times.length - 1 &&
                           i > 5 && (
-                            // // 12:00 ~ 23:00
-                            // i < times.length - 1 &&
-                            // i > 11 && (
                             <TimeButton
                               key={time.time}
                               className={classes.button}
@@ -932,14 +870,6 @@ const CalendarTemplate = ({
                   >
                     {t('book a lesson')}
                   </Button>
-                  {/* <span
-                    className="resetBtn"
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                  >
-                    ♻️ {t('refresh')}
-                  </span> */}
                 </div>
               </Grid>
             </Grid>

@@ -1,11 +1,14 @@
 import React from 'react';
-import Portal from '../shared/Portal';
 import styled from 'styled-components';
-import { Image, Text } from '../elements/index';
 import { history } from '../redux/configureStore';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+
+// 모듈
 import { actionCreators as tutorActions } from '../redux/modules/tutor';
+
+// 아이콘
+import { Image, Text } from '../elements/index';
 
 const TutorModal = (props) => {
   const { t } = useTranslation();

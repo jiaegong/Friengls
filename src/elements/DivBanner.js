@@ -1,6 +1,6 @@
 import React, { Children } from 'react';
 import styled from 'styled-components';
-import { BannerImg } from '../image/index';
+import { BannerImg } from '../asset/image/index';
 
 const DivBanner = (props) => {
   const { children, className } = props;

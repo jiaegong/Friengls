@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { actionCreators as likeActions } from '../redux/modules/like';
-import MyPageModal from './MyPageModal';
-import { Profile, OpenToggle, CloseToggle } from '../image/index';
-import { Buttons } from '../elements/index';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import Swal from 'sweetalert2';
+
+// 컴포넌트
+import MyPageModal from './MyPageModal';
+
+// 모듈
+import { actionCreators as likeActions } from '../redux/modules/like';
+
+// 아이콘
+import { Button } from '../elements/index';
+import { Profile, OpenToggle, CloseToggle } from '../asset/image/index';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 const DetailUser = (props) => {
   const { t } = useTranslation();
@@ -70,7 +76,7 @@ const DetailUser = (props) => {
           </UserImgWrap>
           {/* 마이페이지일 경우 프로필수정버튼 보이기 */}
           {currentUser.userName === userInfo.userName && (
-            <Buttons
+            <Button
               _onClick={handleModal}
               styles={{
                 // margin: '20px 10px 0',
@@ -81,7 +87,7 @@ const DetailUser = (props) => {
               }}
             >
               {t('edit my profile')}
-            </Buttons>
+            </Button>
           )}
           {/* 수정버튼 누르면 모달 열리기 */}
           {modalOn && <MyPageModal onClose={handleModal} userInfo={userInfo} />}
@@ -254,7 +260,7 @@ const ContentsWrap = styled.div`
 `;
 // 자기소개 토글
 const ContentsButton = styled.button`
-  display: flex;  
+  display: flex;
   position: absolute;
   right: 20px;
   bottom: 30px;
@@ -266,8 +272,8 @@ const ContentsButton = styled.button`
     width: 30px;
   }
   img {
-    width: 100%
-    height: 100%
+    width: 100%;
+    height: 100%;
   }
 `;
 // 유저정보가 없을 때

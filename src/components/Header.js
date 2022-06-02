@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
-// 패키지
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { io } from 'socket.io-client';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
-import { GrLanguage } from 'react-icons/gr';
 
 // 모듈
 import { history } from '../redux/configureStore';
@@ -15,8 +11,11 @@ import { actionCreators as notiActions } from '../redux/modules/booking';
 
 //컴포넌트
 import { getCookie } from '../shared/Cookie';
-import { MainLogo } from '../image/index';
+import { MainLogo } from '../asset/image/index';
 import NotiModal from './NotiModal';
+
+// 아이콘
+import { GrLanguage } from 'react-icons/gr';
 
 const Header = () => {
   const dispatch = useDispatch();
