@@ -160,9 +160,8 @@ const VideoChat = (props) => {
         audio: { echoCancellation: true, noiseSuppression: true },
       })
       .then((stream) => {
-        myVideo.current.srcObject = stream;
+        myVideo.current.srcObject = stream; // 내 비디오 공유 화면으로 변경
         const videoTrack = stream.getVideoTracks()[0];
-        console.log(stream);
         connectionRef.current
           .getSenders()
           .find((sender) => sender.track.kind === videoTrack.kind)
@@ -174,7 +173,7 @@ const VideoChat = (props) => {
             .find((sender) => sender.track.kind === screenTrack.kind)
             .replaceTrack(screenTrack);
           stream.getTracks().forEach((track) => track.stop());
-          myVideo.current.srcObject = userStream.current;
+          myVideo.current.srcObject = userStream.current; // 내 비디오로 변경
         };
       });
   };
