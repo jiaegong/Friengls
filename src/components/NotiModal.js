@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as notiActions } from '../redux/modules/booking';
+import { useSelector } from 'react-redux';
+
+// 컴포넌트
 import NotiItem from '../components/NotiItem';
+import { useTranslation } from 'react-i18next';
 
 const NotiModal = (props) => {
-  const dispactch = useDispatch();
+  const { t } = useTranslation();
   const notiList = useSelector((state) => state.booking.noti);
   const notiCheck = notiList?.length;
   const { ModalAction, userInfo } = props;
@@ -34,34 +36,23 @@ const NotiModal = (props) => {
           <div className="notificationsInnerWrap">
             <ul>
               {notiCheck === 0 && (
-                <div className="notiNot"> 알림이 없습니다.</div>
+                <div className="notiNot">{t('no alarm')}</div>
               )}
 
               {notiList?.map((notiItem, idx) => {
                 const timeId = notiItem.timeId;
-                // const noti = notiItem.noti;
-                // const del = notiItem.del;
 
                 return (
                   <>
                     <NotiItem
                       notiItem={notiItem}
                       userInfo={userInfo}
-                      // key={`noti_${timeId}`}
                       key={`noti_${idx}`}
                     />
                   </>
                 );
               })}
             </ul>
-            {/* <button
-              className="notificationBtn"
-              onClick={() => {
-                dispactch(notiActions.delAllNotiDB());
-              }}
-            >
-              지우기
-            </button> */}
           </div>
         </div>
       </Background>
@@ -82,7 +73,6 @@ const Background = styled.div`
 
   /* 알림창 */
   .notifications {
-    /* display: none; */
     position: absolute;
     max-width: 600px;
     min-width: 420px;

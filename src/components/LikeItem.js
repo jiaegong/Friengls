@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
-import { Profile } from '../asset/image/index';
+import { Profile } from '../asset/image';
+import { useTranslation } from 'react-i18next';
 
 const LikeItem = (props) => {
+  const { t } = useTranslation();
   const isTutor = props.userInfo.isTutor;
   if (isTutor === 0) {
     return (
@@ -20,7 +22,7 @@ const LikeItem = (props) => {
           style={{ cursor: 'pointer' }}
           onClick={() => history.push(`/detail/${props.userName}/1`)}
         >
-          프로필 보러가기
+          {t('see the profile')}
         </div>
       </Wrap>
     );
@@ -36,7 +38,7 @@ const LikeItem = (props) => {
         <div>{props.userName}</div>
       </UserWrap>
       <ProfileWrap onClick={() => history.push(`/detail/${props.userName}/0`)}>
-        프로필 보러가기
+        {t('see the profile')}
       </ProfileWrap>
     </Wrap>
   );
@@ -52,7 +54,6 @@ const Wrap = styled.div`
   border-radius: 20px;
   box-shadow: 0px 2px 8px 0px #00000030;
   margin: 0 auto 20px;
-  width: 80%;
   width: 100%;
   height: 100px;
   position: relative;

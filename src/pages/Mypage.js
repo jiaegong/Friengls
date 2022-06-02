@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
+// 모듈
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as bookingAction } from '../redux/modules/booking';
 import { actionCreators as likeActions } from '../redux/modules/like';
+
+// 컴포넌트
 import DetailUser from '../components/DetailUser';
 import BookingItem from '../components/BookingItem';
 import LikeItem from '../components/LikeItem';
-import { useTranslation } from 'react-i18next';
 
 const Mypage = (props) => {
   const { t } = useTranslation();
@@ -46,7 +50,7 @@ const Mypage = (props) => {
           </p>
           <ul className="bookingList">
             {bookingList.length === 0 && (
-              <li className="noBookingText"> 예약이 없습니다. </li>
+              <li className="noBookingText">{t('no reservation')}</li>
             )}
             {bookingList?.map((item, idx) => {
               return (
@@ -60,7 +64,7 @@ const Mypage = (props) => {
           </ul>
         </div>
         <LikeWrap>
-          <p className="like-title">좋아요 리스트</p>
+          <p className="like-title">{t('like list')}</p>
           {likeList.map((l, idx) => {
             return <LikeItem key={idx} {...l} userInfo={userInfo} />;
           })}
@@ -91,9 +95,6 @@ const Wrap = styled.div`
       padding: 10px;
       border-top: 1px solid #c4c4c4;
 
-      /* 
-
-
       /* 예약 리스트 타이틀 */
       .bookingTitle {
         font-size: 38px;
@@ -108,7 +109,6 @@ const Wrap = styled.div`
       }
 
       /* 예약 리스트 */
-
       .bookingList {
         width: 100%;
         margin: auto;
@@ -117,29 +117,26 @@ const Wrap = styled.div`
         border: 2px solid #c7c7c7;
         border: 1px solid #c7c7c7;
         border-radius: 4px;
-        /* padding: 40px 60px 40px 40px; */
-        /* padding: 40px 30px 40px 40px; */
         padding: 20px 10px 20px 20px;
         box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.15);
         overflow-y: scroll;
 
-        /* background: red; */
-
         /* 스크롤 버튼 조절 */
         ::-webkit-scrollbar {
-          width: 20px; /*스크롤바의 너비*/
+          /*스크롤바의 너비*/
+          width: 20px;
         }
         ::-webkit-scrollbar-thumb {
+          /*스크롤바의 색상*/
           height: 20%;
-          background-color: #e4e4e4; /*스크롤바의 색상*/
+          background-color: #e4e4e4;
           border-radius: 15px;
-          /* display: none; */
         }
         ::-webkit-scrollbar-track {
+          /*스크롤바 트랙 색상 */
           background-color: #d7d7d7;
           border-radius: 15px;
           display: none;
-          /*스크롤바 트랙 색상 */
         }
         .noBookingText {
           text-align: center;
@@ -167,10 +164,7 @@ const Wrap = styled.div`
             height: 50px;
             padding: 10px;
             display: flex;
-            /* justify-content: space-between; */
-            /* justify-content: space-around; */
             text-align: center;
-            /* border: 2px solid #c7c7c7; */
             border: 1px solid #c7c7c7;
             border-radius: 4px;
             margin-right: 20px;
@@ -187,8 +181,6 @@ const Wrap = styled.div`
               margin-left: 10px;
               margin-right: 30px;
               padding-left: 10px;
-
-              /* background-color: #aaaaaa; */
             }
 
             .userBookingWrap {
@@ -205,17 +197,11 @@ const Wrap = styled.div`
 
               .dayInfo {
                 min-width: 200px;
-                /* background-color: yellow; */
               }
 
               .timeInfo {
-                /* background-color: blue; */
               }
-
-              /* background-color: #aaaaaa; */
             }
-
-            /* background: #eee; */
           }
 
           .videoBtn {
@@ -224,15 +210,12 @@ const Wrap = styled.div`
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
-            /* padding: 10px 5px 5px; */
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;
             color: #fff;
             cursor: pointer;
-
             background-color: #153587;
-            /* background-color: #c1c1c1; */
           }
 
           .delBtn {
@@ -241,7 +224,6 @@ const Wrap = styled.div`
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
-            /* padding: 10px 5px 5px; */
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;
@@ -258,7 +240,6 @@ const Wrap = styled.div`
             height: 50px;
             border: none;
             padding: 10px 8px 9px;
-            /* padding: 10px 5px 5px; */
             border-radius: 5px;
             font-size: 16px;
             font-weight: bolder;

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Text, Input } from '../elements/index';
-import { Profile } from '../asset/image/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as reviewActions } from '../redux/modules/review';
 import styled from 'styled-components';
-import { AiFillStar } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
+
+// 모듈
+import { actionCreators as reviewActions } from '../redux/modules/review';
+
+// 아이콘
+import { Profile } from '../asset/image/index';
+import { AiFillStar } from 'react-icons/ai';
+import { Text, Input } from '../elements/index';
 
 const Review = (props) => {
   const { t } = useTranslation();

@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import { useDispatch } from 'react-redux';
-import { actionCreators as userActions } from '../redux/modules/user';
-import { emailForm, pwdForm } from '../utils/validation';
-import { Logo } from '../asset/image/';
-import { Button, InfoInput } from '../elements';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
+// 모듈
+import { actionCreators as userActions } from '../redux/modules/user';
+import { emailForm, pwdForm } from '../utils/validation';
+
+// 엘리먼트
+import { Button, InfoInput } from '../elements';
+
+//아이콘
+import { Logo } from '../asset/image/';
 
 const Login = (props) => {
   const { t } = useTranslation();
@@ -25,14 +30,17 @@ const Login = (props) => {
 
   //입력된 값을 data로 보내기 위한 함수
   const login = () => {
-    // e.preventDefault();
     //유효성검사
     if (!emailForm(userEmail)) {
-      new Swal('이메일: abc@abc.abc형식의 이메일');
+      new Swal(t('email: abc@abc.com'));
       return;
     }
     if (!pwdForm(pwd)) {
-      new Swal('비밀번호: 8-20자 사이의 영어대소문자, 숫자, 특수문자');
+      new Swal(
+        t(
+          'password: english upper case, number, special character between 8 and 20 characters',
+        ),
+      );
       return;
     }
     const loginForm = { userEmail: userEmail, pwd: pwd };

@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
+// 모듈
 import { actionCreators as notiActions } from '../redux/modules/booking';
+import { useTranslation } from 'react-i18next';
 
 const NotiItem = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { userInfo, notiItem } = props;
 
-  // console.log({ notiItem });
-
   //  조건에 필요한 정보
   const timeId = notiItem.timeId;
-  // console.log({ timeId });
 
   const TutorNoti = notiItem.TutorNoti;
   const TuteeNoti = notiItem.TuteeNoti;
@@ -22,15 +23,9 @@ const NotiItem = (props) => {
   const tutorName = notiItem.Tutor_userName;
   const tuteeName = notiItem.Tutee_userName;
   let startTime = notiItem.start;
-  let endTime = notiItem.end;
 
-  // console.log({ tutorName, tuteeName });
-
-  // if (!notiItem) return; // 이 부분 불확실...
   let [week, month, day, year, sTime] = startTime.split(' ');
   let start = sTime.substr(0, 5);
-  let end = endTime.substr(-17, 5);
-  // console.log({ start, end });
 
   let Month = (month) => {
     console.log(month);
@@ -61,7 +56,8 @@ const NotiItem = (props) => {
                 dispatch(notiActions.clearNotiDB(timeId));
               }}
             >
-              {tutorName}튜터님이 예약을 취소하셨습니다.
+              {tutorName}
+              {t('canceled booking.')}
             </li>
           ) : TuteeDel === 0 ? (
             <li
@@ -70,7 +66,10 @@ const NotiItem = (props) => {
                 dispatch(notiActions.clearNotiDB(timeId));
               }}
             >
-              {Month(month)}월 {day}일 {start}시에 강의를 예약하셨습니다.
+              {Month(month)}
+              {t('month')} {day}
+              {t('day')} {start}
+              {t('booked tutoring.')}
             </li>
           ) : null}
         </>
@@ -88,7 +87,8 @@ const NotiItem = (props) => {
                 dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
-              {tutorName}튜터님이 예약을 취소하셨습니다.
+              {tutorName}
+              {t('canceled booking.')}
             </li>
           )}
         </>
@@ -111,7 +111,8 @@ const NotiItem = (props) => {
                 dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
-              {tuteeName}튜티님이 예약을 취소했습니다.
+              {tuteeName}
+              {t('canceled booking.')}
             </div>
           ) : TutorDel === 0 ? (
             <div
@@ -120,8 +121,10 @@ const NotiItem = (props) => {
                 dispatch(notiActions.clearNotiDB(timeId));
               }}
             >
-              {tuteeName}튜티님이 {Month(month)}월 {day}일 {start}시에
-              예약있습니다.
+              {tuteeName} {Month(month)}
+              {t('month')} {day}
+              {t('day')} {start}
+              {t('booked tutoring.')}
             </div>
           ) : null}
         </>
@@ -139,7 +142,8 @@ const NotiItem = (props) => {
                 dispatch(notiActions.delCheckNotiDB(timeId));
               }}
             >
-              {tuteeName}튜티님이 예약을 취소했습니다.
+              {tuteeName}
+              {t('canceled booking.')}
             </li>
           )}
         </>

@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
-import axios from 'axios';
 import { getCookie } from '../../shared/Cookie';
 
 const SET_LIKE = 'SET_LIKE';
@@ -64,7 +64,6 @@ const isLikeDB = (tutorName) => {
     })
       .then((res) => {
         dispatch(isLike(res.data.isLike));
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);

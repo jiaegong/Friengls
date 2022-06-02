@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
 import './App.css';
-
-// 패키지
 import { Route } from 'react-router-dom';
 import { history } from '../redux/configureStore';
 import { ConnectedRouter } from 'connected-react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
-import { BsPatchPlus } from 'react-icons/bs';
-import styled from 'styled-components';
 
 //  컴포넌트
 import Main from '../pages/Main';
@@ -25,7 +21,6 @@ import Footer from '../components/Footer';
 import { getCookie } from '../shared/Cookie';
 import FeedBackModal from '../components/FeedBackModal';
 import Tutorial from '../pages/Tutorial';
-import Swal from 'sweetalert2';
 
 function App() {
   const dispatch = useDispatch();

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
+// 아이콘
 import { FeedBackIcon } from '../asset/image/index';
 
 const FeedBack = (props) => {
@@ -18,9 +20,14 @@ const FeedBack = (props) => {
         onMouseOver={handleFeedbackOn}
         onMouseOut={handleFeedbackOff}
       >
-        <a href="https://forms.gle/Q2cRMo4xN4ZvUgpu9" target="_blank">
-          <img src={FeedBackIcon} />
-        </a>
+        <div
+          target="_blank"
+          onClick={() => {
+            window.open('https://forms.gle/Q2cRMo4xN4ZvUgpu9');
+          }}
+        >
+          <img src={FeedBackIcon} alt="피드백 아이콘" />
+        </div>
       </FeedBackBox>
       {feedback && <Div>소중한 의견을 남겨주세요!</Div>}
     </React.Fragment>

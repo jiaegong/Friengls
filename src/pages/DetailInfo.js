@@ -3,20 +3,19 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { history } from '../redux/configureStore';
-import { actionCreators as userActions } from '../redux/modules/user';
 import { Logo, Profile } from '../asset/image/index';
 import SelectLanguage from '../components/SelectLanguage';
-import { Button, InputLabel, InfoInput } from '../elements';
 import { useTranslation } from 'react-i18next';
 import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
+
+// 모듈
+import { actionCreators as userActions } from '../redux/modules/user';
 import { inputLength } from '../utils/validation';
 
-// to do: 자기소개, 한 줄 소개, 태그 글자수제한
-//to do: 태그 영어 대소문자 중복 거르기
-// to do: 글자수 제한 조건에 따라 색 변경
-//to do: 로그인상태에서 로그인 회원가입 페이지는 들어가져야 할까?
-//to do: 안내 사항 호버 시 나오도록
+// 엘리먼트
+import { Button, InputLabel, InfoInput } from '../elements';
+
 const DetailInfo = (props) => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -80,7 +79,7 @@ const DetailInfo = (props) => {
       setContents(e.target.value);
       setContentsLength(inputLength(e.target.value));
     } else {
-      new Swal(t('자기 소개는 400자까지 작성할 수 있습니다.'));
+      new Swal(t('self-introduction can be up to 400 characters.'));
     }
   };
 
@@ -92,7 +91,7 @@ const DetailInfo = (props) => {
       setComment(e.target.value);
       setCommentLength(inputLength(e.target.value));
     } else {
-      new Swal(t('한 줄 소개는 70자까지 작성할 수 있습니다.'));
+      new Swal(t('comment can be up to 70 characters.'));
     }
   };
 
@@ -134,7 +133,7 @@ const DetailInfo = (props) => {
         setTagInput('');
         return;
       } else {
-        new Swal(t('8글자 이하로 작성해 주세요.'));
+        new Swal(t('please write in 8 characters or less.'));
         return;
       }
     }
@@ -221,7 +220,6 @@ const DetailInfo = (props) => {
       </LogoBox>
       <LogoText>{t('signup')}</LogoText>
       {/* 프로필등록 */}
-      {/* <form> */}
       <label htmlFor="file">
         <ImageBox>
           <Image
@@ -306,9 +304,7 @@ const DetailInfo = (props) => {
             tagList.map((tag, index) => (
               <div key={tag + index}>
                 <p>{tag}</p>
-                <button id={index} onClick={deleteTag}>
-                  {/* <img /> */}X
-                </button>
+                <button id={index} onClick={deleteTag}></button>
               </div>
             ))
           ) : (
@@ -340,7 +336,6 @@ const DetailInfo = (props) => {
           {t('signup')}
         </Button>
       </ButtonBox>
-      {/* </form> */}
     </Container>
   );
 };

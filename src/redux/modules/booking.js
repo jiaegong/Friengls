@@ -5,55 +5,17 @@ import axios from 'axios';
 import { getCookie } from '../../shared/Cookie';
 import Swal from 'sweetalert2';
 
-const SET_BOOKING = 'SET_BOOKING';
 const GET_BOOKING = 'GET_BOOKING';
 const GET_NOTI = 'GET_NOTI';
-const CLEAR_NOTI = 'CLEAR_NOTI';
-const DEL_NOTI = 'DEL_NOTI';
-const DEL_CHECK_NOTI = 'DEL_CHECK_NOTI';
-const DEL_ALL_NOTI = 'DEL_ALL_NOTI';
 
-const setBooking = createAction(SET_BOOKING, (data) => ({ data }));
 const getBooking = createAction(GET_BOOKING, (data) => ({ data }));
 const getNoti = createAction(GET_NOTI, (data) => ({ data }));
-const clearNoti = createAction(CLEAR_NOTI, (data) => ({ data }));
-const delNoti = createAction(DEL_NOTI, (data) => ({ data }));
-const delCheckNoti = createAction(DEL_CHECK_NOTI, (data) => ({ data }));
-const delAllNoti = createAction(DEL_ALL_NOTI, (data) => ({ data }));
 
 // moment의 서포터 경고를 멈춰주는 코드
 moment.suppressDeprecationWarnings = true;
 
 const initialState = {
-  list: [
-    // {
-    //   Tutee_userName: 'test0022',
-    //   Tutor_userName: 'yoonha3331',
-    //   end: 'Thu May 26 2022 20:00:00 GMT+0900',
-    //   start: 'Thu May 26 2022 19:00:00 GMT+0900',
-    //   timeId: 27,
-    // },
-    // {
-    //   Tutee_userName: 'test0022',
-    //   Tutor_userName: 'yoonha3331',
-    //   end: 'Thu May 23 2022 13:00:00 GMT+0900',
-    //   start: 'Thu May 23 2022 12:00:00 GMT+0900',
-    //   timeId: 28,
-    // },
-    // {
-    //   start: 'Wed May 18 2022 10:00:00 GMT+0900',
-    //   end: 'Wed May 18 2022 11:00:00 GMT+0900',
-    //   userName: 'dingo',
-    //   start: moment(
-    //     'Wed May 18 2022 10:00:00 GMT+0900',
-    //     'ddd, DD MMM YYYY HH:mm:ss ZZ',
-    //   ),
-    //   end: moment(
-    //     'Wed May 18 2022 11:00:00 GMT+0900',
-    //     'ddd, DD MMM YYYY HH:mm:ss ZZ',
-    //   ),
-    // },
-  ],
+  list: [],
   noti: [],
 };
 
@@ -67,19 +29,23 @@ const setBookingDB = (data, tutorName) => {
     console.log(userName);
 
     if (!userName) {
-      alert('로그인후 예약해주세요~!');
+      Swal.fire({
+        icon: 'error',
+        text: `로그인후 예약해주세요~!`,
+        showConfirmButton: true,
+        confirmButtonColor: '#3085d6',
+        timer: 2000,
+      });
       return;
     }
 
     if (isTutor === 1) {
-      // alert("선생님은.. 예약 할수 없어요... ㅠㅠ")
       Swal.fire({
-        // position: 'center',
         icon: 'error',
         text: `선생님은.. 예약 할수 없어요... ㅠㅠ`,
         showConfirmButton: true,
         confirmButtonColor: '#3085d6',
-        // timer: 2000,
+        timer: 2000,
       });
       return;
     }
@@ -92,7 +58,6 @@ const setBookingDB = (data, tutorName) => {
         confirmButtonText: '확인',
       }).then((result) => {
         if (result.isConfirmed) {
-          // history.push('/login');
           window.location.reload();
         }
       });
@@ -102,10 +67,7 @@ const setBookingDB = (data, tutorName) => {
 
     axios({
       method: 'post',
-      // url: `https://hjg521.link/addBooking/jungi521`,
-      // url: `https://13.124.206.190/addBooking/yoonha3331`, // 학생 또는 선생님
       url: `https://hjg521.link/addBooking/${tutorName}`,
-      // url: `http://13.124.206.190/addBooking/${tutorName}`,
       data: {
         start: data[0]?.start,
         end: data[0]?.end,
@@ -113,21 +75,12 @@ const setBookingDB = (data, tutorName) => {
       },
     })
       .then((doc) => {
-        console.log('--------------');
-        console.log('booking post check!!!!');
-        console.log({ data });
-
         const startTime = data[0].start;
         const endTime = data[0].end;
-
-        console.log({ startTime, endTime });
 
         let [week, month, day, year, sTime] = startTime.toString().split(' ');
         let start = sTime.substr(0, 5);
         let end = endTime.toString().substr(-17, 5);
-
-        console.log({ week, month, day, year });
-        console.log({ start, end });
 
         let Month = (month) => {
           console.log(month);
@@ -146,14 +99,12 @@ const setBookingDB = (data, tutorName) => {
         };
 
         Swal.fire({
-          // position: 'top-end',
           icon: 'success',
           text: `${Month(
             month,
           )}월  ${day}일   ${start} - ${end} 예약 되었습니다!!`,
           showConfirmButton: true,
           confirmButtonColor: '#3085d6',
-          // timer: 2000,
         });
       })
       .catch((err) => {
@@ -167,13 +118,9 @@ const getBookingDB = ({ userName, isTutor }) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'get',
-      // url: `https://hjg521.link/getBooking/?userName=jungi521&isTutor=1`, // 학생 또는 선생님
-      // url: `https://hjg521.link/getBooking/?userName=yoonha3331&isTutor=1`, // 학생 또는 선생님
       url: `https://hjg521.link/getBooking/?userName=${userName}&isTutor=${isTutor}`, // 학생 또는 선생님
     })
       .then((doc) => {
-        console.log(doc.data);
-
         dispatch(getBooking(doc.data));
       })
       .catch((err) => {
@@ -202,15 +149,12 @@ const getBookingNotiDB = () => {
 // 알림 확인 ( 한개씩 )
 const clearNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
-    console.log({ timeId });
     axios({
       method: 'patch',
       url: `https://hjg521.link/delNoti/?timeId=${timeId}`,
       headers: { token: `${getCookie('token')}` },
     })
-      .then((doc) => {
-        console.log(doc);
-      })
+      .then((doc) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -221,8 +165,6 @@ const clearNotiDB = (timeId) => {
 const delBookingNotiDB = (timeId) => {
   return function (dispatch, getState, { history }) {
     dispatch(clearNotiDB(timeId));
-
-    console.log(timeId);
     axios({
       method: 'patch',
       url: `https://hjg521.link/delBooking/?timeId=${timeId}`,
@@ -256,7 +198,6 @@ const delCheckNotiDB = (timeId) => {
       headers: { token: `${getCookie('token')}` },
     })
       .then((doc) => {
-        console.log(doc);
         window.location.reload();
       })
       .catch((err) => {
@@ -274,9 +215,7 @@ const delAllNotiDB = () => {
       url: `https://hjg521.link/delAllNoti`,
       headers: { token: `${getCookie('token')}` },
     })
-      .then((doc) => {
-        console.log(doc);
-      })
+      .then((doc) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -285,11 +224,6 @@ const delAllNotiDB = () => {
 
 export default handleActions(
   {
-    [SET_BOOKING]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action.payload.data);
-        draft.list = action.payload.data;
-      }),
     [GET_BOOKING]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.data.datas1;
@@ -297,26 +231,6 @@ export default handleActions(
     [GET_NOTI]: (state, action) =>
       produce(state, (draft) => {
         draft.noti = action.payload.data;
-      }),
-    [CLEAR_NOTI]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action);
-        // draft.list = action.payload.data;
-      }),
-    [DEL_NOTI]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action);
-        // draft.list = action.payload.data;
-      }),
-    [DEL_CHECK_NOTI]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action);
-        // draft.list = action.payload.data;
-      }),
-    [DEL_ALL_NOTI]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action);
-        // draft.list = action.payload.data;
       }),
   },
   initialState,
