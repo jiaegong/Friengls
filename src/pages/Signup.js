@@ -35,20 +35,20 @@ const Signup = ({ userInfo }) => {
     }
   };
   //인증번호
-  // const localAuthCount = Number(localStorage.getItem('authCount'));
   const [authNumber, setAuthNumber] = useState(0);
+  //새로고침 시 로컬스토리지에 저장한 인증요청횟수 가져오기
   useEffect(() => {
     setAuthCount(Number(localStorage.getItem('authCount')));
   }, []);
-  // 인증요청 누른 후 번호인증버튼 누르기 전 까지 true (버튼 다중클릭 방지)
+  // 인증요청횟수
   const [authCount, setAuthCount] = useState(0);
-  //이름바꾸기 preventAuth
-  const [authLoading, setAuthLoading] = useState(false);
+  //5회 이상 요청 시 버튼 비활성화(5분)
+  const [preventAuth, setPreventAuth] = useState(false);
 
-  if (authLoading) {
+  if (preventAuth) {
     console.log(authCount);
     setTimeout(() => {
-      setAuthLoading(false);
+      setPreventAuth(false);
       window.location.reload();
     }, 300000);
   }
@@ -60,6 +60,7 @@ const Signup = ({ userInfo }) => {
 
   //중복체크 + 인증번호 요청
   const checkDuplicatedEmail = (e) => {
+    //빈칸이나 유효성검사 안됐을 경우 리턴
     if (
       emailCheck === '\u00A0' ||
       emailCheck === t('email format: ex) example@example.com')
@@ -71,9 +72,9 @@ const Signup = ({ userInfo }) => {
     setAuthCount(authCount + 1);
     localStorage.setItem('authCount', authCount + 1);
     if (authCount >= 4) {
-      setAuthLoading(true);
+      setPreventAuth(true);
     }
-
+    //이메일 중복검사
     axios({
       method: 'post',
       url: 'https://hjg521.link/signUp/emailCheck',
@@ -89,7 +90,7 @@ const Signup = ({ userInfo }) => {
           );
           return;
         }
-        //이메일 중복 확인 후 인증번호 보내기 요청
+        //중복 이메일 아닐 경우 인증번호 보내기 요청
         setEmailCheck(
           t('We are sending the authentication number. Please wait a moment'),
         );
@@ -300,9 +301,9 @@ const Signup = ({ userInfo }) => {
               />
               <ConfirmButton
                 type="button"
-                onClick={authLoading ? delayMessage : checkDuplicatedEmail}
+                onClick={preventAuth ? delayMessage : checkDuplicatedEmail}
                 // 한 번 인증번호 보내고 인증버튼 누를 때까지 버튼 비활성화
-                authLoading={authLoading}
+                authLoading={preventAuth}
               >
                 번호요청
               </ConfirmButton>
