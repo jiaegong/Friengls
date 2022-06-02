@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { history } from '../redux/configureStore';
-import { Profile } from '../image/index';
+import { Profile } from '../asset/image';
 import { useTranslation } from 'react-i18next';
 
 const LikeItem = (props) => {
@@ -54,7 +54,6 @@ const Wrap = styled.div`
   border-radius: 20px;
   box-shadow: 0px 2px 8px 0px #00000030;
   margin: 0 auto 20px;
-  width: 80%;
   width: 100%;
   height: 100px;
   position: relative;

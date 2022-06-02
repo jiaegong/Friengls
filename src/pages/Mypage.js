@@ -64,7 +64,7 @@ const Mypage = (props) => {
           </ul>
         </div>
         <LikeWrap>
-          <p className="like-title">{t('like list')}}</p>
+          <p className="like-title">{t('like list')}</p>
           {likeList.map((l, idx) => {
             return <LikeItem key={idx} {...l} userInfo={userInfo} />;
           })}
