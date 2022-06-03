@@ -52,6 +52,7 @@
   "the password does not match": "The password does not match",
   "this email is already subscribed. try another email.": "This email is already subscribed. Try another email.",
   "this email is available.": "This email is available.",
+  "Bypass authentication because an unknown error occurred.": "Bypass authentication because an unknown error occurred.",
   "this nickname is already in use. try another nickname.": "This nickname is already in use. Try another nickname.",
   "this nickname is available.": "This nickname is available.",
   "please fill in an email address.": "Please fill in an email address.",

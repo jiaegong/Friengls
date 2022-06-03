@@ -26,6 +26,7 @@ const InfoInput = (props) => {
     validationLabel,
     onlyBox,
     children,
+    confirmed, // 유효성검사 여부에 따라 테두리 색상 변경
   } = props;
 
   if (onlyBox) {
@@ -35,15 +36,15 @@ const InfoInput = (props) => {
         {...defaultStyles}
         onMouseOver={_onMouseOver}
         onMouseOut={_onMouseOut}
+        confirmed={confirmed}
       >
         {children}
       </InputBox>
     );
   }
-
   return (
     <InputBoxWrap>
-      <InputBox style={{ ...styles }} {...defaultStyles}>
+      <InputBox confirmed={confirmed} style={{ ...styles }} {...defaultStyles}>
         {label && (
           <LabelWrap>
             {label && <InputLabel>{label}</InputLabel>}
@@ -79,6 +80,7 @@ const InfoInput = (props) => {
 };
 
 InfoInput.defaultProps = {
+  confirmed: false,
   defaultStyles: {
     height: '54px',
     flexDirection: 'row',
@@ -93,7 +95,8 @@ const InputBox = styled.div`
   height: ${(props) => props.height};
   padding: 0 10px;
   margin-bottom: 5px;
-  border: 1px solid #8a8a8a;
+  border: 2px solid #8a8a8a;
+  border-color: ${(props) => (props.confirmed ? '#1263CE' : '')};
   border-radius: 8px;
   display: flex;
   flex-direction: ${(props) => props.flexDirection};

@@ -15,10 +15,10 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { Profile, CloseIcon } from '../asset/image/index';
 import { Button, InputLabel, Input, InfoInput } from '../elements/index';
 import { pwdForm, inputLength } from '../utils/validation';
+import SelectIsTutor from './SelectIstutor';
 
-const EditUser = (props) => {
+const EditUser = ({ onClose, userInfo, accessInfo }) => {
   const { t } = useTranslation();
-  const { onClose, userInfo, accessInfo } = props;
   const dispatch = useDispatch();
 
   // 입력받은 img 타켓 설정
@@ -208,29 +208,13 @@ const EditUser = (props) => {
     }
     setTagList(tagList.filter((tag, index) => index !== Number(e.target.id)));
   };
-  //isTutor input값
-  const [isTutor, setIsTutor] = useState('');
-  const handleIstutor = (e) => {
-    setIsTutor(e.target.value);
-  };
 
-  //수업가능시간(시작) option
-  const startTimeArray = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23,
-  ];
   //수업가능시간(시작) input값
   const [startTime, setStartTime] = useState(userInfo.startTime);
   const handleStartTime = (e) => {
     setStartTime(e.target.value);
   };
-  //수업가능시간(종료) option설정
-  const endTimeArray = [];
-  for (let i = 1; i < 7; i++) {
-    Number(startTime) + (2 * i - 1) < 24
-      ? endTimeArray.push(Number(startTime) + (2 * i - 1))
-      : endTimeArray.push(Number(startTime) + (2 * i - 1) - 24);
-  }
+
   //수업가능시간(종료) input값
   const [endTime, setEndTime] = useState(userInfo.endTime);
   const handleEndTime = (e) => {
@@ -270,7 +254,7 @@ const EditUser = (props) => {
       }
     }
 
-    //자기소개, 한 줄 소개 공백으로 채울 경우 리턴
+    //자기소개 공백으로 채울 경우 리턴
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
       if (contents.length > 0) {
         new Swal(t('self-introduction can not be filled with spaces.'));
@@ -278,7 +262,7 @@ const EditUser = (props) => {
         return;
       }
     }
-
+    //한 줄 소개 공백으로 채울 경우 리턴
     if (comment.split('').filter((word) => word !== ' ').length === 0) {
       if (comment.length > 0) {
         new Swal(t('comment can not be filled with spaces.'));
@@ -329,11 +313,10 @@ const EditUser = (props) => {
       contents: contents,
       comment: comment,
       tag: tagList.join(),
-      isTutor: isTutor ? isTutor : userInfo.isTutor.toString(),
+      isTutor: userInfo.isTutor.toString(),
       startTime: startTime,
       endTime: endTime,
     };
-    console.log('전송할 유저정보', userForm);
 
     dispatch(userActions.editUserDB(userForm));
   };
@@ -410,6 +393,7 @@ const EditUser = (props) => {
                 type="password"
                 label={t('new password')}
                 placeholder={t('please enter a password to change.')}
+                value={userInfo.pwd}
                 autoComplete="off"
                 validationLabel={pwdCheck}
                 _onChange={handlePwd}
@@ -532,142 +516,18 @@ const EditUser = (props) => {
         </GroupBox>
         {/* 수업시간 변경 */}
         <GroupBox>
-          <TimeBox>
-            <p>{t('change user setting')}</p>
-            <InfoInput
-              onlyBox
-              styles={{
-                justifyContent: 'flex-start',
-                background: 'rgba(0,0,0,0.05)',
-                cursor: 'default',
-                color: '#999',
-              }}
-            >
-              <InputLabel>{t('in friengls i want to')}</InputLabel>
-              <Input
-                type="radio"
-                name="isTutor"
-                value="0"
-                _onChange={handleIstutor}
-                checked={userInfo.isTutor === 0 ? true : false}
-                styles={{
-                  margin: '0 0 0 10px',
-                  width: '15px',
-                  cursor: 'default',
-                }}
-              />
-              <InputLabel
-                htmlFor="isTutor0"
-                styles={{
-                  padding: '0 10px 0 10px',
-                  alignItems: 'center',
-                }}
-              >
-                {t('learn!')}
-              </InputLabel>
-              /
-              <Input
-                type="radio"
-                name="isTutor"
-                value="1"
-                _onChange={handleIstutor}
-                checked={userInfo.isTutor === 1 ? true : false}
-                styles={{
-                  margin: '0 0 0 10px',
-                  width: '15px',
-                  background: '#fff',
-                  cursor: 'default',
-                }}
-              />
-              <InputLabel
-                styles={{
-                  padding: '0 0 0 10px',
-                  alignItems: 'center',
-                }}
-              >
-                {t('teach!')}
-              </InputLabel>
-            </InfoInput>
-            {/* 선생님인 경우 수업시간 선택 */}
-            {userInfo.isTutor === 1 ? (
-              <React.Fragment>
-                <InfoInput
-                  onlyBox
-                  styles={{ justifyContent: 'flex-start', cursor: 'default' }}
-                >
-                  <TimeSelectBox>
-                    {t('available time for tutoring')} :
-                    {/* 시작시간 선택 셀렉트*/}
-                    <Select name="startTime" onChange={handleStartTime}>
-                      <option value="">
-                        {userInfo.startTime
-                          ? startNum +
-                            1 +
-                            t('session') +
-                            ': ' +
-                            startNum +
-                            ':00 - ' +
-                            (startNum + 1) +
-                            ':00'
-                          : `=====${t('first tutoring')}=====`}
-                      </option>
-                      {startTimeArray.map((time, index) => (
-                        <option value={time} key={index + time}>
-                          {time + 1}
-                          {t('session')}: {time}:00 - {time + 1}:00
-                        </option>
-                      ))}
-                    </Select>
-                    {t('from')}
-                    {/* 종료시간 선택 셀렉트 */}
-                    {startTime === '' ? (
-                      <></>
-                    ) : (
-                      <React.Fragment>
-                        <Select name="endTime" onChange={handleEndTime}>
-                          <option value="">
-                            {userInfo.endTime
-                              ? endNum +
-                                1 +
-                                t('session') +
-                                ': ' +
-                                endNum +
-                                ':00 - ' +
-                                (endNum + 1) +
-                                ':00'
-                              : `=====${t('last tutoring')}=====`}
-                          </option>
-                          {endTimeArray.map((time, index) => (
-                            <option value={time} key={startTime + index}>
-                              {time + 1}
-                              {t('session')}: {time}:00 - {time + 1}:00
-                            </option>
-                          ))}
-                        </Select>
-                        {t('to')}
-                      </React.Fragment>
-                    )}
-                  </TimeSelectBox>
-                </InfoInput>
-                <InfoBox>
-                  <span>
-                    ※ {t('the tutoring lesson lasts 30 minutes each time.')}
-                  </span>
-                  <span>
-                    ※ {t('tutoring lessons can be organized in two sessions.')}
-                  </span>
-                  <span>
-                    ※{' '}
-                    {t(
-                      'you can take at least 2 sessions and up to 12 sessions.',
-                    )}
-                  </span>
-                </InfoBox>
-              </React.Fragment>
-            ) : (
-              <InfoInput onlyBox styles={{ border: 'none' }}></InfoInput>
-            )}
-          </TimeBox>
+          <SelectIsTutor
+            startTime={Number(startTime)}
+            endTime={Number(endTime)}
+            startNum={startNum}
+            endNum={endNum}
+            title={t('change user setting')}
+            checked={userInfo.isTutor === 1 ? 'isTutor' : 'isTutee'}
+            _onChange={() => {}}
+            handleStartTime={handleStartTime}
+            handleEndTime={handleEndTime}
+            isTutor={userInfo.isTutor}
+          />
         </GroupBox>
         <GroupBox>
           <Button
@@ -744,6 +604,7 @@ const GroupBox1 = styled.div`
   width: 100%;
   margin: 0 auto 20px;
   display: flex;
+  border-bottom: 1px solid #c4c4c4;
 `;
 // 프로필사진 관련
 const ImageBox = styled.div`
@@ -822,7 +683,6 @@ const GroupBox = styled.div`
   width: 100%;
   // margin: 0 auto;
   padding: 20px 0;
-  border-top: 1px solid #c4c4c4;
 
   p {
     height: 50px;
@@ -889,36 +749,4 @@ const TagBox = styled.div`
     font-size: 14px;
     color: #8a8a8a;
   }
-`;
-
-const TimeBox = styled.div`
-  width: 100%;
-  p {
-    font-size: 20px;
-    font-weight: 700;
-  }
-`;
-
-const TimeSelectBox = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-`;
-
-const Select = styled.select`
-  width: 170px;
-  height: 30px;
-  margin: 0 10px;
-  text-align: center;
-  border: 1px solid #8a8a8a;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 12px;
-`;
-
-const InfoBox = styled.div`
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
 `;

@@ -14,6 +14,7 @@ const Input = (props) => {
     disabled,
     maxLength,
     checked,
+    readOnly,
     autoComplete,
     multiLine,
     styles,
@@ -47,6 +48,7 @@ const Input = (props) => {
       disabled={disabled}
       maxLength={maxLength}
       checked={checked}
+      readOnly={readOnly}
       autoComplete={autoComplete}
       style={{ ...styles }}
       {...defaultStyles}

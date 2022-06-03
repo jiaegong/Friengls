@@ -54,6 +54,7 @@
   "this email is available.": "使用可能なメールです",
   "this nickname is already in use. try another nickname.": "すでに使用中のニックネームです。 他のニックネームを入力してください。",
   "this nickname is available.": "使用可能なニックネームです。",
+  "Bypass authentication because an unknown error occurred.": "不明なエラーが発生したため、認証をバイパスします。",
   "please fill in an email address.": "メールアドレスを入力してください。",
   "please fill in a nickname.": "ニックネームを入力してください。",
   "please fill in a password.": "パスワードを入力してください。。",

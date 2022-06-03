@@ -151,7 +151,6 @@ const DetailInfo = (props) => {
     if (contents.split('').filter((word) => word !== ' ').length === 0) {
       if (contents.length > 0) {
         new Swal(t('self-introduction can not be filled with spaces.'));
-        setContents('');
         return;
       }
     }
@@ -159,7 +158,6 @@ const DetailInfo = (props) => {
     if (comment.split('').filter((word) => word !== ' ').length === 0) {
       if (comment.length > 0) {
         new Swal(t('comment can not be filled with spaces.'));
-        setComment('');
         return;
       }
     }
@@ -204,14 +202,13 @@ const DetailInfo = (props) => {
     //로그인에 필요한 유저정보
     const loginInfo = { userEmail: userInfo.userEmail, pwd: userInfo.pwd };
     dispatch(userActions.signupDB(formData, loginInfo));
-    //저장했던 이메일 인증 요청 버튼 count 데이터 지우기
-    localStorage.removeItem('authCount');
   };
   // 새로고침 시 필수정보가 사라져 다시 작성하도록 유도
   if (!userInfo) {
     new Swal(t('refreshing will return to the first screen.'));
     history.replace('/login');
   }
+  console.log(userInfo);
   return (
     <Container>
       {/* 로고 */}
@@ -244,6 +241,7 @@ const DetailInfo = (props) => {
         handleLanguage1={handleLanguage1}
         handleLanguage2={handleLanguage2}
         handleLanguage3={handleLanguage3}
+        confirmed={language1}
       />
       {/* 자기소개 */}
       <InfoInput
@@ -260,6 +258,10 @@ const DetailInfo = (props) => {
           flexDirection: 'column',
           alignItems: 'flex-start',
         }}
+        confirmed={
+          contents.split('').filter((word) => word !== ' ').length !== 0 &&
+          contentsLength < 401
+        }
       />
       {/* 한 줄 소개 */}
       <InfoInput
@@ -272,6 +274,10 @@ const DetailInfo = (props) => {
           flexDirection: 'column',
           justifyContent: 'flex-start',
         }}
+        confirmed={
+          comment.split('').filter((word) => word !== ' ').length !== 0 &&
+          commentLength < 71
+        }
       />
       {/* 태그 */}
       <InfoInput
@@ -282,6 +288,7 @@ const DetailInfo = (props) => {
           justifyContent: 'flex-start',
           alignItems: 'flex-start',
         }}
+        confirmed={tagList.length !== 0}
       >
         <InputLabel>{t('tag')}</InputLabel>
         {/* 태그입력 */}

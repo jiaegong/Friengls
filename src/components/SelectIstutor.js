@@ -7,10 +7,18 @@ import { InputLabel, Input, InfoInput } from '../elements/index';
 
 const SelectIsTutor = ({
   startTime,
+  endTime,
+  startNum,
+  endNum,
   isTutor,
-  _onClick,
+  _onChange,
   handleStartTime,
   handleEndTime,
+  title,
+  checked,
+  readOnly,
+  confirmed,
+  isSignup,
 }) => {
   const { t } = useTranslation();
   //수업가능시간(시작) option
@@ -25,7 +33,6 @@ const SelectIsTutor = ({
       ? endTimeArray.push(Number(startTime) + (2 * i - 1))
       : endTimeArray.push(Number(startTime) + (2 * i - 1) - 24);
   }
-
   const [notification, setNotification] = useState(false);
   const notificationOn = () => {
     setNotification(true);
@@ -36,23 +43,38 @@ const SelectIsTutor = ({
   };
 
   return (
-    <TimeBox>
-      <p>{t('friengls user setting')}</p>
-      <InputLabel styles={{ padding: '0 0 5px 5px' }}>
-        {t('you can not change it when you select tutor / tutee')}
-      </InputLabel>
-      <InfoInput onlyBox styles={{ justifyContent: 'flex-start' }}>
-        <InputLabel> {t('in friengls i want to')}</InputLabel>
+    <TimeBox isSignup={isSignup}>
+      <p>{title}</p>
+      {isSignup && (
+        <InputLabel styles={{ padding: '20px 0 5px 5px' }}>
+          {t('you can not change it when you select tutor / tutee')}
+        </InputLabel>
+      )}
+      <InfoInput
+        onlyBox
+        styles={
+          isSignup
+            ? { justifyContent: 'flex-start' }
+            : {
+                justifyContent: 'flex-start',
+                background: 'rgba(0,0,0,0.05)',
+                cursor: 'default',
+                color: '#999',
+              }
+        }
+        confirmed={confirmed}
+      >
+        <InputLabel>{t('in friengls i want to')}</InputLabel>
         <Input
           type="radio"
           name="isTutor"
           value="0"
-          id="isTutor0"
+          checked={checked ? (checked === 'isTutee' ? true : false) : undefined}
+          _onChange={_onChange}
+          readOnly={readOnly}
           styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
-          _onChange={_onClick}
         />
         <InputLabel
-          htmlFor="isTutor0"
           styles={{
             padding: '0 10px 0 10px',
             alignItems: 'center',
@@ -65,7 +87,9 @@ const SelectIsTutor = ({
           type="radio"
           name="isTutor"
           value="1"
-          _onChange={_onClick}
+          checked={checked ? (checked === 'isTutor' ? true : false) : undefined}
+          _onChange={_onChange}
+          readOnly={readOnly}
           styles={{ margin: '0 0 0 10px', width: '15px', cursor: 'pointer' }}
         />
         <InputLabel
@@ -78,7 +102,7 @@ const SelectIsTutor = ({
         </InputLabel>
       </InfoInput>
       {/* 선생님인 경우 수업시간 선택 */}
-      {isTutor === '1' && (
+      {Number(isTutor) === 1 && (
         <React.Fragment>
           <InfoInput
             onlyBox
@@ -89,10 +113,22 @@ const SelectIsTutor = ({
             <TimeSelectBox>
               {t('available time for tutoring')} :
               <Select name="startTime" onChange={handleStartTime}>
-                <option value="">====={t('first tutoring')}=====</option>
+                <option value="">
+                  {' '}
+                  {startTime
+                    ? startNum +
+                      1 +
+                      t('session') +
+                      ': ' +
+                      startNum +
+                      ':00 - ' +
+                      (startNum + 1) +
+                      ':00'
+                    : `=====${t('first tutoring')}=====`}
+                </option>
                 {startTimeArray.map((time, index) => (
                   //+ 키 유저아이디 같은걸로 바꿔주기
-                  <option value={time} key={index}>
+                  <option value={time} key={time + index}>
                     {time + 1}
                     {t('session')}: {time}:00 - {time + 1}:00
                   </option>
@@ -104,7 +140,18 @@ const SelectIsTutor = ({
               ) : (
                 <React.Fragment>
                   <Select name="endTime" onChange={handleEndTime}>
-                    <option value="">====={t('last tutoring')}=====</option>
+                    <option value="">
+                      {endTime
+                        ? endNum +
+                          1 +
+                          t('session') +
+                          ': ' +
+                          endNum +
+                          ':00 - ' +
+                          (endNum + 1) +
+                          ':00'
+                        : `=====${t('last tutoring')}=====`}
+                    </option>
                     {endTimeArray.map((time, index) => (
                       <option value={time} key={startTime + index}>
                         {time + 1}
@@ -146,11 +193,11 @@ const TimeBox = styled.div`
   border-top: 1px solid #c4c4c4;
 
   p {
-    margin: 0 auto 25px;
-    text-align: center;
+    margin: ${(props) => (props.isSignup ? '0 auto 15px' : '20px auto 0')};
+    text-align: ${(props) => (props.isSignup ? 'center' : '')};
     font-size: 20px;
     font-weight: 700;
-    color: #153587;
+    color: ${(props) => (props.isSignup ? '#153587' : '')};
   }
 `;
 
@@ -183,7 +230,7 @@ const InfoBox = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   position: absolute;
   bottom: 20px;
-  left: 450px;
+  left: 280px;
   font-size: 12px;
   text-align: center;
 `;

@@ -52,9 +52,13 @@ const Signup = ({ userInfo }) => {
 
   if (preventAuth) {
     console.log(authCount);
+    //5분 지나고 로컬스토리지에 authCount가 남은 경우 제한 해제, authCount초기화
     setTimeout(() => {
-      setPreventAuth(false);
-      window.location.reload();
+      if (localStorage.getItem('authCount')) {
+        setPreventAuth(false);
+        window.location.reload();
+        localStorage.removeItem('authCount');
+      }
     }, 300000);
   }
 
@@ -104,8 +108,10 @@ const Signup = ({ userInfo }) => {
           data: {
             userEmail: userEmail,
           },
+          timeout: 8000,
         })
           .then((response) => {
+            console.log(response.data);
             setEmailCheck(
               t(
                 'the authentication number has been sent to the email you wrote.',
@@ -116,6 +122,10 @@ const Signup = ({ userInfo }) => {
           })
           .catch((error) => {
             console.log('이메일인증 에러', error);
+            setEmailCheck(
+              t('Bypass authentication because an unknown error occurred.'),
+            );
+            setConfirmEmail(t('email authentication completed'));
           });
       })
       .catch((error) => {
@@ -262,7 +272,6 @@ const Signup = ({ userInfo }) => {
     startTime: startTime,
     endTime: endTime,
   };
-
   //DetailInfo페이지로 넘어가는 버튼 활성화
   const isDisabled = !(
     (userInfo ? true : confirmEmail === t('email authentication completed')) &&
@@ -273,7 +282,6 @@ const Signup = ({ userInfo }) => {
   )
     ? true
     : false;
-
   return (
     <Container>
       {/* 로고 */}
@@ -293,13 +301,22 @@ const Signup = ({ userInfo }) => {
         ) : (
           <React.Fragment>
             <EmailBox>
+              {/* 이메일 인풋 */}
               <InfoInput
                 placeholder={t('please fill in an email address.')}
                 type="text"
                 _onChange={handleEmail}
                 validationLabel={emailCheck}
                 styles={{ borderRadius: '8px 0 0 8px' }}
+                confirmed={
+                  confirmEmail === t('email authentication completed') ||
+                  emailCheck ===
+                    t(
+                      'Bypass authentication because an unknown error occurred.',
+                    )
+                }
               />
+              {/* 이메일 중복/인증 요청 버튼 */}
               <ConfirmButton
                 type="button"
                 onClick={preventAuth ? delayMessage : checkDuplicatedEmail}
@@ -317,7 +334,15 @@ const Signup = ({ userInfo }) => {
                 _onBlur={handleInputNumber}
                 validationLabel={confirmEmail}
                 styles={{ borderRadius: '8px 0 0 8px' }}
+                confirmed={
+                  confirmEmail === t('email authentication completed') ||
+                  emailCheck ===
+                    t(
+                      'Bypass authentication because an unknown error occurred.',
+                    )
+                }
               />
+              {/* 이메일 인증 확인 버튼 */}
               <ConfirmButton type="button" onClick={checkEmail}>
                 {t('authentication')}
               </ConfirmButton>
@@ -332,6 +357,7 @@ const Signup = ({ userInfo }) => {
           _onChange={handleUserName}
           _onBlur={checkDuplicatedUserName}
           validationLabel={userNameCheck}
+          confirmed={userNameCheck === t('this nickname is available.')}
         />
         {/* 비밀번호 인풋 */}
         <InfoInput
@@ -340,6 +366,7 @@ const Signup = ({ userInfo }) => {
           autoComplete="off"
           _onChange={handlePwd}
           validationLabel={pwdCheck}
+          confirmed={pwdForm(pwd)}
         />
         {/* 비밀번호 확인 인풋 */}
         <InfoInput
@@ -348,15 +375,19 @@ const Signup = ({ userInfo }) => {
           autoComplete="off"
           _onChange={handleConfirmPwd}
           validationLabel={confirmPwdCheck}
+          confirmed={pwd.length > 7 ? pwd === confirmPwd : false}
         />
         {/* 선생님/학생 선택 */}
         {/* isTutor */}
         <SelectIsTutor
           startTime={startTime}
-          _onClick={handleIstutor}
+          _onChange={handleIstutor}
           isTutor={isTutor}
           handleStartTime={handleStartTime}
           handleEndTime={handleEndTime}
+          confirmed={isTutor ? true : false}
+          title={t('friengls user setting')}
+          isSignup
         />
         {/* 상세정보 페이지로 넘어가기 */}
         {isDisabled ? (
@@ -370,7 +401,15 @@ const Signup = ({ userInfo }) => {
           />
         ) : (
           <Link to={{ pathname: '/signup/detail', signupForm }}>
-            <NextButton type="button" value={t('next')} disabled={isDisabled} />
+            <NextButton
+              type="button"
+              value={t('next')}
+              disabled={isDisabled}
+              // 페이지 전환 시 인증횟수제한 해제
+              onClick={() => {
+                localStorage.removeItem('authCount');
+              }}
+            />
           </Link>
         )}
       </form>

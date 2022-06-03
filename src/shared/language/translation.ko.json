@@ -54,6 +54,7 @@
   "this email is available.": "사용 가능한 이메일입니다.",
   "this nickname is already in use. try another nickname.": "이미 사용중인 닉네임입니다. 다른 닉네임을 입력해 주세요.",
   "this nickname is available.": "사용 가능한 닉네임입니다.",
+  "Bypass authentication because an unknown error occurred.": "알 수 없는 오류가 발생해 이메일 인증을 생략합니다.",
   "please fill in an email address.": "이메일을 입력해 주세요.",
   "please fill in a nickname.": "닉네임을 입력해 주세요.",
   "please fill in a password.": "비밀번호를 입력해 주세요.",

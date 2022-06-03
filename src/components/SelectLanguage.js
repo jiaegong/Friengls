@@ -14,6 +14,7 @@ const SelectLanguage = (props) => {
     handleLanguage1,
     handleLanguage2,
     handleLanguage3,
+    confirmed,
   } = props;
   //사용언어1 option
   const languageList = [
@@ -43,6 +44,7 @@ const SelectLanguage = (props) => {
     <InfoInput
       onlyBox
       styles={{ flexDirection: 'column', alignItems: 'flex-start' }}
+      confirmed={confirmed}
     >
       <LabelBox>
         <InputLabel>{t('select available language')}</InputLabel>
@@ -112,4 +114,7 @@ const Select = styled.select`
   border: 1px solid #8a8a8a;
   border-radius: 8px;
   font-size: 14px;
+  &:focus {
+    outline: none;
+  }
 `;
