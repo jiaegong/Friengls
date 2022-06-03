@@ -497,7 +497,7 @@ const EditUser = ({ onClose, userInfo, accessInfo }) => {
                   <div key={tag + index}>
                     <p>{tag}</p>
                     <button id={index} onClick={deleteTag}>
-                      {/* <img /> */}X
+                      X
                     </button>
                   </div>
                 ))
@@ -738,7 +738,7 @@ const TagBox = styled.div`
   button {
     background: transparent;
     border: none;
-    margin-top: 2px;
+    margin-bottom: 2px;
     font-size: 16px;
     color: #8a8a8a;
     cursor: pointer;

@@ -208,7 +208,7 @@ const DetailInfo = (props) => {
     new Swal(t('refreshing will return to the first screen.'));
     history.replace('/login');
   }
-  console.log(userInfo);
+
   return (
     <Container>
       {/* 로고 */}
@@ -311,7 +311,9 @@ const DetailInfo = (props) => {
             tagList.map((tag, index) => (
               <div key={tag + index}>
                 <p>{tag}</p>
-                <button id={index} onClick={deleteTag}></button>
+                <button id={index} onClick={deleteTag}>
+                  X
+                </button>
               </div>
             ))
           ) : (
@@ -461,7 +463,7 @@ const TagBox = styled.div`
   button {
     background: transparent;
     border: none;
-    margin-top: 2px;
+    margin-bottom: 2px;
     font-size: 16px;
     color: #8a8a8a;
     cursor: pointer;
