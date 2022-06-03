@@ -1,3 +1,13 @@
+@media screen and (max-width: 4000px) {
+  .notifications {
+    right: 34%;
+  }
+}
+@media screen and (max-width: 3000px) {
+  .notifications {
+    right: 29%;
+  }
+}
 @media screen and (max-width: 2056px) {
   .notifications {
     right: 25%;

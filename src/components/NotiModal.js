@@ -38,10 +38,7 @@ const NotiModal = (props) => {
               {notiCheck === 0 && (
                 <div className="notiNot">{t('no alarm')}</div>
               )}
-
               {notiList?.map((notiItem, idx) => {
-                const timeId = notiItem.timeId;
-
                 return (
                   <>
                     <NotiItem
