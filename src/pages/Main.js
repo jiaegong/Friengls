@@ -23,6 +23,23 @@ const Main = () => {
   const [title, setTitle] = useState('');
   const [mean, setMean] = useState('');
 
+  // 오늘의 속담
+  const getProverb = () => {
+    axios({
+      method: 'get',
+      url: 'https://hjg521.link/proverb',
+    })
+      .then((res) => {
+        setTitle(res.data.title);
+        setMean(res.data.mean);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log('속담 불러오기에 실패했습니다!', err);
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     dispatch(tutorActions.getTutorListDB());
 
@@ -41,21 +58,6 @@ const Main = () => {
       tutorList.push(tutorListDB[i]);
     }
   }
-
-  // 오늘의 속담
-  const getProverb = () => {
-    axios({
-      method: 'get',
-      url: 'https://hjg521.link/proverb',
-    })
-      .then((res) => {
-        setTitle(res.data.title);
-        setMean(res.data.mean);
-      })
-      .catch((err) => {
-        console.log('속담 불러오기에 실패했습니다!', err);
-      });
-  };
 
   return (
     <Wrap>
