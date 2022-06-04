@@ -11,20 +11,9 @@
 ## 🛠 기술스택
 
 <p align='center'>
-  <img src='https://img.shields.io/badge/Node-v16.13.1-339933?logo=Node.js'/>
-  <img src='https://img.shields.io/badge/NPM-CB3837?logo=npm'/>
-  <img src='https://img.shields.io/badge/socket.io-v4.4.1-white?logo=Socket.io'/>
-  <img src="https://img.shields.io/badge/Express-v4.17.3-009688?logo=Express&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-v8.0.23-4479a1?logo=MySQL&logoColor=white" />
-  </br>
-  <img src="https://img.shields.io/badge/WebRTC-333333?logo=WebRTC&logoColor=white" />
-  <img src="https://img.shields.io/badge/Passport-v0.5.2-34E27A?logo=Passport&logoColor=white" />
-  <img src="https://img.shields.io/badge/Json Web Token-v8.5.1-8a8a8a?logo=JSON Web Tokens&logoColor=white" />
-  </br></br>
-  Deploy
-  </br></br>
-  <img src="https://img.shields.io/badge/Git hub-000000?logo=Github&logoColor=white" />
-  <img src="https://img.shields.io/badge/GitHub Actions-4479a1?logo=GitHub Actions&logoColor=#2088FF" />
+   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
   
 </p>
 
