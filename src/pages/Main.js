@@ -41,7 +41,6 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(tutorActions.getTutorListDB());
-
     dispatch(reviewActions.getReviewDB());
 
     getProverb();
@@ -67,18 +66,6 @@ const Main = () => {
             <span>{t('we are here!')}</span>
             <span>{t('your closest korean friends, friengls')}</span>
           </p>
-          <button
-            onClick={() => {
-              Swal.fire({
-                title: '준비중',
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                timer: 2000,
-              });
-            }}
-          >
-            {t('see a tutorial')} ▶︎
-          </button>
         </Banner>
       </DivBanner>
       <ProverbWrap>
@@ -152,14 +139,14 @@ const Banner = styled.div`
   .bannerTitle {
     display: flex;
     flex-direction: column;
-    padding-top: 40px;
+    padding-top: 80px;
     margin-bottom: 20px;
   }
   .bannerTitle > span {
     font-size: 40px;
     font-weight: bolder;
     line-height: 34px;
-    margin-bottom: 18px;
+    margin-bottom: 26px;
     letter-spacing: 1px;
     color: #fff;
   }

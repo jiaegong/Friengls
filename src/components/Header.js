@@ -120,11 +120,7 @@ const Header = () => {
           )}
           <ul className="navBarWrap">
             {notiOpen && (
-              <NotiModal
-                ModalAction={handleNotiModal}
-                userInfo={userInfo}
-                // key={'notiModal'}
-              />
+              <NotiModal ModalAction={handleNotiModal} userInfo={userInfo} />
             )}
 
             <li
@@ -208,7 +204,6 @@ const Wrap = styled.div`
     padding: 20px 0 0;
     margin: auto;
     position: relative;
-
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -252,15 +247,12 @@ const Wrap = styled.div`
           position: absolute;
           right: 20px;
           top: -5px;
-
           width: 10px;
           height: 10px;
           font-size: 12px;
-
           display: flex;
           align-items: center;
           justify-content: center;
-
           border-radius: 50%;
           padding: 5px;
         }
@@ -288,7 +280,6 @@ const LangugeBox = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  // border: 1px solid #f9f9f9;
   cursor: pointer;
   font-size: 14px;
   color: #999;
