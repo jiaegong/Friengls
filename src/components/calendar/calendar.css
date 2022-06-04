@@ -1,0 +1,82 @@
+.calendarTitle {
+  margin: 10px;
+}
+
+.saveBtn {
+  /* margin-top: 50px; */
+  position: relative;
+}
+
+.saveBtn > button {
+  background-color: #213f8d;
+  color: #fff;
+}
+
+.resetBtn {
+  /* background-color: rgb(207, 0, 0); */
+  background-color: #d11010;
+
+  height: 30.38px;
+  width: 130px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  font-size: 34px;
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  border-radius: 4px;
+  color: #fff;
+  right: -80px;
+  top: 0px;
+  cursor: pointer;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+.calendarTextWrap {
+  max-width: 1280px;
+  width: 80%;
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.calendarTextInner {
+  margin-bottom: 5px;
+}
+.calendarInfo {
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 15px;
+}
+
+.redColor {
+  background-color: #ff1512;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.blueColor {
+  background-color: #08a9ff;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.calendarText {
+  font-size: 12px;
+}
+
+.btnWrap {
+  height: 50px;
+}
