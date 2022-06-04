@@ -32,7 +32,6 @@ const Main = () => {
       .then((res) => {
         setTitle(res.data.title);
         setMean(res.data.mean);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log('속담 불러오기에 실패했습니다!', err);

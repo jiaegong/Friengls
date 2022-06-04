@@ -222,11 +222,29 @@ const getUserDetailDB = (userApi) => {
 
 const logout = () => {
   return function (dispatch, getState, { history }) {
+    // axios({
+    //   method: 'post',
+    //   url: 'https://hjg521.link/logout',
+    //   headers: { token: `${getCookie('token')}` },
+    // })
+    //   .then((response) => {
+    //     console.log(response.msg);
+    //     deleteCookie('token');
+    //     dispatch(unsetUser());
+    //     new Swal('성공적으로 로그아웃 되었습니다.');
+    //   })
+    //   .catch((error) => {
+    //     console.log('로그아웃 오류', error);
+    //     deleteCookie('token');
+    //     dispatch(unsetUser());
+    //     new Swal('성공적으로 로그아웃 되었습니다.');
+    //     history.push('/');
+    //   });
     deleteCookie('token');
-    new Swal('성공적으로 로그아웃 되었습니다.');
-    history.replace('/');
     dispatch(unsetUser());
+    history.replace('/');
     // window.location.reload();
+    new Swal('성공적으로 로그아웃 되었습니다.');
   };
 };
 
